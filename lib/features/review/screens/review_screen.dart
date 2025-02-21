@@ -41,7 +41,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: widget.storeName ?? 'store_reviews'.tr),
       endDrawer: const MenuDrawer(), endDrawerEnableOpenDragGesture: false,
-      body: GetBuilder<ReviewController>(builder: (reviewController) {
+      body: 
+      GetBuilder<ReviewController>(builder: (reviewController) {
         return reviewController.storeReviewList != null ? reviewController.storeReviewList!.isNotEmpty ? RefreshIndicator(
           onRefresh: () async {
             await reviewController.getStoreReviewList(widget.storeID);
@@ -93,6 +94,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
           ),
         ) : Center(child: NoDataScreen(text: 'no_review_found'.tr, showFooter: true)) : const Center(child: CircularProgressIndicator());
       }),
+    
     );
   }
 }

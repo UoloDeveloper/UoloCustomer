@@ -53,7 +53,7 @@ class OrderItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-        boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 10)],
+        // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 10)],
       ),
       padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
       margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),

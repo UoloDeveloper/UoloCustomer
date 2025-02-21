@@ -86,7 +86,8 @@ class _AccessLocationScreenState extends State<AccessLocationScreen> {
             ) : isLoggedIn ? Column(children: [
               Expanded(child: SingleChildScrollView(
                 child: FooterView(child: Column(mainAxisAlignment: (locationController.addressList != null && locationController.addressList!.isNotEmpty) ? MainAxisAlignment.start : MainAxisAlignment.center, children: [
-
+             ResponsiveHelper.isDesktop(context) ? const SizedBox() : BottomButton2(fromSignUp: widget.fromSignUp, route: widget.route),
+                  ResponsiveHelper.isDesktop(context) ? const SizedBox(height: 100) : const SizedBox(),
                   locationController.addressList != null ? locationController.addressList!.isNotEmpty ? ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -107,11 +108,11 @@ class _AccessLocationScreenState extends State<AccessLocationScreen> {
                   ) : NoDataScreen(text: 'no_saved_address_found'.tr) : const Center(child: CircularProgressIndicator()),
                   const SizedBox(height: Dimensions.paddingSizeLarge),
 
-                  ResponsiveHelper.isDesktop(context) ? BottomButton(fromSignUp: widget.fromSignUp, route: widget.route) : const SizedBox(),
+              
 
                 ])),
               )),
-              ResponsiveHelper.isDesktop(context) ? const SizedBox() : BottomButton(fromSignUp: widget.fromSignUp, route: widget.route),
+             
             ]) : Center(child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: FooterView(child: SizedBox( width: 700,
@@ -219,3 +220,148 @@ class BottomButton extends StatelessWidget {
   }
 }
 
+
+
+
+class BottomButton2 extends StatelessWidget {
+  final bool fromSignUp;
+  final String? route;
+  const BottomButton2({super.key, required this.fromSignUp, required this.route});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(width: 700, child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+    
+      TextButton(
+        // style: TextButton.styleFrom(
+        //   shape: RoundedRectangleBorder(
+        //     side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+        //     borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+        //   ),
+        //   minimumSize: const Size(Dimensions.webMaxWidth, 50),
+        //   padding: EdgeInsets.zero,
+        // ),
+        onPressed: () async {
+          Get.find<LocationController>().checkPermission(() async {
+            Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
+            AddressModel address = await Get.find<LocationController>().getCurrentLocation(true);
+            ZoneResponseModel response = await Get.find<LocationController>().getZone(address.latitude, address.longitude, false);
+            if(response.isSuccess) {
+              Get.find<LocationController>().saveAddressAndNavigate(
+                address, fromSignUp, route, route != null, ResponsiveHelper.isDesktop(Get.context),
+              );
+            }else {
+              Get.back();
+              if(ResponsiveHelper.isDesktop(Get.context)) {
+                showGeneralDialog(context: Get.context!, pageBuilder: (_,__,___) {
+                  return SizedBox(
+                      height: 300, width: 300,
+                      child: PickMapScreen(fromSignUp: fromSignUp, canRoute: route != null, fromAddAddress: false, route: route ?? RouteHelper.accessLocation)
+                  );
+                });
+              }else {
+                Get.toNamed(RouteHelper.getPickMapRoute(route ?? RouteHelper.accessLocation, route != null));
+                showCustomSnackBar('service_not_available_in_current_location'.tr);
+              }
+            }
+          });
+        }, child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          // IconButton(onPressed: () {}, icon: const Icon(Icons.my_location),),
+                    Padding(
+            padding: const EdgeInsets.only(right: Dimensions.paddingSizeExtraSmall),
+            child: Icon(Icons.near_me, color: Theme.of(context).primaryColor),
+          ),
+          Text("Use Current Location",textAlign: TextAlign.center, style: robotoBold.copyWith(
+            color: Theme.of(context).primaryColor,
+            fontSize: Dimensions.fontSizeLarge,
+          ))
+        ])
+        // icon: Icons.my_location,
+      ),
+      // const SizedBox(height: Dimensions.paddingSizeSmall),
+    
+      TextButton(
+        // style: TextButton.styleFrom(
+        //   // shape: RoundedRectangleBorder(
+        //   //   side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+        //   //   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+        //   // ),
+        //   minimumSize: const Size(Dimensions.webMaxWidth, 50),
+        //   padding: EdgeInsets.zero,
+        // ),
+        onPressed: () {
+          if(ResponsiveHelper.isDesktop(Get.context)) {
+            showGeneralDialog(context: Get.context!, pageBuilder: (_,__,___) {
+              return SizedBox(
+                  height: 300, width: 300,
+                  child: PickMapScreen(fromSignUp: fromSignUp, canRoute: route != null, fromAddAddress: false, route: route ?? RouteHelper.accessLocation)
+              );
+            });
+          }else {
+            Get.toNamed(RouteHelper.getPickMapRoute(
+              route ?? (fromSignUp ? RouteHelper.signUp : RouteHelper.accessLocation), route != null,
+            ));
+          }
+        },
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Padding(
+            padding: const EdgeInsets.only(right: Dimensions.paddingSizeExtraSmall),
+            child: Icon(Icons.add, color: Theme.of(context).primaryColor,weight: 20,),
+          ),
+          Text('Add new address'.tr, textAlign: TextAlign.center, style: robotoBold.copyWith(
+            color: Theme.of(context).primaryColor,
+            fontSize: Dimensions.fontSizeLarge,
+          )),
+        ]),
+      ),
+    
+    ]));
+  }
+}
+
+
+
+
+
+class textButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String buttonText;
+
+  const textButton({
+    super.key,
+    required this.onPressed,
+    required this.buttonText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 700,
+        child: TextButton(
+          style: TextButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(width: 1, color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            minimumSize: const Size(double.infinity, 50),
+            padding: const EdgeInsets.all(16.0),
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          onPressed: onPressed,
+          child: Text(
+            buttonText,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

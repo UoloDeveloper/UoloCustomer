@@ -61,6 +61,7 @@ class CustomButton extends StatelessWidget {
           ) : robotoRegular.copyWith(
             color: textColor ?? (transparent ? Theme.of(context).primaryColor : Colors.white),
             fontSize: fontSize ?? Dimensions.fontSizeLarge,
+            
           )),
         ]),
       ),

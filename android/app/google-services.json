@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "491987943015",
-    "project_id": "stackmart-500c7",
-    "storage_bucket": "stackmart-500c7.appspot.com"
+    "project_number": "349709842275",
+    "project_id": "uolo-6b0e9",
+    "storage_bucket": "uolo-6b0e9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491987943015:android:a6fb4303cc4bf3d18f1ec2",
+        "mobilesdk_app_id": "1:349709842275:android:c45d0399a7fce637c84556",
         "android_client_info": {
-          "package_name": "com.sixamtech.sixam_mart_user"
+          "package_name": "com.uolo.delivery"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+          "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA"
+          "current_key": "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+              "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -36,27 +36,143 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491987943015:android:de46aa9776b1b4888f1ec2",
+        "mobilesdk_app_id": "1:349709842275:android:a15c32725531f7bbc84556",
         "android_client_info": {
-          "package_name": "com.sixamtech.stack_food_user"
+          "package_name": "com.uolo.rider"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+          "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA"
+          "current_key": "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+              "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349709842275:android:7c727b84f8560ad2c84556",
+        "android_client_info": {
+          "package_name": "com.uolo.store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349709842275:android:88e60dbf591db4c4c84556",
+        "android_client_info": {
+          "package_name": "com.uolo.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349709842275:android:d0de2fbdaa62699ac84556",
+        "android_client_info": {
+          "package_name": "com.uolo.zone_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349709842275:android:558096d081b9b54ec84556",
+        "android_client_info": {
+          "package_name": "com.uolo.zoneapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349709842275-br58utdhfu7da4q2sms3cnkglt5tmcin.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -40,7 +40,7 @@ class SignUpBodyModel {
     data['phone'] = phone;
     data['email'] = email;
     data['password'] = password;
-    data['ref_code'] = refCode;
+    // data['ref_code'] = refCode;
     data['cm_firebase_token'] = deviceToken;
     data['guest_id'] = guestId;
     data['name'] = name;

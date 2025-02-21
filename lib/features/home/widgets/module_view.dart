@@ -21,6 +21,8 @@ class ModuleView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
+        SizedBox(height: 10,)
         // GetBuilder<BannerController>(builder: (bannerController) {
         //   return const BannerView(isFeatured: true);
         // }),
@@ -51,9 +53,9 @@ class ModuleView extends StatelessWidget {
 //                       width: MediaQuery.of(context).size.width,
 //                     ),
 //           ),
-//         ),
+//         ),,
 
-        splashController.moduleList != null
+       , splashController.moduleList != null
             ? splashController.moduleList!.isNotEmpty
                 ? GridView.builder(
                     gridDelegate:
@@ -63,7 +65,7 @@ class ModuleView extends StatelessWidget {
                       crossAxisSpacing: Dimensions.paddingSizeDefault,
                       childAspectRatio: (1 / 1.3),
                     ),
-                    padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                    padding: const EdgeInsets.all(5),
                     itemCount: splashController.moduleList!.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -144,6 +146,11 @@ class ModuleView extends StatelessWidget {
                                                       .paddingSizeDefault,
                                                 ),
                                                 child: Text(
+
+                                                     splashController
+                                                      .moduleList![index]
+                                                      .moduleName!
+                                                      .toUpperCase() == "." ? "" :
                                                   splashController
                                                       .moduleList![index]
                                                       .moduleName!
@@ -174,7 +181,12 @@ class ModuleView extends StatelessWidget {
                                                   // top: Dimensions.paddingSizeDefault,
                                                 ),
                                                 child: Text(
-                                                  "${removeHtmlTags(
+                                               removeHtmlTags(
+                                                    splashController
+                                                        .moduleList![index]
+                                                        .description!
+                                                        .toUpperCase(),
+                                                  ) == "." ? "" :   "${removeHtmlTags(
                                                     splashController
                                                         .moduleList![index]
                                                         .description!
@@ -187,7 +199,7 @@ class ModuleView extends StatelessWidget {
                                                       TextOverflow.ellipsis,
                                                   style: robotoMedium.copyWith(
                                                       fontSize: Dimensions
-                                                          .fontSizeSmall,
+                                                          .fontSizeSmall ,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       color: Colors.grey[500]),
@@ -208,12 +220,14 @@ class ModuleView extends StatelessWidget {
                           : null;
                     },
                   )
-                : Center(
-                    child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
-                    child: Text('no_module_found'.tr),
-                  ))
+                :
+                ModuleShimmer(isEnabled: splashController.moduleList == null)
+                //  Center(
+                //     child: Padding(
+                //     padding:
+                //         const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
+                //     child: Text('no_module_found'.tr),
+                //   ))
             : ModuleShimmer(isEnabled: splashController.moduleList == null),
 
         // Address Section
@@ -281,85 +295,92 @@ class ModuleView extends StatelessWidget {
         // const PopularStoreView(isPopular: false, isFeatured: true),
         const SizedBox(height: 15),
         Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          padding: const EdgeInsets.only(left: 5, right: 5),
           child: Column(children: [
-            Container(
-              height: 80,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Theme.of(context).primaryColor,
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(15, 148, 148, 148),
-                  Color.fromARGB(164, 139, 9, 233)
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                boxShadow: [
-                  //  BoxShadow(
-                  //    color: Theme.of(context).disabledColor.withOpacity(0.1),
-                  //    spreadRadius: 5,
-                  //    blurRadius:1,
-                  //  ),
-                ],
-              ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Uolo Coins".toUpperCase(),
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 52, 4, 87),
-                                fontSize: 21,
-                                fontWeight: FontWeight.w800),
-                          ),
-                          Flexible(
-                              child: Text(
-                            "Uolo Coins can be used for all your orders ",
-                            style: TextStyle(
-                              color: Theme.of(context).cardColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
-                          )),
-                          Flexible(
-                              child: Text(
-                            "Across categories ",
-                            style: TextStyle(
-                              color: Theme.of(context).cardColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
-                          )),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: 80,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white60,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Center(
-                            child: Text(
-                          'ADD',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 52, 4, 87),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w800),
-                        )),
-                      ),
-                    )
-                  ]),
-            ),
+        
+            // Container(
+            //   height: 80,
+            //   width: MediaQuery.of(context).size.width,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(15),
+            //     color: Theme.of(context).primaryColor,
+            //     gradient: LinearGradient(colors: [
+            //       Color.fromARGB(15, 148, 148, 148),
+            //       Color.fromARGB(164, 139, 9, 233)
+            //     ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            //     boxShadow: [
+            //       //  BoxShadow(
+            //       //    color: Theme.of(context).disabledColor.withOpacity(0.1),
+            //       //    spreadRadius: 5,
+            //       //    blurRadius:1,
+            //       //  ),
+            //     ],
+            //   ),
+            //   child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Padding(
+            //           padding: const EdgeInsets.only(left: 10, top: 10),
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 "Uolo Coins".toUpperCase(),
+            //                 style: TextStyle(
+            //                     color: Color.fromARGB(255, 52, 4, 87),
+            //                     fontSize: 21,
+            //                     fontWeight: FontWeight.w800),
+            //               ),
+            //               Flexible(
+            //                   child: Text(
+            //                 "Uolo Coins can be used for all your orders ",
+            //                 style: TextStyle(
+            //                   color: Theme.of(context).cardColor,
+            //                   fontSize: 12,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //                 maxLines: 2,
+            //               )),
+            //               Flexible(
+            //                   child: Text(
+            //                 "Across categories ",
+            //                 style: TextStyle(
+            //                   color: Theme.of(context).cardColor,
+            //                   fontSize: 12,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //                 maxLines: 2,
+            //               )),
+            //             ],
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: const EdgeInsets.all(8.0),
+            //           child: Container(
+            //             width: 80,
+            //             height: 40,
+            //             decoration: BoxDecoration(
+            //               color: Colors.white60,
+            //               borderRadius: BorderRadius.circular(15),
+            //             ),
+            //             child: Center(
+            //                 child: Text(
+            //               'ADD',
+            //               style: TextStyle(
+            //                   color: Color.fromARGB(255, 52, 4, 87),
+            //                   fontSize: 15,
+            //                   fontWeight: FontWeight.w800),
+            //             )),
+            //           ),
+            //         )
+            //       ]),
+            // ),
+
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15), topRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+              child: Image.asset("assets/image/static_banner/uolo app 2 copy 2.jpg",fit: BoxFit.cover,)),
 
             SizedBox(
               height: 20,
@@ -375,11 +396,11 @@ class ModuleView extends StatelessWidget {
                                   ? 1
                                   : 2,
                           mainAxisSpacing: Dimensions.paddingSizeSmall,
-                          crossAxisSpacing: Dimensions.paddingSizeDefault,
+                          crossAxisSpacing: Dimensions.paddingSizeDefault + 5,
                           childAspectRatio:  splashController.moduleList!.length - 2 != 1 ? 1.6 : (3.7 / 1.5),
                         ),
                         padding:
-                            const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                            const EdgeInsets.only( top : Dimensions.paddingSizeSmall,bottom:Dimensions.paddingSizeSmall ),
                         itemCount: splashController.moduleList!.length - 2,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -417,13 +438,28 @@ class ModuleView extends StatelessWidget {
                                       isdynamic: true,
 
                                       title: splashController
-                                          .moduleList![actualIndex].moduleName!
-                                          .toUpperCase(),
+                                                      .moduleList![index]
+                                                      .moduleName!
+                                                      .toUpperCase() == "." ? "" :
+                                                  splashController
+                                                      .moduleList![index]
+                                                      .moduleName!
+                                                      .toUpperCase(),
                                       image:
                                           '${splashController.moduleList![actualIndex].iconFullUrl}',
 
                                       title2:
-                                          "${removeHtmlTags(splashController.moduleList![actualIndex].description!.toUpperCase())}",
+                                          "${     removeHtmlTags(
+                                                    splashController
+                                                        .moduleList![index]
+                                                        .description!
+                                                        .toUpperCase(),
+                                                  ) == "." ? "" :   "${removeHtmlTags(
+                                                    splashController
+                                                        .moduleList![index]
+                                                        .description!
+                                                        .toUpperCase(),
+                                                  )}"}",
 
                                       // isdynamic: true,
                                     )),
@@ -441,6 +477,8 @@ class ModuleView extends StatelessWidget {
                 : ModuleShimmer(isEnabled: splashController.moduleList == null),
           ]),
         ),
+      
+      
         BannerView(
           isFeatured: true,
         ),

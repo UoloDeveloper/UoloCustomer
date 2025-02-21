@@ -1,4 +1,6 @@
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
+import 'package:sixam_mart/features/store/widgets/bottom_cart_widget.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
@@ -92,6 +94,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
           ],
         )))),
+
+         bottomNavigationBar: GetBuilder<CartController>(
+      builder: (cartController){
+        return cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
+         ? const BottomCartWidget(
+          fromgroccery: false,
+         )
+         : const SizedBox();
+      },
+    ),
+    
     );
   }
 }

@@ -84,7 +84,7 @@ class CustomDivider1 extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 12,
+        fontSize: 14,
         color: color,
         fontWeight: FontWeight.w600,
       ),

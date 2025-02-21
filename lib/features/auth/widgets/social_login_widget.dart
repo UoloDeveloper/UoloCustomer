@@ -258,18 +258,18 @@ class SocialLoginWidget extends StatelessWidget {
     if (result.status == LoginStatus.success) {
       Map userData = await FacebookAuth.instance.getUserData();
 
-      SocialLogInBody facebookBodyModel = SocialLogInBody(
-        email: userData['email'], token: result.accessToken!.token, uniqueId: result.accessToken!.userId,
-        medium: 'facebook', loginType: CentralizeLoginType.social.name,
-      );
+      // SocialLogInBody facebookBodyModel = SocialLogInBody(
+      //   email: userData['email'], token: result.accessToken!.tokenString, uniqueId: result.accessToken!.tokenString,
+      //   medium: 'facebook', loginType: CentralizeLoginType.social.name,
+      // );
 
-      Get.find<AuthController>().loginWithSocialMedia(facebookBodyModel).then((response) {
-        if (response.isSuccess) {
-          _processSocialSuccessSetup(response, null, null, facebookBodyModel);
-        } else {
-          showCustomSnackBar(response.message);
-        }
-      });
+      // Get.find<AuthController>().loginWithSocialMedia(facebookBodyModel).then((response) {
+      //   if (response.isSuccess) {
+      //     _processSocialSuccessSetup(response, null, null, facebookBodyModel);
+      //   } else {
+      //     showCustomSnackBar(response.message);
+      //   }
+      // });
     }
   }
 
@@ -290,7 +290,7 @@ class SocialLoginWidget extends StatelessWidget {
 
     // webAuthenticationOptions: WebAuthenticationOptions(
     //   clientId: Get.find<SplashController>().configModel.appleLogin[0].clientId,
-    //   redirectUri: Uri.parse('https://6ammart-web.6amtech.com/apple'),
+    //   redirectUri: Uri.parse('https://Uolo Delivery-web.6amtech.com/apple'),
     // ),
 
     SocialLogInBody appleBodyModel = SocialLogInBody(

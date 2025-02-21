@@ -47,26 +47,26 @@ class AllStoreFilterWidget extends StatelessWidget {
             ]) : Column(children: [
 
             
+  // Padding(
+  //               padding: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+  //               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+  //                 // Text(
+  //                 // Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants'.tr : 'stores'.tr,
+  //                 //   style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+  //                 // ),
+  //                 // Flexible(
+  //                 //   child:  Text(
+  //                 //   ' ${Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants_near_you'.tr : 'stores_near_you'.tr}',
+  //                 //   maxLines: 1, overflow: TextOverflow.ellipsis,
+  //                 //   style: robotoRegular.copyWith(color: Colors.black, fontSize: Dimensions.fontSizeExtraLarge,fontWeight: FontWeight.w600),
+  //                 // ),
+  //                 // ),
+  //               ]),
+  //             ),
 
-
+              
               filter(context, storeController),
               const SizedBox(height: Dimensions.paddingSizeSmall),
-                Padding(
-                padding: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  // Text(
-                  // Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants'.tr : 'stores'.tr,
-                  //   style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge),
-                  // ),
-                  Flexible(
-                    child:  Text(
-                    ' ${Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants_near_you'.tr : 'stores_near_you'.tr}',
-                    maxLines: 1, overflow: TextOverflow.ellipsis,
-                    style: robotoRegular.copyWith(color: Colors.black, fontSize: Dimensions.fontSizeExtraLarge,fontWeight: FontWeight.w600),
-                  ),
-                  ),
-                ]),
-              ),
             ]),
           ),
         );

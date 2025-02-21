@@ -382,7 +382,7 @@ class RouteHelper {
         canRoute: Get.parameters['route'] == 'true',
       );
     }),
-    GetPage(name: interest, page: () => const InterestScreen()),
+    // GetPage(name: interest, page: () => const InterestScreen()),
     GetPage(name: main, page: () => getRoute(DashboardScreen(
       pageIndex: Get.parameters['page'] == 'home' ? 0 : Get.parameters['page'] == 'favourite' ? 1
           : Get.parameters['page'] == 'cart' ? 2 : Get.parameters['page'] == 'order' ? 3 : Get.parameters['page'] == 'menu' ? 4 : 0,

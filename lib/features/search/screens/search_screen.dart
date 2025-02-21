@@ -108,7 +108,7 @@ class SearchScreenState extends State<SearchScreen> with TickerProviderStateMixi
                               ? 'search_food_or_restaurant'.tr : 'search_item_or_store'.tr,
                           suffixIcon: searchController.searchHomeText!.isNotEmpty ? Icons.cancel : CupertinoIcons.search,
                           iconColor: Theme.of(context).disabledColor,
-                          filledColor: Theme.of(context).colorScheme.surface,
+                          // filledColor: Theme.of(context).colorScheme.surface,
                           onChanged: (text) {
                             _searchSuggestions(text);
                             searchController.setSearchText(text);
@@ -382,7 +382,7 @@ class SearchScreenState extends State<SearchScreen> with TickerProviderStateMixi
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).disabledColor  ,
+                                color: Colors.white12  ,
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(color: Theme.of(context).disabledColor, width: 0.1),
                               ),

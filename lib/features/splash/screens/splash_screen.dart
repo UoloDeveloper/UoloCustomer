@@ -1,12 +1,17 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:sixam_mart/common/models/module_model.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
-import 'package:sixam_mart/features/dashboard/dashboardscroll_controller.dart';
+import 'package:sixam_mart/features/location/controllers/location_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
+import 'package:sixam_mart/features/favourite/controllers/favourite_controller.dart';
 import 'package:sixam_mart/features/notification/domain/models/notification_body_model.dart';
 import 'package:sixam_mart/helper/address_helper.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
+import 'package:sixam_mart/helper/route_helper.dart';
+import 'package:sixam_mart/helper/splash_route_helper.dart';
+import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/common/widgets/no_internet_screen.dart';
@@ -32,7 +37,14 @@ class SplashScreenState extends State<SplashScreen> {
     bool firstTime = true;
     _onConnectivityChanged = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) {
       bool isConnected = result.contains(ConnectivityResult.wifi) || result.contains(ConnectivityResult.mobile);
-
+// Get.find<SplashController>().getModules();
+//   // Get.find<SplashController>().getModules();
+//      for(ModuleModel module in Get.find<SplashController>().moduleList ?? []) {
+//                             if(module.moduleType == AppConstants.food) {
+//                               Get.find<SplashController>().setModule(module);
+//                               break;
+//                             }
+//                           }
       if(!firstTime) {
         isConnected ? ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar() : const SizedBox();
         ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
@@ -163,6 +175,7 @@ class SplashScreenState extends State<SplashScreen> {
     }
 
     return Scaffold(
+      backgroundColor: Color(0xFFFFC909),
       key: _globalKey,
       body: GetBuilder<SplashController>(builder: (splashController) {
         return Center(

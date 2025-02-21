@@ -44,7 +44,7 @@ class _MinMaxTimePickerWidgetState extends State<MinMaxTimePickerWidget> {
         itemBuilder: (context, index, _) {
           return Container(
             decoration: BoxDecoration(
-              color: selectedIndex == index ? Theme.of(context).primaryColor   : Colors.transparent,
+              color: selectedIndex == index ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
             ),
             child: Center(child: Text(
               widget.times[index].toString(),

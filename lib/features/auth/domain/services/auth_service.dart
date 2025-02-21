@@ -32,6 +32,7 @@ class AuthService implements AuthServiceInterface{
   Future<ResponseModel> registration(SignUpBodyModel signUpBody) async {
     Response response = await authRepositoryInterface.registration(signUpBody);
     if(response.statusCode == 200){
+      
       AuthResponseModel authResponse = AuthResponseModel.fromJson(response.body);
       await _updateHeaderFunctionality(authResponse, alreadyInApp: false);
       return ResponseModel(true, authResponse.token??'', authResponseModel: authResponse);

@@ -15,7 +15,7 @@ class FooterView extends StatefulWidget {
   final Widget child;
   final double minHeight;
   final bool visibility;
-  const FooterView({super.key, required this.child, this.minHeight = 0.65, this.visibility = true});
+  const FooterView({super.key, required this.child, this.minHeight = 0.55, this.visibility = true});
 
   @override
   State<FooterView> createState() => _FooterViewState();

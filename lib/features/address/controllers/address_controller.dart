@@ -42,13 +42,13 @@ class AddressController extends GetxController implements GetxService {
 
   Future<void> getAddressList() async {
     List<AddressModel>? addressList = await addressServiceInterface.getAllAddress();
-    if (addressList != null) {
-      _addressList = [];
-      _allAddressList = [];
-      _addressList!.addAll(addressList);
-      _allAddressList.addAll(addressList);
-    }
-    update();
+
+    _addressList = [];
+    _allAddressList = [];
+    _addressList!.addAll(addressList ?? []);
+    _allAddressList.addAll(addressList?? []);
+      update();
+
   }
 
   Future<ResponseModel> deleteUserAddressByID(int? id, int index) async {

@@ -19,7 +19,8 @@ class NewOnMartView extends StatelessWidget {
   final bool isPharmacy;
   final bool isShop;
   final bool isNewStore;
-  const NewOnMartView({super.key, required this.isPharmacy, required this.isShop, this.isNewStore = false});
+    final bool? itemsview;
+  const NewOnMartView({super.key, required this.isPharmacy, required this.isShop, this.isNewStore = false,this.itemsview = false});
 
   @override
   Widget build(BuildContext context) {
@@ -28,49 +29,60 @@ class NewOnMartView extends StatelessWidget {
 
       return storeList != null ? storeList.isNotEmpty ? Padding(
         padding: const EdgeInsets.symmetric(vertical: 0),
-        child: Column(children: [
-
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child:const CustomDivider2(text: "Newly Added",thickness: .2,textAlign: TextAlign.left,),
+        child: Padding(
+         padding:  EdgeInsets.only(bottom: itemsview! ? 10 :  0),
+          child: Container(
+              decoration: itemsview! ? BoxDecoration(
+                 color:  Color(0xFFE6E6FA)
+                //  Theme.of(context).primaryColor
+                  // Color.fromARGB(190, 141, 190, 234),
+                //  borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+               ) : null,
+            child: Column(children: [
             
-            //  TitleWidget(
-            //   title: 'Newly Added'.tr,
-            //   onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('latest')),
-            // ),
+              Padding(
+                padding:  EdgeInsets.only(left: 8,top:itemsview! ? 30 :   0),
+                child: CustomDivider1(text: "Newly Added".toUpperCase(),thickness: .2,textAlign: TextAlign.left,color: itemsview! ? Colors.black : Colors.black,),
+                
+                //  TitleWidget(
+                //   title: 'Newly Added'.tr,
+                //   onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('latest')),
+                // ),
+              ),
+              const SizedBox(height: Dimensions.paddingSizeSmall),
+            
+              (isPharmacy || isShop) ? SizedBox(
+                height: 240,
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
+                    itemCount: storeList.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
+                        child: isShop? Fashionstorecard(store: storeList[index],isNewStore: isNewStore) : StoreCardWithDistance(store: storeList[index], isNewStore: isNewStore,fromitemsview: itemsview!,),
+                      );
+                    }),
+              ) : SizedBox(
+                height: 270,
+                child: ListView.builder(
+                  controller: ScrollController(),
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+                  itemCount: storeList.length,
+                  itemBuilder: (context, index){
+                    return Padding(
+                      padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault, bottom: 0, top: Dimensions.paddingSizeSmall),
+                      child: StoreCardWithDistance(store: storeList[index],fromitemsview: false,),
+                    );
+                  },
+                ),
+              ),
+            ]),
           ),
-          const SizedBox(height: Dimensions.paddingSizeSmall),
-
-          (isPharmacy || isShop) ? SizedBox(
-            height: 240,
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
-                itemCount: storeList.length,
-                itemBuilder: (context, index){
-                  return Padding(
-                    padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
-                    child: isShop? Fashionstorecard(store: storeList[index],isNewStore: isNewStore) : StoreCardWithDistance(store: storeList[index], isNewStore: isNewStore),
-                  );
-                }),
-          ) : SizedBox(
-            height: 270,
-            child: ListView.builder(
-              controller: ScrollController(),
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
-              itemCount: storeList.length,
-              itemBuilder: (context, index){
-                return Padding(
-                  padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault, bottom: 0, top: Dimensions.paddingSizeSmall),
-                  child: StoreCardWithDistance(store: storeList[index]),
-                );
-              },
-            ),
-          ),
-        ]),
+        ),
       ) : const SizedBox.shrink() : const WebNewOnShimmerView();
     });
   }

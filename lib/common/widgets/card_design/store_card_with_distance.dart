@@ -27,13 +27,14 @@ class StoreCardWithDistance extends StatefulWidget {
   final bool fromAllStore;
   final bool? isNewStore; 
   final bool? fromTopOffers;
+   final bool? fromitemsview;
 
   const StoreCardWithDistance({
     Key? key,
     required this.store,
     this.fromAllStore = false,
     this.isNewStore = false,
-    this.fromTopOffers = false,
+    this.fromTopOffers = false, this.fromitemsview = false,
   }) : super(key: key);
 
   @override
@@ -154,7 +155,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
         children: [
           Text(
             widget.store.name ?? '',
-            style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge,fontWeight: FontWeight.w600 ),
+            style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge,fontWeight: FontWeight.w600 ,color: widget.fromitemsview! ? Colors.white : Colors.black),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -168,7 +169,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
                   
                       Text(
                        widget.store!.avgRating!.toStringAsFixed(1),
-                        style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,fontWeight: FontWeight.w600),
+                        style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,fontWeight: FontWeight.w600,color: widget.fromitemsview! ? Colors.white : Colors.black),
                       ),
                       const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                   
@@ -180,7 +181,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
                   
                         Text(
                           '${ widget.store!.deliveryTime}',
-                          style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,fontWeight: FontWeight.w600),
+                          style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,fontWeight: FontWeight.w600,color: widget.fromitemsview! ? Colors.white : Colors.black),
                         ),
                       ]),
                   

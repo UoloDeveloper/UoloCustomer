@@ -15,7 +15,8 @@ import 'package:sixam_mart/util/styles.dart';
 class VisitAgainView extends StatefulWidget {
   final bool? fromFood;
   final bool isshop;
-  const VisitAgainView({super.key, this.fromFood = false,  this.isshop = false, });
+  final bool? itemsview;
+  const VisitAgainView({super.key, this.fromFood = false,  this.isshop = false,  this.itemsview = false, });
 
   @override
   State<VisitAgainView> createState() => _VisitAgainViewState();
@@ -28,34 +29,47 @@ class _VisitAgainViewState extends State<VisitAgainView> {
     return GetBuilder<StoreController>(builder: (storeController) {
         List<Store>? stores = storeController.visitAgainStoreList;
 
-      return stores != null ? stores.isNotEmpty ?
-       Column(
-         children: [
-           Padding(
-               padding: const EdgeInsets.only(left: 8,bottom: 10),
-            child:const CustomDivider2(text: "Try Again",thickness: .2,textAlign: TextAlign.left,),
-            
-            
-            //  TitleWidget(
-            //   title: 'Try Again'.tr,
-            //   onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('latest')),
-            // ),
-          ),
-           Container(
-            height: widget.isshop? 260 : 270,
-             child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.only(left: 8),
-                      itemCount: stores.length,
-                      itemBuilder: (context, index){
-                        return Padding(
-                          padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
-                          child: widget.isshop? Fashionstorecard(store: stores[index],isNewStore:false) : StoreCardWithDistance(store: stores[index],),
-                        );
-                      }),
+      return   stores != null ? stores.isNotEmpty ? stores.length < 1 ? SizedBox.shrink() :
+       Padding(
+         padding:  EdgeInsets.only(bottom: widget.itemsview! ? 10 :  0),
+         child: Container(
+            decoration: widget.itemsview! ? BoxDecoration(
+               color: Color(0xFFE6E6FA)
+              //  Color.fromARGB(93, 57, 3, 88) 
+              //  Color(0xFFF5FEFD),
+                // Theme.of(context).primaryColor,
+              //  Color.fromARGB(184, 73, 174, 246),
+              //  borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+             ) : null,
+           child: Column(
+             children: [
+               Padding(
+                   padding:  EdgeInsets.only(left: 8,bottom: 10,top:widget.itemsview! ? 30 :   0),
+                child: CustomDivider1(text: "Try Again".toUpperCase(),thickness: .2,textAlign: TextAlign.left,color: !widget.itemsview! ? Colors.black : Colors.black,),
+                
+                
+                //  TitleWidget(
+                //   title: 'Try Again'.tr,
+                //   onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('latest')),
+                // ),
+              ),
+               Container(
+                height: widget.isshop? 260 : 270,
+                 child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(left: 8),
+                          itemCount: stores.length,
+                          itemBuilder: (context, index){
+                            return Padding(
+                              padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeSmall, top: Dimensions.paddingSizeSmall),
+                              child: widget.isshop? Fashionstorecard(store: stores[index],isNewStore:false) : StoreCardWithDistance(store: stores[index],fromitemsview: false,),
+                            );
+                          }),
+               ),
+             ],
            ),
-         ],
+         ),
        ) : SizedBox(): SizedBox();
       //  Padding(
       //   padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault),

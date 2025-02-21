@@ -8,6 +8,7 @@ import 'package:sixam_mart/features/banner/controllers/banner_controller.dart';
 import 'package:sixam_mart/features/brands/controllers/brands_controller.dart';
 import 'package:sixam_mart/features/home/controllers/advertisement_controller.dart';
 import 'package:sixam_mart/features/home/controllers/home_controller.dart';
+import 'package:sixam_mart/features/home/notdeliverablescreen.dart';
 import 'package:sixam_mart/features/home/screens/videobanner.dart';
 import 'package:sixam_mart/features/home/widgets/all_store_filter_widget.dart';
 import 'package:sixam_mart/features/home/widgets/cashback_logo_widget.dart';
@@ -122,13 +123,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   bool searchBgShow = false;
+  bool isPinned = false;
   final GlobalKey _headerKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-  
-    _scrollController.addListener(_updateStatusBarColor);
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _updateStatusBarColor();
+    });
+
+    _scrollController.addListener(_onScroll);
+
     HomeScreen.loadData(false).then((value) {
       Get.find<SplashController>().getReferBottomSheetStatus();
 
@@ -146,71 +152,62 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-    _scrollController.addListener(() {
-
-      final scrollDirection = _scrollController.position.userScrollDirection;
-
-  // // Access the Bottomsheetcontroller
  
+  }
 
-  // if (scrollDirection == ScrollDirection.reverse) {
-  //   // Show the bottom sheet when scrolling down
-  //   if (!bottomsheetcontroller.showBottomSheet) {
-  //     bottomsheetcontroller.showBottomSheet = true  ;
-  //   }
-  // } else if (scrollDirection == ScrollDirection) {
-  //   // Hide the bottom sheet when scrolling up
-  //   if (bottomsheetcontroller.showBottomSheet) {
-     
-  //     bottomsheetcontroller.showBottomSheet = false   ;
-  //   }
-  // }
- final bottomsheetcontroller = Get.find<Bottomsheetcontroller>();
-  if (scrollDirection == ScrollDirection.forward) {
-  // Show the bottom sheet when scrolling down
-  if (!bottomsheetcontroller.showBottomSheet.value) {
-    bottomsheetcontroller.showBottomSheet.value = true; // Update the value
-  }
-} else if (scrollDirection == ScrollDirection.reverse) { // Corrected to ScrollDirection.forward
-  // Hide the bottom sheet when scrolling up
-  if (bottomsheetcontroller.showBottomSheet.value) {
-    bottomsheetcontroller.showBottomSheet.value = false; // Update the value
-  }
-}
-      if(_scrollController.position.userScrollDirection == ScrollDirection.reverse){
  
-        if(Get.find<HomeController>().showFavButton){
-          Get.find<HomeController>().changeFavVisibility();
-          Future.delayed(const Duration(milliseconds: 800), () => Get.find<HomeController>().changeFavVisibility());
-        }
-      }else {
-        if(Get.find<HomeController>().showFavButton){
-          Get.find<HomeController>().changeFavVisibility();
-          Future.delayed(const Duration(milliseconds: 800), () => Get.find<HomeController>().changeFavVisibility());
-        }
+   void _onScroll() {
+    _updateStatusBarColor();
+
+    final scrollDirection = _scrollController.position.userScrollDirection;
+    final bottomsheetcontroller = Get.find<Bottomsheetcontroller>();
+
+    if (scrollDirection == ScrollDirection.forward) {
+      if (!bottomsheetcontroller.showBottomSheet.value) {
+        bottomsheetcontroller.showBottomSheet.value = true;
       }
-    });
+    } else if (scrollDirection == ScrollDirection.reverse) {
+      if (bottomsheetcontroller.showBottomSheet.value) {
+        bottomsheetcontroller.showBottomSheet.value = false;
+      }
+    }
+
+    if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
+      if (Get.find<HomeController>().showFavButton) {
+        Get.find<HomeController>().changeFavVisibility();
+        Future.delayed(const Duration(milliseconds: 800), () => Get.find<HomeController>().changeFavVisibility());
+      }
+    } else {
+      if (Get.find<HomeController>().showFavButton) {
+        Get.find<HomeController>().changeFavVisibility();
+        Future.delayed(const Duration(milliseconds: 800), () => Get.find<HomeController>().changeFavVisibility());
+      }
+    }
   }
 
   void _updateStatusBarColor() {
+    print("Scroll Offset: ${_scrollController.offset}");
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+
     if (_scrollController.offset > 50) {
-      
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,
-      ));
 
+      ));
     } else {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
       ));
     }
   }
 
+
   @override
   void dispose() {
     super.dispose();
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
   }
 
@@ -252,10 +249,27 @@ class _HomeScreenState extends State<HomeScreen> {
       bool isShop = splashController.module != null && splashController.module!.moduleType.toString() == AppConstants.ecommerce;
       bool isGrocery = splashController.module != null && splashController.module!.moduleType.toString() == AppConstants.grocery;
 
+
+
+
+  // if(splashController.module != null && splashController.module!.moduleType.toString() == AppConstants.grocery){ 
+
+  //   Get.to(Notdeliverablescreen());
+  // }
+
+  if (isGrocery ) {
+        return const NotDeliverableScreen();
+      }
+
+
       return GetBuilder<HomeController>(builder: (homeController) {
+
+
         return Scaffold(
-          appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
-          endDrawer: const MenuDrawer(),
+          extendBodyBehindAppBar: false,
+
+          // appBar: ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : null,
+          // endDrawer: const MenuDrawer(),
           endDrawerEnableOpenDragGesture: false,
           backgroundColor: Colors.white,
           body: isParcel ? const ParcelCategoryScreen() : RefreshIndicator(
@@ -307,6 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ResponsiveHelper.isDesktop(context) ? WebNewHomeScreen(
               scrollController: _scrollController,
             ) : CustomScrollView(
+
               controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
@@ -322,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       alignment: Alignment.topCenter,
                       child: Stack(
                         children: [
-                          VideoContainer( link:isShop ? 'assets/image/static_banner/pinterestdownloader.com-1738566103.44417.mp4' : "assets/image/static_banner/pinterestdownloader.com-1737569803.046238.mp4",),
+                          VideoContainer( link: !isFood ? 'assets/image/static_banner/homescreenbannervideo.mp4' : "assets/image/static_banner/videobanner.mp4",),
 
                             //  if (!showMobileModule)
                                 Padding(
@@ -379,48 +394,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
              
-                /// Search Button
-                // !showMobileModule ? SliverPersistentHeader(
-                //   pinned: true,
-                //   delegate: SliverDelegate(callback: (val){}, child: Center(child: Container(
-                //     height: 50, width: Dimensions.webMaxWidth,
-                //     color: searchBgShow ? Get.find<ThemeController>().darkTheme ? Theme.of(context).colorScheme.surface : Theme.of(context).cardColor : null,
-                //     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                //     child: InkWell(
-                //       onTap: () => Get.toNamed(RouteHelper.getSearchRoute()),
-                //       child: Container(
-                //         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                //         margin: const EdgeInsets.symmetric(vertical: 3),
-                //         decoration: BoxDecoration(
-                //           color: Theme.of(context).cardColor,
-                //           border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2), width: 1),
-                //           borderRadius: BorderRadius.circular(25),
-                //           boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
-                //         ),
-                //         child: Row(children: [
-                //           Icon(
-                //             CupertinoIcons.search, size: 25,
-                //             color: Theme.of(context).primaryColor,
-                //           ),
-                //           const SizedBox(width: Dimensions.paddingSizeExtraSmall),
-                //           Expanded(child: Text(
-                //             Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'search_food_or_restaurant'.tr : 'search_item_or_store'.tr,
-                //             style: robotoRegular.copyWith(
-                //               fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor,
-                //             ),
-                //           )),
-                //         ]),
-                //       ),
-                //     ),
-                //   ))),
-                // ) : const SliverToBoxAdapter(),
+
           
                 SliverToBoxAdapter(
                   child: Center(child: SizedBox(
                     width: Dimensions.webMaxWidth,
                     child: !showMobileModule ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           
-                          isGrocery ? const GroceryHomeScreen()
+                          isGrocery ? const
+                          SizedBox()
+                          //  GroceryHomeScreen()
+                          // Notdeliverablescreen()
                           : isPharmacy ? const PharmacyHomeScreen()
                           : isFood ? const FoodHomeScreen()
                           : isShop ? const ShopHomeScreen()
@@ -431,39 +415,74 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
            
-          
-           isShop ? SliverToBoxAdapter(
+          isGrocery ||  isShop  ?  SliverToBoxAdapter(
                 child: SizedBox(),
-               )   :   !showMobileModule ? SliverSafeArea(
-                top: true,
-                 sliver: SliverPersistentHeader(
+               ) :  showMobileModule ? SliverToBoxAdapter(
+            child: SizedBox(),
+          ) : SliverToBoxAdapter(
+                child:  Padding(
+                padding: const EdgeInsets.only(left:15),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  // Text(
+                  // Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants'.tr : 'stores'.tr,
+                  //   style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                  // ),
+                  Flexible(
+                    child:  Text(
+                    ' ${Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants_near_you'.tr : 'stores_near_you'.tr}',
+                    maxLines: 1, overflow: TextOverflow.ellipsis,
+                    style: robotoRegular.copyWith(color: Colors.black, fontSize: Dimensions.fontSizeExtraLarge,fontWeight: FontWeight.w600),
+                  ),
+                  ),
+                ]),
+              ),
+               ),
+         isGrocery ||  isShop ? SliverToBoxAdapter(
+                child: SizedBox(),
+               )   :   !showMobileModule ?
+                // SliverSafeArea(
+                
+                // top: true,
+                //  sliver:
+                  
+                  SliverPersistentHeader(
                     key: _headerKey,
                     pinned: true,
                     delegate: SliverDelegate(
-                      height: 85,
+                      height:  isPinned ? 70 : 40,
                       callback: (val) {
                         searchBgShow = val;
+                        isPinned = val;
+                        print('isPinned: $val');
                       },
-                      child: const AllStoreFilterWidget(),
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            // isPinned ? const SizedBox(height: 30) : SizedBox(),
+                            Padding(
+                              padding:  EdgeInsets.only(top: !isPinned ? 0 : 30),
+                              child: const AllStoreFilterWidget(
+
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-               ) : const SliverToBoxAdapter(),
+                  )
+              //  )
+               
+                : const SliverToBoxAdapter(),
           
-               isShop ? SliverToBoxAdapter(
+             isGrocery ||  isShop ? SliverToBoxAdapter(
                 child: SizedBox(),
                )  :   SliverToBoxAdapter(child: !showMobileModule ? Center(child: GetBuilder<StoreController>(builder: (storeController) {
                   return 
                   Padding(
-                    padding: EdgeInsets.only(bottom: ResponsiveHelper.isDesktop(context) ? 0 : 100),
+                    padding: EdgeInsets.only(bottom: ResponsiveHelper.isDesktop(context) ? 0 : 100,),
                     child: 
-                    // ListView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   itemCount: storeController.storeModel!.stores!.length ?? 0,
-                    //   itemBuilder: (context, index) {
-                    //     return StoreCard(store: storeController.storeModel!.stores![index],);
-                    //   },
-                    // )
+                    
                     
                      PaginatedListView(
                       
@@ -472,13 +491,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       offset: storeController.storeModel?.offset,
                       onPaginate: (int? offset) async => await storeController.getStoreList(offset!, false),
                       itemView: ItemsView(
+                        isHome: true,
                         isStore: true,
                         items: null,
                         isFoodOrGrocery: (isFood || isGrocery),
                         stores: storeController.storeModel?.stores,
                         padding: EdgeInsets.symmetric(
                           horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall,
-                          vertical: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeDefault,
+                          // vertical: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeDefault,
                         ),
                       ),
                     ),
@@ -513,7 +533,7 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    isPinned = shrinkOffset == maxExtent /*|| shrinkOffset < maxExtent*/;
+    isPinned = shrinkOffset == maxExtent /* || shrinkOffset < maxExtent*/;
     callback!(isPinned);
     return child;
   }
@@ -529,3 +549,12 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
     return oldDelegate.maxExtent != height || oldDelegate.minExtent != height || child != oldDelegate.child;
   }
 }
+
+
+
+
+
+
+
+
+

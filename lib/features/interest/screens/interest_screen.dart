@@ -11,14 +11,14 @@ import 'package:sixam_mart/common/widgets/web_menu_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class InterestScreen extends StatefulWidget {
-  const InterestScreen({super.key});
+class InterestScreen2 extends StatefulWidget {
+  const InterestScreen2({super.key});
 
   @override
-  State<InterestScreen> createState() => _InterestScreenState();
+  State<InterestScreen2> createState() => _InterestScreenState();
 }
 
-class _InterestScreenState extends State<InterestScreen> {
+class _InterestScreenState extends State<InterestScreen2> {
 
   @override
   void initState() {

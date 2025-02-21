@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:sixam_mart/common/widgets/footer_view.dart';
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/features/store/domain/models/store_model.dart';
+import 'package:sixam_mart/features/store/widgets/bottom_cart_widget.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
@@ -174,10 +176,10 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                 ),
               ) : const SizedBox(),
 
-              IconButton(
-                onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
-                icon: CartWidget(color: Theme.of(context).textTheme.bodyLarge!.color, size: 25),
-              ),
+              // IconButton(
+              //   onPressed: () => Get.toNamed(RouteHelper.getCartRoute()),
+              //   icon: CartWidget(color: Theme.of(context).textTheme.bodyLarge!.color, size: 25),
+              // ),
 
               VegFilterWidget(type: catController.type, fromAppBar: true, onSelected: (String type) {
                 if(catController.isSearching) {
@@ -233,7 +235,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                               Text(
                                 catController.subCategoryList![index].name!,
                                 style: index == catController.subCategoryIndex
-                                    ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
+                                    ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor)
                                     : robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
                               ),
                             ]),
@@ -342,14 +344,14 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
                         margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                          borderRadius: BorderRadius.circular(Dimensions.radiusSmall + 5),
                           color: index == catController.subCategoryIndex ? Theme.of(context).primaryColor   : Colors.transparent,
                         ),
                         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                           Text(
                             catController.subCategoryList![index].name!,
                             style: index == catController.subCategoryIndex
-                                ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor)
+                                ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor)
                                 : robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
                           ),
                         ]),
@@ -434,6 +436,16 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
 
             ]),
           ),
+           bottomNavigationBar: GetBuilder<CartController>(
+      builder: (cartController){
+        return  cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
+         ? const BottomCartWidget(
+          fromgroccery: false,
+         )
+         : const SizedBox() ;
+      },
+    ),
+    
         ),
       );
     });

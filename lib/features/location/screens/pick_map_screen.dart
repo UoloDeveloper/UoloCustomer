@@ -200,11 +200,12 @@ class _PickMapScreenState extends State<PickMapScreen> {
                       const SizedBox(height: 8),
                       Text(
                         locationController.pickAddress ?? 'No address selected',
-                        style: TextStyle(fontSize: 14, color: Theme.of(context).hintColor),
+                        style: TextStyle(fontSize: 14, color: Theme.of(context).hintColor, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 16),
                       CustomButton(
-                        isBold: false,
+                        
+                        isBold: true,
                         radius: Dimensions.radiusSmall,
                         buttonText: locationController.inZone
                             ? widget.fromAddAddress

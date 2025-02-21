@@ -4,17 +4,19 @@ import 'package:sixam_mart/features/language/domain/models/language_model.dart';
 import 'package:sixam_mart/util/images.dart';
 
 class AppConstants {
-  static const String appName = '6amMart';
-  static const double appVersion = 2.12; ///Flutter Version: 3.24.5
+  static const String appName = 'Uolo Delivery';
+  static const double appVersion = 3.1; ///Flutter Version: 3.24.5
 
   static const String fontFamily = 'Poppins';
   static const bool payInWevView = false;
   static const int balanceInputLen = 10;
-  static const String webHostedUrl = 'https://6ammart-web.6amtech.com';
+  static const String webHostedUrl = 'https://Uolo Delivery-web.6amtech.com';
   static const bool useReactWebsite = false;
 
-  // static const String baseUrl = 'https://6ammart-admin.6amtech.com';
-  static const String baseUrl = 'https://uolo.v-nexus.com';
+  // static const String baseUrl = 'https://Uolo Delivery-admin.6amtech.com';
+  static const String baseUrl = 
+  "https://orders.uolodelivery.com";
+  // 'https://uolo.v-nexus.com';
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
   static const String storeItemUri = '/api/v1/items/latest';
@@ -168,32 +170,32 @@ class AppConstants {
   static const String removeItemCartUri = '/api/v1/customer/cart/remove-item';
 
   /// Shared Key
-  static const String theme = '6ammart_theme';
-  static const String token = '6ammart_token';
-  static const String countryCode = '6ammart_country_code';
-  static const String languageCode = '6ammart_language_code';
+  static const String theme = 'Uolo Delivery_theme';
+  static const String token = 'Uolo Delivery_token';
+  static const String countryCode = 'Uolo Delivery_country_code';
+  static const String languageCode = 'Uolo Delivery_language_code';
   static const String cacheCountryCode = 'cache_country_code';
   static const String cacheLanguageCode = 'cache_language_code';
-  static const String cartList = '6ammart_cart_list';
-  static const String userPassword = '6ammart_user_password';
-  static const String userAddress = '6ammart_user_address';
-  static const String userNumber = '6ammart_user_number';
-  static const String userCountryCode = '6ammart_user_country_code';
-  static const String notification = '6ammart_notification';
+  static const String cartList = 'Uolo Delivery_cart_list';
+  static const String userPassword = 'Uolo Delivery_user_password';
+  static const String userAddress = 'Uolo Delivery_user_address';
+  static const String userNumber = 'Uolo Delivery_user_number';
+  static const String userCountryCode = 'Uolo Delivery_user_country_code';
+  static const String notification = 'Uolo Delivery_notification';
   static const String notificationIdList = 'notification_id_list';
-  static const String searchHistory = '6ammart_search_history';
-  static const String intro = '6ammart_intro';
-  static const String notificationCount = '6ammart_notification_count';
-  static const String dmTipIndex = '6ammart_dm_tip_index';
-  static const String earnPoint = '6ammart_earn_point';
-  static const String acceptCookies = '6ammart_accept_cookies';
-  static const String suggestedLocation = '6ammart_suggested_location';
-  static const String walletAccessToken = '6ammart_wallet_access_token';
-  static const String guestId = '6ammart_guest_id';
-  static const String guestNumber = '6ammart_guest_number';
-  static const String referBottomSheet = '6ammart_reffer_bottomsheet_show';
-  static const String dmRegisterSuccess = '6ammart_dm_registration_success';
-  static const String isRestaurantRegister = '6ammart_store_registration';
+  static const String searchHistory = 'Uolo Delivery_search_history';
+  static const String intro = 'Uolo Delivery_intro';
+  static const String notificationCount = 'Uolo Delivery_notification_count';
+  static const String dmTipIndex = 'Uolo Delivery_dm_tip_index';
+  static const String earnPoint = 'Uolo Delivery_earn_point';
+  static const String acceptCookies = 'Uolo Delivery_accept_cookies';
+  static const String suggestedLocation = 'Uolo Delivery_suggested_location';
+  static const String walletAccessToken = 'Uolo Delivery_wallet_access_token';
+  static const String guestId = 'Uolo Delivery_guest_id';
+  static const String guestNumber = 'Uolo Delivery_guest_number';
+  static const String referBottomSheet = 'Uolo Delivery_reffer_bottomsheet_show';
+  static const String dmRegisterSuccess = 'Uolo Delivery_dm_registration_success';
+  static const String isRestaurantRegister = 'Uolo Delivery_store_registration';
 
   static const String topic = 'all_zone_customer';
   static const String zoneId = 'zoneId';

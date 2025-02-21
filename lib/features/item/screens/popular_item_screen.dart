@@ -1,5 +1,8 @@
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
+import 'package:sixam_mart/features/store/widgets/bottom_cart_widget.dart';
+import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/common/widgets/custom_app_bar.dart';
@@ -76,9 +79,24 @@ class _PopularItemScreenState extends State<PopularItemScreen> {
                 ),
               ),
             ],
-          ))),
+
+            
+          )))
+          
+          ,
+           bottomNavigationBar: GetBuilder<CartController>(
+      builder: (cartController){
+        return  !isShop ? cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
+         ? const BottomCartWidget(
+          fromgroccery: false,
+         )
+         : const SizedBox() : const SizedBox();
+      },
+    ),
+    
         );
       }
     );
   }
 }
+               

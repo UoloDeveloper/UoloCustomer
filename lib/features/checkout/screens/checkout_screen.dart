@@ -743,7 +743,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                         isPrescriptionRequired: isPrescriptionRequired, checkoutButton: _orderPlaceButton(
                                           checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge,
                                           tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,currency
-                                        ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount,
+                                        ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress,
                                       ),
                                     ),
                                                                     
@@ -783,7 +783,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                     //                 ),
                                     //               ),
 
-
+   
                                     SizedBox(height: 30,),
                                        Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -866,8 +866,36 @@ SizedBox(height: 20,),
                           ),
                         )
                       ),
-                       
-                       SizedBox(height: 350,),
+                      SizedBox(height: 10,),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Cancelation Policy".toUpperCase(),style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500, 
+                                color: Color.fromARGB(255, 177, 175, 175),  
+                                fontFamily: 'Poppins'
+                                ),
+                                textAlign: TextAlign.left,
+                                ),
+                                 Text("Help us reduce food waste by avoiding cancellation. The amount paid in non-refundabale after placing  the order".toLowerCase(),style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500, 
+                                color: Color.fromARGB(255, 177, 175, 175),
+                                fontFamily: 'Poppins'
+                                ),
+                                textAlign: TextAlign.left,
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                       SizedBox(height: 200,),
                                         ],
                                       ),
                                   ),
@@ -1093,8 +1121,39 @@ SizedBox(height: 20,),
       children: [
         // Wallet Balance Section
        
-
-        // Loyalty Screen Navigation
+      //   GetBuilder<CheckoutController>(
+      // builder: (checkoutController) {
+      //   return Get.find<SplashController>().configModel!.partialPaymentStatus! 
+      //   && Get.find<SplashController>().configModel!.customerWalletStatus == 1
+      //   && Get.find<ProfileController>().userInfoModel!.walletBalance! > 0 ?  Container(
+      //                             height: 40,
+      //                             width: double.infinity,
+      //                             color: Colors.amber[50],
+      //                             padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+      //                             child: Row(
+      //                               mainAxisAlignment: MainAxisAlignment.start,
+      //                               children: [
+      //                                   Checkbox(
+      //                                         value:  checkoutController.isPartialPay || checkoutController.paymentMethodIndex == 1,
+      //                                         onChanged: (bool? value) {
+      //                                           // setState(() {
+      //                                           //   // isChecked = value!;
+      //                                           // });
+      //                                         }, 
+      //                                       ),
+      //                                 Text("Wallet Balance",)
+      //                             //     Text(
+      //                             //       'order_summary'.tr,
+      //                             //       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),
+      //                             //     ),
+      //                             //     InkWell(
+                                    
+      //                             // )
+      //                             ])
+      //                           ) : const SizedBox();
+      //                         }
+      //                       ),
+      //   // Loyalty Screen Navigation
         InkWell(
           onTap: () {
             Get.to(LoyaltyScreen(fromNotification: false));
@@ -1282,7 +1341,18 @@ Widget _orderPlaceButton(
             showCustomSnackBar('you_must_upload_prescription_for_this_order'.tr);
           } else if(!_isCashOnDeliveryActive! && !_isDigitalPaymentActive! && !_isWalletActive) {
             showCustomSnackBar('no_payment_method_is_enabled'.tr);
-          }else if(checkoutController.paymentMethodIndex == -1) {
+            
+          } else if(checkoutController.store!.open == 1 && !checkoutController.store!.active!  ) {
+
+            
+          showCustomSnackBar("The store isn't serving right now");
+
+
+          } else if( checkoutController.store!.scheduleOrder == true && checkoutController.preferableTime.isEmpty   ) {
+             showCustomSnackBar("Preferable time is required");
+            
+          }
+          else if(checkoutController.paymentMethodIndex == -1) {
             if(ResponsiveHelper.isDesktop(context)){
               Get.dialog(Dialog(backgroundColor: Colors.transparent, child: PaymentMethodBottomSheet(
                 isCashOnDeliveryActive: _isCashOnDeliveryActive!, isDigitalPaymentActive: _isDigitalPaymentActive!,

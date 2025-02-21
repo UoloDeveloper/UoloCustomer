@@ -796,10 +796,29 @@ class DashboardScreenState extends State<DashboardScreen> {
     if (Get.find<SplashController>().configModel!.loyaltyPointStatus == 1 &&
         Get.find<AuthController>().getEarningPint().isNotEmpty &&
         !ResponsiveHelper.isDesktop(Get.context)) {
+      // Future.delayed(
+      //     const Duration(seconds: 1),
+      //     () => showAnimatedDialog(
+              
+      //         context, const CongratulationDialogue()
+              
+        
+              
+      //         )
+              
+      //         );
+
+
       Future.delayed(
-          const Duration(seconds: 1),
-          () => showAnimatedDialog(
-              context, const CongratulationDialogue()));
+  const Duration(seconds: 1),
+  () => showDialog(
+    context: context,
+    barrierColor: Colors.black.withOpacity(0.6), // Ensure the barrier is transparent
+    builder: (BuildContext context) {
+      return const CongratulationDialogue();
+    },
+  ),
+);
     }
     suggestAddressBottomSheet();
     Get.find<OrderController>().getRunningOrders(1, fromDashboard: true);
@@ -981,10 +1000,13 @@ class DashboardScreenState extends State<DashboardScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     BottomNavItemWidget(
+                      
                       title: 'home'.tr,
-                      selectedIcon: "assets/svgs/homesl.svg",
+                      selectedIcon:
+                       "assets/svgs/svg logo big.svg"
+                       ,
                       unSelectedIcon: "assets/svgs/homeun.svg",
-                      isSelected: _pageIndex == 0,
+                      isSelected: _pageIndex == 0 && splashController.module == null,
                       onTap: () {
                         splashController.removeModule();
                         setPage(0);
@@ -998,9 +1020,10 @@ class DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                     BottomNavItemWidget(
+                      isfood: true,
                       title: 'Food'.tr,
-                      selectedIcon: "assets/svgs/foodsl.svg",
-                      unSelectedIcon: "assets/svgs/foodun.svg",
+                      selectedIcon: "assets/svgs/food.svg",
+                      unSelectedIcon: "assets/svgs/food.svg",
                       isSelected: _pageIndex == 1,
                       onTap: () {
                         splashController.switchModule(0, true);
@@ -1008,17 +1031,17 @@ class DashboardScreenState extends State<DashboardScreen> {
                         setPage(1);
                       },
                     ),
-                    BottomNavItemWidget(
-                      title: 'Uolomart'.tr,
-                      selectedIcon: "assets/svgs/martsl.svg",
-                      unSelectedIcon: "assets/svgs/martun.svg",
-                      isSelected: _pageIndex == 2,
-                      onTap: () {
-                        splashController.switchModule(1, true);
-                        Get.put(const DashboardScreen(pageIndex: 2));
-                        setPage(2);
-                      },
-                    ),
+                    // BottomNavItemWidget(
+                    //   title: 'Uolomart'.tr,
+                    //   selectedIcon: "assets/svgs/martsl.svg",
+                    //   unSelectedIcon: "assets/svgs/martun.svg",
+                    //   isSelected: _pageIndex == 2,
+                    //   onTap: () {
+                    //     splashController.switchModule(1, true);
+                    //     Get.put(const DashboardScreen(pageIndex: 2));
+                    //     setPage(2);
+                    //   },
+                    // ),
                     BottomNavItemWidget(
                       title: isParcel ? 'address'.tr : 'EatList'.tr,
                       selectedIcon:

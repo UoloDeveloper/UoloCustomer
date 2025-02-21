@@ -165,7 +165,9 @@ class _SignInViewState extends State<SignInView> {
           },
         );
 
-      }
+      default:
+        return const SizedBox();
+    }
   }
   
   void _otpLogin(AuthController authController, String countryDialCode, CentralizeLoginType loginType) async {

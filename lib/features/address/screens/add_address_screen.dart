@@ -143,7 +143,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     children: [
                       Container(
                         height: 64,
-                        color: Theme.of(context).primaryColor  ,
+                        color: Theme.of(context).primaryColor.withOpacity(0.10),
                         child: Center(child: Text('address'.tr, style: robotoMedium)),
                       ),
                       const SizedBox(height: Dimensions.paddingSizeLarge),
@@ -607,7 +607,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeSmall),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(Dimensions.radiusDefault), color: locationController.addressTypeIndex == index
-                              ? Theme.of(context).primaryColor   : Theme.of(context).cardColor,
+                              ? Theme.of(context).primaryColor.withOpacity(0.1) : Theme.of(context).cardColor,
                             boxShadow: locationController.addressTypeIndex == index ? null : const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
                             border: Border.all(color: locationController.addressTypeIndex == index ? Theme.of(context).primaryColor : Theme.of(context).disabledColor)
                           ),

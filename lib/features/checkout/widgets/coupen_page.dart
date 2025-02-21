@@ -38,9 +38,12 @@ class CouponPage extends StatelessWidget {
             couponList = [];
             for (CouponModel coupon in couponController.couponList!) {
               if (coupon.storeId == null ||
-                  (coupon.couponType != 'store_wise' && coupon.couponType != 'default' && coupon.couponType != 'free_delivery') ||
-                  coupon.storeId == storeId) {
-                couponList.add(coupon);
+                  (coupon.couponType != 'store_wise' && coupon.couponType != 'default' && coupon.couponType != 'free_delivery' && coupon.storeId == null) ||
+                  coupon.storeId == storeId)     {
+                    if (!RegExp(r'^[0]+$').hasMatch(coupon.title.toString().trim())) {
+         couponList.add(coupon);
+}
+         
               }
             }
           }

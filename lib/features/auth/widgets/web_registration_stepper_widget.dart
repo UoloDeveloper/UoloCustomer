@@ -45,8 +45,8 @@ class RegistrationStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = onGoing ? Theme.of(context).primaryColor : isActive ? Theme.of(context).primaryColor : Theme.of(context).disabledColor.withOpacity( 0.7);
-    Color right = onGoing ? Theme.of(context).disabledColor.withOpacity( 0.7) : rightActive ? Theme.of(context).primaryColor : Theme.of(context).disabledColor.withOpacity( 0.7);
+    Color color = onGoing ? Theme.of(context).primaryColor : isActive ? Theme.of(context).primaryColor : Theme.of(context).disabledColor.withOpacity(0.7);
+    Color right = onGoing ? Theme.of(context).disabledColor.withOpacity(0.7) : rightActive ? Theme.of(context).primaryColor : Theme.of(context).disabledColor.withOpacity(0.7);
     return Expanded(
       child: Column(children: [
 

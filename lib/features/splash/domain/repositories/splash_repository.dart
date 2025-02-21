@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sixam_mart/api/local_client.dart';
@@ -25,6 +27,7 @@ class SplashRepository implements SplashRepositoryInterface {
     switch(source) {
       case DataSourceEnum.client:
         Response response = await apiClient.getData(AppConstants.configUri);
+        
         if (response.statusCode == 200) {
           responseData = Response(statusCode: 200, body: response.body);
           LocalClient.organize(source, cacheId, jsonEncode(response.body), apiClient.getHeader());
@@ -32,10 +35,8 @@ class SplashRepository implements SplashRepositoryInterface {
 
       case DataSourceEnum.local:
         String? cacheResponseData = await LocalClient.organize(source, cacheId, null, null);
-        if(cacheResponseData != null) {
-          responseData = Response(statusCode: 200, body: jsonDecode(cacheResponseData));
-        }
-    }
+        responseData = Response(statusCode: 200, body: cacheResponseData == null ? null : jsonDecode(cacheResponseData));
+          }
     return responseData;
   }
 
@@ -54,10 +55,8 @@ class SplashRepository implements SplashRepositoryInterface {
 
       case DataSourceEnum.local:
         String? cacheResponseData = await LocalClient.organize(source, cacheId, null, null);
-        if(cacheResponseData != null) {
-          landingModel = LandingModel.fromJson(jsonDecode(cacheResponseData));
-        }
-    }
+        landingModel = LandingModel.fromJson(jsonDecode(cacheResponseData!));
+          }
     return landingModel;
   }
 
@@ -146,11 +145,9 @@ class SplashRepository implements SplashRepositoryInterface {
 
       case DataSourceEnum.local:
         String? cacheResponseData = await LocalClient.organize(source, cacheId, null, null);
-        if(cacheResponseData != null) {
-          moduleList = [];
-          jsonDecode(cacheResponseData).forEach((storeCategory) => moduleList!.add(ModuleModel.fromJson(storeCategory)));
-        }
-    }
+        moduleList = [];
+     cacheResponseData!=null?   jsonDecode(cacheResponseData).forEach((storeCategory) => moduleList!.add(ModuleModel.fromJson(storeCategory))):null;
+          }
 
     return moduleList;
   }
@@ -159,7 +156,9 @@ class SplashRepository implements SplashRepositoryInterface {
   Future<void> setModule(ModuleModel? module) async {
     AddressModel? addressModel;
     try {
-      addressModel = AddressModel.fromJson(jsonDecode(sharedPreferences.getString(AppConstants.userAddress)!));
+      if(sharedPreferences.containsKey(AppConstants.userAddress)){
+        addressModel = AddressModel.fromJson(jsonDecode(sharedPreferences.getString(AppConstants.userAddress)!));
+      }
     }catch(e) {
       debugPrint('Did not get shared Preferences address . Note: $e');
     }

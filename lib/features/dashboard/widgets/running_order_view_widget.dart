@@ -137,8 +137,8 @@ class RunningOrderViewWidget extends StatelessWidget {
                         child: isFirstOrder ? !(reversOrder.length < 2) ? InkWell(
                           onTap: () => onOrderTap(),
                           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Text('+${reversOrder.length - 1}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
-                                Text('more'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor)),
+                                Text('+${reversOrder.length - 1}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).cardColor)),
+                                Text('more'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).cardColor)),
                               ]),
                             ) : Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor)
                             : Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor),

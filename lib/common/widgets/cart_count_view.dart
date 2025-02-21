@@ -96,6 +96,7 @@ class CartCountView extends StatelessWidget {
       
       InkWell(
         onTap: () {
+          
           Get.find<ItemController>().itemDirectlyAddToCart(item, context);
         },
         child: child ??  Container(

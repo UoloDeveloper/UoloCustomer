@@ -99,18 +99,18 @@ class OrderViewWidget extends StatelessWidget {
 
                                 Stack(children: [
                                   Container(
-                                    height: ResponsiveHelper.isDesktop(context) ? 80 : 60, width: ResponsiveHelper.isDesktop(context) ? 80 : 60, alignment: Alignment.center,
+                                    height: ResponsiveHelper.isDesktop(context) ? 80 : 80, width: ResponsiveHelper.isDesktop(context) ? 80 : 80, alignment: Alignment.center,
                                     decoration: isParcel ? BoxDecoration(
                                       borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                                       color: Theme.of(context).primaryColor  ,
                                     ) : null,
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                                      borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
                                       child: CustomImage(
                                         image: isParcel ? '${paginatedOrderModel.orders![index].parcelCategory != null ? paginatedOrderModel.orders![index].parcelCategory!.imageFullUrl : ''}'
                                             : '${paginatedOrderModel.orders![index].store != null ? paginatedOrderModel.orders![index].store!.logoFullUrl : ''}',
-                                        height: isParcel ? 35 : ResponsiveHelper.isDesktop(context) ? 80 : 60,
-                                        width: isParcel ? 35 : ResponsiveHelper.isDesktop(context) ? 80 : 60, fit: isParcel ? null : BoxFit.cover,
+                                        height: isParcel ? 35 : ResponsiveHelper.isDesktop(context) ? 80 : 80,
+                                        width: isParcel ? 35 : ResponsiveHelper.isDesktop(context) ? 80 : 80, fit: isParcel ? null : BoxFit.cover,
                                       ),
                                     ),
                                   ),
@@ -139,7 +139,9 @@ class OrderViewWidget extends StatelessWidget {
                                 const SizedBox(width: Dimensions.paddingSizeSmall),
 
                                 Expanded(
-                                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center, 
+                                  children: [
                                     Row(children: [
                                       Text(
                                         '${isParcel ? 'delivery_id'.tr : 'order_id'.tr}:',
@@ -180,7 +182,7 @@ class OrderViewWidget extends StatelessWidget {
                                       color: Theme.of(context).primaryColor  ,
                                     ),
                                     child: Text(paginatedOrderModel.orders![index].orderStatus!.tr, style: robotoMedium.copyWith(
-                                      fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor,
+                                      fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).cardColor,
                                     )),
                                   ) : const SizedBox(),
                                   const SizedBox(height: Dimensions.paddingSizeSmall),

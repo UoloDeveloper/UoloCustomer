@@ -3,11 +3,19 @@ import 'package:get/get.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
 import 'package:sixam_mart/common/widgets/custom_divider%20copy.dart';
 import 'package:sixam_mart/common/widgets/custom_divider.dart';
+import 'package:sixam_mart/features/home/screens/modules/MyFavorites.dart';
+import 'package:sixam_mart/features/home/screens/modules/popular_itemscreen.dart';
 import 'package:sixam_mart/features/home/widgets/highlight_widget.dart';
+import 'package:sixam_mart/features/home/widgets/recomendedcardwidget.dart';
 import 'package:sixam_mart/features/home/widgets/views/category_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/top_offers_near_me.dart';
 import 'package:sixam_mart/features/home/widgets/web/widgets/customcard.dart';
+import 'package:sixam_mart/features/item/domain/models/item_model.dart';
+import 'package:sixam_mart/features/store/controllers/store_controller.dart';
+import 'package:sixam_mart/features/store/domain/models/store_model.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
+import 'package:sixam_mart/helper/date_converter.dart';
+import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/features/home/widgets/bad_weather_widget.dart';
@@ -49,7 +57,7 @@ class FoodHomeScreen extends StatelessWidget {
                         imageLeftPosition: 0,
                         imageRightPosition: 0,
                         // ontap: () => Get.to(SpecialOfferView(isFood: true, isShop: false)),
-                        // ontap: () => Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
+                        ontap: () => Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
                         width: containerWidth * 1.1,
                         height: containerHeight - 20,
                         image: "assets/image/offerzoneimage.png",
@@ -65,7 +73,7 @@ class FoodHomeScreen extends StatelessWidget {
                         imageLeftPosition: 0,
                         imageRightPosition: 0,
                         // ontap: () => splashController.switchModule(1, true),
-                          // ontap: () => Get.to(const MyFavorite()),
+                          ontap: () => Get.to(const MyFavorite()),
                         width: containerWidth * 1.1,
                          height: containerHeight - 20,
                         image: "assets/image/myfavoriteimage.png",
@@ -81,7 +89,7 @@ class FoodHomeScreen extends StatelessWidget {
                         imageBottomPosition: 0,
                         imageLeftPosition: 0,
                         imageRightPosition: 0,
-                        // ontap: () => Get.to(const  Popular()),
+                        ontap: () => Get.to(const  Popular()),
                        width: containerWidth * 1.1,
                          height: containerHeight - 20,
                         image: "assets/image/newonuolo.png",
@@ -95,11 +103,87 @@ class FoodHomeScreen extends StatelessWidget {
                   ),
 
     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                        GetBuilder<StoreController>(builder: (storeController) 
+         
+         {
+           List<Store?> Recomendedavaliablestores = [];
+           List<Store?> notAvailableRecomendedstores = [];
+           if (storeController.recommendedStoreList != null ) {
+            
+             for (var stores in storeController.recommendedStoreList!) {
+               if (stores != null) { 
+                 bool isAvailable = stores.open == 1 && stores.active!;
+                 if (isAvailable) {
+            Recomendedavaliablestores.add(stores);
+                 } else {
+            notAvailableRecomendedstores.add(stores);
+                 }
+               }
+             }
+           }
+           
+           
+           final List<Store?> sortedFilteredItems = [...Recomendedavaliablestores, ...notAvailableRecomendedstores];
+  List<Store?> stores = sortedFilteredItems;
+
+  return    stores != null && stores.isNotEmpty 
+
+                ? Padding(
+                  padding: const EdgeInsets.only(left: 5,right: 5),
+                  child: Container(
+                      height: 301,
+                       decoration: BoxDecoration(
+                          // color: Color(0xFFF8F8FF)
+                        ),
+                  
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                                // padding: const EdgeInsets.all(8.0),
+                                 padding: EdgeInsets.only(left: 10,top: 0,bottom: 10),
+                             child: CustomDivider1(text: "RECOMMENDED FOR YOU",thickness: .2, textAlign: TextAlign.left, ),
+                           ),
+                          Center(
+                            child: Container(
+                              height: 270,
+                              width: 500,
+                             child: 
+                              ListView.builder(
+                    scrollDirection: Axis.horizontal ,
+                      itemCount: stores.length,
+                      itemBuilder: (context, index) {
+                        final store = stores[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height:80,
+                            width: 150,
+                            child: RecomendedStoreCardWidget(store: store)),
+                        ); 
+                      },
+                      shrinkWrap: true,
+                      physics: AlwaysScrollableScrollPhysics(),
+                    )
+                                 , // Fallback widget if no stores
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ) : SizedBox();
+}),
+
+  // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
            
          const CustomDivider2(text: "WHAT,S ON YOUR MIND ?",thickness: .2,),
       
              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
       const CategoryView(),
+ SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+      
+
        BannerView(isFeatured: false),
       //  const Padding(
       //    padding: EdgeInsets.only(left: 10),
@@ -107,7 +191,10 @@ class FoodHomeScreen extends StatelessWidget {
       //    ),
 
  SizedBox(height: 10),
-               const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false),
+               Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false),
+               ),
           //  const SizedBox(height: Dimensions.paddingSizeDefault  ,),
 
         //     const Padding(
@@ -116,16 +203,25 @@ class FoodHomeScreen extends StatelessWidget {
         //  ),
 
 
-      isLoggedIn ? const VisitAgainView(fromFood: true) : const SizedBox(),
+      isLoggedIn ? Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const VisitAgainView(fromFood: true),
+      ) : const SizedBox(),
       //  SizedBox(height: 10),
       // const SpecialOfferView(isFood: false, isShop: true),
-      const HighlightWidget(),
+      // Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: const HighlightWidget(),
+      // ),
       // const TopOffersNearMe(),
       // const BestReviewItemView(),
   
       // const ItemThatYouLoveView(forShop: false),
       // const MostPopularItemView(isFood: true, isShop: false),
-      const JustForYouView(),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: const JustForYouView(),
+      ),
       // const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false),
     ]);
   }

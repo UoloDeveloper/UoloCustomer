@@ -1,7 +1,7 @@
 name: sixam_mart
 description: A Multi-vendor Food. Grocery, eCommerce, Pharmacy & Parcel service.
 publish_to: 'none' #
-version: 1.0.0+1
+version: 4.0.0+2
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -64,6 +64,9 @@ dependencies:
   location: ^7.0.0
   drift: ^2.21.0
   drift_flutter: ^0.2.1
+  lottie: ^3.2.0
+  pinput: ^5.0.1
+
 #  js: ^0.6.7
 #  universal_io: ^2.2.2
 
@@ -79,6 +82,8 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   drift_dev: ^2.21.2
   build_runner: ^2.4.13
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.4
 
 flutter:
   uses-material-design: true
@@ -91,6 +96,10 @@ flutter:
     - assets/image/icons/
     - assets/svgs/
     - assets/image/location_icon.svg
+    - assets/animations/
+    - assets/success-1-6297.mp3
+    - assets/image/static_banner/videobanner.mp4
+    - assets/image/static_banner/homescreenbannervideo.mp4
 
   fonts:
     - family: Poppins

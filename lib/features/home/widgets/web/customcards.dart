@@ -248,18 +248,18 @@ class Customcard2 extends StatelessWidget {
                       title,
                       style: const TextStyle(
                         color: Color(0xFF5B5B5B),
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     if (title2.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(top: 4),
+                        padding: const EdgeInsets.only(top: 0),
                         child: Text(
                           title2,
                           style: const TextStyle(
                             color: Color(0xFF5B5B5B),
-                            fontSize: 8,
+                            fontSize: 9,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

@@ -173,7 +173,7 @@ class PartialPayView2 extends StatelessWidget {
         // Check if userInfoModel is not null before accessing its properties
         final walletBalance = profileController.userInfoModel?.walletBalance ?? 0.0;
 
-        return  walletBalance < 0 ? splashController.configModel!.partialPaymentStatus! &&
+        return  walletBalance > 0 ? splashController.configModel!.partialPaymentStatus! &&
                 splashController.configModel!.customerWalletStatus == 1 &&
                 walletBalance > 0
             ? WalletBalanceWidget(

@@ -42,6 +42,11 @@ class SplashController extends GetxController implements GetxService {
   ModuleModel? _module;
   ModuleModel? get module => _module;
 
+
+   
+  // ModuleModel? _fashionmodules;
+  // ModuleModel? get fashionmodules => _fashionmodules;
+
   ModuleModel? _cacheModule;
   ModuleModel? get cacheModule => _cacheModule;
 
@@ -213,6 +218,10 @@ class SplashController extends GetxController implements GetxService {
   }
 
   Module getModuleConfig(String? moduleType) {
+    if(_data == null || _data!.isEmpty) {
+      return Module();
+    }
+
     Module module = Module.fromJson(_data!['module_config'][moduleType]);
     moduleType == 'food' ? module.newVariation = true : module.newVariation = false;
     return module;

@@ -57,9 +57,13 @@ class TimeSlotSection extends StatelessWidget {
         child: Column(
           children: [
 
-            SizedBox(
+       !isGuestLoggedIn &&
+                    storeId == null &&
+                    checkoutController.store!.scheduleOrder! &&
+                    cartList!.isNotEmpty &&
+                    cartList![0]!.item!.availableDateStarts == null ?      SizedBox(
               height: Dimensions.paddingSizeSmall,
-            ),
+            ) : const SizedBox(),
             // Display time slot with a design similar to coupon section
             !isGuestLoggedIn &&
                     storeId == null &&
@@ -144,7 +148,11 @@ class TimeSlotSection extends StatelessWidget {
       
             //   // SizedBox(height: Dimensions.paddingSizeSmall,)
             // ),
-            const SizedBox(height: Dimensions.paddingSizeSmall,)
+         !isGuestLoggedIn &&
+                    storeId == null &&
+                    checkoutController.store!.scheduleOrder! &&
+                    cartList!.isNotEmpty &&
+                    cartList![0]!.item!.availableDateStarts == null ?    const SizedBox(height: Dimensions.paddingSizeSmall,) : const SizedBox(),
             // const SizedBox(height: Dimensions.paddingSizeExtraLarge),
           ],
         ),

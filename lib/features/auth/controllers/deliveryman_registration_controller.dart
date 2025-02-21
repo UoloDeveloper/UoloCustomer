@@ -190,16 +190,14 @@ class DeliverymanRegistrationController extends GetxController implements GetxSe
     _selectedZoneIndex = -1;
     _zoneIds = null;
     List<ZoneDataModel>? zones = await deliverymanRegistrationServiceInterface.getZoneList();
-    if (zones != null) {
-      _zoneList = [];
-      _zoneList!.addAll(zones);
-      _setLocation(LatLng(
-        double.parse(Get.find<SplashController>().configModel!.defaultLocation!.lat ?? '0'),
-        double.parse(Get.find<SplashController>().configModel!.defaultLocation!.lng ?? '0'),
-      ));
-      await getModules(_zoneList![0].id);
-    }
-    update();
+    _zoneList = [];
+    _zoneList!.addAll(zones ?? []);
+    _setLocation(LatLng(
+      double.parse(Get.find<SplashController>().configModel!.defaultLocation!.lat ?? '0'),
+      double.parse(Get.find<SplashController>().configModel!.defaultLocation!.lng ?? '0'),
+    ));
+    await getModules(_zoneList![0].id);
+      update();
   }
 
   void _setLocation(LatLng location) async {
@@ -217,11 +215,9 @@ class DeliverymanRegistrationController extends GetxController implements GetxSe
 
   Future<void> getModules(int? zoneId) async {
     List<ModuleModel>? modules = await deliverymanRegistrationServiceInterface.getModules(zoneId);
-    if (modules != null) {
-      _moduleList = [];
-      _moduleList!.addAll(modules);
-    }
-    update();
+    _moduleList = [];
+    _moduleList!.addAll(modules ?? []);
+      update();
   }
 
   void toggleTerms() {
@@ -231,12 +227,10 @@ class DeliverymanRegistrationController extends GetxController implements GetxSe
 
   Future<void> getVehicleList() async {
     List<DeliveryManVehicleModel>? vehicleList = await deliverymanRegistrationServiceInterface.getVehicleList();
-    if (vehicleList != null) {
-      _vehicles = [];
-      _vehicles!.addAll(vehicleList);
-      _vehicleIds = deliverymanRegistrationServiceInterface.prepareVehicleIds(vehicleList);
-    }
-    update();
+    _vehicles = [];
+    _vehicles!.addAll(vehicleList ?? []);
+    _vehicleIds = deliverymanRegistrationServiceInterface.prepareVehicleIds(vehicleList);
+      update();
   }
 
   Future<void> registerDeliveryMan(DeliveryManBody deliveryManBody) async {

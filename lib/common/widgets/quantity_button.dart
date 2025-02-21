@@ -15,19 +15,19 @@ class QuantityButton extends StatelessWidget {
       onTap: onTap as void Function()?,
       child: Container(
         height: fromSheet ? 30 : 22, width: fromSheet ? 30 : 22,
-        margin: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(width: 1, color: showRemoveIcon ? Theme.of(context).colorScheme.error : isIncrement ? Theme.of(context).primaryColor : Theme.of(context).disabledColor),
-          color: showRemoveIcon ? Theme.of(context).cardColor : isIncrement ? color ?? Theme.of(context).primaryColor : Theme.of(context).disabledColor  ,
+          // shape: BoxShape.circle,
+          // border: Border.all(width: 1, color: showRemoveIcon ? Theme.of(context).colorScheme.error : isIncrement ? Theme.of(context).primaryColor : Theme.of(context).disabledColor),
+          color: Colors.transparent,
         ),
         alignment: Alignment.center,
         child: Icon(
           showRemoveIcon ? Icons.delete_outline_outlined : isIncrement ? Icons.add : Icons.remove,
-          size: 15,
+          size: 20,
           color: showRemoveIcon ? Theme.of(context).colorScheme.error
-              : isIncrement ? Theme.of(context).cardColor
-              : Theme.of(context).disabledColor,
+              : isIncrement ? Colors.green
+              : Colors.green,
         ),
       ),
     );

@@ -353,7 +353,7 @@ class _ItemWidgetState extends State<ItemWidget> {
     String? discountType;
     bool isAvailable;
     bool customizable;
-
+    bool itemAvailable;
     if (widget.isStore && widget.store != null) {
       discount = widget.store!.discount?.discount ?? 0;
       discountType = widget.store!.discount?.discountType ?? 'percent';
@@ -379,13 +379,15 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   String startTime = DateFormat('hh:mm a').format(DateFormat('HH:mm').parse(widget.item!.availableTimeStarts.toString()));
   String EndTime = DateFormat('hh:mm a').format(DateFormat('HH:mm').parse(widget.item!.availableTimeEnds.toString()));
+
+   itemAvailable = DateConverter.isAvailable(widget.item!.availableTimeStarts, widget.item!.availableTimeEnds);
+
+  print("Item Available: $itemAvailable  ${widget.item!.availableTimeStarts} - ${widget.item!.availableTimeEnds}");
 return Container(
   height: 190,
   decoration:  BoxDecoration(
-  border: widget.Recomended ?  Border.all(
-    color: Colors.black12,
-    width: .9
-  ) : null , 
+    color: Colors.white,
+  
   borderRadius:  BorderRadius.all( 
     Radius.circular(
       Dimensions.radiusDefault
@@ -399,10 +401,13 @@ return Container(
       children: [
      
         SizedBox(
-          height: widget.Recomended ?  160: _showFullDescription ? 220 : 200,
+          height:  _showFullDescription ? 220 : 200,
           child: CustomInkWell(
     
-            onTap: () => Get.find<ItemController>().navigateToItemPage(widget.item, context),
+            onTap: () {
+              
+            },
+            //  Get.find<ItemController>().navigateToItemPage(widget.item, context),
             radius: Dimensions.radiusDefault,
             padding: desktop
                 ? const EdgeInsets.all(Dimensions.paddingSizeSmall)
@@ -422,105 +427,121 @@ return Container(
               //  ),
                 Align(
                  alignment: Alignment.topRight,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                    child: Stack(
-                      children: [
+                  child: Padding(
+                 padding: widget.Recomended ? EdgeInsets.only(top: 10) : EdgeInsets.all(0),
+                    child: ClipRRect(
                       
-                        Stack(
-                          children: [
-                            CustomImage(
-                              // fromstore: true,
-                              image: widget.isStore
-                                  ? widget.store?.logoFullUrl ??
-                                      'assets/images/placeholder.png'
-                                  : widget.item?.imageFullUrl ??
-                                      'assets/images/placeholder.png',
-                              height: widget.imageHeight ?? (desktop ?  120 :  widget.Recomended ? 120 : 145),
-                              width: widget.imageWidth ?? (desktop ? 200 :  widget.Recomended ? 120 : 145),
-                              fit: BoxFit.cover,
-                            ),
-                          ],
-                        ),
+                      borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                      child: Stack(
+                        children: [
                         
-    
-                          customizable ||  isAvailable  ?  const SizedBox() :     Container(
-                            height: widget.imageHeight ?? (desktop ? 120 : 145),
-                          width: widget.imageWidth ?? (desktop ? 200 : 145),
-                          color: Colors.black.withOpacity(.4),
-                          child: Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  !isAvailable ? 'Not Available' : 'Customizable',
-                                  style: robotoRegular.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-
-                                   !isAvailable ?     Text(
-                                  'available@ $startTime - $EndTime',
-                                  style: robotoRegular.copyWith(
-                                    fontSize: 8,
-                                    color: Colors.white,
-                                    
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ) : SizedBox(),
-                              ],
-                            ),
+                          Stack(
+                            children: [
+                              CustomImage(
+                                // fromstore: true,
+                                image: widget.isStore
+                                    ? widget.store?.logoFullUrl ??
+                                        'assets/images/placeholder.png'
+                                    : widget.item?.imageFullUrl ??
+                                        'assets/images/placeholder.png',
+                                height: widget.imageHeight ?? (desktop ?  120 : 145),
+                                width: widget.imageWidth ?? (desktop ? 200 :  145),
+                                fit: BoxFit.cover,
+                              ),
+                            ],
                           ),
-                        )  ,
-    
-                        // isAvailable ? const SizedBox() :  Container(
-                        //     height: widget.imageHeight ?? (desktop ? 120 :  widget.Recomended ? 120 : 145),
-                        //   width: widget.imageWidth ?? (desktop ? 200 :  widget.Recomended ? 120 : 145),
-                        //   color: Colors.black.withOpacity(.6),
-                        //   child: Center(
-                        //     child: Column(
-                        //       crossAxisAlignment: CrossAxisAlignment.center,
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       children: [
-    
-                        //         Text(
-                        //           'Not Available',
-                        //           style: robotoRegular.copyWith(
-                        //             fontSize: 12,
-                        //             color: Colors.white,
-                                    
-                        //           ),
-                        //           textAlign: TextAlign.center,
-                        //         ),
-                        //         Text(
-                        //           'available@ $startTime - $EndTime',
-                        //           style: robotoRegular.copyWith(
-                        //             fontSize: 8,
-                        //             color: Colors.white,
-                                    
-                        //           ),
-                        //           textAlign: TextAlign.center,
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
-                     
-                     
-                      ],
+                          
+                        
+                            !customizable ||  isAvailable   ?  const SizedBox() :     Padding(
+                              padding: widget.Recomended ? EdgeInsets.only(top: 0) : EdgeInsets.all(0),
+                              child: Container(
+                                height: widget.imageHeight ?? (desktop ? 120 : 145),
+                              width: widget.imageWidth ?? (desktop ? 200 : 145),
+                              color: Colors.black.withOpacity(.5),
+                              child: Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                  !itemAvailable ? 'Not Available' :    !isAvailable ? 'Not Available' : 'Customizable',
+                                      style: robotoRegular.copyWith(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                              
+                                       !isAvailable ?     Text(
+                                      'available@ $startTime - $EndTime',
+                                      style: robotoRegular.copyWith(
+                                        fontSize: 8,
+                                        color: Colors.white,
+                                        
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ) : SizedBox(),
+                                  ],
+                                ),
+                              ),
+                                                      ),
+                            )  ,
+                        
+                          // isAvailable ? const SizedBox() :  Container(
+                          //     height: widget.imageHeight ?? (desktop ? 120 :  widget.Recomended ? 120 : 145),
+                          //   width: widget.imageWidth ?? (desktop ? 200 :  widget.Recomended ? 120 : 145),
+                          //   color: Colors.black.withOpacity(.6),
+                          //   child: Center(
+                          //     child: Column(
+                          //       crossAxisAlignment: CrossAxisAlignment.center,
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                        
+                          //         Text(
+                          //           'Not Available',
+                          //           style: robotoRegular.copyWith(
+                          //             fontSize: 12,
+                          //             color: Colors.white,
+                                      
+                          //           ),
+                          //           textAlign: TextAlign.center,
+                          //         ),
+                          //         Text(
+                          //           'available@ $startTime - $EndTime',
+                          //           style: robotoRegular.copyWith(
+                          //             fontSize: 8,
+                          //             color: Colors.white,
+                                      
+                          //           ),
+                          //           textAlign: TextAlign.center,
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                       
+                       
+                        ],
+                      ),
                     ),
                   ),
                 ),
-    
+                      //  const SizedBox( height: 5,),
+                          Positioned(
+                            right: 26,
+                            bottom: 5,
+                            child: !customizable ?   Text("Customizable", style: TextStyle(
+                              color: Theme.of(context).disabledColor,
+                              fontSize: widget.Recomended ? 10 : 12,
+                              fontWeight: FontWeight.w600
+                            )) : const SizedBox(),
+                          ),
             
                 Align(
                  alignment: Alignment.topLeft,
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: SizedBox(
-                      width:  widget.Recomended ? MediaQuery.of(context).size.width/3 : MediaQuery.of(context).size.width/2.4,
+                      width:   MediaQuery.of(context).size.width/2.4,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -553,9 +574,9 @@ return Container(
                            Text(
                              widget.isStore
                                  ? widget.store?.name ?? ''.toString()
-                                 : widget.item?.name ?? ''.toString(),
+                                 : "${widget.item?.name}${itemAvailable ? '' : ' (Not Available)'}"  ?? ''.toString(),
                              style: robotoMedium.copyWith(
-                               fontSize:  widget.Recomended ? Dimensions.fontSizeDefault : Dimensions.fontSizeLarge,
+                               fontSize:  Dimensions.fontSizeLarge,
                                fontWeight: FontWeight.w600
     
                              ), 
@@ -668,9 +689,9 @@ return Container(
                                       }
                                   },
                                   child: Container(
-                                    width:   38,
-                                    // isWished ? widget.Recomended ? 110 :  130 : widget.Recomended ? 130 : 160,
-                                    height: 38,
+                                    width:   
+                                    isWished ? widget.Recomended ? 110 :  105 : widget.Recomended ? 130 : 130,
+                                    height: 30,
                                     decoration: BoxDecoration(
                                       // color:  Color(0xFFE5BFFF),
                                       borderRadius: BorderRadius.circular(100),
@@ -685,9 +706,9 @@ return Container(
                                         crossAxisAlignment: CrossAxisAlignment.center ,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Icon(isWished ?  Icons.bookmark_outlined :Icons.bookmark_border_outlined , color: isWished ? Colors.red : Colors.red, size:widget.Recomended ? 16 :  20),
-                                          //  SizedBox(width: widget.Recomended ?  2 : 5,),
-                                          // Text(isWished ? "In 'Collection'" : "Add to Collection", style:  TextStyle(color: Colors.black, fontSize:  widget.Recomended ? 11 : 13),)
+                                          Icon(isWished ?  Icons.bookmark_outlined :Icons.bookmark_border_outlined , color: isWished ? Colors.red : Colors.red, size:widget.Recomended ? 16 :  15),
+                                           SizedBox(width: widget.Recomended ?  2 : 3,),
+                                          Text(isWished ? "In 'Collection'" : "Add to Collection", style:  TextStyle(color: Colors.black, fontSize:  widget.Recomended ? 11 : 10),)
                                         ],
                                         
                                       ),
@@ -696,19 +717,20 @@ return Container(
                                 );
                               }
                             ),
-                          //  const SizedBox(height: 10,),
-                            //  Flexible(
-                            //    child: Text( widget.item!.description ?? "" ,style: const TextStyle(
-                            //     color: Colors.grey,
+                       
+                           const SizedBox(height: 10,),
+                             Flexible(
+                               child: Text( widget.item!.description ?? "" ,style: const TextStyle(
+                                color: Colors.grey,
                                 
-                            //    ),
-                            //      maxLines: 
-                            //       widget.Recomended ? 1 :  2,
+                               ),
+                                 maxLines: 
+                                  widget.Recomended ? 1 :  2,
                                   
-                            //    overflow: TextOverflow.ellipsis,),
-                            //  )
-
-                            AutoScrollDescription (description: widget.item!.description ?? "", recommended: widget.Recomended,)
+                               overflow: TextOverflow.ellipsis,),
+                             )
+                                   
+                            // AutoScrollDescription (description: widget.item!.description ?? "", recommended: widget.Recomended,)
                             //  Flexible(
                             //   child: Column(
                             //     crossAxisAlignment: CrossAxisAlignment.start,
@@ -739,10 +761,10 @@ return Container(
                 ),
       
 
-                 Positioned(
-                               bottom:   !customizable ? widget.Recomended ? 0 : 10 :  widget.Recomended ? 5 :   20,
-                      right: widget.Recomended  ? 10 : widget.Recomended ? 15 : 17,
-                  child: CartCountView(item: widget.item!, index: widget.index)),
+              isAvailable ?   Positioned(
+                               bottom:   !customizable ? widget.Recomended ? 0 : 25 :  widget.Recomended ? 5 :   20,
+                      right: widget.Recomended  ? 15 : widget.Recomended ? 15 : 17,
+                  child: CartCountView(item: widget.item!, index: widget.index)) : const SizedBox(),
                 // Positioned: Add to Cart Button (Bottom Right)
                 //  GetBuilder<CartController>(
                 //             builder: (cartController) {

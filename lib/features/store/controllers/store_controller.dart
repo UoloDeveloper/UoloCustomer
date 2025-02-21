@@ -67,6 +67,9 @@ class StoreController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+   bool _isopen = false;
+  bool get isopen => _isopen;
+
   String _filterType = 'all';
   String get filterType => _filterType;
 
@@ -472,6 +475,8 @@ class StoreController extends GetxController implements GetxService {
       storeID, offset,
       (_store != null && _store!.categoryIds!.isNotEmpty && _categoryIndex != 0) ? _categoryList![_categoryIndex].id : 0, type,
     );
+
+    
     if (storeItemModel != null) {
       if (offset == 1) {
         _storeItemModel = storeItemModel;
@@ -590,4 +595,19 @@ class StoreController extends GetxController implements GetxService {
     }
   }
 
+
+
+void clearstoreitems () {
+  print('clear store items');
+  _storeItemModel = null;
+  update();  
+   }
+
+
+ void togglerecommendedContainer(){
+_isopen = !_isopen;
+update();
+ }
+
+ 
 }

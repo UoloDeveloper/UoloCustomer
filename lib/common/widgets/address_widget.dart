@@ -26,13 +26,13 @@ class AddressWidget extends StatelessWidget {
       child: Container(
         decoration: fromDashBoard ? BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-          border: Border.all(color: isSelected ? Theme.of(context).primaryColor : Colors.transparent, width: isSelected ? 1 : 0),
+          border: Border.all(color: isSelected ? Colors.transparent : Colors.transparent, width: isSelected ? 1 : 0),
         ) : fromCheckout ? const BoxDecoration() : BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
           border: Border.all(color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).cardColor, width: isSelected ? 0.5 : 0),
           // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 5, spreadRadius: 1)],
-          boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 5, spreadRadius: 1)],
+          // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 5, spreadRadius: 1)],
         ),
         child: CustomInkWell(
           onTap: onTap as void Function()?,

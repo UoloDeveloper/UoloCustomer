@@ -1,8 +1,12 @@
 import 'package:sixam_mart/common/widgets/card_design/store_card_with_distance.dart';
+import 'package:sixam_mart/features/home/widgets/views/new_on_mart_view.dart';
+import 'package:sixam_mart/features/home/widgets/views/visit_again_view.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
+import 'package:sixam_mart/features/store/controllers/store_controller.dart';
 import 'package:sixam_mart/features/store/domain/models/store_model.dart';
 import 'package:sixam_mart/features/home/widgets/web/widgets/store_card_widget.dart';
+import 'package:sixam_mart/helper/date_converter.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/common/widgets/no_data_screen.dart';
@@ -22,11 +26,12 @@ class ItemsView extends StatefulWidget {
   final bool isCampaign;
   final bool inStorePage;
   final bool isFeatured;
+    final bool isHome;
   final bool? isFoodOrGrocery;
   const ItemsView({super.key, required this.stores, required this.items, required this.isStore, this.isScrollable = false,
     this.shimmerLength = 20, this.padding = const EdgeInsets.all(Dimensions.paddingSizeDefault), this.noDataText,
     this.isCampaign = false, this.inStorePage = false, this.isFeatured = false,
-    this.isFoodOrGrocery = true});
+    this.isFoodOrGrocery = true,  this.isHome = false});
 
   @override
   State<ItemsView> createState() => _ItemsViewState();
@@ -49,9 +54,249 @@ class _ItemsViewState extends State<ItemsView> {
       }
     }
 
-    return Column(children: [
 
-      !isNull ? length > 0 ? GridView.builder(
+
+  //    bool isOpen = false;
+
+  // void toggleContainer() {
+  //   setState(() {
+  //     isOpen = !isOpen; 
+  //   });
+  // }
+
+    return Column(
+      
+      children: [
+  widget.isHome ?
+  
+  //  ListView.builder(
+  //     itemCount: widget.stores!.length,  
+  //     // shrinkWrap: true,
+  //      physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+  //       shrinkWrap: widget.isScrollable ? false : true,
+  //   itemBuilder: 
+  //   (context, index) {
+
+  //      if (index == 3) {
+  //        return   VisitAgainView(fromFood: true);
+  //       //  StoreCardWidget2(store: widget.stores![index]);
+  //      } else if (index == 7) {
+  //        return  
+  //            const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false);
+  //       //  StoreCardWidget2(store: widget.stores![index]);
+  //      } 
+       
+  //       else {
+  //        return StoreCardWidget2(store: widget.stores![index]);
+  //      }
+  //     // return StoreCardWidget2(store:  widget.stores![index]);
+  //   },
+  //  ) : 
+     
+     ListView.builder(
+  itemCount: widget.stores != null ? widget.stores!.length : 10, 
+  physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+  shrinkWrap: widget.isScrollable ? false : true,
+  itemBuilder: (context, index) {
+
+    if (widget.stores == null) {
+      return const StoreCardShimmer2();
+    }
+
+  
+    if (index -3 % 7 == 1) { 
+      return VisitAgainView(fromFood: true,itemsview: true,);
+    } else if (index -3 % 7 == 5) { 
+      return const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false,itemsview: true,);
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Container(
+            height: 180,
+          child: StoreCardWidget2(store: widget.stores![index])),
+        ),
+      );
+    }
+  },
+)  :
+
+
+      !isNull ? length > 0 ? 
+       widget.inStorePage ? 
+       Column(
+         children: [
+          GetBuilder<StoreController>(builder: (storeController) {
+             ;
+               return storeController.recommendedItemModel!.items!.isEmpty ?  SizedBox() : Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: SizedBox(
+                 
+                  child:
+                   Container(
+                    decoration: BoxDecoration(
+                      color:  Color(0xFFECF3F9),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10)
+                      )
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap:  (){
+                            // print("Trying to toggle");
+                       storeController.togglerecommendedContainer();
+                            // logic for close  recommended container
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 40,
+                            color: Colors.transparent,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20,top: 10),
+                                  child: Text("Recommended", style: TextStyle(
+                                    fontSize: 16,fontWeight: FontWeight.w700
+                                  )),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(!storeController.isopen ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor,size: 30,weight: 35,),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(height: 10,),
+                    if (storeController.isopen)
+                      ListView.builder(
+                          padding: EdgeInsets.all(0),
+                          // separatorBuilder: (context, index) => const Divider(),
+                          physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: storeController.recommendedItemModel!.items!.length ?? 1,
+                          itemBuilder: (context, index) {
+                          
+                          return 
+                          //  Container(
+                          //   color: Theme.of(context).primaryColor,
+                          //   child: Text("Recommended $index",)
+                          // );
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
+                            child: ItemWidget(item:storeController.recommendedItemModel!.items![index] , isStore: false, store: null, index: index, length: length,Recomended: true,),
+                          );
+                        }),
+                 
+                        // SizedBox(height: 10,)
+                      ],
+                    ),
+                 
+                    
+                  ),
+                    
+                    
+                           ),
+               );
+             }
+           ),
+          
+           GridView.builder(
+            key: UniqueKey(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+
+              crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
+              mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
+              // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
+              //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
+              //     : 3.3,
+              mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
+                  : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 170 : 206
+                  : 122,
+              crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
+            ),
+            physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+            shrinkWrap: widget.isScrollable ? false : true,
+            itemCount: length,
+            padding: widget.padding,
+            itemBuilder: (context, index) {
+             
+             //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
+             // final List<Item?>? filterditems = widget.items!.where((element) => element!.storeId == widget.stores![index]!.id).toList();
+             
+                List<Item?> availableItems = [];
+           List<Item?> notAvailableItems = [];
+           if (widget.items != null ) {
+            
+             for (var item in widget.items!) {
+               if (item != null) { 
+                 bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds);
+                 if (isAvailable) {
+            availableItems.add(item);
+                 } else {
+            notAvailableItems.add(item);
+                 }
+               }
+             }
+           }
+           
+           
+           final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
+           
+           
+             // if (index  == 0) {
+             // print("showing recommended items");
+             //  return  GetBuilder<StoreController>(builder: (storeController) {
+           
+           
+             //      return  ItemWidget(
+             //           isStore: widget.isStore, item: storeController.recommendedItemModel?.items?[index], isFeatured: widget.isFeatured,
+             //           store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
+             //           inStore: widget.inStorePage,
+             //         );
+                 
+                                            
+             //    }
+             //  );
+             // }
+              return widget.stores != null && widget.isStore ?  widget.isFoodOrGrocery! && widget.isStore
+                  ?
+                  
+                  StoreCardWidget2(store: widget.stores![index])
+                  : StoreCardWithDistance(store: widget.stores![index]!, fromAllStore: true)
+                  :
+                  
+                   
+                   Column(
+                     children: [
+                       ItemWidget(
+                                       isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
+                                       store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
+                                       inStore: widget.inStorePage,
+                                     ),
+
+                                     Divider()
+                     ],
+                   );
+            },
+                 ),
+         ],
+       ) :
+   
+   
+   
+      GridView.builder(
         key: UniqueKey(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
@@ -69,13 +314,51 @@ class _ItemsViewState extends State<ItemsView> {
         itemCount: length,
         padding: widget.padding,
         itemBuilder: (context, index) {
+         
+  //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
+  // final List<Item?>? filterditems = widget.items!.where((element) => element!.storeId == widget.stores![index]!.id).toList();
+         
+     List<Item?> availableItems = [];
+List<Item?> notAvailableItems = [];
+if (widget.items != null ) {
+ 
+  for (var item in widget.items!) {
+    if (item != null) { 
+      bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds);
+      if (isAvailable) {
+        availableItems.add(item);
+      } else {
+        notAvailableItems.add(item);
+      }
+    }
+  }
+}
+
+
+final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
+
+
+  // if (index  == 0) {
+  // print("showing recommended items");
+  //  return  GetBuilder<StoreController>(builder: (storeController) {
+  //      return  Container(
+  //       color: Theme.of(context).primaryColor,
+  //      );
+      
+                                        
+  //    }
+  //  );
+  // }
           return widget.stores != null && widget.isStore ?  widget.isFoodOrGrocery! && widget.isStore
               ?
-         
+              
               StoreCardWidget2(store: widget.stores![index])
               : StoreCardWithDistance(store: widget.stores![index]!, fromAllStore: true)
-              : ItemWidget(
-            isStore: widget.isStore, item: widget.isStore ? null : widget.items![index], isFeatured: widget.isFeatured,
+              :
+              
+               
+               ItemWidget(
+            isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
             store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
             inStore: widget.inStorePage,
           );
@@ -92,7 +375,7 @@ class _ItemsViewState extends State<ItemsView> {
           //     : ResponsiveHelper.isMobile(context) ? widget.isStore ? 2 : 3.8
           //     : 3,
           mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
-              : ResponsiveHelper.isMobile(context) ? widget.isStore ? 200 : 110
+              : ResponsiveHelper.isMobile(context) ? widget.isStore ? 200 : 200
               : 110,
           crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) ? 3 : 3,
         ),
@@ -232,3 +515,97 @@ class NewOnShimmerView extends StatelessWidget {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //  (storeController.categoryList!.isNotEmpty)  &&  (!ResponsiveHelper.isDesktop(context) &&
+  //                               storeController.recommendedItemModel != null &&
+  //                               storeController.recommendedItemModel!.items!.isNotEmpty)
+    
+  //                       ? SliverPersistentHeader(
+  //                         floating: false,
+  //                           // pinned: true,
+  //                           delegate: SliverDelegate(
+  //                               height: 240,
+  //                               child: Center(
+  //                                   child: Container(
+  //                                 width: Dimensions.webMaxWidth,
+  //                                 decoration: BoxDecoration(
+  //                                   color: Theme.of(context).cardColor,
+  //                                   // boxShadow: const [
+  //                                   //   BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)
+  //                                   // ],
+  //                                 ),
+  //                                 padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+  //                                 child: Column(
+  //                                   children: [
+    
+  //                                     //  const SizedBox(height: Dimensions.paddingSizeLarge),
+  //                       (!ResponsiveHelper.isDesktop(context) &&
+  //                               storeController.recommendedItemModel != null &&
+  //                               storeController.recommendedItemModel!.items!.isNotEmpty)
+  //                           ? Padding(
+  //                             padding: const EdgeInsets.only(left: 10),
+  //                             child: Column(
+  //                                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                                 children: [
+  //                                   Padding(
+  //                                      padding: const EdgeInsets.only(left: 10),
+  //                                     child: Text('recommended'.tr, style: TextStyle(
+  //                                       fontSize: 16,fontWeight: FontWeight.w700
+  //                                     )),
+  //                                   ),
+  //                                   const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+  //                                   SizedBox(
+  //                                     height: ResponsiveHelper.isDesktop(context) ? 150 : 185,
+  //                                     child: ListView.builder(
+  //                                       scrollDirection: Axis.horizontal,
+  //                                       itemCount: storeController.recommendedItemModel!.items!.length,
+  //                                       physics: const BouncingScrollPhysics(),
+  //                                       itemBuilder: (context, index) {
+  //                                         return Padding(
+  //                                           padding: ResponsiveHelper.isDesktop(context)
+  //                                               ? const EdgeInsets.symmetric(vertical: 20)
+  //                                               : const EdgeInsets.symmetric(vertical: 10),
+  //                                           child: Container(
+  //                                             width: ResponsiveHelper.isDesktop(context) ? 500 : 300,
+  //                                             padding: const EdgeInsets.only(
+  //                                                 right: Dimensions.paddingSizeSmall,
+  //                                                 left: Dimensions.paddingSizeExtraSmall),
+  //                                             margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
+  //                                             child: ItemWidget(
+  //                                               // notinStore: true,
+  //                                               // Recomended: true,
+  //                                               isStore: false,
+  //                                               item: storeController.recommendedItemModel!.items![index],
+  //                                               store: null,
+  //                                               index: index,
+  //                                               length: storeController.recommendedItemModel!.items!.length,
+  //                                               isCampaign: false,
+  //                                               inStore: true,
+  //                                             ),
+  //                                           ),
+  //                                         );
+  //                                       },
+  //                                     ),
+  //                                   ),
+  //                                 ],
+  //                               ),
+  //                           )
+  //                           : const SizedBox(),
+                                  
+  //                                   ],
+  //                                 ),
+  //                               ))),
+  //                         )
+  //                       : const SliverToBoxAdapter(child: SizedBox()),

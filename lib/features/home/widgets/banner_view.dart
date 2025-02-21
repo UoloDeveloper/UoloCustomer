@@ -94,7 +94,7 @@ class BannerView extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
-                          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 0)],
+                          // boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 0)],
                         ),
                         margin: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
                         child: ClipRRect(

@@ -19,15 +19,18 @@ class NotAvailableWidget extends StatelessWidget {
       top: 0, left: 0, bottom: 0, right: 0,
       child: Container(
         alignment: Alignment.center,
-        decoration: BoxDecoration(borderRadius: isAllSideRound ? BorderRadius.circular(radius!) :  BorderRadius.vertical(top: Radius.circular(radius!)), color: Colors.black  ),
-        child: Text(
-          isStore
-              ? store != null
-              ? store!.storeOpeningTime == 'closed' ? 'closed_now'.tr : '${'closed_now'.tr} ${!store!.active! ? '' : '(${'open_at'.tr} ${DateConverter.convertRestaurantOpenTime(store!.storeOpeningTime!)})'}'
-              : 'closed_now'.tr
-              : 'not_available_now_break'.tr,
-          textAlign: TextAlign.center,
-          style: robotoMedium.copyWith(color: Colors.white, fontSize: fontSize),
+        decoration: BoxDecoration(borderRadius: isAllSideRound ? BorderRadius.circular(radius!) :  BorderRadius.vertical(top: Radius.circular(radius!)), color: Colors.black.withOpacity(0.5)  ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            isStore
+                ? store != null
+                ? store!.storeOpeningTime == 'closed' ? 'closed_now'.tr : '${'closed_now'.tr} ${!store!.active! ? '' : '(${'open_at'.tr} ${DateConverter.convertRestaurantOpenTime(store!.storeOpeningTime!)})'}'
+                : 'closed_now'.tr
+                : 'not_available_now_break'.tr,
+            textAlign: TextAlign.center,
+            style: robotoMedium.copyWith(color: Colors.white, fontSize: fontSize),
+          ),
         ),
       ),
     );

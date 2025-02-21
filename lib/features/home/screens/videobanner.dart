@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
 import 'package:sixam_mart/features/location/controllers/location_controller.dart';
+import 'package:sixam_mart/features/loyalty/screens/loyalty_screen.dart';
 import 'package:sixam_mart/features/menu/screens/menu_screen.dart';
 import 'package:sixam_mart/features/profile/controllers/profile_controller.dart';
 import 'package:sixam_mart/helper/address_helper.dart';
@@ -290,7 +292,7 @@ class _VideoContainerState extends State<VideoContainer> {
   }
 
   void _initializeController() {
-    _controller = VideoPlayerController.asset(widget.link)
+    _controller = VideoPlayerController.asset(widget.link,)
       ..initialize().then((_) {
         setState(() {}); 
         _controller.play(); 
@@ -322,7 +324,7 @@ class _VideoContainerState extends State<VideoContainer> {
         ),
       ),
       width: MediaQuery.of(context).size.width,
-      height: 400,
+      height: 415,
       child: Stack(
         children: [
           // Video Player
@@ -332,9 +334,23 @@ class _VideoContainerState extends State<VideoContainer> {
                     bottomLeft: Radius.circular(19),
                     bottomRight: Radius.circular(19),
                   ),
-                  child: VideoPlayer(_controller),
+                  child: VideoPlayer(_controller,),
                 )
-              : const Center(child: CircularProgressIndicator()),
+              :  ClipRRect(
+                 borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(19),
+                    bottomRight: Radius.circular(19),
+                  ),
+                child: Container(
+                  height: 415,
+                  width:MediaQuery.of(context).size.width ,
+                  child: Image.asset(
+                    "assets/image/static_banner/Copy of Copy of black purple modern christmas food pinterest pin (500 x 500_20250219_123752_0000.png",
+                    fit: BoxFit.cover,
+                     
+                  ),
+                ),
+              ),
 
           // Existing content
           GetBuilder<LocationController>(builder: (locationController) {
@@ -362,12 +378,13 @@ class _VideoContainerState extends State<VideoContainer> {
                           ),
                         ),
                         InkWell(
-                          onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
+                          // onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               InkWell(
+                                onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
                                 child: Text(
                                   AuthHelper.isLoggedIn()
                                       ? AddressHelper.getUserAddressFromSharedPref()!.addressType!.tr
@@ -381,17 +398,20 @@ class _VideoContainerState extends State<VideoContainer> {
                                   overflow: TextOverflow.fade,
                                 ),
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Text(
-                                  AddressHelper.getUserAddressFromSharedPref()?.address ?? "",
-                                  style: robotoRegular.copyWith(
-                                    color: Theme.of(context).cardColor,
-                                    fontSize: Dimensions.fontSizeSmall,
-                                    fontWeight: FontWeight.w700
+                              CustomInkWell(
+                                 onTap: () => Get.find<LocationController>().navigateToLocationScreen('home'),
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  child: Text(
+                                    AddressHelper.getUserAddressFromSharedPref()?.address ?? "",
+                                    style: robotoRegular.copyWith(
+                                      color: Theme.of(context).cardColor,
+                                      fontSize: Dimensions.fontSizeSmall,
+                                      fontWeight: FontWeight.w700
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.fade,
                                   ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.fade,
                                 ),
                               ),
                             ],
@@ -403,34 +423,39 @@ class _VideoContainerState extends State<VideoContainer> {
                   Row(
                     children: [
                       GetBuilder<ProfileController>(builder: (profileController) {
-                        return Container(
-                          height: 34,
-                          width: 71,
-                          decoration: const BoxDecoration(
-                            color: Colors.white60,
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: Text(
-                                  "${profileController.userInfoModel?.loyaltyPoint ?? 0}",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 15
+                        return CustomInkWell(
+                          onTap: (){
+                                 Get.to(LoyaltyScreen(fromNotification: false));
+                          },
+                          child: Container(
+                            height: 34,
+                            width: 71,
+                            decoration: const BoxDecoration(
+                              color: Colors.white60,
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: Text(
+                                    "${profileController.userInfoModel?.loyaltyPoint ?? 0}",
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 0),
-                                child: Image.asset(
-                                  "assets/image/gift_icon.png",
-                                  width: 40
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: Image.asset(
+                                    "assets/image/gift_icon.png",
+                                    width: 40
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       }),

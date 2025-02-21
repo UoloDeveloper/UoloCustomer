@@ -76,10 +76,12 @@ class _AddressScreenState extends State<AddressScreen> {
                 child: Column(
                   children: [
                     WebScreenTitleWidget(title: 'address'.tr),
+                    
                     Center(child: FooterView(
                       minHeight: 0.45,
                       child: SizedBox(
                         width: Dimensions.webMaxWidth,
+
                         child: Column(
                           children: [
                             ResponsiveHelper.isDesktop(context) ? const SizedBox( height: Dimensions.paddingSizeSmall) : const SizedBox(),
@@ -104,7 +106,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                       decoration:  BoxDecoration(
                                         color: Theme.of(context).cardColor,
                                         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                                        boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 5, spreadRadius: 1)],
+                                        boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 5, spreadRadius: 1)],
                                       ),
                                       child: CustomInkWell(
                                         onTap: () => Get.toNamed(RouteHelper.getAddAddressRoute(false, false, 0)),

@@ -52,7 +52,7 @@ class MessageBubbleWidget extends StatelessWidget {
                     ),
                   ),
                   padding: EdgeInsets.all(message.message != null ? Dimensions.paddingSizeDefault : 0),
-                  child: Text(message.message ?? '', style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeSmall)),
+                  child: Text(message.message ?? '', style: robotoRegular.copyWith(color: Theme.of(context).cardColor, fontSize: Dimensions.fontSizeSmall)),
                 ),
               ),
               const SizedBox(height: 8.0),

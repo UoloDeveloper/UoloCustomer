@@ -60,24 +60,25 @@ Future<void> main() async {
 
   if(GetPlatform.isWeb){
     await Firebase.initializeApp(options: const FirebaseOptions(
-        apiKey: "AIzaSyD0Z911mOoWCVkeGdjhIKwWFPRgvd6ZyAw",
-        authDomain: "stackmart-500c7.firebaseapp.com",
-        projectId: "stackmart-500c7",
-        storageBucket: "stackmart-500c7.appspot.com",
-        messagingSenderId: "491987943015",
-        appId: "1:491987943015:web:d8bc7ab8dbc9991c8f1ec2"
+        apiKey: "AIzaSyDFN-73p8zKVZbA0i5DtO215XzAb-xuGSE",
+        authDomain: "ammart-8885e.firebaseapp.com",
+        projectId: "ammart-8885e",
+        storageBucket: "ammart-8885e.appspot.com",
+        messagingSenderId: "1000163153346",
+        appId: "1:1000163153346:web:4f702a4b5adbd5c906b25b",
     ));
   } else if(GetPlatform.isAndroid) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA",
-        appId: "1:491987943015:android:a6fb4303cc4bf3d18f1ec2",
-        messagingSenderId: "491987943015",
-        projectId: "stackmart-500c7",
+        apiKey: "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4",
+        appId: "1:349709842275:android:c45d0399a7fce637c84556",
+        messagingSenderId: "349709842275",
+        projectId: "uolo-6b0e9",
       ),
     );
   } else {
     await Firebase.initializeApp();
+       
   }
 
   Map<String, Map<String, String>> languages = await di.init();
@@ -112,6 +113,7 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.languages, required this.body});
 
   @override
+  
   State<MyApp> createState() => _MyAppState();
 }
 
@@ -195,3 +197,102 @@ class MyHttpOverrides extends HttpOverrides {
     return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Status Bar Color Change',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: const HomeScreen(),
+//     );
+//   }
+// }
+
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({Key? key}) : super(key: key);
+
+//   @override
+//   State<HomeScreen> createState() => _HomeScreenState();
+// }
+
+// class _HomeScreenState extends State<HomeScreen> {
+//   final ScrollController _scrollController = ScrollController();
+//   bool _isScrolled = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _scrollController.addListener(_updateStatusBarColor);
+//   }
+
+//   void _updateStatusBarColor() {
+//     final isScrolled = _scrollController.offset > 50;
+//     if (isScrolled != _isScrolled) {
+//       setState(() {
+//         _isScrolled = isScrolled;
+//       });
+//     }
+//   }
+
+//   @override
+//   void dispose() {
+//     _scrollController.removeListener(_updateStatusBarColor);
+//     _scrollController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Scroll to Change Status Bar Color'),
+//         systemOverlayStyle: _isScrolled
+//             ? const SystemUiOverlayStyle(
+//                 statusBarColor: Colors.red, // Status bar color when scrolled
+//                 statusBarIconBrightness: Brightness.dark,
+//               )
+//             : const SystemUiOverlayStyle(
+//                 statusBarColor: Colors.transparent, // Transparent when not scrolled
+//                 statusBarIconBrightness: Brightness.light,
+//               ),
+//       ),
+//       body: ListView.builder(
+//         controller: _scrollController,
+//         itemCount: 100,
+//         itemBuilder: (context, index) {
+//           return Container(
+//             height: 100,
+//             color: index.isEven ? Colors.blue[100] : Colors.blue[200],
+//             alignment: Alignment.center,
+//             child: Text(
+//               'Item $index',
+//               style: const TextStyle(fontSize: 24),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

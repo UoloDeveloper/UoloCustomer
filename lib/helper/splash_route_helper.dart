@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
+import 'package:sixam_mart/features/auth/screens/sign_in_screen.dart';
 import 'package:sixam_mart/features/favourite/controllers/favourite_controller.dart';
 import 'package:sixam_mart/features/location/controllers/location_controller.dart';
 import 'package:sixam_mart/features/notification/domain/models/notification_body_model.dart';
@@ -24,6 +25,8 @@ import 'package:sixam_mart/util/app_constants.dart';
       }else {
         _handleUserRouting();
       }
+    } else if (GetPlatform.isWeb) {
+      Get.offNamed(RouteHelper.getInitialRoute());
     }
   }
 
@@ -67,13 +70,13 @@ import 'package:sixam_mart/util/app_constants.dart';
     }
   }
 
-  void _newlyRegisteredRouteProcess() {
-    if(AppConstants.languages.length > 1) {
-      Get.offNamed(RouteHelper.getLanguageRoute('splash'));
-    }else {
-      Get.offNamed(RouteHelper.getOnBoardingRoute());
-    }
-  }
+  // void _newlyRegisteredRouteProcess() {
+  //   if(AppConstants.languages.length > 1) {
+  //     Get.offNamed(RouteHelper.getLanguageRoute('splash'));
+  //   }else {
+  //     Get.offNamed(RouteHelper.getOnBoardingRoute());
+  //   }
+  // }
 
   void _forGuestUserRouteProcess() {
     if (AddressHelper.getUserAddressFromSharedPref() != null) {
@@ -87,12 +90,18 @@ import 'package:sixam_mart/util/app_constants.dart';
     if (AuthHelper.isLoggedIn()) {
       _forLoggedInUserRouteProcess();
     } else if (Get.find<SplashController>().showIntro() == true) {
-      _newlyRegisteredRouteProcess();
+      // _newlyRegisteredRouteProcess();
+      // SignInScreen(exitFromApp: false, backFromThis: true,);
+      Get.offNamed(RouteHelper.getSignInRoute(
+RouteHelper.splash
+      ));
     } else if (AuthHelper.isGuestLoggedIn()) {
-      _forGuestUserRouteProcess();
+      // _forGuestUserRouteProcess();
+      Get.offNamed(RouteHelper.getInitialRoute(fromSplash: true));
     } else {
       await Get.find<AuthController>().guestLogin();
-      _forGuestUserRouteProcess();
+      // _forGuestUserRouteProcess();
+      Get.offNamed(RouteHelper.getInitialRoute(fromSplash: true));
     }
   }
 // }

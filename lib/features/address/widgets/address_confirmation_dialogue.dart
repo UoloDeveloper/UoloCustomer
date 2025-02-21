@@ -74,9 +74,9 @@ class AddressConfirmDialogue extends StatelessWidget {
                   SizedBox(width: isDesktop ? Dimensions.paddingSizeExtraLarge : Dimensions.paddingSizeLarge),
 
                   Expanded(child: CustomButton(
-                    buttonText:  'cancel'.tr, textColor: Theme.of(context).textTheme.bodyMedium!.color!  ,
+                    buttonText:  'cancel'.tr, textColor: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.5),
                     onPressed: () => Get.back(),
-                    radius: Dimensions.radiusSmall, height: 50, color: Theme.of(context).disabledColor  ,
+                    radius: Dimensions.radiusSmall, height: 50, color: Theme.of(context).disabledColor.withOpacity(0.4),
                   )),
                   SizedBox(width: isDesktop ? Dimensions.paddingSizeExtremeLarge : 0),
                 ]) : const Center(child: CircularProgressIndicator());

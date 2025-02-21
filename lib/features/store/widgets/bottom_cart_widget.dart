@@ -40,13 +40,16 @@ import 'package:sixam_mart/common/widgets/custom_button.dart';
               padding: const EdgeInsets.only(left: 10,right: 10),
               child: InkWell(
                 onTap: () {
-                     if(!cartController.cartList.first.item!.scheduleOrder!) {
+                  //    if(cartController.cartList.first.item!.scheduleOrder!) {
                           
-                      print(!cartController.cartList.first.item!.scheduleOrder!);
-                    showCustomSnackBar('one_or_more_product_unavailable'.tr);
-                  } /*else if(AuthHelper.isGuestLoggedIn() && !Get.find<SplashController>().configModel!.guestCheckoutStatus!) {
+                  //     print(!cartController.cartList.first.item!.scheduleOrder!);
+                  //   showCustomSnackBar('one_or_more_product_unavailable'.tr);
+                  // } 
+                  
+                  /*else if(AuthHelper.isGuestLoggedIn() && !Get.find<SplashController>().configModel!.guestCheckoutStatus!) {
                     showCustomSnackBar('currently_your_zone_have_no_permission_to_place_any_order'.tr);
-                  }*/ else {
+                  // }*/
+                  // if (cartController.cartList.isEmpty) {
                     if(Get.find<SplashController>().module == null) {
                       int i = 0;
                       for(i = 0; i < Get.find<SplashController>().moduleList!.length; i++){
@@ -60,7 +63,9 @@ import 'package:sixam_mart/common/widgets/custom_button.dart';
                     Get.find<CouponController>().removeCouponData(false);
 // Get.toNamed(RouteHelper.getCartRoute());
 Get.toNamed(RouteHelper.getCheckoutRoute('cart'));
-                  }},
+                  // }
+                  
+                  },
                 
                 child: Container(
                   height: 60,

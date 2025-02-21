@@ -55,64 +55,67 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
                 tilePadding: const EdgeInsets.all(0),
                 // onExpansionChanged: (value) => orderController.expandedUpdate(value),
                 children: [
-                  SizedBox(
-                    height: 100,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: AppConstants.deliveryInstructionList.length,
-                      itemBuilder: (context, index) {
-                        bool isSelected = orderController.selectedInstruction == index;
-                        return InkWell(
-                          onTap: () {
-                            orderController.setInstruction(index);
-                            // if (controller.isExpanded) {
-                            //   controller.collapse();
-                            // }
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? Theme.of(context).primaryColor.withOpacity(0.5)
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(8.0),
-
-                              border: Border.all(
-                                color: Colors.black12
-                              )
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.integration_instructions,
-                                  color: isSelected
-                                      ? Theme.of(context).primaryColor
-                                      : Theme.of(context).disabledColor,
-                                  size: 18,
-                                ),
-                                const SizedBox(height: 20,),
-                                Expanded(
-                                  child: Text(
-                                    AppConstants.deliveryInstructionList[index].tr,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                      color: isSelected
-                                          ? Theme.of(context).primaryColor
-                                          :  Colors.grey[600],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: AppConstants.deliveryInstructionList.length,
+                        itemBuilder: (context, index) {
+                          bool isSelected = orderController.selectedInstruction == index;
+                          return InkWell(
+                            onTap: () {
+                              orderController.setInstruction(index);
+                              // if (controller.isExpanded) {
+                              //   controller.collapse();
+                              // }
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? Theme.of(context).primaryColor.withOpacity(0.5)
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(8.0),
+                    
+                                border: Border.all(
+                                  color: Colors.black12
+                                )
+                              ),
+                              padding: const EdgeInsets.all(8.0),
+                              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.integration_instructions,
+                                    color: isSelected
+                                        ? Theme.of(context).primaryColor
+                                        : Theme.of(context).disabledColor,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(height: 20,),
+                                  Expanded(
+                                    child: Text(
+                                      AppConstants.deliveryInstructionList[index].tr,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: isSelected
+                                            ? Theme.of(context).primaryColor
+                                            :  Colors.grey[600],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                

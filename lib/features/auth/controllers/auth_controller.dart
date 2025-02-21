@@ -143,6 +143,7 @@ class AuthController extends GetxController implements GetxService {
         && responseModel.authResponseModel!.isEmailVerified! && responseModel.authResponseModel!.isPersonalInfo!
         && responseModel.authResponseModel!.isExistUser == null) {
       Get.find<ProfileController>().getUserInfo();
+      print('------------call from auth controller get user cart data');
       Get.find<CartController>().getCartDataOnline();
     }
   }

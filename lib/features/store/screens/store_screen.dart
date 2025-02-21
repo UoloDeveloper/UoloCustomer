@@ -9,6 +9,7 @@ import 'package:sixam_mart/features/favourite/controllers/favourite_controller.d
 import 'package:sixam_mart/features/category/domain/models/category_model.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/features/store/domain/models/store_model.dart';
+import 'package:sixam_mart/features/store/widgets/CoupenCarousal.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/date_converter.dart';
 import 'package:sixam_mart/helper/price_converter.dart';
@@ -975,7 +976,10 @@ class _StoreScreenState extends State<StoreScreen> {
 
   @override
   void dispose() {
+    Get.find<StoreController>().clearstoreitems();
+  
     scrollController.dispose();
+
     super.dispose();
   }
 
@@ -1138,7 +1142,7 @@ class _StoreScreenState extends State<StoreScreen> {
                         icon:  Icon(Icons.arrow_back_ios, color: Theme.of(context).primaryColor),
                       ),
                           title: Text(_showTitle ? store!.name ?? '' : '', style: 
-                           robotoMedium.copyWith(fontSize: 16, color:  Theme.of(context).cardColor,fontWeight: FontWeight.w600)
+                           robotoMedium.copyWith(fontSize: 16, color:  Colors.black,fontWeight: FontWeight.w600)
                           // robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge!.color)
                           ),
                       // centerTitle: ",
@@ -1202,8 +1206,77 @@ class _StoreScreenState extends State<StoreScreen> {
                                                     child: Column(children: [
                                                       StoreDescriptionViewWidget(store: store),
                                                       // const SizedBox(height: Dimensions.paddingSizeSmall),
+
+                                               store!.open == 1 && store!.active!
+    ? const SizedBox()
+    : Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 80, // Slightly taller for better visual balance
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 237, 121, 11).withOpacity(0.2),
+            borderRadius: BorderRadius.circular(12), // Smoother border radius
+            // border: Border.all(
+            //   color: Theme.of(context).primaryColor.withOpacity(0.2),
+            //   width: 1.5, // Slightly thicker border
+            // ),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.black.withOpacity(0.1),
+            //     blurRadius: 6,
+            //     offset: const Offset(0, 3), // Subtle shadow for depth
+            //   ),
+            // ],
+          ),
+          padding: const EdgeInsets.symmetric(
+              horizontal: 16.0, vertical: 12.0), // Better padding
+          child: Row(
+            children: [
+            
+          
+              Expanded(
+                child: Text(
+                  "This restaurant is currently not available for delivery".tr,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w500, // Slightly bolder text
+                      ),
+                  maxLines: 2, // Prevent text overflow
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+   const SizedBox(width: 12),
+              Image.asset(
+                "assets/image/icons/icons8-disconnect-94.png"
+              )
+            ],
+          ),
+        ),
+      ),
                                                       StoreBannerWidget(storeController: storeController),
                                                       // const SizedBox(height: Dimensions.paddingSizeLarge),
+                                                      // GetBuilder<CouponController>(builder: (couponController) {
+
+
+                                                      //     return ListView.builder(
+                                                      //       scrollDirection: Axis.horizontal,
+                                                      //       itemCount: couponController.couponList!.length,
+                                                      //       itemBuilder: (context, index) {
+                                                          
+                                                      //       return Container(
+                                                      //         height: 100,
+                                                      //      decoration: BoxDecoration(
+                                                      //       color: Colors.red
+                                                      //      ),
+                                                      //         child: Text('${couponController.couponList![index].code}'),
+                                                      //       );
+                                                          
+                                                      //     });
+                                                      //   }
+                                                      // ),
+                                               
+                                                  
                                                       // (!ResponsiveHelper.isDesktop(context) &&
                                                       //         storeController.recommendedItemModel != null &&
                                                       //         storeController.recommendedItemModel!.items!.isNotEmpty)
@@ -1249,8 +1322,9 @@ class _StoreScreenState extends State<StoreScreen> {
                               
                               
                                                       // SizedBox(height: 40,),
+CouponCarousel(storeid: store!.id,),
 
-                                                      StoreBannerWidget(storeController: storeController)
+                                             // SizedBox(height: 40,),             StoreBannerWidget(storeController: storeController)
                                                     ]),
                                                   ),
                             ))),
@@ -1607,6 +1681,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                           },
                                         ),
                                       ),
+                                      
                                     ],
                                   ),
                                 ))),
@@ -1908,6 +1983,7 @@ class _StoreScreenState extends State<StoreScreen> {
                     totalSize: storeController.storeItemModel?.totalSize,
                     offset: storeController.storeItemModel?.offset,
                     itemView: ItemsView(
+                      
                       // notinStore: true,
                       isStore: false, stores: null,
                       items: (storeController.categoryList!.isNotEmpty && storeController.storeItemModel != null)
@@ -1922,8 +1998,10 @@ class _StoreScreenState extends State<StoreScreen> {
                   ),
                 ),
               )),
-       
-       
+
+
+       SliverToBoxAdapter(child: SizedBox(height: 200,))
+
             ],
           ) :
           CustomScrollView(
@@ -1961,9 +2039,9 @@ class _StoreScreenState extends State<StoreScreen> {
           },
         ),
         IconButton(
-          icon: const Icon(Icons.shopping_bag), // Cart icon
+          icon: const Icon(Icons.shopping_bag),
           onPressed: () {
-            // Handle the cart action
+            
           },
         ),
       ],

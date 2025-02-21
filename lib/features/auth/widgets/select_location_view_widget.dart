@@ -372,7 +372,7 @@ class _SelectLocationViewWidgetState extends State<SelectLocationViewWidget> {
         points: zoneLatLongList,
         strokeWidth: 2,
         strokeColor: Get.theme.colorScheme.primary,
-        fillColor: Get.theme.colorScheme.primary  ,
+        fillColor: Get.theme.colorScheme.primary.withOpacity(.2),
       ),
     );
 

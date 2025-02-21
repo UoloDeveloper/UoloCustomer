@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sixam_mart/common/widgets/address_widget.dart';
+import 'package:sixam_mart/features/address/domain/models/address_model.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/checkout/screens/checkout_screen.dart';
 import 'package:sixam_mart/features/checkout/widgets/prescription_image_picker_widget.dart';
@@ -22,6 +24,7 @@ import 'package:sixam_mart/features/checkout/widgets/partial_pay_view.dart';
 
 class BottomSection extends StatelessWidget {
   final CheckoutController checkoutController;
+  final AddressModel SelectedAddress;
   final double total;
   final Module module;
   final double subTotal;
@@ -49,7 +52,7 @@ class BottomSection extends StatelessWidget {
     required this.discount, required this.couponController, required this.taxIncluded, required this.tax,
     required this.deliveryCharge, required this.todayClosed, required this.tomorrowClosed,
     required this.orderAmount, this.maxCodOrderAmount, this.storeId, this.taxPercent, required this.price,
-    required this.addOns, this.checkoutButton, required this.isPrescriptionRequired, required this.referralDiscount, required this.variationPrice, required this.distance, required this.dicount});
+    required this.addOns, this.checkoutButton, required this.isPrescriptionRequired, required this.referralDiscount, required this.variationPrice, required this.distance, required this.dicount, required this.SelectedAddress});
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +100,30 @@ class BottomSection extends StatelessWidget {
 
             // const CheckoutCondition(),
       //  const Divider(),
+  Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10.0,
+                                              bottom: 10,
+                                              left: 3,
+                                              right: 10),
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                Images.dltime,
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              const Text('Deliver in '),
+                                              Text('30 mins ',
+                                                  style: robotoBold),
+                                            ],
+                                          ),
+                                        ),
+                                           const Divider(),
 
+                                           AddressWidget(address: SelectedAddress, fromAddress: false),
+                                             const Divider(),
                          GetBuilder<ProfileController>(builder: (profileController) {
                               return Padding(
                                 padding: const EdgeInsets.only(
@@ -451,7 +477,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                   Container(
                     decoration: const BoxDecoration(color: Color(0xFFF4F5FA)),
                     child: const Text(
-                      "Order Summary",
+                      "mary",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -488,13 +514,38 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                                 ],
                               ),
                               const Spacer(),
-                               Text(
+                              discount < 0 ?     Text(
                                 PriceConverter.convertPrice(subtotal,currency: currency ),
                                 style: TextStyle(
                                   fontSize: Dimensions.fontSizeDefault,
                                   fontWeight: FontWeight.w500,
                                 ),
+                              ) : Row(
+                                children: [
+                                   Text(
+                                   "₹${subtotal}",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: Dimensions.fontSizeDefault,
+                                      fontWeight: FontWeight.w500,
+                                       decoration: TextDecoration.lineThrough,
+        decorationColor:  Colors.grey,
+                                      
+                                    ),
+                                  ),
+
+                                  SizedBox(width: 5),
+                                  Text(
+                                   "₹${subtotal - discount}",
+                                    style: TextStyle(
+                                      fontSize: Dimensions.fontSizeDefault,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
+
+
                             ],
                           ),
                           const SizedBox(height: 10,),
@@ -616,9 +667,9 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                   
                             ],
                           ),
-                          checkoutController.isPartialPay ? Row(
-                            children: [
-                              Row(
+ const SizedBox(height: 10,),
+                         checkoutController.isPartialPay ?  Row(children: [
+                               Row(
                                 children: [
                                  const Icon(Icons.wallet, size: 17),
                                   const SizedBox(width: 5),
@@ -633,24 +684,49 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                               ),
                               const Spacer(),
                                checkoutController.isPartialPay ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text('paid_by_wallet'.tr, style: robotoRegular),
-              Text('(-) ${PriceConverter.convertPrice(Get.find<ProfileController>().userInfoModel!.walletBalance!,currency: currency)}', style: robotoRegular, textDirection: TextDirection.ltr),
+              // Text('paid_by_wallet'.tr, style: robotoRegular),
+              Text('${PriceConverter.convertPrice(Get.find<ProfileController>().userInfoModel!.walletBalance!,currency: currency)}', style:TextStyle(
+                                  fontSize: Dimensions.fontSizeDefault,
+                                  fontWeight: FontWeight.w500,), textDirection: TextDirection.ltr),
             ]) : const SizedBox(),
-            SizedBox(height: checkoutController.isPartialPay ? Dimensions.paddingSizeSmall : 0),
+                          ],) : SizedBox(),
+                          checkoutController.isPartialPay ? Row(
+                            children: [
+                           
+            // SizedBox(height: checkoutController.isPartialPay ? Dimensions.paddingSizeSmall : 0),
 
-            checkoutController.isPartialPay ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                'due_payment'.tr,
-                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: !ResponsiveHelper.isDesktop(context) ? Theme.of(context).textTheme.bodyMedium!.color : Theme.of(context).primaryColor),
-              ),
-              PriceConverter.convertAnimationPrice(
-                checkoutController.viewTotalPrice,
-                textStyle: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: !ResponsiveHelper.isDesktop(context) ? Theme.of(context).textTheme.bodyMedium!.color : Theme.of(context).primaryColor),
-                currency: Get.find<CartController>().getCurrncyForUi()
-              )
-            ]) : const SizedBox(),
+//             checkoutController.isPartialPay ? Row(
+//               children: [
+//                 Row( children: [
+//                   Text(
+//                     'due_payment'.tr,
+//                     style: TextStyle(
+//                        fontSize: Dimensions.fontSizeDefault,
+//                                           fontWeight: FontWeight.w400,
+//                     )
+                    
+//                     // robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: !ResponsiveHelper.isDesktop(context) ? Theme.of(context).textTheme.bodyMedium!.color : Theme.of(context).primaryColor),
+//                   ),
+                
+//                     // Spacer(),
+                
+                   
+//                   // PriceConverter.convertAnimationPrice(
+//                   //   checkoutController.viewTotalPrice,
+//                   //   textStyle: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: !ResponsiveHelper.isDesktop(context) ? Theme.of(context).textTheme.bodyMedium!.color : Theme.of(context).primaryColor),
+//                   //   currency: Get.find<CartController>().getCurrncyForUi()
+//                   // )
+//                 ]),
 
-//                                Text(
+
+
+//                   Text('${PriceConverter.convertPrice(  checkoutController.viewTotalPrice,currency: currency)}', style:TextStyle(
+//                                       fontSize: Dimensions.fontSizeDefault,
+//                                       fontWeight: FontWeight.w500,), textDirection: TextDirection.ltr),
+//               ],
+//             ) : const SizedBox(),
+
+// //                                Text(
 // "₹-${checkoutController.viewpartialpayPrice}",
 
 //                                 // PriceConverter.convertPrice(checkoutController.viewpartialpayPrice,),

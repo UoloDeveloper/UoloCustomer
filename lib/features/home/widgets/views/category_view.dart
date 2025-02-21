@@ -772,7 +772,7 @@ class FoodCategoryView extends StatelessWidget {
                             Text(
                               isSeeAll ? 'see_all'.tr : category.name ?? '',
                               style: robotoMedium.copyWith(
-                                fontSize: Dimensions.fontSizeSmall,
+                                fontSize: Dimensions.fontSizeSmall +2,
                                 color: isSeeAll
                                     ? Theme.of(context).primaryColor
                                     : Theme.of(context).textTheme.bodyMedium?.color,

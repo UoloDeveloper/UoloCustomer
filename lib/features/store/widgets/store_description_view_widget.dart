@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:sixam_mart/features/review/screens/review_screen.dart';
 import 'package:sixam_mart/features/store/controllers/store_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/favourite/controllers/favourite_controller.dart';
@@ -61,9 +62,9 @@ class StoreDescriptionViewWidget extends StatelessWidget {
                       Text("${store!.name}", style: robotoMedium.copyWith(fontSize: 20, color: textColor,fontWeight: FontWeight.w600)),
                       Row(
                         children: [
-                          Icon(Icons.timer, color: Theme.of(context).primaryColor, size: 18),
-                          Text("${store!.deliveryTime}", style: robotoMedium.copyWith(fontSize: 11, color: textColor,fontWeight: FontWeight.w500)),
-                          Text("'${(store!.distance! / 1000).toStringAsFixed(2)} km'", style: robotoMedium.copyWith(fontSize: 11, color: textColor,fontWeight: FontWeight.w500)),
+                          // Icon(Icons.timer, color: Theme.of(context).primaryColor, size: 18),
+                          Text("${store!.deliveryTime}", style: robotoMedium.copyWith(fontSize: 13, color: textColor,fontWeight: FontWeight.w500)),
+                          Text("'${(store!.distance! / 1000).toStringAsFixed(2)} km'", style: robotoMedium.copyWith(fontSize: 13, color: textColor,fontWeight: FontWeight.w500)),
              //  Text("'${(store!.address! )}'", style: robotoMedium.copyWith(fontSize: 10, color: textColor,fontWeight: FontWeight.w500)),
          
              SizedBox(width: 5,),
@@ -77,9 +78,10 @@ class StoreDescriptionViewWidget extends StatelessWidget {
                    
                    const Expanded(child: SizedBox()),
                    InkWell(
-                                  onTap: () => Get.toNamed(RouteHelper.getStoreReviewRoute(store!.id, store!.name, store!))
+                                  onTap: () => Get.to(ReviewScreen(store: store, storeID: store!.id.toString(),)),
+                                  //  Get.toNamed(RouteHelper.getStoreReviewRoute(store!.id, store!.name, store!))
                                   
-                                  ,
+                                  
                                   
                                   child: Column(children: [
                      Container(
@@ -115,7 +117,8 @@ class StoreDescriptionViewWidget extends StatelessWidget {
           const Divider(
          
           ),
-         const SizedBox(height: 10,),
+        //  const SizedBox(height: 10,),
+        store!.discount != null ?   const SizedBox(height: 10,) : const SizedBox(),
           store!.discount != null ?  Row(
             children: [
               SvgPicture.asset("assets/image/icons/Vector (1).svg", height: 20, width: 20),
@@ -132,7 +135,9 @@ class StoreDescriptionViewWidget extends StatelessWidget {
                                     textAlign: TextAlign.justify, maxLines: 2, overflow: TextOverflow.ellipsis,
                                   )
             ],
-          ): const SizedBox()
+          ): const SizedBox(),
+
+         store!.discount != null ?   const SizedBox(height: 10,) : const SizedBox(),
             //  Row(children: [
              
               
@@ -193,8 +198,8 @@ class StoreDescriptionViewWidget extends StatelessWidget {
             //    ]) : const SizedBox(),
             //    const Expanded(child: SizedBox()),
             //  ]),
-           ,
-           SizedBox(height: 30,)
+           
+          //  SizedBox(height: 30,)
            ],
          ),
        ),

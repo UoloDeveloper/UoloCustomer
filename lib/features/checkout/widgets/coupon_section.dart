@@ -43,6 +43,7 @@ class CouponSection extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                   horizontal: Dimensions.paddingSizeLarge),
               child: Column(children: [
+                
                 const SizedBox(height: Dimensions.paddingSizeSmall),
                   
                 Row( children: [
@@ -95,6 +96,8 @@ class CouponSection extends StatelessWidget {
           
                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
             const Divider(),
+
+            
                 // Container(
                 //   decoration: BoxDecoration(
                 //     borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
@@ -184,8 +187,99 @@ class CouponSection extends StatelessWidget {
                 //     ),
                 //   ]),
                 // ),
-                const SizedBox(height: Dimensions.paddingSizeSmall),
+                // const SizedBox(height: Dimensions.paddingSizeSmall),
+
+                 Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                // border: Border.all(color: Theme.of(context).primaryColor, width: 0.2),
+              ),
+              padding: const EdgeInsets.only(left: 5),
+              child: Row(children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 45,
+                    child: TextField(
+                      controller: checkoutController.couponController,
+                      style: robotoRegular.copyWith(height: ResponsiveHelper.isMobile(context) ? null : 2),
+                      decoration: InputDecoration(
+                        hintText: 'enter_promo_code'.tr,
+                        hintStyle: robotoRegular.copyWith(color: Theme.of(context).hintColor),
+                        isDense: true,
+                        filled: true,
+                        enabled: couponController.discount == 0,
+                        fillColor: Theme.of(context).cardColor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(Get.find<LocalizationController>().isLtr ? 10 : 0),
+                            right: Radius.circular(Get.find<LocalizationController>().isLtr ? 0 : 10),
+                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all( 15),
+                          child: Image.asset(Images.couponIcon, height: 10, width: 20, color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    if(checkoutController.couponController.text.isNotEmpty){
+                      if(Get.find<CouponController>().discount! < 1 && !Get.find<CouponController>().freeDelivery) {
+                        if(checkoutController.couponController.text.isNotEmpty && !Get.find<CouponController>().isLoading) {
+                          Get.find<CouponController>().applyCoupon(checkoutController.couponController.text, (price-discount)+addOns + variationPrice, deliveryCharge,
+                              Get.find<StoreController>().store!.id).then((discount) {
+                            //checkoutController.couponController.text = 'coupon_applied'.tr;
+                            if (discount! > 0) {
+                              showCustomSnackBar(
+                                '${'you_got_discount_of'.tr} ${PriceConverter.convertPrice(discount)}',
+                                isError: false,
+                              );
+                              if(checkoutController.isPartialPay || checkoutController.paymentMethodIndex == 1) {
+                                totalPrice = totalPrice - discount;
+                                checkoutController.checkBalanceStatus(totalPrice, discount);
+                              }
+                            }
+                          });
+                        } else if(checkoutController.couponController.text.isEmpty) {
+                          showCustomSnackBar('enter_a_coupon_code'.tr);
+                        }
+                      } else {
+                        totalPrice = totalPrice + couponController.discount!;
+                        Get.find<CouponController>().removeCouponData(true);
+                        checkoutController.couponController.text = '';
+                        if(checkoutController.isPartialPay || checkoutController.paymentMethodIndex == 1){
+                          checkoutController.checkBalanceStatus(totalPrice, 0);
+                        }
+                      }
+                    }else {
+                      showCustomSnackBar('enter_a_coupon_code'.tr);
+                    }
+                  },
+                  child: Container(
+                    height: 40, width: (couponController.discount! <= 0 && !couponController.freeDelivery) ? 100 : 50,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                    decoration: BoxDecoration(
+                      color: (couponController.discount! <= 0 && !couponController.freeDelivery) ? Color.fromARGB(255, 45, 3, 67) : Colors.transparent,
+                      borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                    ),
+                    child: (couponController.discount! <= 0 && !couponController.freeDelivery) ? !couponController.isLoading ? Text(
+                      'apply'.tr,
+                      style: robotoMedium.copyWith(color: Theme.of(context).cardColor),
+                    ) : const SizedBox(
+                      height: 30, width: 30,
+                      child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+                    )
+                        : Icon(Icons.clear, color: Theme.of(context).colorScheme.error),
+                  ),
+                ),
+              ]),
+            ),
           
+           Divider(),
                 GestureDetector(
                   onTap:   () {
             Get.to(() => CouponPage(storeId: storeId, checkoutController: checkoutController));
