@@ -619,7 +619,7 @@ return Container(
                                 ),
                               ),
                                const SizedBox(width: 8,),
-                                if (discount! > 0)
+                                if (discount! > 0  && customizable )
                             Text(
                               PriceConverter.convertPrice(widget.item?.price,currency: widget.item?.currency?.currencyCode),
                               style: robotoMedium.copyWith(

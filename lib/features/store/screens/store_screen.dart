@@ -1138,7 +1138,7 @@ class _StoreScreenState extends State<StoreScreen> {
                       //   ),
                       // ),
                       leading: IconButton(
-                        onPressed: () => Get.back(),
+                        onPressed: () => Navigator.pop(context),
                         icon:  Icon(Icons.arrow_back_ios, color: Theme.of(context).primaryColor),
                       ),
                           title: Text(_showTitle ? store!.name ?? '' : '', style: 

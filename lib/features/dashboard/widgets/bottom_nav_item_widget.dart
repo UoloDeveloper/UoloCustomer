@@ -18,11 +18,11 @@ class BottomNavItemWidget extends StatelessWidget {
       child: InkWell(
         onTap: onTap as void Function()?,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-SizedBox(height: isSelected ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall),
+SizedBox(height: isSelected ? Dimensions.paddingSizeExtraSmall : isfood ?  Dimensions.paddingSizeExtraSmall - 3 : Dimensions.paddingSizeSmall),
           SvgPicture.asset(
             isSelected ? selectedIcon : unSelectedIcon, 
-            height: isfood ? 30 : 21,
-            width:isfood ? 30 : 21,
+            height: isfood ? 25 : 21,
+            width:isfood ? 25 : 21,
             color: isSelected ? 
             
             // const Color(0xFFFF5200) 
@@ -32,7 +32,7 @@ SizedBox(height: isSelected ? Dimensions.paddingSizeExtraSmall : Dimensions.padd
           ),
 
 
-          SizedBox(height: isSelected ? Dimensions.paddingSizeExtraSmall :Dimensions.paddingSizeExtraSmall ),
+          SizedBox(height: isSelected ? Dimensions.paddingSizeExtraSmall : isfood ?  Dimensions.paddingSizeExtraSmall - 3 : Dimensions.paddingSizeExtraSmall ),
 
           Text(
             title,

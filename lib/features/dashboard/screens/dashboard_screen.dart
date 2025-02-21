@@ -989,7 +989,7 @@ class DashboardScreenState extends State<DashboardScreen> {
           return Obx(() {
               return  Get.find<Bottomsheetcontroller>().showBottomSheet.value ? Container(
                 width: size.width,
-                height: GetPlatform.isIOS ? 80 : 65,
+                height: GetPlatform.isIOS ? 80 : 55,
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
                   boxShadow: const [

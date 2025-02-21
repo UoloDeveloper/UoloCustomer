@@ -337,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       alignment: Alignment.topCenter,
                       child: Stack(
                         children: [
-                          VideoContainer( link: !isFood ? 'assets/image/static_banner/homescreenbannervideo.mp4' : "assets/image/static_banner/videobanner.mp4",),
+                          VideoContainer( link: "assets/image/static_banner/videobanner.mp4",),
 
                             //  if (!showMobileModule)
                                 Padding(

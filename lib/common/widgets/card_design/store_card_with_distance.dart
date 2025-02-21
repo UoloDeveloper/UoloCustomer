@@ -105,7 +105,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
           ),
         ),
         if (discount > 0)
-        DiscountTag(discount: discount, discountType: discountType,fromTop: 85, currency:widget.store?.currency?.currencyCode,),
+        DiscountTag(discount: discount, discountType: discountType,fromTop: 85, currency:widget.store?.currency?.currencySymbol,),
           // Positioned( 
           //   right: 0,
           //   bottom: 0,
@@ -139,7 +139,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
             child: Icon(
               isWished ? Icons.favorite : Icons.favorite_border,
               size: 20,
-              color: Theme.of(context).primaryColor,
+              color: Colors.red,
             ),
           ),
         ),

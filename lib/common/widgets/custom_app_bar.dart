@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       leading: backButton ? IconButton(
         icon: leadingIcon != null ? Image.asset(leadingIcon!, height: 22, width: 22) : const Icon(Icons.arrow_back_ios),
-        color: Theme.of(context).textTheme.bodyLarge!.color,
+        color: Colors.black,
         onPressed: () => onBackPressed != null ? onBackPressed!() : Navigator.pop(context),
       ) : const SizedBox(),
       backgroundColor: Theme.of(context).cardColor,

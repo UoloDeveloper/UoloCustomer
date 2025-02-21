@@ -1348,10 +1348,11 @@ Widget _orderPlaceButton(
           showCustomSnackBar("The store isn't serving right now");
 
 
-          } else if( checkoutController.store!.scheduleOrder == true && checkoutController.preferableTime.isEmpty   ) {
-             showCustomSnackBar("Preferable time is required");
+          } 
+          // else if( checkoutController.store!.scheduleOrder == true || checkoutController.preferableTime.isEmpty   ) {
+          //    showCustomSnackBar("Preferable time is required");
             
-          }
+          // }
           else if(checkoutController.paymentMethodIndex == -1) {
             if(ResponsiveHelper.isDesktop(context)){
               Get.dialog(Dialog(backgroundColor: Colors.transparent, child: PaymentMethodBottomSheet(

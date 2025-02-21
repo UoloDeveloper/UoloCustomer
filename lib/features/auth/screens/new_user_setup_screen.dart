@@ -42,6 +42,8 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
 
   bool _isSocial = false;
 
+  bool _ShowreferelCode = false;
+
   @override
   void initState() {
     super.initState();
@@ -49,16 +51,17 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
     _formKeyInfo = GlobalKey<FormState>();
     _countryDialCode = CountryCode.fromCountryCode(Get.find<SplashController>().configModel!.country!).dialCode;
     _isSocial ? _nameController.text = widget.name : _nameController.text = '';
+    // _ShowreferelCode = Get.find<SplashController>().configModel!.refEarningStatus == 1;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).cardColor,
+      backgroundColor: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).primaryColor,
       appBar: ResponsiveHelper.isDesktop(context) ? null : AppBar(leading: IconButton(
         onPressed: () => Get.back(),
-        icon: Icon(Icons.arrow_back_ios_rounded, color: Theme.of(context).textTheme.bodyLarge!.color),
-      ), elevation: 0, backgroundColor: Theme.of(context).cardColor),
+        icon: Icon(Icons.arrow_back_ios_rounded, color: Theme.of(context).cardColor),
+      ), elevation: 0, backgroundColor: Theme.of(context).primaryColor),
       body: SafeArea(child: Align(
         alignment: Alignment.center,
         child: Container(
@@ -82,16 +85,19 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
                   ),
                 ) : const SizedBox(),
 
-                Image.asset(Images.logo, width: 125),
-                const SizedBox(height: Dimensions.paddingSizeLarge),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+                  child: Image.asset(Images.logo, width: 125)),
+                const SizedBox(height: Dimensions.paddingSizeLarge + 40),
 
-                Text('just_one_step_away'.tr, style: robotoMedium.copyWith(color: Theme.of(context).disabledColor), textAlign: TextAlign.center),
+                Text("Just one more action, and this will personalize your profile", style: robotoMedium.copyWith(color: Theme.of(context).disabledColor), textAlign: TextAlign.center),
                 const SizedBox(height: Dimensions.paddingSizeExtremeLarge),
 
                 CustomTextField(
-                  titleText: 'ex_jhon'.tr,
+                  color: Colors.white60,
+                  titleText: 'name'.tr,
                   labelText: 'user_name'.tr,
-                  showLabelText: true,
+                  showLabelText: false,
                   required: true,
                   controller: _nameController,
                   focusNode: _nameFocus,
@@ -105,9 +111,10 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
                 const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
                 _isSocial ? CustomTextField(
+                  color: Colors.white60,
                   titleText: 'xxx-xxx-xxxxx'.tr,
                   labelText: 'phone'.tr,
-                  showLabelText: true,
+                  showLabelText: false,
                   required: true,
                   controller: _phoneController,
                   focusNode: _phoneFocus,
@@ -121,9 +128,10 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
                       : Get.find<LocalizationController>().locale.countryCode,
                   validator: (value) => ValidateCheck.validateEmptyText(value, "please_enter_phone_number".tr),
                 ) : CustomTextField(
+                  color: Colors.white60,
                   titleText: 'enter_email'.tr,
                   labelText: 'email'.tr,
-                  showLabelText: true,
+                  showLabelText: false,
                   required: true,
                   controller: _emailController,
                   focusNode: _emailFocus,
@@ -134,10 +142,11 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
                 ),
                 const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
-                (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? CustomTextField(
+            if(_ShowreferelCode)    (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? CustomTextField(
+                  color: Colors.white60,
                   titleText: 'refer_code'.tr,
                   labelText: 'refer_code'.tr,
-                  showLabelText: true,
+                  showLabelText: false,
                   controller: _referCodeController,
                   focusNode: _referCodeFocus,
                   inputAction: TextInputAction.done,
@@ -147,10 +156,13 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
                   divider: false,
                   prefixSize: 14,
                 ) : const SizedBox(),
-                SizedBox(height: (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? Dimensions.paddingSizeExtraOverLarge : 0),
+                SizedBox(height: (Get.find<SplashController>().configModel!.refEarningStatus == 1 ) ? Dimensions.paddingSizeExtraOverLarge - 10 : 0),
 
                 GetBuilder<AuthController>(builder: (authController) {
                   return CustomButton(
+                    successtextcolour:Theme.of(context).cardColor ,
+                    textColor:Theme.of(context).primaryColor ,
+                    color: Theme.of(context).cardColor,
                     height: ResponsiveHelper.isDesktop(context) ? 50 : null,
                     width:  ResponsiveHelper.isDesktop(context) ? 250 : null,
                     radius: ResponsiveHelper.isDesktop(context) ? Dimensions.radiusSmall : Dimensions.radiusDefault,
@@ -178,7 +190,11 @@ class _NewUserSetupScreenState extends State<NewUserSetupScreen> {
                     },
                   );
                 }),
-
+               if (Get.find<SplashController>().configModel!.refEarningStatus == 1)     TextButton(onPressed: (){
+                setState(() {
+                  _ShowreferelCode = !_ShowreferelCode;
+                });
+               }, child: Text("Have referal code?".tr, style: robotoRegular.copyWith(color: Theme.of(context).cardColor),)),
               ]),
             ),
           ),

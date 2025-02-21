@@ -337,7 +337,7 @@ class CurrencyModel {
   int? id;
   String? country;
 
-  CurrencyModel({ this.currencySymbol, this.exchangeRate, this.created_at, this.updated_at, this.id, this.country});
+  CurrencyModel(String s, { this.currencySymbol, this.exchangeRate, this.created_at, this.updated_at, this.id, this.country});
 
   CurrencyModel.fromJson(Map<String, dynamic> json) {
     currencyCode = json['currency_code'];
