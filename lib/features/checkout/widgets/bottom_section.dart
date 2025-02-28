@@ -47,12 +47,13 @@ class BottomSection extends StatelessWidget {
   final double variationPrice;
   final double distance;
   final double dicount;
+  final String time;
 
   const BottomSection({super.key, required this.checkoutController, required this.total, required this.module, required this.subTotal,
     required this.discount, required this.couponController, required this.taxIncluded, required this.tax,
     required this.deliveryCharge, required this.todayClosed, required this.tomorrowClosed,
     required this.orderAmount, this.maxCodOrderAmount, this.storeId, this.taxPercent, required this.price,
-    required this.addOns, this.checkoutButton, required this.isPrescriptionRequired, required this.referralDiscount, required this.variationPrice, required this.distance, required this.dicount, required this.SelectedAddress});
+    required this.addOns, this.checkoutButton, required this.isPrescriptionRequired, required this.referralDiscount, required this.variationPrice, required this.distance, required this.dicount, required this.SelectedAddress, required this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +116,7 @@ class BottomSection extends StatelessWidget {
                                               ),
                                               const SizedBox(width: 5),
                                               const Text('Deliver in '),
-                                              Text('30 mins ',
+                                              Text('${time}',
                                                   style: robotoBold),
                                             ],
                                           ),

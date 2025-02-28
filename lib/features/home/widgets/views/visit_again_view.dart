@@ -29,7 +29,7 @@ class _VisitAgainViewState extends State<VisitAgainView> {
     return GetBuilder<StoreController>(builder: (storeController) {
         List<Store>? stores = storeController.visitAgainStoreList;
 
-      return   stores != null ? stores.isNotEmpty ? stores.length > 1 ? SizedBox.shrink() :
+      return   stores != null && stores.length > 1 ? stores.isNotEmpty ? 
        Padding(
          padding:  EdgeInsets.only(bottom: widget.itemsview! ? 10 :  0),
          child: Container(

@@ -133,12 +133,12 @@ class RunningOrderViewWidget extends StatelessWidget {
 
                       Container(
                         padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                        decoration: BoxDecoration(color: Theme.of(context).primaryColor  , shape: BoxShape.circle),
+                        decoration: BoxDecoration(color: Theme.of(context).primaryColor.withValues(alpha: 0.1), shape: BoxShape.circle),
                         child: isFirstOrder ? !(reversOrder.length < 2) ? InkWell(
                           onTap: () => onOrderTap(),
                           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Text('+${reversOrder.length - 1}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).cardColor)),
-                                Text('more'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).cardColor)),
+                                Text('+${reversOrder.length - 1}', style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
+                                Text('more'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor)),
                               ]),
                             ) : Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor)
                             : Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor),
@@ -156,6 +156,6 @@ class RunningOrderViewWidget extends StatelessWidget {
 
   Widget trackView(BuildContext context, {required bool status}) {
     return Container(height: 5, decoration: BoxDecoration(color: status ? Theme.of(context).primaryColor
-        : Theme.of(context).disabledColor  , borderRadius: BorderRadius.circular(Dimensions.radiusDefault)));
+        : Theme.of(context).disabledColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(Dimensions.radiusDefault)));
   }
 }

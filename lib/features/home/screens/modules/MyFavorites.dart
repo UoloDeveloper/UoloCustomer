@@ -4,6 +4,7 @@ import 'package:sixam_mart/common/widgets/custom_app_bar.dart';
 import 'package:sixam_mart/common/widgets/item_widget.dart';
 import 'package:sixam_mart/common/widgets/no_data_screen.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
+import 'package:sixam_mart/features/favourite/controllers/favourite_controller.dart';
 
 
 import 'package:sixam_mart/features/home/widgets/web/widgets/store_card_widget.dart';
@@ -350,42 +351,59 @@ class _MyFavoriteState extends State<MyFavorite> with SingleTickerProviderStateM
               controller: _tabController,
               children: [
                 // Dishes Tab
-                GetBuilder<ItemController>(builder: (itemController) {
-                  List<Item>? items = itemController.recommendedItemList;
+                GetBuilder<FavouriteController>(builder: (favouriteController) {
+                  List<Item?>? items = favouriteController.wishItemList;
 
                   if (items == null || items.isEmpty) {
                     return const Center(child: NoDataScreen(text: 'No Data.'));
                   }
 
-                  return ListView.builder(
+                  return ListView.separated(
                     itemCount: items.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ItemWidget(
-                        item: items[index],
-                        isStore: false,
-                        store: null,
-                        index: index,
-                        length: items.length,
+                      return Container(
+                        height: 200,
+                        child: ItemWidget(
+                          item: items[index],
+                          isStore: false,
+                          store: null,
+                          index: index,
+                          length: items.length,
+                        ),
                       );
-                    },
+                    }, separatorBuilder: (BuildContext context, int index) { 
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10,right: 10),
+                        child: const Divider(),
+                      );
+                     },
                   );
                 }),
                 // Restaurants Tab
-                GetBuilder<StoreController>(builder: (storeController) {
-                  List<Store>? stores = storeController.visitAgainStoreList;
+              GetBuilder<FavouriteController>(builder: (favouriteController) {
+                  List<Store?>? stores = favouriteController.wishStoreList;
 
                   if (stores == null || stores.isEmpty) {
                     return const Center(child: NoDataScreen(text: 'No Data.'));
                   }
 
-                  return ListView.builder(
+                  return ListView.separated(
                     itemCount: stores.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: StoreCardWidget2(store: stores[index]),
+                      return Container(
+                        height: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: StoreCardWidget2(store: stores[index]),
+                        ),
                       );
-                    },
+                    }, separatorBuilder: (BuildContext context, int index) { 
+                      return Padding(
+                         padding: const EdgeInsets.only(left: 10,right: 10),
+                        
+                        child: const Divider(),
+                      );
+                     },
                   );
                 }),
               ],

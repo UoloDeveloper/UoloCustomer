@@ -1,4 +1,5 @@
 import 'package:flutter/rendering.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
@@ -977,7 +978,7 @@ class _StoreScreenState extends State<StoreScreen> {
   @override
   void dispose() {
     Get.find<StoreController>().clearstoreitems();
-  
+    print('================================================================DISPOSE===================================================================');
     scrollController.dispose();
 
     super.dispose();
@@ -2494,7 +2495,9 @@ CouponCarousel(storeid: store!.id,),
 //           ) :
          
          
-            MyStoreShimmer();
+            MyStoreShimmer(
+              isloader: true,
+            );
           
           //  const CustomLoaderWidget();
           
@@ -2513,15 +2516,20 @@ CouponCarousel(storeid: store!.id,),
     
     
     
-         bottomNavigationBar: GetBuilder<CartController>(
-      builder: (cartController){
-        return  !isShop ? cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
-         ? const BottomCartWidget(
-          fromgroccery: false,
-         )
-         : const SizedBox() : const SizedBox();
-      },
-    ),
+         bottomNavigationBar:  GetBuilder<StoreController>(
+                             builder: (storeController) {
+                       return (storeController.store != null &&
+                   storeController.store!.name != null) ? GetBuilder<CartController>(
+                             builder: (cartController){
+                               return  !isShop ? cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
+                                ? const BottomCartWidget(
+                                 fromgroccery: false,
+                                )
+                                : const SizedBox() : const SizedBox();
+                             },
+                           ) : const SizedBox();
+                     }
+                   ),
     
          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat  ,
        
@@ -2665,11 +2673,46 @@ void showGridMenu(BuildContext context) {
 
 
 
-class MyStoreShimmer extends StatelessWidget {
+class MyStoreShimmer extends StatefulWidget {
+final bool  isloader;
+  const MyStoreShimmer({super.key, required this.isloader});
+
   @override
+  State<MyStoreShimmer> createState() => _MyStoreShimmerState();
+}
+
+class _MyStoreShimmerState extends State<MyStoreShimmer> with SingleTickerProviderStateMixin {
+
+
+  //  late AnimationController _controller;
+ @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = AnimationController(
+  //     duration: const Duration(seconds: 2), 
+  //     vsync: this,
+  //   )..repeat(); 
+
+ 
+  //   _controller.value = 2.0; 
+  //   _controller.forward(); 
+  //   _controller.duration = const Duration(seconds: 3);
+  //   _controller.repeat(); 
+  // }
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: widget.isloader ?  Center(child: Padding(
+        padding: const EdgeInsets.only(bottom: 00),
+        child: Container(
+          height: 200,
+          width: 200,
+          child: Lottie.asset('assets/animations/Animation - 1740696483528 (4).json', repeat: true,
+        fit: BoxFit.cover,
+        height: 100,
+        width: 100
+             ),
+        ),
+      ))  : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -2735,7 +2778,7 @@ class MyStoreShimmer extends StatelessWidget {
                 ),
               );
             
-            
+                 
             
             },
             ),
@@ -2753,9 +2796,9 @@ class MyStoreShimmer extends StatelessWidget {
                 child: ItemShimmer()),
                SizedBox(height: 20,),
               // Flexible(child: ShimmerSkeleton(height: 200, width: double.infinity)), 
-            Container(
-                height: 200,
-                child: ItemShimmer()),
+            // Container(
+            //     height: 200,
+            //     child: ItemShimmer()),
             
           ],
         ),

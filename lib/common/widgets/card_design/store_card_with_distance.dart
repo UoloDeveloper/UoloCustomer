@@ -60,6 +60,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
     String discountType = widget.store.discount?.discountType ?? '';
     String currencySymbol = splashController.configModel!.currencySymbol!;
     bool isRightSide = splashController.configModel!.currencySymbolDirection == 'right';
+        bool isAvailable = widget. store?.open == 1 &&  widget.store?.active == true;
 
     return Container(
       width: widget.fromAllStore ? double.infinity : 150,
@@ -78,7 +79,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
         },
         child: Column(
           children: [
-            _buildStoreImage(context, discount, discountType, currencySymbol, isRightSide),
+            _buildStoreImage(context, discount, discountType, currencySymbol, isRightSide,isAvailable),
             _buildStoreDetails(context, distance, discount, discountType, currencySymbol, isRightSide),
           ],
         ),
@@ -86,9 +87,11 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
     );
   }
 
-  Widget _buildStoreImage(BuildContext context, double discount, String discountType, String currencySymbol, bool isRightSide) {
+  Widget _buildStoreImage(BuildContext context, double discount, String discountType, String currencySymbol, bool isRightSide,isAvailable) {
     return Stack(
       children: [
+        
+               
         ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(Dimensions.radiusDefault+ 8),
@@ -105,7 +108,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
           ),
         ),
         if (discount > 0)
-        DiscountTag(discount: discount, discountType: discountType,fromTop: 85, currency:widget.store?.currency?.currencySymbol,),
+        DiscountTag(discount: discount, discountType: discountType,fromTop: 85,),
           // Positioned( 
           //   right: 0,
           //   bottom: 0,
@@ -143,6 +146,17 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
             ),
           ),
         ),
+
+
+        if (!isAvailable)
+                    NotAvailableWidget(
+                      isStore: true,
+                      store:
+                      widget.store,
+                      fontSize: Dimensions.fontSizeExtraSmall,
+                      isAllSideRound: true,
+                      radius: Dimensions.radiusLarge,
+                    ),
       ],
     );
   }

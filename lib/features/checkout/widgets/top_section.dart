@@ -208,7 +208,7 @@ class TopSection extends StatelessWidget {
         ) : const SizedBox(),
         // const SizedBox(height: Dimensions.paddingSizeSmall),
 ///DmTips..
- (Currency.toString() == "INR")?  Padding(
+  Padding(
     padding: const EdgeInsets.only(left: 8,right: 8),
     child: DeliveryManTipsSection(
             takeAway: takeAway, tooltipController3: dmTipsTooltipController,
@@ -216,7 +216,7 @@ class TopSection extends StatelessWidget {
             Currency:Currency ,
 
           ),
-  ) : SizedBox(),
+  ),
        
         ///delivery instruction
         !takeAway ? isDesktop ? const WebDeliveryInstructionView() : Padding(

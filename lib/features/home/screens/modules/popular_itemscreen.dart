@@ -228,7 +228,13 @@ class _PopularState extends State<Popular> with SingleTickerProviderStateMixin {
                     return const Center(child: NoDataScreen(text: 'No Data.'));
                   }
 
-                  return ListView.builder(
+                  return ListView.separated(
+                    separatorBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.only(left: 10,right: 10),
+                      child: const Divider(
+                        
+                      ),
+                    ),
                     itemCount: items.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
@@ -253,12 +259,18 @@ class _PopularState extends State<Popular> with SingleTickerProviderStateMixin {
                     return const Center(child: NoDataScreen(text: 'No Data.'));
                   }
 
-                  return ListView.builder(
+                  return ListView.separated(
+                    separatorBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.only(left: 10,right: 10),
+                      child: Divider(),
+                    ),
                     itemCount: stores.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.all(10),
-                        child: StoreCardWidget2(store: stores[index]),
+                        child: Container(
+                          height: 180,
+                          child: StoreCardWidget2(store: stores[index])),
                       );
                     },
                   );

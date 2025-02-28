@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
-import 'package:sixam_mart/features/dashboard/dashboardscroll_controller.dart';
+// import 'package:sixam_mart/features/dashboard/dashboardscroll_controller.dart';
 import 'package:sixam_mart/features/language/controllers/language_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
@@ -124,7 +124,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _route();
-       Get.put(Bottomsheetcontroller()); 
+      //  Get.put(Bottomsheetcontroller()); 
   }
 
   void _route() async {

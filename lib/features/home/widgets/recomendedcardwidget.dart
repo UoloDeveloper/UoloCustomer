@@ -351,6 +351,7 @@ class RecomendedStoreCardWidget extends StatelessWidget {
                       isAllSideRound: true,
                       radius: Dimensions.radiusLarge,
                     ),
+               
                   Positioned(
                     top: Dimensions.paddingSizeSmall,
                     right: Dimensions.paddingSizeSmall,

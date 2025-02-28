@@ -43,6 +43,9 @@ class ItemController extends GetxController implements GetxService {
   
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+    bool _isAdding = false;
+  bool get isAdding => _isAdding;
   
   List<int>? _variationIndex;
   List<int>? get variationIndex => _variationIndex;
@@ -518,7 +521,7 @@ class ItemController extends GetxController implements GetxService {
   }
 
   void itemDirectlyAddToCart(Item? item, BuildContext context, {bool inStore = false, bool isCampaign = false}) {
-
+     
     if (((item!.foodVariations != null && item.foodVariations!.isEmpty) && item.moduleType == AppConstants.food) || (item.variations != null && item.variations!.isEmpty && item.moduleType != AppConstants.food)) {
       double price = item.price!;
       double discount = item.discount!;
@@ -546,17 +549,20 @@ class ItemController extends GetxController implements GetxService {
               ? 'if_you_continue'.tr : 'if_you_continue_without_another_store'.tr,
           onYesPressed: () {
             Get.find<CartController>().clearCartOnline().then((success) async {
+                 Get.back();
               if (success) {
                 await Get.find<CartController>().addToCartOnline(onlineCart);
-                Get.back();
+             
                 showCartSnackBar();
               }
             });
           },
         ), barrierDismissible: false);
       } else {
+         _isAdding = true;
         Get.find<CartController>().addToCartOnline(onlineCart);
         showCartSnackBar();
+         _isAdding = false;
       }
     } else if(Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! || item.moduleType == AppConstants.food){
       ResponsiveHelper.isMobile(context) ? Get.bottomSheet(
@@ -568,6 +574,8 @@ class ItemController extends GetxController implements GetxService {
     } else {
       Get.toNamed(RouteHelper.getItemDetailsRoute(item.id, inStore), arguments: ItemDetailsScreen(item: item, inStorePage: inStore));
     }
+
+    
   }
   
 }

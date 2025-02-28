@@ -1,3 +1,4 @@
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/order/controllers/order_controller.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/styles.dart';
@@ -165,45 +166,50 @@ class ConfirmationDialog extends StatelessWidget {
 
                     GetBuilder<OrderController>(
                       builder: (orderController) {
-                        return !orderController.isLoading
-                            ? Row(
-                                children: [
-                                  Expanded(
-                                    child: TextButton(
-                                      onPressed: () => isLogOut
-                                          ? onYesPressed()
-                                          : onNoPressed != null
-                                              ? onNoPressed!()
-                                              : Get.back(),
-                                      style: TextButton.styleFrom(
-                                        backgroundColor: Colors.grey[200],
-                                        minimumSize: const Size(50, 50),
-                                        padding: EdgeInsets.zero,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12),
+                        return GetBuilder<CartController>(
+                      builder: (cartcontroller) {
+                            return !orderController.isLoading
+                                ? Row(
+                                    children: [
+                                      Expanded(
+                                        child: TextButton(
+                                          onPressed: () => isLogOut
+                                              ? onYesPressed()
+                                              : onNoPressed != null
+                                                  ? onNoPressed!()
+                                                  : Get.back(),
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: Colors.grey[200],
+                                            minimumSize: const Size(50, 50),
+                                            padding: EdgeInsets.zero,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            isLogOut ? 'yes'.tr : 'no'.tr,
+                                            style: robotoBold.copyWith(
+                                              color: Colors.grey[800],
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                      child: Text(
-                                        isLogOut ? 'yes'.tr : 'no'.tr,
-                                        style: robotoBold.copyWith(
-                                          color: Colors.grey[800],
+                                      const SizedBox(width: 12),
+                            
+                                      Expanded(
+                                        child: CustomButton(
+                                           isLoading: cartcontroller.isLoading,
+                                          buttonText: isLogOut ? 'no'.tr : 'yes'.tr,
+                                          onPressed: () => isLogOut ? Get.back() : onYesPressed(),
+                                          radius: 12,
+                                          height: 50,
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-
-                                  Expanded(
-                                    child: CustomButton(
-                                      buttonText: isLogOut ? 'no'.tr : 'yes'.tr,
-                                      onPressed: () => isLogOut ? Get.back() : onYesPressed(),
-                                      radius: 12,
-                                      height: 50,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : const Center(child: CircularProgressIndicator());
+                                    ],
+                                  )
+                                : const Center(child: CircularProgressIndicator());
+                          }
+                        );
                       },
                     ),
                   ],

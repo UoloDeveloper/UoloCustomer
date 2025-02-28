@@ -54,7 +54,9 @@ class _PickMapScreenState extends State<PickMapScreen> {
   @override
   void initState() {
     super.initState();
-
+ Get.find<LocationController>().checkPermission(() {
+                        Get.find<LocationController>().getCurrentLocation(false, mapController: _mapController);
+                      });
     if (widget.fromAddAddress) {
       Get.find<LocationController>().setPickData();
     }

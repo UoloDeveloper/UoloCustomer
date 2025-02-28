@@ -480,7 +480,7 @@ class ModuleView extends StatelessWidget {
       
       
         BannerView(
-          isFeatured: true,
+          isFeatured: false,
         ),
         const SizedBox(height: 40),
 

@@ -171,7 +171,7 @@ class _ItemsViewState extends State<ItemsView> {
 
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Icon(!storeController.isopen ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor,size: 30,weight: 35,),
+                                  child: Icon(storeController.isopen ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor,size: 30,weight: 35,),
                                 ),
                               ],
                             ),
@@ -179,7 +179,7 @@ class _ItemsViewState extends State<ItemsView> {
                         ),
 
                         SizedBox(height: 10,),
-                    if (storeController.isopen)
+                    if (!storeController.isopen)
                       ListView.builder(
                           padding: EdgeInsets.all(0),
                           // separatorBuilder: (context, index) => const Divider(),
@@ -305,7 +305,7 @@ class _ItemsViewState extends State<ItemsView> {
           //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
           //     : 3.3,
           mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
-              : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 170 : 190
+              : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 200 : 210
               : 122,
           crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
         ),
@@ -352,16 +352,26 @@ final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems
           return widget.stores != null && widget.isStore ?  widget.isFoodOrGrocery! && widget.isStore
               ?
               
-              StoreCardWidget2(store: widget.stores![index])
+              Column(
+                children: [
+                  StoreCardWidget2(store: widget.stores![index]),
+                  Divider()
+                ],
+              )
               : StoreCardWithDistance(store: widget.stores![index]!, fromAllStore: true)
               :
               
                
-               ItemWidget(
-            isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
-            store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
-            inStore: widget.inStorePage,
-          );
+               Column(
+                 children: [
+                   ItemWidget(
+                               isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
+                               store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
+                               inStore: widget.inStorePage,
+                             ),
+                                 Divider()
+                 ],
+               );
         },
       ) : NoDataScreen(
         text: widget.noDataText ?? (widget.isStore ? Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!

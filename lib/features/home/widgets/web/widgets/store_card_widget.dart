@@ -265,8 +265,8 @@ double distance = (store!.distance! / 1000);
       child: OnHover(
         isItem: true,
         child: Container(
-            height: 200,
-            width: 200,
+            height: 180,
+            width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
@@ -320,7 +320,7 @@ double distance = (store!.distance! / 1000);
                       DiscountTag(
                         fromTop: 80,
                         discount: discount,
-                        discountType: discountType, currency: store?.currency?.currencySymbol,
+                        discountType: discountType, currency: store?.currency,
                       ),
       
                       // Not Available Indicator
@@ -645,6 +645,7 @@ double distance = (store!.distance! / 1000);
                        ),
                     
                     // SizedBox(height: 15,)
+                    
                       ],
                     ),
                   ),

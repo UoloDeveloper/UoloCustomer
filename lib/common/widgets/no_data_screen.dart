@@ -20,13 +20,13 @@ class NoDataScreen extends StatelessWidget {
         visibility: showFooter,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
 
-          Center(
-            child: Image.asset(
-              fromAddress ? Images.address : isCart ? Images.emptyCart : Images.noDataFound,
-              width: MediaQuery.of(context).size.height*0.15, height: MediaQuery.of(context).size.height*0.15,
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height*0.03),
+          // Center(
+          //   child: Image.asset(
+          //     fromAddress ? Images.address : isCart ? Images.emptyCart : Images.noDataFound,
+          //     width: MediaQuery.of(context).size.height*0.15, height: MediaQuery.of(context).size.height*0.15,
+          //   ),
+          // ),
+          // SizedBox(height: MediaQuery.of(context).size.height*0.03),
 
           Text(
             isCart ? 'cart_is_empty'.tr : text!,

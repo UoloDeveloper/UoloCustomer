@@ -43,7 +43,7 @@ class _MenuScreenState extends State<MenuScreen> {
       body: GetBuilder<ProfileController>(builder: (profileController) {
         final bool isLoggedIn = AuthHelper.isLoggedIn();
 
-        return Column(children: [
+        return !isLoggedIn ? SizedBox()  :  Column(children: [
 
           Container(
             decoration: BoxDecoration(color: Theme.of(context).primaryColor),
@@ -368,7 +368,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         Get.find<FavouriteController>().removeFavourite();
                         await Get.find<AuthController>().clearSharedData();
                         Get.find<HomeController>().forcefullyNullCashBackOffers();
-                        Get.offAllNamed(RouteHelper.getInitialRoute());
+                        Get.offAllNamed(RouteHelper.getSignInRoute(RouteHelper.splash));
                       }), useSafeArea: false);
                     }else {
                       Get.find<FavouriteController>().removeFavourite();
@@ -376,6 +376,14 @@ class _MenuScreenState extends State<MenuScreen> {
                       if(AuthHelper.isLoggedIn()) {
                         await Get.find<FavouriteController>().getFavouriteList();
                         profileController.getUserInfo();
+                        Get.find<ProfileController>().clearUserInfo();
+                        Get.find<AuthController>().socialLogout();
+                        Get.find<CartController>().clearCartList(canRemoveOnline: false);
+                        Get.find<FavouriteController>().removeFavourite();
+                        await Get.find<AuthController>().clearSharedData();
+                        Get.find<HomeController>().forcefullyNullCashBackOffers();
+                        // Get.offAllNamed(RouteHelper.getInitialRoute());
+
                       }
                     }
                   },
