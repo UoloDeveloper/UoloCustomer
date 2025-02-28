@@ -776,13 +776,16 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
                                         icon: Images.warning,
                                         onYesPressed: () {
                                           // Cancel the order
+                                          //  Get.back();
                                       _cancelOrder();
                                           Get.back(); // Close the dialog
+                                            Get.back();
                                         },
                                         onNoPressed: () {
                                           // Resume the timer
                                           _resumeTimer();
                                           _startProgress();
+                                             Get.back();
                                           // Get.back(); // Close the dialog
                                         },
                                         title: "Are you sure you want to cancel order?",

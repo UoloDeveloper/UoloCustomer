@@ -50,7 +50,7 @@ import 'package:get/get.dart';
 import 'package:sixam_mart/features/home/widgets/module_view.dart';
 import 'package:sixam_mart/features/parcel/screens/parcel_category_screen.dart';
 
-import '../../dashboard/dashboardscroll_controller.dart';
+// import '../../dashboard/dashboardscroll_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
      WidgetsBinding.instance.addPostFrameCallback((_) {
-      _updateStatusBarColor();
+      // _updateStatusBarColor();
     });
 
     _scrollController.addListener(_onScroll);
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _updateStatusBarColor();
 
     final scrollDirection = _scrollController.position.userScrollDirection;
-    final bottomsheetcontroller = Get.find<Bottomsheetcontroller>();
+    final bottomsheetcontroller = Get.find<SplashController>();
 
     if (scrollDirection == ScrollDirection.forward) {
       if (!bottomsheetcontroller.showBottomSheet.value) {
@@ -337,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       alignment: Alignment.topCenter,
                       child: Stack(
                         children: [
-                          VideoContainer( link: !isFood ? 'assets/image/static_banner/homescreenbannervideo.mp4' : "assets/image/static_banner/videobanner.mp4",),
+                          VideoContainer( link: "assets/image/static_banner/videobanner.mp4",),
 
                             //  if (!showMobileModule)
                                 Padding(

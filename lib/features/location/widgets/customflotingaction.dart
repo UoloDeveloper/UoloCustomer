@@ -17,7 +17,7 @@ class CustomFloatingActionButton extends StatelessWidget {
     return RawMaterialButton(
       onPressed: onPressed,
       elevation: 2.0,
-      fillColor: Theme.of(context).cardColor,
+      fillColor: Theme.of(context).primaryColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -27,14 +27,14 @@ class CustomFloatingActionButton extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).cardColor,
             size: 20.0, // Adjust icon size if needed
           ),
           SizedBox(width: 5.0),
           Text(
             label,
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).cardColor,
               fontSize: 14.0, 
               fontWeight: FontWeight.bold,
             ),

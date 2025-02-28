@@ -58,7 +58,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet1> {
 
   @override
   Widget build(BuildContext context) {
-      String currency = Get.find<CartController>().getCurrncyForUi();
+      // String currency = Get.find<CartController>().getCurrncyForUi();
     return Container(
       width: 550,
       margin: EdgeInsets.only(top: GetPlatform.isWeb ? 0 : 30),
@@ -183,7 +183,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet1> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              DiscountTag(discount: initialDiscount, discountType: discountType, fromTop: 20, currency: currency,),
+                              DiscountTag(discount: initialDiscount, discountType: discountType, fromTop: 20,),
                             ]),
                           ),
                           const SizedBox(width: 10),
@@ -217,7 +217,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet1> {
                               ),
                               !widget.isCampaign ? RatingBar(rating: widget.item!.avgRating, size: 15, ratingCount: widget.item!.ratingCount) : const SizedBox(),
                               Text(
-                                '${PriceConverter.convertPrice(startingPrice, discount: initialDiscount, discountType: discountType,currency: widget.item?.currency?.currencyCode)}'
+                                '${PriceConverter.convertPrice(startingPrice, discount: initialDiscount, discountType: discountType,)}'
                                     '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: initialDiscount,
                                     discountType: discountType)}' : ''}',
                                 style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
@@ -417,13 +417,13 @@ class _ItemBottomSheetState extends State<ItemBottomSheet1> {
                             discount! > 0 ? PriceConverter.convertAnimationPrice(
                          
                               (price * itemController.quantity!) + addonsCost,
-                              textStyle: robotoMedium.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall, decoration: TextDecoration.lineThrough),currency: currency
+                              textStyle: robotoMedium.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall, decoration: TextDecoration.lineThrough),
                             ) : const SizedBox(),
                             const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
                             PriceConverter.convertAnimationPrice(
                               withAddonCost,
-                              textStyle: robotoBold.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeDefault),currency: currency
+                              textStyle: robotoBold.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeDefault),
                             ),
                           ]),
                         ]);
@@ -965,14 +965,14 @@ class NewVariationView extends StatelessWidget {
                         const Spacer(),
 
                         showOriginalPrice ? Text(
-                          '+${PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice,currency: item?.currency?.currencyCode)}',
+                          '+${PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice,)}',
                           maxLines: 1, overflow: TextOverflow.ellipsis, textDirection: TextDirection.ltr,
                           style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
                         ) : const SizedBox(),
                         SizedBox(width: showOriginalPrice ? Dimensions.paddingSizeExtraSmall : 0),
 
                         Text(
-                          '+${PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice, discount: discount, discountType: discountType, isFoodVariation: true,currency: item?.currency?.currencyCode)}',
+                          '+${PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice, discount: discount, discountType: discountType, isFoodVariation: true,)}',
                           maxLines: 1, overflow: TextOverflow.ellipsis, textDirection: TextDirection.ltr,
                           style: itemController.selectedVariations[index][i]! ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall)
                               : robotoRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),
@@ -1044,7 +1044,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                           Row(
                             children: [
                               Text(
-                                '+${PriceConverter.convertPrice(variationValue.optionPrice, currency: item?.currency?.currencyCode)}',
+                                '+${PriceConverter.convertPrice(variationValue.optionPrice,)}',
                                 style: robotoRegular.copyWith(
                                   fontSize: Dimensions.fontSizeExtraSmall,
                                   color: Theme.of(context).disabledColor,
@@ -1060,7 +1060,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                             discount: discount,
                             discountType: discountType,
                             isFoodVariation: true,
-                            currency: item?.currency?.currencyCode,
+                          
                           )}',
                           style: itemController.selectedVariations[variationIndex][valueIndex] ?? false
                               ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall)

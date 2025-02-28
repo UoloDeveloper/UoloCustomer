@@ -405,9 +405,9 @@ return Container(
           child: CustomInkWell(
     
             onTap: () {
-              
+               Get.find<ItemController>().navigateToItemPage(widget.item, context);
             },
-            //  Get.find<ItemController>().navigateToItemPage(widget.item, context),
+            
             radius: Dimensions.radiusDefault,
             padding: desktop
                 ? const EdgeInsets.all(Dimensions.paddingSizeSmall)
@@ -611,7 +611,7 @@ return Container(
                                   _getPrice(widget.item),
                                   discount: discount,
                                   discountType: discountType,
-                                  currency: widget.item?.currency?.currencyCode 
+                                  // currency: widget.item?.currency?.currencyCode 
                                 ),
                                 style: robotoMedium.copyWith(
                                   fontSize: Dimensions.fontSizeDefault,
@@ -619,9 +619,9 @@ return Container(
                                 ),
                               ),
                                const SizedBox(width: 8,),
-                                if (discount! > 0)
+                                if (discount! > 0  && customizable )
                             Text(
-                              PriceConverter.convertPrice(widget.item?.price,currency: widget.item?.currency?.currencyCode),
+                              PriceConverter.convertPrice(widget.item?.price,),
                               style: robotoMedium.copyWith(
                                 fontSize: Dimensions.fontSizeDefault,
                                 color: Theme.of(context).disabledColor,

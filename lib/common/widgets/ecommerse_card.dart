@@ -203,7 +203,7 @@ class _ItemWidgetState extends State<Ecomerceitem> {
                                     _getPrice(widget.item),
                                     discount: discount,
                                     discountType: discountType,
-                                    currency: widget.item?.currency?.currencyCode 
+                                    // currency: widget.item?.currency?.currencyCode 
                                   ),
                                   style: robotoMedium.copyWith(
                                     fontSize: 13,
@@ -213,7 +213,7 @@ class _ItemWidgetState extends State<Ecomerceitem> {
                                  const SizedBox(width: 8,),
                                   if (discount! > 0)
                               Text(
-                                PriceConverter.convertPrice(widget.item?.price,currency: widget.item?.currency?.currencyCode),
+                                PriceConverter.convertPrice(widget.item?.price,),
                                 style: robotoMedium.copyWith(
                                   fontSize: 13,
                                   color: Theme.of(context).disabledColor,
@@ -224,7 +224,7 @@ class _ItemWidgetState extends State<Ecomerceitem> {
                               ),
       
                   SizedBox(width: 5,),
-                              if (discount! > 0) Text("${discountType == 'percent' ? '${discount.round()}% off' : '${PriceConverter.convertPrice(discount,currency: widget.item?.currency?.currencyCode)} off'}",style: robotoMedium.copyWith(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.green),),
+                              if (discount! > 0) Text("${discountType == 'percent' ? '${discount.round()}% off' : '${PriceConverter.convertPrice(discount,)} off'}",style: robotoMedium.copyWith(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.green),),
                               ],
                             ),
                   // Price

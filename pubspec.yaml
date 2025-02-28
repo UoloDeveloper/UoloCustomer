@@ -1,7 +1,7 @@
 name: sixam_mart
 description: A Multi-vendor Food. Grocery, eCommerce, Pharmacy & Parcel service.
 publish_to: 'none' #
-version: 4.0.0+2
+version: 4.0.0+15
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -99,7 +99,6 @@ flutter:
     - assets/animations/
     - assets/success-1-6297.mp3
     - assets/image/static_banner/videobanner.mp4
-    - assets/image/static_banner/homescreenbannervideo.mp4
 
   fonts:
     - family: Poppins

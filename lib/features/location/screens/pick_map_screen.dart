@@ -54,7 +54,9 @@ class _PickMapScreenState extends State<PickMapScreen> {
   @override
   void initState() {
     super.initState();
-
+ Get.find<LocationController>().checkPermission(() {
+                        Get.find<LocationController>().getCurrentLocation(false, mapController: _mapController);
+                      });
     if (widget.fromAddAddress) {
       Get.find<LocationController>().setPickData();
     }
@@ -154,10 +156,11 @@ class _PickMapScreenState extends State<PickMapScreen> {
 
               // Floating Action Button for Current Location
               Padding(
-                padding: const EdgeInsets.only(bottom: 180),
+                padding: const EdgeInsets.only(bottom: 190),
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: CustomFloatingActionButton(
+
                     onPressed: () {
                       Get.find<LocationController>().checkPermission(() {
                         Get.find<LocationController>().getCurrentLocation(false, mapController: _mapController);

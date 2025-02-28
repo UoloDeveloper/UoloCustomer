@@ -50,7 +50,7 @@ class CancellationDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                 TextButton(
-                  onPressed: () => onNoPressed != null ? onNoPressed!() : Get.back(),
+                  onPressed: () => onNoPressed!(),
                   style: TextButton.styleFrom(
                     backgroundColor: Theme.of(context).disabledColor.withOpacity(0.3), minimumSize: const Size(80, 50), padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
@@ -60,16 +60,25 @@ class CancellationDialog extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: Dimensions.paddingSizeLarge),
-
-                Container(
-                  height: 50,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.error.withOpacity(.7),
-                    borderRadius: const BorderRadius.all(Radius.circular(8))
+  TextButton(
+                  onPressed: () => onYesPressed() ,
+                  style: TextButton.styleFrom(
+                    backgroundColor: Theme.of(context).disabledColor.withOpacity(0.3), minimumSize: const Size(80, 50), padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
                   ),
-                  child: Center(child: Text('yes'.tr,style: robotoRegular.copyWith(color: Theme.of(context).cardColor),)),
+                  child: Text('Yes'.tr, textAlign: TextAlign.center,
+                    style: robotoBold.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color),
+                  ),
                 ),
+                // Container(
+                //   height: 50,
+                //   width: 80,
+                //   decoration: BoxDecoration(
+                //     color: Theme.of(context).colorScheme.error.withOpacity(.7),
+                //     borderRadius: const BorderRadius.all(Radius.circular(8))
+                //   ),
+                //   child: Center(child: Text('yes'.tr,style: robotoRegular.copyWith(color: Theme.of(context).cardColor),)),
+                // ),
               ]) : const Center(child: CircularProgressIndicator());
             }),
 

@@ -363,5 +363,12 @@ class SplashController extends GetxController implements GetxService {
     hoverStates[index] = state;
     update();
   }
+  var showBottomSheet = true.obs; // Use RxBool
 
+  // Method to toggle the bottom sheet visibility
+  void toggleBottomSheet() {
+    showBottomSheet.value = !showBottomSheet.value; // Update the value
+    print("Bottom sheet visibility changed: ${showBottomSheet.value}");
+    update(); // Notify listeners
+  }
 }

@@ -47,6 +47,7 @@ class CustomTextField extends StatefulWidget {
   final Function()? suffixOnPressed;
   final bool divider;
   final bool fromUpdateProfile;
+  final Color? color;
 
   const CustomTextField({
     super.key,
@@ -85,7 +86,7 @@ class CustomTextField extends StatefulWidget {
     this.suffixOnPressed,
     this.suffixImage,
     this.divider = false,
-    this.fromUpdateProfile = false, this.radius,
+    this.fromUpdateProfile = false, this.radius,  this.color,
   });
 
   @override
@@ -125,7 +126,7 @@ class CustomTextFieldState extends State<CustomTextField> {
             focusNode: widget.focusNode,
             textAlign: widget.textAlign,
             validator: widget.validator,
-            style: robotoRegular.copyWith(fontSize: 13,color: Colors.black54,fontWeight: FontWeight.w500),
+            style: robotoRegular.copyWith(fontSize: 13,color: widget.color ?? Colors.black54 ,fontWeight: FontWeight.w500),
             textInputAction: widget.inputAction,
             keyboardType: widget.isAmount ? TextInputType.number : widget.inputType,
             cursorColor: Theme.of(context).primaryColor,
@@ -159,10 +160,10 @@ class CustomTextFieldState extends State<CustomTextField> {
               isDense: true,
               hintText: widget.hintText.isEmpty || !ResponsiveHelper.isDesktop(context) ? widget.titleText : widget.hintText,
               fillColor: Theme.of(context).disabledColor.withOpacity(0.1),
-              hintStyle: robotoRegular.copyWith(fontSize: 13, color: Colors.black54),
+              hintStyle: robotoRegular.copyWith(fontSize: 13, color:widget.color ?? Colors.black54),
               filled: true,
 
-              labelStyle : widget.showLabelText ? robotoRegular.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).hintColor) : null,
+              labelStyle : widget.showLabelText ? robotoRegular.copyWith(fontSize: Dimensions.fontSizeDefault, color:widget.color ?? Theme.of(context).hintColor) : null,
               errorStyle: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
 
               label: widget.showLabelText ? Text.rich(TextSpan(children: [
@@ -171,7 +172,7 @@ class CustomTextFieldState extends State<CustomTextField> {
                   text: widget.labelText ?? '',
                   style: robotoRegular.copyWith(
                     fontSize: widget.labelTextSize ?? Dimensions.fontSizeLarge,
-                    color: ((widget.focusNode?.hasFocus == true || widget.controller!.text.isNotEmpty ) &&  widget.isEnabled) ? Theme.of(context).textTheme.bodyLarge?.color :  Theme.of(context).hintColor.withOpacity(.75),
+                    color: ((widget.focusNode?.hasFocus == true || widget.controller!.text.isNotEmpty ) &&  widget.isEnabled) ? Theme.of(context).textTheme.bodyLarge?.color :widget.color ??  Theme.of(context).hintColor.withOpacity(.75),
                   ),
                 ),
 

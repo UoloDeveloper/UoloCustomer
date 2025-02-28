@@ -267,6 +267,10 @@ class _CheckoutState extends State<CheckoutScreen> {
 
           // endDrawer: const MenuDrawer(),
           body: GetBuilder<CartController>(builder: (cartController) {
+             if (cartController.cartList.isEmpty) {
+              Get.back();
+            }
+
             return cartController.cartList.isNotEmpty
                 ? GetBuilder<CheckoutController>(builder: (checkoutController) {
                   
@@ -370,14 +374,14 @@ class _CheckoutState extends State<CheckoutScreen> {
                                   SliverAppBar(
                                     pinned: true,
                                        leading: Padding(
-                                         padding: const EdgeInsets.all(8.0),
+                                         padding: const EdgeInsets.only(left: 5),
                                          child: IconButton(
                                                                    onPressed: () => Get.back(),
                                                                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                                                                  ),
                                        ),
                                     title:Padding(
-                                      padding: const EdgeInsets.only(top : 15,left: 10),
+                                      padding: const EdgeInsets.only(top : 15,left: 0,bottom: 10),
                                       child: InkWell(
                                           onTap: (){
                                            
@@ -394,7 +398,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                              Padding(
-                                               padding: const EdgeInsets.only(left: 10 ),
+                                               padding: const EdgeInsets.only(left: 0 ),
                                                child: Text("${checkoutController.store!.name}",style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
@@ -402,7 +406,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                                   ),),
                                              ),
                                             Row(children: [
-                                            SizedBox(width: 5,),
+                                            SizedBox(width: 0,),
                                               Icon(
                                                 Icons.near_me,
                                                 size: 18,
@@ -432,7 +436,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                         ),
                                       ),
                                     ),
-                                   leadingWidth: 10,
+                                   leadingWidth: 35,
                               //  leading: 
                                ),
                                               //                 SliverAppBar(
@@ -743,7 +747,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                         isPrescriptionRequired: isPrescriptionRequired, checkoutButton: _orderPlaceButton(
                                           checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge,
                                           tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,currency
-                                        ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress,
+                                        ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress, time: checkoutController.store!.deliveryTime!,
                                       ),
                                     ),
                                                                     
@@ -1205,7 +1209,7 @@ SizedBox(height: 20,),
                     );
                   }
                 )
-                : const NoDataScreen(isCart: true, text: '', showFooter: true);
+                : const SizedBox();
           }),
         );
      
@@ -1348,10 +1352,11 @@ Widget _orderPlaceButton(
           showCustomSnackBar("The store isn't serving right now");
 
 
-          } else if( checkoutController.store!.scheduleOrder == true && checkoutController.preferableTime.isEmpty   ) {
-             showCustomSnackBar("Preferable time is required");
+          } 
+          // else if( checkoutController.store!.scheduleOrder == true || checkoutController.preferableTime.isEmpty   ) {
+          //    showCustomSnackBar("Preferable time is required");
             
-          }
+          // }
           else if(checkoutController.paymentMethodIndex == -1) {
             if(ResponsiveHelper.isDesktop(context)){
               Get.dialog(Dialog(backgroundColor: Colors.transparent, child: PaymentMethodBottomSheet(

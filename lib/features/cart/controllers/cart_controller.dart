@@ -112,14 +112,14 @@ class CartController extends GetxController implements GetxService {
   }
 
   String getCurrncyForUi(){
-    if(cartList.isEmpty){
-      return Get.find<SplashController>().configModel!.currencySymbol!;
-    }
-       for (var cartModel in cartList) {
-         if(cartModel.item != null && cartModel.item!.currency != null && cartModel.item!.currency!.currencyCode != null){
-           return cartModel.item!.currency!.currencyCode!;
-         }
-       }
+    // if(cartList.isEmpty){
+    //   return Get.find<SplashController>().configModel!.currencySymbol!;
+    // }
+    //    for (var cartModel in cartList) {
+    //      if(cartModel.item != null && cartModel.item!.currency != null && cartModel.item!.currency!.currencyCode != null){
+    //        return cartModel.item!.currency!.currencyCode!;
+    //      }
+    //    }
      return Get.find<SplashController>().configModel!.currencySymbol!;
   }
 

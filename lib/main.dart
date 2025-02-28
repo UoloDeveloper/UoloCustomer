@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
-import 'package:sixam_mart/features/dashboard/dashboardscroll_controller.dart';
+// import 'package:sixam_mart/features/dashboard/dashboardscroll_controller.dart';
 import 'package:sixam_mart/features/language/controllers/language_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
@@ -124,7 +124,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _route();
-       Get.put(Bottomsheetcontroller()); 
+      //  Get.put(Bottomsheetcontroller()); 
   }
 
   void _route() async {
@@ -205,94 +205,3 @@ class MyHttpOverrides extends HttpOverrides {
 
 
 
-
-
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Status Bar Color Change',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const HomeScreen(),
-//     );
-//   }
-// }
-
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({Key? key}) : super(key: key);
-
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   final ScrollController _scrollController = ScrollController();
-//   bool _isScrolled = false;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _scrollController.addListener(_updateStatusBarColor);
-//   }
-
-//   void _updateStatusBarColor() {
-//     final isScrolled = _scrollController.offset > 50;
-//     if (isScrolled != _isScrolled) {
-//       setState(() {
-//         _isScrolled = isScrolled;
-//       });
-//     }
-//   }
-
-//   @override
-//   void dispose() {
-//     _scrollController.removeListener(_updateStatusBarColor);
-//     _scrollController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Scroll to Change Status Bar Color'),
-//         systemOverlayStyle: _isScrolled
-//             ? const SystemUiOverlayStyle(
-//                 statusBarColor: Colors.red, // Status bar color when scrolled
-//                 statusBarIconBrightness: Brightness.dark,
-//               )
-//             : const SystemUiOverlayStyle(
-//                 statusBarColor: Colors.transparent, // Transparent when not scrolled
-//                 statusBarIconBrightness: Brightness.light,
-//               ),
-//       ),
-//       body: ListView.builder(
-//         controller: _scrollController,
-//         itemCount: 100,
-//         itemBuilder: (context, index) {
-//           return Container(
-//             height: 100,
-//             color: index.isEven ? Colors.blue[100] : Colors.blue[200],
-//             alignment: Alignment.center,
-//             child: Text(
-//               'Item $index',
-//               style: const TextStyle(fontSize: 24),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

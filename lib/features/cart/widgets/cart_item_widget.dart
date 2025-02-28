@@ -418,14 +418,14 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
           ),
           child: CustomInkWell(
             onTap: () {
-              // ResponsiveHelper.isMobile(context) ? showModalBottomSheet(
-              //   context: context,
-              //   isScrollControlled: true,
-              //   backgroundColor: Colors.transparent,
-              //   builder: (con) => ItemBottomSheet1(item: cart.item, cartIndex: cartIndex, cart: cart),
-              // ) : showDialog(context: context, builder: (con) => Dialog(
-              //   child: ItemBottomSheet1(item: cart.item, cartIndex: cartIndex, cart: cart),
-              // ));
+              ResponsiveHelper.isMobile(context) ? showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (con) => ItemBottomSheet(item: cart.item, cartIndex: cartIndex, cart: cart),
+              ) : showDialog(context: context, builder: (con) => Dialog(
+                child: ItemBottomSheet(item: cart.item, cartIndex: cartIndex, cart: cart),
+              ));
             },
             radius: Dimensions.radiusDefault,
             padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall, horizontal: Dimensions.paddingSizeExtraSmall),
@@ -505,8 +505,8 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
                      Wrap(children: [
 
                           ( discount ?? 0) > 0 ? Text(
-                          '${PriceConverter.convertPrice( startingPrice,currency: cart.item?.currency?.currencyCode)}'
-                              '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice,currency: cart.item?.currency?.currencyCode)}' : ''}',
+                          '${PriceConverter.convertPrice( startingPrice,)}'
+                              '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice,)}' : ''}',
                           textDirection: TextDirection.ltr,
                           style: robotoRegular.copyWith(
                             color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough,
@@ -516,7 +516,7 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
 
                               SizedBox(width: (discount?? 0) > 0 ? Dimensions.paddingSizeExtraSmall : 0),
                         Text(
-                          '${PriceConverter.convertPrice(startingPrice, discount: discount, discountType: discountType,currency: cart.item?.currency?.currencyCode)}'
+                          '${PriceConverter.convertPrice(startingPrice, discount: discount, discountType: discountType,)}'
                               '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: discount, discountType: discountType)}' : ''}',
                           style: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall), textDirection: TextDirection.ltr,
                         ),
@@ -526,7 +526,7 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
                       ]) : Wrap(
                         children: [
                             Text(
-                          '${PriceConverter.convertPrice(variationprice ?? cart.price, discount: discount, discountType: discountType,currency: cart.item?.currency?.currencyCode)}'
+                          '${PriceConverter.convertPrice(variationprice ?? cart.price, discount: discount, discountType: discountType,)}'
                               ,
                           style: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall), textDirection: TextDirection.ltr,
                         )

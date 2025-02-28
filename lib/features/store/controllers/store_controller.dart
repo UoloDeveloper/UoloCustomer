@@ -67,7 +67,7 @@ class StoreController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-   bool _isopen = false;
+   bool _isopen = true;
   bool get isopen => _isopen;
 
   String _filterType = 'all';

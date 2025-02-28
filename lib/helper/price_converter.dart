@@ -46,44 +46,83 @@ class PriceConverter {
   } 
   
 
-  static Widget convertAnimationPrice(double? price, {double? discount, String? discountType, bool forDM = false, TextStyle? textStyle,String? currency}) {
-    if(discount != null && discountType != null){
-      if(discountType == 'amount') {
-        price = price! - discount;
-      }else if(discountType == 'percent') {
-        price = price! - ((discount / 100) * price);
-      }
-    }
+  // static Widget convertAnimationPrice(double? price, {double? discount, String? discountType, bool forDM = false, TextStyle? textStyle,String? currency}) {
+  //   if(discount != null && discountType != null){
+  //     if(discountType == 'amount') {
+  //       price = price! - discount;
+  //     }else if(discountType == 'percent') {
+  //       price = price! - ((discount / 100) * price);
+  //     }
+  //   }
 
-    if(currency != null){
-    bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
-        return Directionality(
-      textDirection: TextDirection.ltr,
-      child: AnimatedFlipCounter(
-        duration: const Duration(milliseconds: 500),
-        value: toFixed(price!),
-        textStyle: textStyle ?? robotoMedium,
-        fractionDigits: forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!,
-        prefix: isRightSide ? '' : '$currency ',
-        suffix: isRightSide ? '$currency ' : '',
-      ),
-      );
-    }
+  //   if(currency != null){
+  //   bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+  //       return Directionality(
+  //     textDirection: TextDirection.ltr,
+  //     child: AnimatedFlipCounter(
+  //       duration: const Duration(milliseconds: 500),
+  //       value: toFixed(price!),
+  //       textStyle: textStyle ?? robotoMedium,
+  //       fractionDigits: forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!,
+  //       prefix: isRightSide ? '' : '$currency ',
+  //       suffix: isRightSide ? '$currency ' : '',
+  //     ),
+  //     );
+  //   }
 
-    bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: AnimatedFlipCounter(
-        duration: const Duration(milliseconds: 500),
-        value: toFixed(price!),
-        textStyle: textStyle ?? robotoMedium,
-        fractionDigits: forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!,
-        prefix: isRightSide ? '' : '${Get.find<SplashController>().configModel!.currencySymbol!} ',
-        suffix: isRightSide ? '${Get.find<SplashController>().configModel!.currencySymbol!} ' : '',
-      ),
-    );
+  //   bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+  //   return Directionality(
+  //     textDirection: TextDirection.ltr,
+  //     child: AnimatedFlipCounter(
+  //       duration: const Duration(milliseconds: 500),
+  //       value: toFixed(price!),
+  //       textStyle: textStyle ?? robotoMedium,
+  //       fractionDigits: forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!,
+  //       prefix: isRightSide ? '' : '${Get.find<SplashController>().configModel!.currencySymbol!} ',
+  //       suffix: isRightSide ? '${Get.find<SplashController>().configModel!.currencySymbol!} ' : '',
+  //     ),
+  //   );
+  // }
+static Widget convertAnimationPrice(double? price, {
+  double? discount,
+  String? discountType,
+  bool forDM = false,
+  TextStyle? textStyle,
+  String? currency
+}) {
+
+  if (discount != null && discountType != null) {
+    if (discountType == 'amount') {
+      price = price! - discount;
+    } else if (discountType == 'percent') {
+      price = price! - ((discount / 100) * price);
+    }
   }
 
+ 
+  String formattedPrice = toFixed(price!).toString();
+
+
+  bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+
+ 
+  String priceText;
+  if (currency != null) {
+    priceText = isRightSide ? '$formattedPrice $currency' : '$currency $formattedPrice';
+  } else {
+    priceText = isRightSide 
+        ? '$formattedPrice ${Get.find<SplashController>().configModel!.currencySymbol!}' 
+        : '${Get.find<SplashController>().configModel!.currencySymbol!} $formattedPrice';
+  }
+
+  return Directionality(
+    textDirection: TextDirection.ltr,
+    child: Text(
+      priceText,
+      style: textStyle ?? robotoMedium,
+    ),
+  );
+}
   static double? convertWithDiscount(double? price, double? discount, String? discountType, {bool isFoodVariation = false}) {
     if(discountType == 'amount' && !isFoodVariation) {
       price = price! - discount!;

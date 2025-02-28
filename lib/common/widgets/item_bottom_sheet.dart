@@ -8,6 +8,7 @@
 
 import 'package:sixam_mart/common/widgets/custom_asset_image_widget.dart';
 import 'package:sixam_mart/common/widgets/custom_tool_tip_widget.dart';
+import 'package:sixam_mart/common/widgets/rating_bar.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
@@ -232,7 +233,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                      children: [
                                     
                                     Padding(
-                                      padding: const EdgeInsets.only(bottom: 30),
+                                      padding: const EdgeInsets.only(bottom: 0),
                                       child: Text(
                                         widget.item!.name!, style: const TextStyle(
                                           fontSize: 18,
@@ -241,39 +242,39 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                         maxLines: 2, overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    // InkWell(
-                                    //   onTap: () {
-                                    //     if(widget.inStorePage) {
-                                    //       Get.back();
-                                    //     }else {
-                                    //       Get.back();
-                                    //       Get.find<CartController>().forcefullySetModule(widget.item!.moduleId!);
-                                    //       Get.toNamed(
-                                    //         RouteHelper.getStoreRoute(id: widget.item!.storeId, page: 'item'),
-                                    //       );
-                                    //       Get.offNamed(RouteHelper.getStoreRoute(id: widget.item!.storeId, page: 'item'));
-                                    //     }
-                                    //   },
-                                    //   child: Padding(
-                                    //     padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                                    //     child: Text(
-                                    //       widget.item!.storeName!,
-                                    //       style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // !widget.isCampaign ? RatingBar(rating: widget.item!.avgRating, size: 15, ratingCount: widget.item!.ratingCount) : const SizedBox(),
-                                    // Text(
-                                    //   '${PriceConverter.convertPrice(startingPrice, discount: initialDiscount, discountType: discountType)}'
-                                    //       '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: initialDiscount,
-                                    //       discountType: discountType)}' : ''}',
-                                    //   style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
-                                    // ),
-                                    // price > priceWithDiscount ? Text(
-                                    //   '${PriceConverter.convertPrice(startingPrice)}'
-                                    //       '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice)}' : ''}', textDirection: TextDirection.ltr,
-                                    //   style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
-                                    // ) : const SizedBox(),
+                                    InkWell(
+                                      onTap: () {
+                                        if(widget.inStorePage) {
+                                          Get.back();
+                                        }else {
+                                          Get.back();
+                                          Get.find<CartController>().forcefullySetModule(widget.item!.moduleId!);
+                                          Get.toNamed(
+                                            RouteHelper.getStoreRoute(id: widget.item!.storeId, page: 'item'),
+                                          );
+                                          Get.offNamed(RouteHelper.getStoreRoute(id: widget.item!.storeId, page: 'item'));
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
+                                        child: Text(
+                                          widget.item!.storeName!,
+                                          style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall,fontWeight: FontWeight.w600, color: Theme.of(context).primaryColor),
+                                        ),
+                                      ),
+                                    ),
+                                    !widget.isCampaign ? RatingBar(rating: widget.item!.avgRating, size: 15, ratingCount: widget.item!.ratingCount) : const SizedBox(),
+                               price > 2 ?     Text(
+                                      '${PriceConverter.convertPrice(startingPrice, discount: initialDiscount, discountType: discountType)}'
+                                          '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: initialDiscount,
+                                          discountType: discountType)}' : ''}',
+                                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
+                                    ) : SizedBox(),
+                                    price > priceWithDiscount&&  price > 2 ? Text(
+                                      '${PriceConverter.convertPrice(startingPrice)}'
+                                          '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice)}' : ''}', textDirection: TextDirection.ltr,
+                                      style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
+                                    ) : const SizedBox(),
                                   ]),
                                 ),
                               
@@ -290,16 +291,17 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                         }
                                       },
                                       child: Container(
+
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                                            color: Theme.of(context).primaryColor.withOpacity(0.05)
+                                            color: Theme.of(context).cardColor
                                         ),
                                         padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                                         margin: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
                                         child: Icon(
                                           wishList.wishItemIdList.contains(widget.item!.id) ? Icons.favorite : Icons.favorite_border,
-                                          color: wishList.wishItemIdList.contains(widget.item!.id) ? Theme.of(context).primaryColor
-                                              : Theme.of(context).disabledColor,
+                                          color: wishList.wishItemIdList.contains(widget.item!.id) ? Colors.redAccent
+                                              : Colors.redAccent,
                                         ),
                                       ),
                                     );
@@ -323,38 +325,51 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                     
                           const SizedBox(height: Dimensions.paddingSizeLarge),
                     
-                          (widget.item!.description != null && widget.item!.description!.isNotEmpty) ? const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                  
-                                // Text('description'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
-                                                  
-                              //   ((Get.find<SplashController>().configModel!.moduleConfig!.module!.unit! && widget.item!.unitType != null)
-                              // || (Get.find<SplashController>().configModel!.moduleConfig!.module!.vegNonVeg! && Get.find<SplashController>().configModel!.toggleVegNonVeg!)) ? Container(
-                              //     padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall, horizontal: Dimensions.paddingSizeSmall),
-                              //     decoration: BoxDecoration(
-                              //         borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
-                              //         color: Theme.of(context).cardColor,
-                              //         boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.2), blurRadius: 5)]
-                              //     ),
-                              //     child: Get.find<SplashController>().configModel!.moduleConfig!.module!.unit! ? Text(
-                              //       widget.item!.unitType ?? '',
-                              //       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
-                              //     ) : Row(children: [
-                              //       Image.asset(widget.item!.veg == 1 ? Images.vegLogo : Images.nonVegLogo, height: 20, width: 20),
-                              //       const SizedBox(width: Dimensions.paddingSizeSmall),
-                                                  
-                              //       Text(widget.item!.veg == 1 ? 'veg'.tr : 'non_veg'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault)),
-                              //     ]),
-                              //   ) : const SizedBox(),
-                                                  
-                              ]),
-                              // const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                    
-                              // Text(widget.item!.description!, style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color?.withOpacity(0.5))),
-                              // const SizedBox(height: Dimensions.paddingSizeLarge),
-                            ],
+                          (widget.item!.description != null && widget.item!.description!.isNotEmpty) ? Padding(
+                            padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                                    
+                                  Text('description'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                                                    
+                                  ((Get.find<SplashController>().configModel!.moduleConfig!.module!.unit! && widget.item!.unitType != null)
+                                || (Get.find<SplashController>().configModel!.moduleConfig!.module!.vegNonVeg! && Get.find<SplashController>().configModel!.toggleVegNonVeg!)) ? Container(
+                                    padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall, horizontal: Dimensions.paddingSizeSmall),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
+                                        color: Colors.transparent,
+                                        // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.2), blurRadius: 5)]
+                                    ),
+                                    child: Get.find<SplashController>().configModel!.moduleConfig!.module!.unit! ? Text(
+                                      widget.item!.unitType ?? '',
+                                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
+                                    ) : Row(children: [
+                                      Image.asset(
+                                widget.item!.veg == 0
+                                    ? Images.nonVegImage
+                                    : Images.vegImage,
+                                height:  15,
+                                width: 15,
+                                fit: BoxFit.contain,
+                              ),
+                                      // Icon(
+                                        // widget.item!.veg == 1 ? Icons.eco : Icons.fastfood,color:widget.item!.veg == 1 ?  ,),
+                                      // Image.asset(widget.item!.veg == 1 ? Images.vegLogo : Images.nonVegLogo, height: 20, width: 20),
+                                      const SizedBox(width: Dimensions.paddingSizeSmall),
+                                                    
+                                      Text(widget.item!.veg == 1 ? 'veg'.tr : 'non_veg'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                                    ]),
+                                  ) : const SizedBox(),
+                                                    
+                                ]),
+                                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                                                
+                                Text(widget.item!.description!, style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color?.withOpacity(0.5))),
+                                const SizedBox(height: Dimensions.paddingSizeLarge),
+                              ],
+                            ),
                           ) : const SizedBox(),
                     
                           // Variation
@@ -413,30 +428,30 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeDefault),
                   child: Column(children: [
 
-                    // Builder(
-                    //   builder: (context) {
-                    //    double? cost = PriceConverter.convertWithDiscount((price! * itemController.quantity!), discount, discountType);
-                    //    double withAddonCost = cost! + addonsCost;
-                    //     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    //       Text('${'total_amount'.tr}:', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor)),
-                    //       const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                    Builder(
+                      builder: (context) {
+                       double? cost = PriceConverter.convertWithDiscount((price! * itemController.quantity!), discount, discountType);
+                       double withAddonCost = cost! + addonsCost;
+                        return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          Text('${'total_amount'.tr}:', style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor)),
+                          const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
-                    //       Row(children: [
-                    //         discount! > 0 ? PriceConverter.convertAnimationPrice(
-                    //           (price * itemController.quantity!) + addonsCost,
-                    //           textStyle: robotoMedium.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall, decoration: TextDecoration.lineThrough),
-                    //         ) : const SizedBox(),
-                    //         const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                          Row(children: [
+                            discount! > 0 ? PriceConverter.convertAnimationPrice(
+                              (price * itemController.quantity!) + addonsCost,
+                              textStyle: robotoMedium.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall, decoration: TextDecoration.lineThrough),
+                            ) : const SizedBox(),
+                            const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
-                    //         PriceConverter.convertAnimationPrice(
-                    //           withAddonCost,
-                    //           textStyle: robotoBold.copyWith(color: Theme.of(context).primaryColor),
-                    //         ),
-                    //       ]),
-                    //     ]);
-                    //   }
-                    // ),
-                    // const SizedBox(height: Dimensions.paddingSizeSmall),
+                            PriceConverter.convertAnimationPrice(
+                              withAddonCost,
+                              textStyle: robotoBold.copyWith(color: Theme.of(context).primaryColor),
+                            ),
+                          ]),
+                        ]);
+                      }
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeSmall),
 
                     SafeArea(
                       child: Row(children: [
@@ -1118,7 +1133,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                             Row(
                               children: [
                                 Text(
-                                  '+${PriceConverter.convertPrice(variationValue.optionPrice, currency: item?.currency?.currencyCode)}',
+                                  '+${PriceConverter.convertPrice(variationValue.optionPrice,)}',
                                   style: robotoRegular.copyWith(
                                     fontSize: Dimensions.fontSizeExtraSmall,
                                     color: Theme.of(context).disabledColor,
@@ -1158,7 +1173,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                               discount: discount,
                               discountType: discountType,
                               isFoodVariation: true,
-                              currency: item?.currency?.currencyCode,
+                              // currency: item?.currency?.currencyCode,
                             )}',
                             style: itemController.selectedVariations[variationIndex][valueIndex] ?? false
                                 ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall)
@@ -1267,7 +1282,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                               discount: discount,
                               discountType: discountType,
                               isFoodVariation: true,
-                              currency: item?.currency?.currencyCode,
+                              // currency: item?.currency?.currencyCode,
                             )}',
                             style: itemController.selectedVariations[variationIndex][valueIndex] ?? false
                                 ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall)

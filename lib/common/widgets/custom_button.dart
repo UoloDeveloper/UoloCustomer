@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final Function? onPressed;
+  final Color? successtextcolour;
   final String buttonText;
   final bool transparent;
   final EdgeInsets? margin;
@@ -18,7 +19,7 @@ class CustomButton extends StatelessWidget {
   final bool isLoading;
   final bool isBold;
   const CustomButton({super.key, this.onPressed, required this.buttonText, this.transparent = false, this.margin, this.width, this.height,
-    this.fontSize, this.radius = 10, this.icon, this.color, this.textColor, this.isLoading = false, this.isBold = true});
+    this.fontSize, this.radius = 10, this.icon, this.color, this.textColor, this.isLoading = false, this.isBold = true, this.successtextcolour});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class CustomButton extends StatelessWidget {
         ),
           const SizedBox(width: Dimensions.paddingSizeSmall),
 
-          Text('loading'.tr, style: robotoMedium.copyWith(color: Colors.white)),
+          Text('loading'.tr, style: robotoMedium.copyWith(color: successtextcolour ?? Colors.white)),
         ]),
         ) : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           icon != null ? Padding(
