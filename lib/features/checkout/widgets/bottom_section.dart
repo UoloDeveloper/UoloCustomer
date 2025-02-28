@@ -524,7 +524,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                               ) : Row(
                                 children: [
                                    Text(
-                                   "₹${subtotal}",
+                                   "${PriceConverter.convertPrice(subtotal,currency: currency )}",
                                     style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: Dimensions.fontSizeDefault,
@@ -537,7 +537,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
 
                                   SizedBox(width: 5),
                                   Text(
-                                   "₹${subtotal - discount}",
+                                   "${PriceConverter.convertPrice(subtotal - discount,currency: currency )}",
                                     style: TextStyle(
                                       fontSize: Dimensions.fontSizeDefault,
                                       fontWeight: FontWeight.w500,

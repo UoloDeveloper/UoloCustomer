@@ -7,45 +7,74 @@ import 'package:get/get.dart';
 import 'package:sixam_mart/util/styles.dart';
 
 class PriceConverter {
-  static String convertPrice(double? price, {double? discount, String? discountType, bool forDM = false, bool isFoodVariation = false,String? currency}) {
-    if(discount != null && discountType != null){
-      if(discountType == 'amount' && !isFoodVariation) {
-        price = price! - discount;
-      }else if(discountType == 'percent') {
-        price = price! - ((discount / 100) * price);
-      }
+  // static String convertPrice(double? price, {double? discount, String? discountType, bool forDM = false, bool isFoodVariation = false,String? currency}) {
+  //   if(discount != null && discountType != null){
+  //     if(discountType == 'amount' && !isFoodVariation) {
+  //       price = price! - discount;
+  //     }else if(discountType == 'percent') {
+  //       price = price! - ((discount / 100) * price);
+  //     }
+  //   }
+
+  //   if(currency != null){
+
+  //     if (currency == 'INR') {
+
+  //       currency = '₹ ';
+  //     }
+  //       log( Get.find<SplashController>().configModel!.digitAfterDecimalPoint!.toString()) ;
+  //      log( Get.find<SplashController>().configModel!.digitAfterDecimalPoint!.toString()) ;
+  //      log(price.toString());
+
+  //         bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+  //   log(Get.find<SplashController>().configModel!.toString());
+  //   return '${isRightSide ? ' ' : currency}'
+  //   "$price"
+  //       // '${toFixed(price!).toStringAsFixed(forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!)
+  //       // .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
+  //       '${isRightSide ? ' ${currency} ' : ''}';
+  //   }
+
+
+  //   bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+  //   log(Get.find<SplashController>().configModel!.toString());
+  //   return '${isRightSide ? '' : '${Get.find<SplashController>().configModel!.currencySymbol!} '}'
+  //     "$price"
+  //       // '${toFixed(price!).toStringAsFixed(forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!)
+  //       // .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
+  //       '${isRightSide ? ' ${Get.find<SplashController>().configModel!.currencySymbol!}' : ''}';
+  // } 
+  
+static String convertPrice(double? price, {double? discount, String? discountType, bool forDM = false, bool isFoodVariation = false, String? currency}) {
+    if (discount != null && discountType != null) {
+        if (discountType == 'amount' && !isFoodVariation) {
+            price = price! - discount;
+        } else if (discountType == 'percent') {
+            price = price! - ((discount / 100) * price);
+        }
     }
 
-    if(currency != null){
+    // Round the price to the nearest integer and remove decimal points
+    int roundedPrice = price?.round() ?? 0;
 
-      if (currency == 'INR') {
+    if (currency != null) {
+        if (currency == 'INR') {
+            currency = '₹ ';
+        }
 
-        currency = '₹ ';
-      }
-        log( Get.find<SplashController>().configModel!.digitAfterDecimalPoint!.toString()) ;
-       log( Get.find<SplashController>().configModel!.digitAfterDecimalPoint!.toString()) ;
-       log(price.toString());
-
-          bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
-    log(Get.find<SplashController>().configModel!.toString());
-    return '${isRightSide ? ' ' : currency}'
-    "$price"
-        // '${toFixed(price!).toStringAsFixed(forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!)
-        // .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
-        '${isRightSide ? ' ${currency} ' : ''}';
+        bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+        log(Get.find<SplashController>().configModel!.toString());
+        return '${isRightSide ? ' ' : currency}'
+            "$roundedPrice"
+            '${isRightSide ? ' ${currency} ' : ''}';
     }
-
 
     bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
     log(Get.find<SplashController>().configModel!.toString());
     return '${isRightSide ? '' : '${Get.find<SplashController>().configModel!.currencySymbol!} '}'
-      "$price"
-        // '${toFixed(price!).toStringAsFixed(forDM ? 0 : Get.find<SplashController>().configModel!.digitAfterDecimalPoint!)
-        // .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'
+        "$roundedPrice"
         '${isRightSide ? ' ${Get.find<SplashController>().configModel!.currencySymbol!}' : ''}';
-  } 
-  
-
+}
   // static Widget convertAnimationPrice(double? price, {double? discount, String? discountType, bool forDM = false, TextStyle? textStyle,String? currency}) {
   //   if(discount != null && discountType != null){
   //     if(discountType == 'amount') {

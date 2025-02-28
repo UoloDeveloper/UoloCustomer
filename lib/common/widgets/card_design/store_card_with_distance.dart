@@ -107,8 +107,8 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
 
           ),
         ),
-        if (discount > 0)
-        DiscountTag(discount: discount, discountType: discountType,fromTop: 85,),
+        if (discount != null)
+        DiscountTag2(discount: discount, discountType: discountType,fromTop: 85,),
           // Positioned( 
           //   right: 0,
           //   bottom: 0,

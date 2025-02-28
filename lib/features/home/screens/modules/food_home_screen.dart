@@ -192,7 +192,7 @@ class FoodHomeScreen extends StatelessWidget {
 
  SizedBox(height: 10),
                Padding(
-                 padding: const EdgeInsets.all(8.0),
+                 padding: const EdgeInsets.only(left: 5,),
                  child: const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false),
                ),
           //  const SizedBox(height: Dimensions.paddingSizeDefault  ,),
@@ -204,7 +204,7 @@ class FoodHomeScreen extends StatelessWidget {
 
 
       isLoggedIn ? Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 5),
         child: const VisitAgainView(fromFood: true),
       ) : const SizedBox(),
       //  SizedBox(height: 10),
