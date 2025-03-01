@@ -30,7 +30,9 @@ class NotDeliverableScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
+        child: 
+        
+        Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -87,8 +89,10 @@ class NotDeliverableScreen extends StatelessWidget {
                 ),
               ),
             ),
+          
           ],
         ),
+   
       ),
     );
   }

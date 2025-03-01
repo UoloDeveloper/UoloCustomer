@@ -72,8 +72,17 @@ class DashboardScreenState extends State<DashboardScreen> {
     if(_isLogin){
       if(Get.find<SplashController>().configModel!.loyaltyPointStatus == 1 && Get.find<AuthController>().getEarningPint().isNotEmpty
           && !ResponsiveHelper.isDesktop(Get.context)){
-        Future.delayed(const Duration(seconds: 1), () => showAnimatedDialog(Get.context!, const CongratulationDialogue()));
-      }
+        // Future.delayed(const Duration(seconds: 1), () => showAnimatedDialog(Get.context!, const CongratulationDialogue()));
+    Future.delayed(
+  const Duration(seconds: 1),
+  () => showDialog(
+    context: context,
+    barrierColor: Colors.black.withOpacity(0.6), // Ensure the barrier is transparent
+    builder: (BuildContext context) {
+      return const CongratulationDialogue();
+    },
+  ),
+);      }
       suggestAddressBottomSheet();
       Get.find<OrderController>().getRunningOrders(1, fromDashboard: true);
     }
@@ -87,7 +96,7 @@ class DashboardScreenState extends State<DashboardScreen> {
       const FavouriteScreen(),
       const SizedBox(),
       const OrderScreen(),
-      const MenuScreen()
+      // const MenuScreen()
     ];
   }
 
@@ -199,7 +208,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                                   : const FavouriteScreen(),
                               const SizedBox(),
                               OrderScreen(),
-                              const MenuScreen()
+                              // const MenuScreen()
                             ];
                             return Obx(() {
                                 return !splashController.showBottomSheet.value ? SizedBox() : Container(

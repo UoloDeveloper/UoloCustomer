@@ -267,9 +267,9 @@ class _CheckoutState extends State<CheckoutScreen> {
 
           // endDrawer: const MenuDrawer(),
           body: GetBuilder<CartController>(builder: (cartController) {
-             if (cartController.cartList.isEmpty) {
-              Get.back();
-            }
+            //  if (cartController.cartList.isEmpty) {
+            //   Get.back();
+            // }
 
             return cartController.cartList.isNotEmpty
                 ? GetBuilder<CheckoutController>(builder: (checkoutController) {
@@ -1209,7 +1209,91 @@ SizedBox(height: 20,),
                     );
                   }
                 )
-                : const SizedBox();
+                :  Center(
+                  child: Container(child: 
+                  
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     SvgPicture.asset("assets/image/icons/shopping-cart.svg",height: 150,width: 150,),
+                  //     SizedBox(height: 20,),
+                  //     SizedBox(
+                  //       width: 300,
+                  //       child: Text('Your cart is empty. Add some things from the menu'.tr, style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16, fontWeight: FontWeight.w500,),textAlign: TextAlign.center,)),
+                  //  CustomButton2(
+                  //   width: 100,
+                  //   fontSize: 10,
+
+                  //   buttonText: 'Explore'.tr, onPressed: () => Get.toNamed(RouteHelper.getInitialRoute()), radius: 30, height: 50,)
+                  //   ],
+                  // )),
+              
+               Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+           SvgPicture.asset("assets/image/icons/shopping-cart.svg",height: 150,width: 150,),
+            // Image.asset(
+            //   'assets/image/freepik__background__9404.png',
+            //   height: 300,
+            //   width: 300,
+            //   fit: BoxFit.contain,
+            // ),
+            const SizedBox(height: 10), 
+
+        
+            Text(
+              ' Cart Empty'.tr,
+              style:  TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40),
+              child: Text(
+                'Your cart is empty.Add some things from the menu'.tr,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 20), 
+
+      
+            ElevatedButton(
+              onPressed: () {
+               Get.toNamed(RouteHelper.getInitialRoute());
+                // Get.back();
+                // Get.find<SplashController>().removeModule();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor, 
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text(
+                'Explore'.tr,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          
+          ],
+        ),
+                ),
+                );
           }),
         );
      
