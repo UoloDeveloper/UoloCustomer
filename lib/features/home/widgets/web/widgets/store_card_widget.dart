@@ -320,7 +320,7 @@ double distance = (store!.distance! / 1000);
                       DiscountTag(
                         fromTop: 80,
                         discount: discount,
-                        discountType: discountType, currency: store?.currency,
+                        discountType: discountType, currency: "₹",
                       ),
       
                       // Not Available Indicator
@@ -339,7 +339,7 @@ double distance = (store!.distance! / 1000);
                         top: 10,
                         right: 5,
                         child: SizedBox(
-                            width: 30,  // Set explicit width
+                            width: 30,  
                             height: 20,
                           child: GetBuilder<FavouriteController>(
                             builder: (favouriteController) {
