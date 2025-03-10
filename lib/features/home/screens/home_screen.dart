@@ -130,6 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
      WidgetsBinding.instance.addPostFrameCallback((_) {
+     
+      // Get.find<CategoryController>().getFoodCategoryList(false, allCategory: true);
       // _updateStatusBarColor();
     });
 
@@ -257,9 +259,9 @@ class _HomeScreenState extends State<HomeScreen> {
   //   Get.to(Notdeliverablescreen());
   // }
 
-  if (isGrocery ) {
-        return const NotDeliverableScreen();
-      }
+  // if (isGrocery ) {
+  //       return const NotDeliverableScreen();
+  //     }
 
 
       return GetBuilder<HomeController>(builder: (homeController) {
@@ -402,8 +404,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: !showMobileModule ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           
                           isGrocery ? const
-                          SizedBox()
-                          //  GroceryHomeScreen()
+                          // SizedBox()
+                           GroceryHomeScreen()
                           // Notdeliverablescreen()
                           : isPharmacy ? const PharmacyHomeScreen()
                           : isFood ? const FoodHomeScreen()

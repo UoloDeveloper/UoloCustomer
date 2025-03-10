@@ -376,7 +376,7 @@ class _ItemWidgetState extends State<ItemWidget> {
       isAvailable = false;
       customizable = false;
     }
-
+                     
   String startTime = DateFormat('hh:mm a').format(DateFormat('HH:mm').parse(widget.item!.availableTimeStarts.toString()));
   String EndTime = DateFormat('hh:mm a').format(DateFormat('HH:mm').parse(widget.item!.availableTimeEnds.toString()));
 

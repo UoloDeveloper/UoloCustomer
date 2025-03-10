@@ -12,6 +12,10 @@ class CategoryController extends GetxController implements GetxService {
   List<CategoryModel>? _categoryList;
   List<CategoryModel>? get categoryList => _categoryList;
 
+
+   List<CategoryModel>? _foodcategoryList;
+  List<CategoryModel>? get GroccerycategoryList => _foodcategoryList;
+
   List<CategoryModel>? _subCategoryList;
   List<CategoryModel>? get subCategoryList => _subCategoryList;
 
@@ -30,6 +34,10 @@ class CategoryController extends GetxController implements GetxService {
   List<bool>? _interestSelectedList;
   List<bool>? get interestSelectedList => _interestSelectedList;
 
+
+  List<bool>? _interestfoodSelectedList;
+  List<bool>? get interestfoodSelectedList => _interestfoodSelectedList;
+   
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -79,6 +87,24 @@ class CategoryController extends GetxController implements GetxService {
     }
   }
 
+
+   Future<void> getGrocceryCategoryList(bool reload, {bool allCategory = false, DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
+    if(_categoryList == null || reload || fromRecall) {
+      if(reload) {
+        _categoryList = null;
+      }
+      List<CategoryModel>? GroccerycategoryList;
+      if(dataSource == DataSourceEnum.local) {
+        GroccerycategoryList = await categoryServiceInterface.getCategoryList(allCategory, source: DataSourceEnum.local);
+        _prepareGrocceryCategoryList(categoryList);
+        getGrocceryCategoryList(false, fromRecall: true, allCategory: allCategory, dataSource: DataSourceEnum.client);
+      } else {
+        GroccerycategoryList = await categoryServiceInterface.getCategoryList(allCategory, source: DataSourceEnum.client);
+        _prepareGrocceryCategoryList(categoryList);
+      }
+
+    }
+  }
   _prepareCategoryList(List<CategoryModel>? categoryList) {
     if (categoryList != null) {
       _categoryList = [];
@@ -91,6 +117,17 @@ class CategoryController extends GetxController implements GetxService {
     update();
   }
 
+  _prepareGrocceryCategoryList(List<CategoryModel>? GroccerycategoryList) {
+    if (GroccerycategoryList != null) {
+      _foodcategoryList = [];
+      _interestfoodSelectedList = [];
+      _foodcategoryList!.addAll(GroccerycategoryList);
+      for(int i = 0; i < _foodcategoryList!.length; i++) {
+        _interestfoodSelectedList!.add(false);
+      }
+    }
+    update();
+  }
   void getSubCategoryList(String? categoryID) async {
     _subCategoryIndex = 0;
     _subCategoryList = null;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sixam_mart/features/flash_sale/widgets/flash_sale_view_widget.dart';
 import 'package:sixam_mart/features/home/widgets/bad_weather_widget.dart';
 import 'package:sixam_mart/features/home/widgets/highlight_widget.dart';
+import 'package:sixam_mart/features/home/widgets/views/Groccerycategory_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/banner_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/best_reviewed_item_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/best_store_nearby_view.dart';
@@ -27,20 +28,21 @@ class GroceryHomeScreen extends StatelessWidget {
     bool isLoggedIn = AuthHelper.isLoggedIn();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-      Container(
-        width: MediaQuery.of(context).size.width,
-        color: Theme.of(context).disabledColor  ,
-        child:  const Column(
-          children: [
-            BadWeatherWidget(),
+      // Container(
+      //   width: MediaQuery.of(context).size.width,
+      //   color: Theme.of(context).disabledColor  ,
+      //   child:  const Column(
+      //     children: [
+      //       BadWeatherWidget(),
 
-            BannerView(isFeatured: false),
-            SizedBox(height: 12),
-          ],
-        ),
-      ),
-
-      const CategoryView(),
+      //       BannerView(isFeatured: false),
+      //       SizedBox(height: 12),
+      //     ],
+      //   ),
+      // ),
+    
+      // const CategoryView(),
+       GroccerycategoryView (),
       isLoggedIn ? const VisitAgainView() : const SizedBox(),
       const SpecialOfferView(isFood: false, isShop: false),
       const HighlightWidget(),
