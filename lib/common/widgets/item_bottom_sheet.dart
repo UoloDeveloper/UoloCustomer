@@ -270,7 +270,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                           discountType: discountType)}' : ''}',
                                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
                                     ) : SizedBox(),
-                                    price > priceWithDiscount&&  price > 2 ? Text(
+                                    price >priceWithDiscount &&  price > 2    ? Text(
                                       '${PriceConverter.convertPrice(startingPrice)}'
                                           '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice)}' : ''}', textDirection: TextDirection.ltr,
                                       style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
@@ -1091,7 +1091,8 @@ class NewVariationView extends StatelessWidget {
                 final variationValue = item?.foodVariations?[variationIndex].variationValues?[valueIndex];
                 if (variationValue == null) return SizedBox();
   
-double priceWithDiscount = PriceConverter.convertWithDiscount(  variationValue.optionPrice, discount, discountType)!;
+double? priceWithDiscount =  variationValue.optionPrice;
+// PriceConverter.convertWithDiscount(  variationValue.optionPrice, discount, discountType)!;
             
                        List<CartModel> matchingItems = cartController.cartList.where(
   (element) => 
@@ -1261,7 +1262,9 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                            OnlineCart onlineCart = OnlineCart(
                                          null,
                                         item!.id, null,
-                                        priceWithDiscount.toString(), ''
+                                        priceWithDiscount.toString()
+                                        , 
+                                        ''
                                         , null,
                                          [orderVariation],
                                         quantity, [], [], [], 'Item',
