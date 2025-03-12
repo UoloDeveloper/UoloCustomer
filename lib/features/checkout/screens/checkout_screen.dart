@@ -339,7 +339,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                               double extraPackagingCharge = _calculateExtraPackagingCharge(checkoutController);
                     
                               double total = _calculateTotal(
-                    subTotal: subTotal, deliveryCharge: deliveryCharge, discount: discount,
+                    subTotal: subTotal, deliveryCharge: deliveryCharge, discount: 0,
                     couponDiscount: couponDiscount, taxIncluded: taxIncluded, tax: tax, orderType: checkoutController.orderType!,
                     tips: checkoutController.tips, additionalCharge: additionalCharge, extraPackagingCharge: extraPackagingCharge,
                               );

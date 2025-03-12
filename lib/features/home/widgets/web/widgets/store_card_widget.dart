@@ -317,10 +317,10 @@ double distance = (store!.distance! / 1000);
                       ),
       
                       // Discount Tag
-                      DiscountTag(
+                      DiscountTag2(
                         fromTop: 80,
                         discount: discount,
-                        discountType: discountType, currency: store?.currency,
+                        discountType: discountType,
                       ),
       
                       // Not Available Indicator

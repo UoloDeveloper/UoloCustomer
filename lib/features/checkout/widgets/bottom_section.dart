@@ -478,7 +478,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                   Container(
                     decoration: const BoxDecoration(color: Color(0xFFF4F5FA)),
                     child: const Text(
-                      "mary",
+                      "Summary",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -524,7 +524,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                               ) : Row(
                                 children: [
                                    Text(
-                                   "${PriceConverter.convertPrice(subtotal,currency: currency )}",
+                                   "${PriceConverter.convertPrice(subtotal + discount,currency: currency )}",
                                     style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: Dimensions.fontSizeDefault,
@@ -537,7 +537,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
 
                                   SizedBox(width: 5),
                                   Text(
-                                   "${PriceConverter.convertPrice(subtotal - discount,currency: currency )}",
+                                   "${PriceConverter.convertPrice(subtotal ,currency: currency )}",
                                     style: TextStyle(
                                       fontSize: Dimensions.fontSizeDefault,
                                       fontWeight: FontWeight.w500,

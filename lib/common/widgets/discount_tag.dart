@@ -151,7 +151,7 @@ class DiscountTag2 extends StatelessWidget {
                       // : 'free_delivery'.tr,
                       discount! > 0
                       ? '${(isRightSide || discountType == 'percent') ? '' : currencySymbol}'
-                        '${(discount! * 10).toInt() > 60 ? 60 : (discount! * 10).toInt()}${discountType == 'percent' ? '%' : isRightSide ? currencySymbol : ''} ${'off'.tr}'
+                        '${(discount! + 10).toInt() > 60 ? 60 : (discount! + 10).toInt()}${discountType == 'percent' ? '%' : isRightSide ? currencySymbol : ''} ${'off'.tr}'
                       : 'free_delivery'.tr,
                 style: robotoMedium.copyWith(
                   color: Theme.of(context).cardColor,
