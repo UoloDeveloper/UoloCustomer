@@ -270,7 +270,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                           discountType: discountType)}' : ''}',
                                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
                                     ) : SizedBox(),
-                                    price >priceWithDiscount &&  price > 2    ? Text(
+                                    price < priceWithDiscount &&  widget.item!.price! < 2    ? Text(
                                       '${PriceConverter.convertPrice(startingPrice)}'
                                           '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice)}' : ''}', textDirection: TextDirection.ltr,
                                       style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
