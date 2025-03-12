@@ -123,13 +123,13 @@ class StoreDescriptionViewWidget extends StatelessWidget {
             children: [
               SvgPicture.asset("assets/image/icons/Vector (1).svg", height: 20, width: 20),
               const SizedBox(width: 5,),
-              Text('${store!.discount!.discountType == 'percent' ? '${'Flat'.tr} ${store!.discount!.discount}% ${'off'.tr}'
+              Text('${store!.discount!.discountType == 'percent' ? '${'UPTO'.tr} ${store!.discount!.discount!.toInt() + 10}% ${'off'.tr}'
                                       : '${PriceConverter.convertPrice(store!.discount!.discount)} ${'off'.tr}'} '
                                       ' ${store!.discount!.minPurchase != 0 ? '${'above'.tr} ${  PriceConverter.convertPrice(store!.discount!.minPurchase)}' : ''} ',
                                       
                                     style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w500
+                                      fontWeight: FontWeight.w600
                                       ),
                                     
                                     textAlign: TextAlign.justify, maxLines: 2, overflow: TextOverflow.ellipsis,
