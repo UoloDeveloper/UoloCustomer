@@ -259,7 +259,7 @@ class ItemCard extends StatelessWidget {
       child: Stack(children: [
         Container(
           width: width,
-          height: 255,
+          height: 290,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
             color: Theme.of(context).cardColor,
@@ -271,7 +271,7 @@ class ItemCard extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
               Expanded(
-                flex: 10,
+                flex: 11,
                 child: Stack(children: [
                   Padding(
                     padding: nopadding ?  EdgeInsets.only(top: isPopularItem ? Dimensions.paddingSizeExtraSmall : 0, left: isPopularItem ? Dimensions.paddingSizeExtraSmall : 0, right: isPopularItem ? Dimensions.paddingSizeExtraSmall : 0 ) : const EdgeInsets.all(0),
@@ -321,7 +321,7 @@ class ItemCard extends StatelessWidget {
               ),
 
               Expanded(
-                flex: 8,
+                flex: 7,
                 child: Padding(
                   padding: EdgeInsets.only(left: Dimensions.paddingSizeSmall, right: isShop ? 0 : 0, top: Dimensions.paddingSizeSmall, bottom: isShop ? 0 : Dimensions.paddingSizeSmall),
                   child: Stack(clipBehavior: Clip.none, children: [
@@ -410,6 +410,8 @@ class ItemCard extends StatelessWidget {
                     child: CartCountView(
                       item: item,
                       index: index,
+                      isgroccery: true,
+
                     ),
                   ),
 
