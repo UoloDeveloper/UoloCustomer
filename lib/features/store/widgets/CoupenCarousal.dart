@@ -494,7 +494,8 @@ class _CouponCarouselState extends State<CouponCarousel> {
       }
 
       List<CouponModel> filteredData = couponController.couponList!.where((data) {
-        return data.store != null && data.store!.id == widget.storeid;
+    
+        return data.store != null && data.store!.id == widget.storeid || data.store == null &&  (!RegExp(r'^[0]+$').hasMatch(data.title.toString().trim())) ;
       }).toList();
 
       if (filteredData.isEmpty) {
@@ -541,7 +542,7 @@ class _CouponCarouselState extends State<CouponCarousel> {
                                     Text(
                                       filteredData[index].discountType == 'amount'
                                           ? 'Flat ${PriceConverter.convertPrice(filteredData[index].discount ?? 0.0)} off'
-                                          : 'Flat ${PriceConverter.convertPrice(filteredData[index].discount ?? 0.0)} % off UPTO ${PriceConverter.convertPrice(filteredData[index].maxDiscount ?? 0.0)}',
+                                          : 'Flat ${PriceConverter.convertPrice(filteredData[index].discount ?? 0.0)} % ${ filteredData[index].maxDiscount == 0 ? "off": "off UPTO ${PriceConverter.convertPrice(filteredData[index].maxDiscount ?? 0.0)}"}',
                                       style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
                                     ),
                                     Row(

@@ -73,7 +73,7 @@ class CouponPage extends StatelessWidget {
           )
               : Column(
             children: [
-              Image.asset(Images.noCoupon, height: 70),
+              // Image.asset(Images.noCoupon, height: 70),
               const SizedBox(height: Dimensions.paddingSizeSmall),
               Text('no_promo_available'.tr, style: robotoMedium),
               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
