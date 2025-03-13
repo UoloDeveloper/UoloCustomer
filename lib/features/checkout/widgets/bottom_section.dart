@@ -521,7 +521,13 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                                   fontSize: Dimensions.fontSizeDefault,
                                   fontWeight: FontWeight.w500,
                                 ),
-                              ) : Row(
+                            ) : subtotal + discount == subtotal ?  Text(
+                                   "${PriceConverter.convertPrice(subtotal ,currency: currency )}",
+                                    style: TextStyle(
+                                      fontSize: Dimensions.fontSizeDefault,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ) : Row(
                                 children: [
                                    Text(
                                    "${PriceConverter.convertPrice(subtotal + discount,currency: currency )}",
