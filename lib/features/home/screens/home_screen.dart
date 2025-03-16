@@ -69,7 +69,9 @@ class HomeScreen extends StatefulWidget {
       Get.find<StoreController>().getRecommendedStoreList();
       if(Get.find<SplashController>().module!.moduleType.toString() == AppConstants.grocery) {
         Get.find<FlashSaleController>().getFlashSale(reload, false);
+            //  Get.find<CategoryController>().getGrocceryCategoryList(true, allCategory: true);
       }
+      
       if(Get.find<SplashController>().module!.moduleType.toString() == AppConstants.ecommerce) {
         Get.find<ItemController>().getFeaturedCategoriesItemList(false, false);
         Get.find<FlashSaleController>().getFlashSale(reload, false);
@@ -287,6 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 await Get.find<BannerController>().getPromotionalBannerList(true);
                 await Get.find<ItemController>().getDiscountedItemList(true, false, 'all');
                 await Get.find<CategoryController>().getCategoryList(true);
+                await Get.find<StoreController>().getRecommendedStoreList();
                 await Get.find<StoreController>().getPopularStoreList(true, 'all', false);
                 await Get.find<CampaignController>().getItemCampaignList(true);
                 Get.find<CampaignController>().getBasicCampaignList(true);

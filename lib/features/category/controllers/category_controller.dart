@@ -13,8 +13,8 @@ class CategoryController extends GetxController implements GetxService {
   List<CategoryModel>? get categoryList => _categoryList;
 
 
-   List<CategoryModel>? _foodcategoryList;
-  List<CategoryModel>? get GroccerycategoryList => _foodcategoryList;
+   List<CategoryModel>? _GroccerycategoryList;
+  List<CategoryModel>? get GroccerycategoryList => _GroccerycategoryList;
 
   List<CategoryModel>? _subCategoryList;
   List<CategoryModel>? get subCategoryList => _subCategoryList;
@@ -119,10 +119,10 @@ class CategoryController extends GetxController implements GetxService {
 
   _prepareGrocceryCategoryList(List<CategoryModel>? GroccerycategoryList) {
     if (GroccerycategoryList != null) {
-      _foodcategoryList = [];
+      _GroccerycategoryList = [];
       _interestfoodSelectedList = [];
-      _foodcategoryList!.addAll(GroccerycategoryList);
-      for(int i = 0; i < _foodcategoryList!.length; i++) {
+      _GroccerycategoryList!.addAll(GroccerycategoryList);
+      for(int i = 0; i < _GroccerycategoryList!.length; i++) {
         _interestfoodSelectedList!.add(false);
       }
     }
@@ -259,6 +259,38 @@ class CategoryController extends GetxController implements GetxService {
   }
 
 
+// Future<ItemModel?> categoryitembyId( String categoryID, int offset, String type) async {
+//   // Fetch data from the service
+//   final data = await categoryServiceInterface.getCategoryItemList(categoryID, offset, type);
+  
+//   // Check if data is null
+//   if (data == null) {
+//   // Get.snackbar(
+//   //     "Error",
+//   //     "Failed to load data for ID $categoryID: Data is null",
+//   //     snackPosition: SnackPosition.TOP,
+//   //   );
+//     throw Exception('Failed to load data for ID $categoryID: Data is null');
+//   }
+
+//   // Check if categories are not empty
+//   if (data.items != null && data.items!.isNotEmpty) {
+//   //  Get.snackbar(
+//   //     "Success",
+//   //     "successfully to load data for ID $categoryID: ${data.items!.length} categories found",
+//   //     snackPosition: SnackPosition.TOP,
+//   //   );
+//     return data;
+//   } else {
+//   //  Get.snackbar(
+//   //     "Error",
+//   //     "Failed to load data for ID $categoryID:  No categories found",
+//   //     snackPosition: SnackPosition.TOP,
+//   //   );
+//     throw Exception('Failed to load data for ID $categoryID: No categories found' " $data and ${data.items!.first.name}");
+//   }
+// }
+
 Future<ItemModel?> categoryitembyId( String categoryID, int offset, String type) async {
   // Fetch data from the service
   final data = await categoryServiceInterface.getCategoryItemList(categoryID, offset, type);
@@ -290,4 +322,5 @@ Future<ItemModel?> categoryitembyId( String categoryID, int offset, String type)
     throw Exception('Failed to load data for ID $categoryID: No categories found' " $data and ${data.items!.first.name}");
   }
 }
+
 }

@@ -156,6 +156,8 @@ import 'package:sixam_mart/features/category/controllers/category_controller.dar
 
 
 import 'package:sixam_mart/features/category/screens/category_item_screen.dart';
+import 'package:sixam_mart/features/home/widgets/views/Grocceryitemsview.dart';
+import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 
 import '../../../../../common/widgets/no_data_screen.dart';
@@ -277,69 +279,99 @@ class GroceryCategoryView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
               categoryController.categoryList!.length,
-              (index) {
+              (index)  {
                 final String id = categoryController.categoryList![index].id.toString();
                 
-                return FutureBuilder(
-                  future: categoryController.categoryitembyId(id, 1, categoryController.type,),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return ItemShimmerView(
-                        isPopularItem: false,
-                        title: categoryController.categoryList![index].name ?? '',
-                      );
-                    } else if (snapshot.hasError) {
-                      return
+  // final ItemModel? itemdatas  ;
+
+  final   List<Item>? itemdata = [];
+                fetchdata () async {
+                   final ItemModel? itemdatas = await  categoryController.categoryitembyId(
+        id, // Use the id passed to the widget
+        1,
+        categoryController.type,
+      );
+             if (itemdatas != Null) {
+                itemdata!.addAll(itemdatas!.items!);
+                  // return const SizedBox.shrink();
+
+
+             }
+
+                }
+
+                fetchdata();
+
+                // if (itemdatas == null || itemdatas.items == null || itemdatas.items!.isEmpty) {
+                //   return const SizedBox.shrink();
+                // }
+
+              //  final  ItemModel? itemdatas = categoryController.categoryitembyId(id, 1, categoryController.type,);
+              //  final items = itemdatas!.items;
+
+                return  Grocceyitemdata(items: itemdata,categoryController: categoryController,id: id
+                ,);
+                
+                // FutureBuilder(
+                //   future: categoryController.categoryitembyId(id, 1, categoryController.type,),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return ItemShimmerView(
+                //         isPopularItem: false,
+                //         title: categoryController.categoryList![index].name ?? '',
+                //       );
+                //     } else if (snapshot.hasError) {
+                //       return
                      
-                       const SizedBox.shrink();
-                    } else if (snapshot.hasData && snapshot.data!.items != null && snapshot.data!.items!.isNotEmpty) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
-                              child: TitleWidget(
-                                title: categoryController.categoryList![index].name ?? '',
-                                onTap: () {
-                                  Get.to(CategoryItemScreen(
-                                    categoryID: id,
-                                    categoryName: categoryController.categoryList![index].name ?? '',
-                                    // fromgroccery: true,
-                                  ));
-                                },
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            SizedBox(
-                              height: 295,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                physics: const BouncingScrollPhysics(),
-                                padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
-                                itemCount: snapshot.data!.items!.length,
-                                itemBuilder: (context, itemIndex) {
-                                  final data = snapshot.data!.items![itemIndex];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: Dimensions.paddingSizeDefault,
-                                      right: Dimensions.paddingSizeDefault,
-                                      top: Dimensions.paddingSizeDefault,
-                                    ),
-                                    child: ItemCard(item: data, isFood: false, isShop: false),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                );
+                //        const SizedBox.shrink();
+                //     } else if (snapshot.hasData && snapshot.data!.items != null && snapshot.data!.items!.isNotEmpty) {
+                //       return Padding(
+                //         padding: const EdgeInsets.only(bottom: 16.0),
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Padding(
+                //               padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+                //               child: TitleWidget(
+                //                 title: categoryController.categoryList![index].name ?? '',
+                //                 onTap: () {
+                //                   Get.to(CategoryItemScreen(
+                //                     categoryID: id,
+                //                     categoryName: categoryController.categoryList![index].name ?? '',
+                //                     // fromgroccery: true,
+                //                   ));
+                //                 },
+                //               ),
+                //             ),
+                //             const SizedBox(height: 8),
+                //             SizedBox(
+                //               height: 295,
+                //               child: ListView.builder(
+                //                 scrollDirection: Axis.horizontal,
+                //                 physics: const BouncingScrollPhysics(),
+                //                 padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
+                //                 itemCount: snapshot.data!.items!.length,
+                //                 itemBuilder: (context, itemIndex) {
+                //                   final data = snapshot.data!.items![itemIndex];
+                //                   return Padding(
+                //                     padding: const EdgeInsets.only(
+                //                       bottom: Dimensions.paddingSizeDefault,
+                //                       right: Dimensions.paddingSizeDefault,
+                //                       top: Dimensions.paddingSizeDefault,
+                //                     ),
+                //                     child: ItemCard(item: data, isFood: false, isShop: false),
+                //                   );
+                //                 },
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       );
+                //     } else {
+                //       return const SizedBox.shrink();
+                //     }
+                //   },
+                // );
               },
             ),
           ),
