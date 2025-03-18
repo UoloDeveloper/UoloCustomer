@@ -263,6 +263,7 @@ class ItemCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
             color: Theme.of(context).cardColor,
+            
           ),
           child: CustomInkWell(
             onTap:  (){},

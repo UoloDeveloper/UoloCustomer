@@ -69,7 +69,12 @@ class HomeScreen extends StatefulWidget {
       Get.find<StoreController>().getRecommendedStoreList();
       if(Get.find<SplashController>().module!.moduleType.toString() == AppConstants.grocery) {
         Get.find<FlashSaleController>().getFlashSale(reload, false);
-            //  Get.find<CategoryController>().getGrocceryCategoryList(true, allCategory: true);
+          if ( Get.find<CategoryController>().GrocerycategoritemyList.isEmpty) {
+        Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
+        }
+      //  if(  Get.find<CategoryController>().categoryItemList == null && Get.find<CategoryController>().categoryItemList!.isEmpty) {
+      //        Get.find<CategoryController>().getCategoryList(false, allCategory: false);
+      //  }
       }
       
       if(Get.find<SplashController>().module!.moduleType.toString() == AppConstants.ecommerce) {

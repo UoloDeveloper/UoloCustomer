@@ -189,6 +189,7 @@ class BottomSection extends StatelessWidget {
                                       PriceConverter.convertAnimationPrice(
                                         checkoutController.viewTotalPrice,
                                         textStyle: robotoBold.copyWith(),
+                                        currency:  Get.find<CartController>().getCurrncyForUi(),
                                       ),
 
                                       const Expanded(child: SizedBox()),

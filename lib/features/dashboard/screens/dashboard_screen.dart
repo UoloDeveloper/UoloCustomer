@@ -93,8 +93,9 @@ class DashboardScreenState extends State<DashboardScreen> {
 
     _screens = [
       const HomeScreen(),
+      const HomeScreen(),
       const FavouriteScreen(),
-      const SizedBox(),
+      // const SizedBox(),
       const OrderScreen(),
       // const MenuScreen()
     ];
@@ -203,10 +204,12 @@ class DashboardScreenState extends State<DashboardScreen> {
 
                             _screens = [
                               const HomeScreen(),
-                              isParcel ? const AddressScreen(fromDashboard: true)
-                                  // : isTaxi ? const VehicleFavouriteScreen()
-                                  : const FavouriteScreen(),
-                              const SizedBox(),
+                                  const HomeScreen(),
+                              // isParcel ? const AddressScreen(fromDashboard: true)
+                              //     // : isTaxi ? const VehicleFavouriteScreen()
+                                  // : const
+                                   FavouriteScreen(),
+                              // const SizedBox(),
                               OrderScreen(),
                               // const MenuScreen()
                             ];
@@ -294,15 +297,15 @@ class DashboardScreenState extends State<DashboardScreen> {
                                                           isParcel ? Images.addressSelect : "assets/svgs/wishsl.svg",
                                                       unSelectedIcon:
                                                           isParcel ? Images.addressUnselect : "assets/svgs/wishun.svg",
-                                                      isSelected: _pageIndex == 3,
-                                                      onTap: () => _setPage(3),
+                                                      isSelected: _pageIndex == 2,
+                                                      onTap: () => _setPage(2),
                                                     ),
                                             BottomNavItemWidget(
                                                       title: 'orders'.tr,
                                                       selectedIcon: "assets/svgs/ordersl.svg",
                                                       unSelectedIcon: "assets/svgs/orderun.svg",
-                                                      isSelected: _pageIndex == 4,
-                                                      onTap: () => _setPage(4),
+                                                      isSelected: _pageIndex == 3,
+                                                      onTap: () => _setPage(3),
                                                     ),
                                           ]),
                                       ),

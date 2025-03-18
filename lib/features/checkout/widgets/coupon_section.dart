@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/checkout/widgets/coupen_page.dart';
 import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
 import 'package:sixam_mart/features/language/controllers/language_controller.dart';
@@ -22,12 +23,15 @@ class CouponSection extends StatelessWidget {
   final double addOns;
   final double deliveryCharge;
   final double variationPrice;
+  
   const CouponSection({super.key, this.storeId, required this.checkoutController, required this.total, required this.price, required this.discount,
     required this.addOns, required this.deliveryCharge, required this.variationPrice});
+
 
   @override
   Widget build(BuildContext context) {
     double totalPrice = total;
+    final String currency = Get.find<CartController>().getCurrncyForUi();
     return storeId == null ? GetBuilder<CouponController>(
       builder: (couponController) {
         return Padding(
@@ -57,7 +61,7 @@ class CouponSection extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                        Text('You saved ${PriceConverter.convertPrice(discount)} on delivery',style: robotoMedium,),
+                        Text('You saved ${PriceConverter.convertPrice(discount,currency: currency)} on delivery',style: robotoMedium,),
                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                       ],
           

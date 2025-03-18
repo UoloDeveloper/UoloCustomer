@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:sixam_mart/common/enums/data_source_enum.dart';
+import 'package:sixam_mart/common/models/module_model.dart';
 import 'package:sixam_mart/features/category/domain/models/category_model.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/features/store/domain/models/store_model.dart';
@@ -11,9 +12,15 @@ class CategoryService implements CategoryServiceInterface {
   CategoryService({required this.categoryRepositoryInterface});
 
   @override
-  Future<List<CategoryModel>?> getCategoryList(bool allCategory, {DataSourceEnum? source}) async {
-    return await categoryRepositoryInterface.getList(allCategory: allCategory, categoryList: true, source: source);
+  Future<List<CategoryModel>?> getCategoryList(bool allCategory,  ModuleModel? module, {DataSourceEnum? source,bool? groceryCategoryList}) async {
+    return await categoryRepositoryInterface.getList(allCategory: allCategory, categoryList: true, source: source,groceryCategoryList: groceryCategoryList ,module:module );
   }
+  
+  //  @override
+  // Future<List<CategoryModel>?> getGroceryCategoryList(bool allCategory, ModuleModel? module, bool groceryCategoryList, {DataSourceEnum? source} ) async {
+  //   return await categoryRepositoryInterface.getList(allCategory: allCategory, categoryList: true, source: source,groceryCategoryList: groceryCategoryList, module: module);
+  // }
+
 
   @override
   Future<List<CategoryModel>?> getSubCategoryList(String? parentID) async {

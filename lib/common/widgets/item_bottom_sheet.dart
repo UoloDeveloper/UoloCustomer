@@ -69,7 +69,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
 
   }
      
-
+ String currency = Get.find<CartController>().getCurrncyForUi();
   
   @override
   Widget build(BuildContext context) {
@@ -265,14 +265,14 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                     ),
                                     !widget.isCampaign ? RatingBar(rating: widget.item!.avgRating, size: 15, ratingCount: widget.item!.ratingCount) : const SizedBox(),
                                price > 2 ?     Text(
-                                      '${PriceConverter.convertPrice(startingPrice, discount: initialDiscount, discountType: discountType)}'
+                                      '${PriceConverter.convertPrice(startingPrice, discount: initialDiscount, discountType: discountType,currency : currency)}'
                                           '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: initialDiscount,
-                                          discountType: discountType)}' : ''}',
+                                          discountType: discountType,currency: currency )}' : ''}',
                                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
                                     ) : SizedBox(),
                                     price < priceWithDiscount &&  widget.item!.price! < 2    ? Text(
-                                      '${PriceConverter.convertPrice(startingPrice)}'
-                                          '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice)}' : ''}', textDirection: TextDirection.ltr,
+                                      '${PriceConverter.convertPrice(startingPrice,currency: currency )}'
+                                          '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, currency: currency)}' : ''}', textDirection: TextDirection.ltr,
                                       style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
                                     ) : const SizedBox(),
                                   ]),
@@ -376,6 +376,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                           Padding(
                             padding: const EdgeInsets.only(left: 10,right: 10,top: 1,bottom: 1),
                             child: _newVariation ? NewVariationView(
+                              currency: currency,
                               item: widget.item, itemController: itemController,
                               discount: initialDiscount, discountType: discountType, showOriginalPrice: (price > priceWithDiscount) && (discountType == 'percent'),
                             ) : VariationView(
@@ -388,7 +389,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                           (Get.find<SplashController>().configModel!.moduleConfig!.module!.addOn! && widget.item!.addOns!.isNotEmpty)
                               ? Padding(
                            padding: const EdgeInsets.only(left: 10,right: 10,top: 1,bottom: 10),
-                                child: AddonView(itemController: itemController, item: widget.item!),
+                                child: AddonView(itemController: itemController, item: widget.item!,currency: currency,),
                               ): const SizedBox(),
                     
                     
@@ -438,12 +439,15 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
 
                           Row(children: [
                             discount! > 0 ? PriceConverter.convertAnimationPrice(
+                              // currency:  ,
                               (price * itemController.quantity!) + addonsCost,
+                              currency: currency ,
                               textStyle: robotoMedium.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall, decoration: TextDecoration.lineThrough),
                             ) : const SizedBox(),
                             const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
                             PriceConverter.convertAnimationPrice(
+                              currency: currency ,
                               withAddonCost,
                               textStyle: robotoBold.copyWith(color: Theme.of(context).primaryColor),
                             ),
@@ -494,7 +498,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                             builder: (cartController) {
                               return Builder(
                                   builder: (context) {
-                          double? cost = PriceConverter.convertWithDiscount((price! * itemController.quantity!), discount, discountType);
+                          double? cost = PriceConverter.convertWithDiscount((price! * itemController.quantity!), discount, discountType, );
                           double withAddonCost = cost! + addonsCost;
                                   
                                   return CustomButton(
@@ -691,7 +695,8 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
 class AddonView extends StatelessWidget {
   final Item item;
   final ItemController itemController;
-  const AddonView({super.key, required this.item, required this.itemController});
+  final String currency;
+  const AddonView({super.key, required this.item, required this.itemController, required this.currency});
 
   @override
   Widget build(BuildContext context) {
@@ -768,7 +773,7 @@ class AddonView extends StatelessWidget {
                         const Spacer(),
         
                         Text(
-                          item.addOns![index].price! > 0 ? PriceConverter.convertPrice(item.addOns![index].price) : 'free'.tr,
+                          item.addOns![index].price! > 0 ? PriceConverter.convertPrice(item.addOns![index].price,currency: currency ) : 'free'.tr,
                           maxLines: 1, overflow: TextOverflow.ellipsis, textDirection: TextDirection.ltr,
                           style: const TextStyle(
                                 fontSize: 15,
@@ -893,7 +898,8 @@ class NewVariationView extends StatelessWidget {
   final double? discount;
   final String? discountType;
   final bool showOriginalPrice;
-  const NewVariationView({super.key, required this.item, required this.itemController, required this.discount, required this.discountType, required this.showOriginalPrice});
+  final String currency;
+  const NewVariationView({super.key, required this.item, required this.itemController, required this.discount, required this.discountType, required this.showOriginalPrice, required this.currency});
 
   @override
   Widget build(BuildContext context) {
@@ -1026,14 +1032,14 @@ class NewVariationView extends StatelessWidget {
                         const Spacer(),
 
                         showOriginalPrice ? Text(
-                          PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice),
+                          PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice, currency: currency),
                           maxLines: 1, overflow: TextOverflow.ellipsis, textDirection: TextDirection.ltr,
                           style: robotoRegular.copyWith(fontSize: 15, color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
                         ) : const SizedBox(),
                         SizedBox(width: showOriginalPrice ? Dimensions.paddingSizeExtraSmall : 0),
 
                         Text(
-                          PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice, discount: discount, discountType: discountType, isFoodVariation: true),
+                          PriceConverter.convertPrice(item!.foodVariations![index].variationValues![i].optionPrice, discount: discount, discountType: discountType, isFoodVariation: true, currency: currency),
                           maxLines: 1, overflow: TextOverflow.ellipsis, textDirection: TextDirection.ltr,
                           style: itemController.selectedVariations[index][i]! ? const TextStyle(
                                 fontSize: 15,
@@ -1134,7 +1140,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                             Row(
                               children: [
                                 Text(
-                                  '+${PriceConverter.convertPrice(variationValue.optionPrice,)}',
+                                  '+${PriceConverter.convertPrice(variationValue.optionPrice, currency: currency)}',
                                   style: robotoRegular.copyWith(
                                     fontSize: Dimensions.fontSizeExtraSmall,
                                     color: Theme.of(context).disabledColor,
@@ -1174,6 +1180,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                               discount: discount,
                               discountType: discountType,
                               isFoodVariation: true,
+                               currency: currency
                               // currency: item?.currency?.currencyCode,
                             )}',
                             style: itemController.selectedVariations[variationIndex][valueIndex] ?? false
@@ -1285,6 +1292,7 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                               discount: discount,
                               discountType: discountType,
                               isFoodVariation: true,
+                               currency: currency,
                               // currency: item?.currency?.currencyCode,
                             )}',
                             style: itemController.selectedVariations[variationIndex][valueIndex] ?? false
