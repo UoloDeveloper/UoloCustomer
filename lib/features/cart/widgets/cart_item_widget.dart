@@ -505,8 +505,8 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
                      Wrap(children: [
 
                           ( discount ?? 0) > 0 ? Text(
-                          '${PriceConverter.convertPrice( startingPrice,)}'
-                              '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice,)}' : ''}',
+                          '${PriceConverter.convertPrice( startingPrice, currency:Get.find<CartController>().getCurrncyForUi()  )}'
+                              '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice, currency:Get.find<CartController>().getCurrncyForUi())}' : ''}',
                           textDirection: TextDirection.ltr,
                           style: robotoRegular.copyWith(
                             color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough,
@@ -516,8 +516,8 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
 
                               SizedBox(width: (discount?? 0) > 0 ? Dimensions.paddingSizeExtraSmall : 0),
                         Text(
-                          '${PriceConverter.convertPrice(startingPrice, discount: discount, discountType: discountType,)}'
-                              '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: discount, discountType: discountType)}' : ''}',
+                          '${PriceConverter.convertPrice(startingPrice, discount: discount, discountType: discountType, currency:Get.find<CartController>().getCurrncyForUi())}'
+                              '${endingPrice!= null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: discount, discountType: discountType, currency:Get.find<CartController>().getCurrncyForUi())}' : ''}',
                           style: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall), textDirection: TextDirection.ltr,
                         ),
                   
@@ -526,7 +526,7 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
                       ]) : Wrap(
                         children: [
                             Text(
-                          '${PriceConverter.convertPrice(variationprice ?? cart.price, discount: discount, discountType: discountType,)}'
+                          '${PriceConverter.convertPrice(variationprice ?? cart.price, discount: discount, discountType: discountType, currency:Get.find<CartController>().getCurrncyForUi())}'
                               ,
                           style: robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall), textDirection: TextDirection.ltr,
                         )

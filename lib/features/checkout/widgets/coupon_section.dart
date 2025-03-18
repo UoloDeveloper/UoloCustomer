@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/checkout/widgets/coupen_page.dart';
 import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
 import 'package:sixam_mart/features/language/controllers/language_controller.dart';
@@ -57,7 +58,7 @@ class CouponSection extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                        Text('You saved ${PriceConverter.convertPrice(discount)} on delivery',style: robotoMedium,),
+                        Text('You saved ${PriceConverter.convertPrice(discount,currency:  Get.find<CartController>().getCurrncyForUi())} on delivery',style: robotoMedium,),
                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                       ],
           

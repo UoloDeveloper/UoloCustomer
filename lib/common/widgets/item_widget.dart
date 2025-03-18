@@ -611,7 +611,7 @@ return Container(
                                   _getPrice(widget.item),
                                   discount: discount,
                                   discountType: discountType,
-                                  // currency: widget.item?.currency?.currencyCode 
+                                  currency: widget.item?.currency?.currencyCode 
                                 ),
                                 style: robotoMedium.copyWith(
                                   fontSize: Dimensions.fontSizeDefault,
