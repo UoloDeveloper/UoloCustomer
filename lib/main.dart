@@ -63,7 +63,7 @@ Future<void> main() async {
         apiKey: "AIzaSyDFN-73p8zKVZbA0i5DtO215XzAb-xuGSE",
         authDomain: "ammart-8885e.firebaseapp.com",
         projectId: "ammart-8885e",
-        storageBucket: "ammart-8885e.appspot.com",
+        storageBucket: "ammart-8885e.passport.com",
         messagingSenderId: "1000163153346",
         appId: "1:1000163153346:web:4f702a4b5adbd5c906b25b",
     ));
@@ -111,7 +111,6 @@ class MyApp extends StatefulWidget {
   final Map<String, Map<String, String>>? languages;
   final NotificationBodyModel? body;
   const MyApp({super.key, required this.languages, required this.body});
-
   @override
   
   State<MyApp> createState() => _MyAppState();

@@ -136,9 +136,15 @@ static Widget convertAnimationPrice(double? price, {
 
  
   String priceText;
+  // if (currency != null) {
+    
+  // }
   if (currency != null) {
-       if (currency == 'INR') {
-            currency = '₹ ';
+
+    
+      if (currency == 'INR') {
+            currency = '₹';
+
         }
     priceText = isRightSide ? '$formattedPrice $currency' : '$currency $formattedPrice';
   } else {

@@ -298,7 +298,10 @@ class _CheckoutState extends State<CheckoutScreen> {
                               double price = _calculatePrice(store: checkoutController.store, cartList: _cartList);
                               double addOns = _calculateAddonsPrice(store: checkoutController.store, cartList: _cartList);
                               double variations = _calculateVariationPrice(store: checkoutController.store, cartList: _cartList, calculateWithoutDiscount: true);
-                              double? discount = _calculateDiscount(
+                              double? discount = 
+                               
+
+                              _calculateDiscount(
                     store: checkoutController.store, cartList: _cartList, price: price, addOns: addOns,
                               );
                               double couponDiscount = PriceConverter.toFixed(couponController.discount!);
@@ -312,7 +315,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                               double referralDiscount = _calculateReferralDiscount(subTotal, discount, couponDiscount);
                     
                               double orderAmount = _calculateOrderAmount(
-                    price: price, variations: variations, discount: discount, addOns: addOns,
+                    price: price, variations: variations, discount: 0, addOns: addOns,
                     couponDiscount: couponDiscount, cartList: _cartList, referralDiscount: referralDiscount,
                               );
                     

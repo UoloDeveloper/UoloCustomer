@@ -18,6 +18,7 @@ class AppConstants {
   "https://test.uolodelivery.com";
   // "https://orders.uolodelivery.com";
   // 'https://uolo.v-nexus.com';
+
   static const String categoryUri = '/api/v1/categories';
   static const String bannerUri = '/api/v1/banners';
   static const String storeItemUri = '/api/v1/items/latest';

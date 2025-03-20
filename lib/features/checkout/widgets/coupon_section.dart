@@ -23,12 +23,15 @@ class CouponSection extends StatelessWidget {
   final double addOns;
   final double deliveryCharge;
   final double variationPrice;
+  
   const CouponSection({super.key, this.storeId, required this.checkoutController, required this.total, required this.price, required this.discount,
     required this.addOns, required this.deliveryCharge, required this.variationPrice});
+
 
   @override
   Widget build(BuildContext context) {
     double totalPrice = total;
+    final String currency = Get.find<CartController>().getCurrncyForUi();
     return storeId == null ? GetBuilder<CouponController>(
       builder: (couponController) {
         return Padding(
@@ -58,8 +61,9 @@ class CouponSection extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
                         Text('You saved ${PriceConverter.convertPrice(discount,currency:  Get.find<CartController>().getCurrncyForUi())} on delivery',style: robotoMedium,),
-                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
                       ],
           
                     ),

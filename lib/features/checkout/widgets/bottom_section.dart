@@ -189,7 +189,11 @@ class BottomSection extends StatelessWidget {
                                       PriceConverter.convertAnimationPrice(
                                         checkoutController.viewTotalPrice,
                                         textStyle: robotoBold.copyWith(),
+<<<<<<< HEAD
                                          currency:Get.find<CartController>().getCurrncyForUi()
+=======
+                                        currency:  Get.find<CartController>().getCurrncyForUi(),
+>>>>>>> Customer_app_with_Groccery
                                       ),
 
                                       const Expanded(child: SizedBox()),
@@ -479,7 +483,11 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                   Container(
                     decoration: const BoxDecoration(color: Color(0xFFF4F5FA)),
                     child: const Text(
+<<<<<<< HEAD
                       "Summary",
+=======
+                      "summary",
+>>>>>>> Customer_app_with_Groccery
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -517,7 +525,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                               ),
                               const Spacer(),
                               discount < 0 ?     Text(
-                                PriceConverter.convertPrice(subtotal,currency: currency ),
+                                PriceConverter.convertPrice(subtotal  ,currency: currency ),
                                 style: TextStyle(
                                   fontSize: Dimensions.fontSizeDefault,
                                   fontWeight: FontWeight.w500,

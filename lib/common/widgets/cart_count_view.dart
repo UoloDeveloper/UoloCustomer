@@ -138,7 +138,8 @@ class CartCountView extends StatefulWidget {
   final Item item;
   final Widget? child;
   final int? index;
-  const CartCountView({super.key, required this.item, this.child, this.index = -1});
+  final bool isgroccery;
+  const CartCountView({super.key, required this.item, this.child, this.index = -1, this.isgroccery = false});
 
   @override
   State<CartCountView> createState() => _CartCountViewState();
@@ -158,8 +159,8 @@ class _CartCountViewState extends State<CartCountView> {
       return cartQty != 0
           ? Center(
               child: Container(
-                width: 110,
-                height: 40,
+                width: widget.isgroccery ?88 : 110,
+                height: widget.isgroccery ? 35 :40,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -191,7 +192,7 @@ class _CartCountViewState extends State<CartCountView> {
                           child: Center(
                             child: Icon(
                               Icons.remove,
-                              size: 25,
+                              size: widget.isgroccery ?18 : 25,
                               color: Colors.green,
                             ),
                           ),
@@ -201,14 +202,14 @@ class _CartCountViewState extends State<CartCountView> {
                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
                         child: cartController.isLoading && cartController.directAddCartItemIndex == widget.index
                             ? SizedBox(
-                                height: 20,
-                                width: 20,
+                                height: widget.isgroccery ?15 :  20,
+                                width: widget.isgroccery ?15 :  20,
                                 child: CircularProgressIndicator(color: Colors.green),
                               )
                             : Text(
                                 cartQty.toString(),
                                 style: robotoMedium.copyWith(
-                                  fontSize: Dimensions.fontSizeLarge,
+                                  fontSize: widget.isgroccery ? Dimensions.fontSizeSmall + 2 :  Dimensions.fontSizeLarge,
                                   color: Colors.green,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -225,7 +226,7 @@ class _CartCountViewState extends State<CartCountView> {
                           child: Center(
                             child: Icon(
                               Icons.add,
-                              size: 25,
+                              size: widget.isgroccery ?18 :  25,
                               color: Colors.green,
                             ),
                           ),
@@ -245,16 +246,16 @@ class _CartCountViewState extends State<CartCountView> {
               },
               child: widget.child ??
                   Container(
-                    width: 110,
-                    height: 40,
+                    width: widget.isgroccery ?80 : 110,
+                    height:  widget.isgroccery  ? 35 : 40,
                     margin: const EdgeInsets.all(0),
                     decoration: BoxDecoration(
-                      color: _isAdded ? Colors.green : Colors.white, // Change color based on the state
+                      color: _isAdded ? widget.isgroccery ?Colors.white  : Colors.green : Colors.white, // Change color based on the state
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
+                          spreadRadius: widget.isgroccery ? 1 : 2,
                           blurRadius: 5,
                         ),
                       ],
@@ -263,7 +264,7 @@ class _CartCountViewState extends State<CartCountView> {
                       child: Text(
                         "ADD",
                         style: TextStyle(
-                          color: _isAdded ? Colors.white : Colors.green, // Change text color based on the state
+                          color: _isAdded ? widget.isgroccery ? Colors.green :  Colors.white : Colors.green, // Change text color based on the state
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
