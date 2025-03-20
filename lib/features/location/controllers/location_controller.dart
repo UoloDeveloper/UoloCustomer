@@ -154,7 +154,7 @@ class LocationController extends GetxController implements GetxService {
 
   Future<ZoneResponseModel> getZone(String? lat, String? lng, bool markerLoad, {bool updateInAddress = false, bool handleError = false}) async {
 
-    Get.find<CartController>().clearCartOnline();
+    // Get.find<CartController>().clearCartOnline();
     if(markerLoad) {
       _loading = true;
     }else {

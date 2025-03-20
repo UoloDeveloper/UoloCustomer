@@ -30,8 +30,8 @@ class SpecialOfferView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
               child: TitleWidget(
-                title: 'special_offer'.tr,
-                image: Images.discountOfferIcon,
+                title: "Offer Zone",
+                // image: Images.discountOfferIcon,
                 onTap: () => Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
               ),
             ),

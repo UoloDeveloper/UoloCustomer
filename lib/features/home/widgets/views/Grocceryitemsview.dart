@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:sixam_mart/common/widgets/card_design/item_card.dart';
+import 'package:sixam_mart/common/widgets/custom_divider%20copy.dart';
+import 'package:sixam_mart/common/widgets/title_widget.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
+import 'package:sixam_mart/helper/route_helper.dart';
+import 'package:sixam_mart/util/dimensions.dart';
 
 class Grocceyitemdata extends StatefulWidget {
   final ItemModel? items;
@@ -35,7 +41,25 @@ class _GrocceyitemdataState extends State<Grocceyitemdata> {
     return  widget.items!.items!.isEmpty ? const SizedBox.shrink() :  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.name ?? '' ,),
+        // Text(widget.name ?? '' ,),
+          Padding(
+              padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
+              child: TitleWidget(
+                title: widget.name ?? '' ,
+                // image: Images.discountOfferIcon,
+                onTap: () => Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
+              ),
+            )
+        //  Padding(
+        //         padding:  EdgeInsets.only(left: 10,),
+        //         child: CustomDivider1(text: widget.name ?? ''.toUpperCase(),thickness: .2,textAlign: TextAlign.left,color:  Colors.black,fontsize: 16,),
+                
+        //         //  TitleWidget(
+        //         //   title: 'Newly Added'.tr,
+        //         //   onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('latest')),
+        //         // ),
+        //       ),,
+        ,
         Container(
           height: 300,
           child: ListView.builder(

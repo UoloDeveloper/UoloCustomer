@@ -262,7 +262,7 @@ class ItemCard extends StatelessWidget {
           height: 290,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-            color: Theme.of(context).cardColor,
+            color: Colors.white,
             
           ),
           child: CustomInkWell(

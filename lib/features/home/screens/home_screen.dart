@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
 import 'package:sixam_mart/common/widgets/card_design/store_card.dart';
+import 'package:sixam_mart/common/widgets/custom_image.dart';
 import 'package:sixam_mart/features/banner/controllers/banner_controller.dart';
 import 'package:sixam_mart/features/brands/controllers/brands_controller.dart';
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/home/controllers/advertisement_controller.dart';
 import 'package:sixam_mart/features/home/controllers/home_controller.dart';
 import 'package:sixam_mart/features/home/notdeliverablescreen.dart';
@@ -61,6 +65,10 @@ class HomeScreen extends StatefulWidget {
     Get.find<FlashSaleController>().setEmptyFlashSale(fromModule: fromModule);
     // print('------------call from home');
     // await Get.find<CartController>().getCartDataOnline();
+        //  if ( Get.find<CategoryController>().GrocerycategoritemyList.isEmpty) {
+        // Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
+        // }
+        //  Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
     if(AuthHelper.isLoggedIn()) {
       Get.find<StoreController>().getVisitAgainStoreList(fromModule: fromModule);
     }
@@ -519,14 +527,152 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          floatingActionButton: AuthHelper.isLoggedIn() && homeController.cashBackOfferList != null && homeController.cashBackOfferList!.isNotEmpty ?
-          homeController.showFavButton ? Padding(
-            padding: EdgeInsets.only(bottom: 50.0, right: ResponsiveHelper.isDesktop(context) ? 50 : 0),
+          // floatingActionButton: AuthHelper.isLoggedIn() && homeController.cashBackOfferList != null && homeController.cashBackOfferList!.isNotEmpty ?
+          // homeController.showFavButton ? Padding(
+          //   padding: EdgeInsets.only(bottom: 50.0, right: ResponsiveHelper.isDesktop(context) ? 50 : 0),
+          //   child: InkWell(
+          //     onTap: () => Get.dialog(const CashBackDialogWidget()),
+          //     child: const CashBackLogoWidget(),
+          //   ),
+   floatingActionButton: GetBuilder<CartController>(builder: (cartController) {
+  return isGrocery ? Stack(
+    children: [
+      
+      Positioned(
+        bottom: 120,
+        right: 5,
+        child:   Container(
+      width: 60,
+      height: 60,
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 32, 31, 31),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      
+      child: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 32, 31, 31),
+        onPressed: (){
+                  // showgrocceryMenu(
+                  //    context,
+                  // );
+        
+      },
+      isExtended: true, 
+       child: const Icon(Icons.menu_book_sharp,color: Colors.white,size: 30,),
+      
+      ),
+    ) ,
+   
+      ),
+
+      // Cart Container (Visible only if cart items > 0)
+      if (cartController.cartList.isNotEmpty) 
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 40, bottom: 50),
             child: InkWell(
-              onTap: () => Get.dialog(const CashBackDialogWidget()),
-              child: const CashBackLogoWidget(),
+              onTap: () => Get.toNamed(RouteHelper.getCheckoutRoute('cart')),
+              child: Container(
+                width: 221,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(50), 
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                       
+                      //  Builder(
+                      //    builder: (context) {
+                           
+                      //      return Image.network(
+                      //       cartController.cartList[0].item!.imageFullUrl!,);
+                      //    }
+                      //  ),
+              
+                      Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Container(
+                          height: 38,
+                          width: 80,
+                                        decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: BorderRadius.circular(50), 
+                                      ),
+                          child: Stack(
+                            children: [
+                            
+                                  for (int index = 0;
+                                  //  index < cartController.cartList.length  ; 
+                                  index < min(cartController.cartList.length , 3);
+                                  //  index < min(cartController.cartList.length, 3);
+                                      index++) ...[
+                                    Positioned(
+                                      left: index * 20,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                        
+                                        child:  CustomImage(
+                                          image: cartController.cartList[index].item!.imageFullUrl ?? "",
+                                          fit: BoxFit.fill,
+                                          height: 38,
+                                          width: 38,
+                                        )
+                                        //  Image.network(
+                                        //   cartController!.cartList[index].item!.imageFullUrl ?? "",
+                                        //   height: 38,
+                                        //   width: 38,
+                                        //   fit: BoxFit.fill,
+                                        // ),
+                                      ),
+                                    ),
+                                  ]
+                                 
+                              //  Positioned(child: Image.network(cartController.cartList[].item!.imageFullUrl!,height: 50,width: 50,fit: BoxFit.fill,),) 
+                            ],
+                          ),
+                        ),
+                      ),
+                    
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("View Cart", style: robotoRegular.copyWith(color: Colors.white, fontSize: 15)),
+                        Text(
+                          "${cartController.cartList.length ?? 0} Items",
+                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                      ],
+                    ),
+              
+              
+                    Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: Container(
+                        height: 38,
+                        width: 38,
+                        decoration: BoxDecoration(
+                          borderRadius:  BorderRadius.circular(100),
+                          color:  const Color(0xFF27093C)
+                      ),
+                       child:  const Center(child: Icon(CupertinoIcons.right_chevron, color: Colors.white,),),
+                      ),
+                    )
+              
+                  ],
+                ),
+              ),
             ),
-          ) : null : null,
+          ),
+        ),
+    ],
+  ) : const SizedBox();
+}),
+
+          
         );
       });
     });

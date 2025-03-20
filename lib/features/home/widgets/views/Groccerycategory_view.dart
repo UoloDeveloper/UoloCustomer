@@ -135,6 +135,7 @@ class GroceryCategoryView extends StatelessWidget {
       
         return categoryController.isLoading ? const Center(child: CircularProgressIndicator()) : SingleChildScrollView(
           child:  Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Use a ListView.builder with a fixed height
               SizedBox(

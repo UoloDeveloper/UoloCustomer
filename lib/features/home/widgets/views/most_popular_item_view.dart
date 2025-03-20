@@ -26,14 +26,14 @@ class MostPopularItemView extends StatelessWidget {
         List<Item>? itemList = itemController.popularItemList;
 
           return (itemList != null) ? itemList.isNotEmpty ? Container(
-            color: Theme.of(context).primaryColor  ,
+            // color: Theme.of(context).primaryColor  ,
             child: Column(children: [
 
               Padding(
                 padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
                 child: TitleWidget(
                   title: isShop ? 'most_popular_products'.tr : 'most_popular_items'.tr,
-                  image: Images.mostPopularIcon,
+                  // image: Images.mostPopularIcon,
                   onTap: () => Get.toNamed(RouteHelper.getPopularItemRoute(true, false)),
                 ),
               ),
@@ -49,8 +49,8 @@ class MostPopularItemView extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault),
                       child: ItemCard(
-                        isPopularItem: isShop ? false : true,
-                        isPopularItemCart: true,
+                        // isPopularItem: isShop ? false : true,
+                        // isPopularItemCart: true,
                         item: itemList[index],
                         isShop: isShop,
                         isFood: isFood,
