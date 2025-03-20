@@ -39,6 +39,340 @@ import 'package:get/get.dart';
 
 import '../widgets/running_order_view_widget.dart';
 
+// class DashboardScreen extends StatefulWidget {
+//   final int pageIndex;
+//   final bool fromSplash;
+//   const DashboardScreen({super.key, required this.pageIndex, this.fromSplash = false});
+
+//   @override
+//   DashboardScreenState createState() => DashboardScreenState();
+// }
+
+// class DashboardScreenState extends State<DashboardScreen> {
+//   PageController? _pageController;
+//   int _pageIndex = 0;
+//   late List<Widget> _screens;
+//   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
+//   bool _canExit = GetPlatform.isWeb ? true : false;
+
+//   GlobalKey<ExpandableBottomSheetState> key = GlobalKey();
+
+
+//   late bool _isLogin;
+//   bool active = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     _isLogin = AuthHelper.isLoggedIn();
+
+//     _showRegistrationSuccessBottomSheet();
+
+//     if(_isLogin){
+//       if(Get.find<SplashController>().configModel!.loyaltyPointStatus == 1 && Get.find<AuthController>().getEarningPint().isNotEmpty
+//           && !ResponsiveHelper.isDesktop(Get.context)){
+//         // Future.delayed(const Duration(seconds: 1), () => showAnimatedDialog(Get.context!, const CongratulationDialogue()));
+//     Future.delayed(
+//   const Duration(seconds: 1),
+//   () => showDialog(
+//     context: context,
+//     barrierColor: Colors.black.withOpacity(0.6), // Ensure the barrier is transparent
+//     builder: (BuildContext context) {
+//       return const CongratulationDialogue();
+//     },
+//   ),
+// );      }
+//       suggestAddressBottomSheet();
+//       Get.find<OrderController>().getRunningOrders(1, fromDashboard: true);
+//     }
+
+//     _pageIndex = widget.pageIndex;
+
+//     _pageController = PageController(initialPage: widget.pageIndex);
+
+//     _screens = [
+//       const HomeScreen(),
+//       const FavouriteScreen(),
+//       const SizedBox(),
+//       const OrderScreen(),
+//       // const MenuScreen()
+//     ];
+//   }
+
+//   _showRegistrationSuccessBottomSheet() {
+//     bool canShowBottomSheet = Get.find<HomeController>().getRegistrationSuccessfulSharedPref();
+//     if(canShowBottomSheet) {
+//       Future.delayed(const Duration(seconds: 1), () {
+//         ResponsiveHelper.isDesktop(Get.context) ? Get.dialog(const Dialog(child: StoreRegistrationSuccessBottomSheet())).then((value) {
+//           Get.find<HomeController>().saveRegistrationSuccessfulSharedPref(false);
+//           Get.find<HomeController>().saveIsStoreRegistrationSharedPref(false);
+//           setState(() {});
+//         }) : showModalBottomSheet(
+//           context: Get.context!, isScrollControlled: true, backgroundColor: Colors.transparent,
+//           builder: (con) => const StoreRegistrationSuccessBottomSheet(),
+//         ).then((value) {
+//           Get.find<HomeController>().saveRegistrationSuccessfulSharedPref(false);
+//           Get.find<HomeController>().saveIsStoreRegistrationSharedPref(false);
+//           setState(() {});
+//         });
+//       });
+//     }
+//   }
+
+//   Future<void> suggestAddressBottomSheet() async {
+//     active = await Get.find<LocationController>().checkLocationActive();
+//     if(widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) {
+//       Future.delayed(const Duration(seconds: 1), () {
+//         showModalBottomSheet(
+//           context: Get.context!, isScrollControlled: true, backgroundColor: Colors.transparent,
+//           builder: (con) => const AddressBottomSheetWidget(),
+//         ).then((value) {
+//           Get.find<LocationController>().hideSuggestedLocation();
+//           setState(() {});
+//         });
+//       });
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final Size size = MediaQuery.of(context).size;
+//     bool keyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
+//     return GetBuilder<SplashController>(
+//       builder: (splashController) {
+//         return PopScope(
+//           canPop: false,
+//           onPopInvokedWithResult: (didPop, result) async {
+//             if (_pageIndex != 0) {
+//               _setPage(0);
+//             } else {
+//               if(!ResponsiveHelper.isDesktop(context) && Get.find<SplashController>().module != null && Get.find<SplashController>().configModel!.module == null) {
+//                 Get.find<SplashController>().setModule(null);
+//                 Get.find<StoreController>().resetStoreData();
+//               }else {
+//                 if(_canExit) {
+//                   if (GetPlatform.isAndroid) {
+//                     SystemNavigator.pop();
+//                   } else if (GetPlatform.isIOS) {
+//                     exit(0);
+//                   }
+//                 }else {
+//                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//                     content: Text('back_press_again_to_exit'.tr, style: const TextStyle(color: Colors.white)),
+//                     behavior: SnackBarBehavior.floating,
+//                     backgroundColor: Colors.green,
+//                     duration: const Duration(seconds: 2),
+//                     margin: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+//                   ));
+//                   _canExit = true;
+//                   Timer(const Duration(seconds: 2), () {
+//                     _canExit = false;
+//                   });
+//                 }
+//               }
+//             }
+//           },
+//           child: GetBuilder<OrderController>(
+//             builder: (orderController) {
+//               List<OrderModel> runningOrder = orderController.runningOrderModel != null ? orderController.runningOrderModel!.orders! : [];
+
+//               List<OrderModel> reversOrder =  List.from(runningOrder.reversed);
+
+//               return Scaffold(
+//                 key: _scaffoldKey,
+//                 body: ExpandableBottomSheet(
+//                   background: Stack(children: [
+//                     PageView.builder(
+//                         controller: _pageController,
+//                         itemCount: _screens.length,
+//                         physics: const NeverScrollableScrollPhysics(),
+//                         itemBuilder: (context, index) {
+//                           return _screens[index];
+//                         },
+//                       ),
+
+//                       ResponsiveHelper.isDesktop(context) || keyboardVisible ? const SizedBox() : Align(
+//                         alignment: Alignment.bottomCenter,
+//                         child: GetBuilder<SplashController>(
+//                           builder: (splashController) {
+//                             bool isParcel = splashController.module != null && splashController.configModel!.moduleConfig!.module!.isParcel!;
+//                             // bool isTaxiWithCache = ((splashController.module != null && splashController.module!.moduleType.toString() == AppConstants.taxi) || (splashController.cacheModule != null && splashController.cacheModule!.moduleType.toString() == AppConstants.taxi)) && TaxiHelper.haveTaxiModule();
+//                             // bool isTaxi = (splashController.module != null && splashController.module!.moduleType.toString() == AppConstants.taxi);
+//                             // isParcel = isParcel && !isTaxiWithCache;
+
+//                             _screens = [
+//                               const HomeScreen(),
+//                               isParcel ? const AddressScreen(fromDashboard: true)
+//                                   // : isTaxi ? const VehicleFavouriteScreen()
+//                                   : const FavouriteScreen(),
+//                               const SizedBox(),
+//                               OrderScreen(),
+//                               // const MenuScreen()
+//                             ];
+//                             return Obx(() {
+//                                 return !splashController.showBottomSheet.value ? SizedBox() : Container(
+//                                   width: size.width, height: GetPlatform.isIOS ? 80 : 55,
+//                                   decoration: BoxDecoration(
+//                                     color: Theme.of(context).cardColor,
+//                                     // borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusLarge)),
+//                                       // boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
+//                                   ),
+//                                   child: Stack(children: [
+                                
+//                                     // Center(
+//                                     //   heightFactor: 0.6,
+//                                     //   child: ResponsiveHelper.isDesktop(context) ? null : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? null
+//                                     //     : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty && _isLogin) ? const SizedBox() : Container(
+//                                     //       width: 60, height: 60,
+//                                     //       decoration: BoxDecoration(
+//                                     //         border: Border.all(color: Theme.of(context).cardColor, width: 5),
+//                                     //         borderRadius: BorderRadius.circular(30),
+//                                     //         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
+//                                     //       ),
+//                                     //       child: FloatingActionButton(
+//                                     //         backgroundColor: Theme.of(context).primaryColor,
+//                                     //         onPressed: () {
+//                                     //           if(isParcel) {
+//                                     //             showModalBottomSheet(
+//                                     //               context: context, isScrollControlled: true, backgroundColor: Colors.transparent,
+//                                     //               builder: (con) => ParcelBottomSheetWidget(parcelCategoryList: Get.find<ParcelController>().parcelCategoryList),
+//                                     //             );
+//                                     //           } else if(isTaxiWithCache) {
+//                                     //             Get.to(()=> const TaxiCartScreen());
+//                                     //           } else {
+//                                     //             Get.toNamed(RouteHelper.getCartRoute());
+//                                     //           }
+//                                     //         },
+//                                     //         elevation: 0,
+//                                     //         child: isTaxiWithCache ? TaxiCartWidget(color: Theme.of(context).cardColor, size: 22) : isParcel ? Icon(CupertinoIcons.add, size: 34, color: Theme.of(context).cardColor) : CartWidget(color: Theme.of(context).cardColor, size: 22),
+//                                     //       ),
+//                                     //   ),
+//                                     // ),
+                                
+//                                     ResponsiveHelper.isDesktop(context) ? const SizedBox() : (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? const SizedBox()
+//                                     : (orderController.showBottomSheet && orderController.runningOrderModel != null && orderController.runningOrderModel!.orders!.isNotEmpty && _isLogin) ? const SizedBox() : Center(
+//                                       child: SizedBox(
+//                                           width: size.width, height: 80,
+//                                           child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+//                                          BottomNavItemWidget(
+                                                      
+//                                                       title: 'home'.tr,
+//                                                       selectedIcon:
+//                                                        "assets/svgs/svg logo big.svg"
+//                                                        ,
+//                                                       unSelectedIcon: "assets/svgs/homeun.svg",
+//                                                       isSelected: _pageIndex == 0 && splashController.module == null,
+//                                                       onTap: () {
+//                                                         splashController.removeModule();
+//                                                         _setPage(0);
+//                                                       },
+//                                                     ),
+//                                                     const Padding(
+//                                                       padding: EdgeInsets.symmetric(vertical: 11),
+//                                                       child: VerticalDivider(
+//                                                         width: 10,
+//                                                         color: Color(0xFF818181),
+//                                                       ),
+//                                                     ),
+//                                                     BottomNavItemWidget(
+//                                                       isfood: true,
+//                                                       title: 'Food'.tr,
+//                                                       selectedIcon: "assets/svgs/food.svg",
+//                                                       unSelectedIcon: "assets/svgs/food.svg",
+//                                                       isSelected: _pageIndex == 1,
+//                                                       onTap: () {
+//                                                         splashController.switchModule(0, true);
+//                                                         Get.find<StoreController>().resetStoreData();
+//                                                         _setPage(1);
+//                                                       },
+//                                                     ),
+                                          
+//                                           BottomNavItemWidget(
+//                                                       title: isParcel ? 'address'.tr : 'EatList'.tr,
+//                                                       selectedIcon:
+//                                                           isParcel ? Images.addressSelect : "assets/svgs/wishsl.svg",
+//                                                       unSelectedIcon:
+//                                                           isParcel ? Images.addressUnselect : "assets/svgs/wishun.svg",
+//                                                       isSelected: _pageIndex == 3,
+//                                                       onTap: () => _setPage(3),
+//                                                     ),
+//                                             BottomNavItemWidget(
+//                                                       title: 'orders'.tr,
+//                                                       selectedIcon: "assets/svgs/ordersl.svg",
+//                                                       unSelectedIcon: "assets/svgs/orderun.svg",
+//                                                       isSelected: _pageIndex == 4,
+//                                                       onTap: () => _setPage(4),
+//                                                     ),
+//                                           ]),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                   ),
+//                                 );
+//                               }
+//                             );
+//                           }
+//                         ),
+//                       ),
+//                     ]),
+
+//                   persistentContentHeight: (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? 0 : GetPlatform.isIOS ? 110 : 100,
+
+//                   onIsContractedCallback: () {
+//                     if(!orderController.showOneOrder) {
+//                       orderController.showOrders();
+//                     }
+//                   },
+//                   onIsExtendedCallback: () {
+//                     if(orderController.showOneOrder) {
+//                       orderController.showOrders();
+//                     }
+//                   },
+
+//                   enableToggle: true,
+
+//                   expandableContent: (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active && !ResponsiveHelper.isDesktop(context)) ?  const SizedBox()
+//                   : (ResponsiveHelper.isDesktop(context) || !_isLogin || orderController.runningOrderModel == null
+//                   || orderController.runningOrderModel!.orders!.isEmpty || !orderController.showBottomSheet) ? const SizedBox()
+//                   : Dismissible(
+//                     key: UniqueKey(),
+//                     onDismissed: (direction) {
+//                       if(orderController.showBottomSheet){
+//                         orderController.showRunningOrders();
+//                       }
+//                     },
+//                     child: RunningOrderViewWidget(reversOrder: reversOrder, onOrderTap: () {
+//                       _setPage(3);
+//                       if(orderController.showBottomSheet){
+//                         orderController.showRunningOrders();
+//                       }
+//                     }),
+//                   ),
+//                 ),
+//               );
+//             }
+//           ),
+//         );
+//       }
+//     );
+//   }
+
+//   void _setPage(int pageIndex) {
+//     setState(() {
+//       _pageController!.jumpToPage(pageIndex);
+//       _pageIndex = pageIndex;
+//     });
+//   }
+
+//   Widget trackView(BuildContext context, {required bool status}) {
+//     return Container(height: 3, decoration: BoxDecoration(color: status ? Theme.of(context).primaryColor
+//         : Theme.of(context).disabledColor.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(Dimensions.radiusDefault)));
+//   }
+
+
+// }
+
 class DashboardScreen extends StatefulWidget {
   final int pageIndex;
   final bool fromSplash;
@@ -93,8 +427,9 @@ class DashboardScreenState extends State<DashboardScreen> {
 
     _screens = [
       const HomeScreen(),
+      const HomeScreen(),
       const FavouriteScreen(),
-      const SizedBox(),
+      // const SizedBox(),
       const OrderScreen(),
       // const MenuScreen()
     ];
@@ -203,10 +538,12 @@ class DashboardScreenState extends State<DashboardScreen> {
 
                             _screens = [
                               const HomeScreen(),
-                              isParcel ? const AddressScreen(fromDashboard: true)
-                                  // : isTaxi ? const VehicleFavouriteScreen()
-                                  : const FavouriteScreen(),
-                              const SizedBox(),
+                                  const HomeScreen(),
+                              // isParcel ? const AddressScreen(fromDashboard: true)
+                              //     // : isTaxi ? const VehicleFavouriteScreen()
+                                  // : const
+                                   FavouriteScreen(),
+                              // const SizedBox(),
                               OrderScreen(),
                               // const MenuScreen()
                             ];
@@ -294,15 +631,15 @@ class DashboardScreenState extends State<DashboardScreen> {
                                                           isParcel ? Images.addressSelect : "assets/svgs/wishsl.svg",
                                                       unSelectedIcon:
                                                           isParcel ? Images.addressUnselect : "assets/svgs/wishun.svg",
-                                                      isSelected: _pageIndex == 3,
-                                                      onTap: () => _setPage(3),
+                                                      isSelected: _pageIndex == 2,
+                                                      onTap: () => _setPage(2),
                                                     ),
                                             BottomNavItemWidget(
                                                       title: 'orders'.tr,
                                                       selectedIcon: "assets/svgs/ordersl.svg",
                                                       unSelectedIcon: "assets/svgs/orderun.svg",
-                                                      isSelected: _pageIndex == 4,
-                                                      onTap: () => _setPage(4),
+                                                      isSelected: _pageIndex == 3,
+                                                      onTap: () => _setPage(3),
                                                     ),
                                           ]),
                                       ),
