@@ -81,85 +81,162 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
         borderRadius: GetPlatform.isWeb ? const BorderRadius.all(Radius.circular(Dimensions.radiusDefault)) : const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusExtraLarge)),
       ),
       child: GetBuilder<ItemController>(builder: (itemController) {
-        double? startingPrice;
-        double? endingPrice;
-        if (widget.item!.choiceOptions!.isNotEmpty && widget.item!.foodVariations!.isEmpty) {
-          List<double?> priceList = [];
-          for (var variation in widget.item!.variations!) {
-            priceList.add(variation.price);
-          }
-          priceList.sort((a, b) => a!.compareTo(b!));
-          startingPrice = priceList[0];
-          if (priceList[0]! < priceList[priceList.length - 1]!) {
-            endingPrice = priceList[priceList.length - 1];
-          }
-        } else {
-          startingPrice = widget.item!.price;
-        }
+        // double? startingPrice;
+        // double? endingPrice;
+        // if (widget.item!.choiceOptions!.isNotEmpty && widget.item!.foodVariations!.isEmpty) {
+        //   List<double?> priceList = [];
+        //   for (var variation in widget.item!.variations!) {
+        //     priceList.add(variation.price);
+        //   }
+        //   priceList.sort((a, b) => a!.compareTo(b!));
+        //   startingPrice = priceList[0];
+        //   if (priceList[0]! < priceList[priceList.length - 1]!) {
+        //     endingPrice = priceList[priceList.length - 1];
+        //   }
+        // } else {
+        //   startingPrice = widget.item!.price;
+        // }
 
-        double? price = widget.item!.price;
-        double variationPrice = 0;
-        Variation? variation;
-        double? initialDiscount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
-        double? discount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
-        String? discountType = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discountType : 'percent';
-        int? stock = widget.item!.stock ?? 0;
+        // double? price = widget.item!.price;
+        // double variationPrice = 0;
+        // Variation? variation;
+        // double? initialDiscount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
+        // double? discount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
+        // String? discountType = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discountType : 'percent';
+        // int? stock = widget.item!.stock ?? 0;
 
-        if(discountType == 'amount'){
-          discount = discount! * itemController.quantity!;
-        }
+        // if(discountType == 'amount'){
+        //   discount = discount! * itemController.quantity!;
+        // }
 
-        if(_newVariation) {
-          for(int index = 0; index< widget.item!.foodVariations!.length; index++) {
-            for(int i=0; i<widget.item!.foodVariations![index].variationValues!.length; i++) {
-              if(itemController.selectedVariations[index][i]!) {
-                variationPrice += widget.item!.foodVariations![index].variationValues![i].optionPrice!;
-              }
-            }
-          }
-        }else {
-          List<String> variationList = [];
-          for (int index = 0; index < widget.item!.choiceOptions!.length; index++) {
-            variationList.add(widget.item!.choiceOptions![index].options![itemController.variationIndex![index]].replaceAll(' ', ''));
-          }
-          String variationType = '';
-          bool isFirst = true;
-          for (var variation in variationList) {
-            if (isFirst) {
-              variationType = '$variationType$variation';
-              isFirst = false;
-            } else {
-              variationType = '$variationType-$variation';
-            }
-          }
+        // if(_newVariation) {
+        //   for(int index = 0; index< widget.item!.foodVariations!.length; index++) {
+        //     for(int i=0; i<widget.item!.foodVariations![index].variationValues!.length; i++) {
+        //       if(itemController.selectedVariations[index][i]!) {
+        //         variationPrice += widget.item!.foodVariations![index].variationValues![i].optionPrice!;
+        //       }
+        //     }
+        //   }
+        // }else {
+        //   List<String> variationList = [];
+        //   for (int index = 0; index < widget.item!.choiceOptions!.length; index++) {
+        //     variationList.add(widget.item!.choiceOptions![index].options![itemController.variationIndex![index]].replaceAll(' ', ''));
+        //   }
+        //   String variationType = '';
+        //   bool isFirst = true;
+        //   for (var variation in variationList) {
+        //     if (isFirst) {
+        //       variationType = '$variationType$variation';
+        //       isFirst = false;
+        //     } else {
+        //       variationType = '$variationType-$variation';
+        //     }
+        //   }
 
-          for (Variation variations in widget.item!.variations!) {
-            if (variations.type == variationType) {
-              price = variations.price;
-              variation = variations;
-              stock = variations.stock;
-              break;
-            }
-          }
-        }
+        //   for (Variation variations in widget.item!.variations!) {
+        //     if (variations.type == variationType) {
+        //       price = variations.price;
+        //       variation = variations;
+        //       stock = variations.stock;
+        //       break;
+        //     }
+        //   }
+        // }
 
-        price = price! + variationPrice;
-        double priceWithDiscount = PriceConverter.convertWithDiscount(price, discount, discountType)!;
-        double addonsCost = 0;
-        List<AddOn> addOnIdList = [];
-        List<AddOns> addOnsList = [];
-        for (int index = 0; index < widget.item!.addOns!.length; index++) {
-          if (itemController.addOnActiveList[index]) {
-            addonsCost = addonsCost + (widget.item!.addOns![index].price! * itemController.addOnQtyList[index]!);
-            addOnIdList.add(AddOn(id: widget.item!.addOns![index].id, quantity: itemController.addOnQtyList[index]));
-            addOnsList.add(widget.item!.addOns![index]);
-          }
-        }
-        priceWithDiscount = priceWithDiscount;
-        double? priceWithDiscountAndAddons = priceWithDiscount + addonsCost;
-        bool isAvailable = DateConverter.isAvailable(widget.item!.availableTimeStarts, widget.item!.availableTimeEnds);
-        final  String currency = widget.item!.currency!.currencyCode!;
+        // price = price! + variationPrice;
+        // double priceWithDiscount = PriceConverter.convertWithDiscount(price, discount, discountType)!;
+        // double addonsCost = 0;
+        // List<AddOn> addOnIdList = [];
+        // List<AddOns> addOnsList = [];
+        // for (int index = 0; index < widget.item!.addOns!.length; index++) {
+        //   if (itemController.addOnActiveList[index]) {
+        //     addonsCost = addonsCost + (widget.item!.addOns![index].price! * itemController.addOnQtyList[index]!);
+        //     addOnIdList.add(AddOn(id: widget.item!.addOns![index].id, quantity: itemController.addOnQtyList[index]));
+        //     addOnsList.add(widget.item!.addOns![index]);
+        //   }
+        // }
+        // priceWithDiscount = priceWithDiscount;
+        // double? priceWithDiscountAndAddons = priceWithDiscount + addonsCost;
+        // bool isAvailable = DateConverter.isAvailable(widget.item!.availableTimeStarts, widget.item!.availableTimeEnds);
+        // final  String currency = widget.item!.currency!.currencyCode!;
+double? startingPrice;
+double? endingPrice;
+if (widget.item!.choiceOptions!.isNotEmpty && widget.item!.foodVariations!.isEmpty) {
+  List<double?> priceList = [];
+  for (var variation in widget.item!.variations!) {
+    priceList.add(variation.price);
+  }
+  priceList.sort((a, b) => a!.compareTo(b!));
+  startingPrice = priceList[0];
+  if (priceList[0]! < priceList[priceList.length - 1]!) {
+    endingPrice = priceList[priceList.length - 1];
+  }
+} else {
+  startingPrice = widget.item!.price;
+}
 
+double? price = widget.item!.price;
+double variationPrice = 0;
+Variation? variation;
+double? initialDiscount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
+double? discount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
+String? discountType = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discountType : 'percent';
+int? stock = widget.item!.stock ?? 0;
+
+if (discountType == 'amount' && discount != null && itemController.quantity != null) {
+  discount = discount * itemController.quantity!;
+}
+
+if (_newVariation) {
+  for (int index = 0; index < widget.item!.foodVariations!.length; index++) {
+    for (int i = 0; i < widget.item!.foodVariations![index].variationValues!.length; i++) {
+      if (itemController.selectedVariations[index][i]!) {
+        variationPrice += widget.item!.foodVariations![index].variationValues![i].optionPrice ?? 0;
+      }
+    }
+  }
+} else {
+  List<String> variationList = [];
+  for (int index = 0; index < widget.item!.choiceOptions!.length; index++) {
+    variationList.add(widget.item!.choiceOptions![index].options![itemController.variationIndex![index]].replaceAll(' ', ''));
+  }
+  String variationType = '';
+  bool isFirst = true;
+  for (var variation in variationList) {
+    if (isFirst) {
+      variationType = '$variationType$variation';
+      isFirst = false;
+    } else {
+      variationType = '$variationType-$variation';
+    }
+  }
+
+  for (Variation variations in widget.item!.variations!) {
+    if (variations.type == variationType) {
+      price = variations.price;
+      variation = variations;
+      stock = variations.stock;
+      break;
+    }
+  }
+}
+
+price = (price ?? 0) + variationPrice;
+double priceWithDiscount = PriceConverter.convertWithDiscount(price, discount, discountType) ?? 0;
+double addonsCost = 0;
+List<AddOn> addOnIdList = [];
+List<AddOns> addOnsList = [];
+for (int index = 0; index < widget.item!.addOns!.length; index++) {
+  if (itemController.addOnActiveList[index]) {
+    addonsCost = addonsCost + (widget.item!.addOns![index].price ?? 0) * (itemController.addOnQtyList[index] ?? 0);
+    addOnIdList.add(AddOn(id: widget.item!.addOns![index].id, quantity: itemController.addOnQtyList[index]));
+    addOnsList.add(widget.item!.addOns![index]);
+  }
+}
+priceWithDiscount = priceWithDiscount;
+double? priceWithDiscountAndAddons = priceWithDiscount + addonsCost;
+bool isAvailable = DateConverter.isAvailable(widget.item!.availableTimeStarts, widget.item!.availableTimeEnds);
+final String currency = widget.item!.currency?.currencyCode ?? '₹ '; 
         return ConstrainedBox(
 
           constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
@@ -271,7 +348,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                           discountType: discountType)}' : ''}',
                                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
                                     ) : SizedBox(),
-                                    widget.item!.price!  > priceWithDiscount&&  price > 2 ? Text(
+                                   widget.item!.price! > priceWithDiscount&&  widget.item!.price! > 2 ? Text(
                                       '${PriceConverter.convertPrice(startingPrice)}'
                                           '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice)}' : ''}', textDirection: TextDirection.ltr,
                                       style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),
