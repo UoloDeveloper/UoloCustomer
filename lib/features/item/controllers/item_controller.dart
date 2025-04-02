@@ -1,5 +1,6 @@
 import 'package:sixam_mart/common/enums/data_source_enum.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
+import 'package:sixam_mart/features/home/widgets/views/GrocceryItemBottomSheet.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/checkout/domain/models/place_order_body_model.dart';
 import 'package:sixam_mart/features/item/domain/models/basic_medicine_model.dart';
@@ -572,10 +573,26 @@ class ItemController extends GetxController implements GetxService {
         Dialog(child: ItemBottomSheet(item: item, inStorePage: inStore, isCampaign: isCampaign)),
       );
     } else {
-      Get.toNamed(RouteHelper.getItemDetailsRoute(item.id, inStore), arguments: ItemDetailsScreen(item: item, inStorePage: inStore));
+      // Get.toNamed(RouteHelper.getItemDetailsRoute(item.id, inStore), arguments: ItemDetailsScreen(item: item, inStorePage: inStore));
+       showGroceryItemBottomSheet(
+        context,
+        item,inStore
+      );
     }
 
     
   }
   
+}
+
+
+void showGroceryItemBottomSheet(BuildContext context , item,inStorePage) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Allows the bottom sheet to take full height
+    backgroundColor: Colors.transparent, // Make the background transparent
+    builder: (BuildContext context) {
+      return  GrocceryItemBottomSheet(inStorePage: inStorePage ,item: item,);
+    },
+  );
 }

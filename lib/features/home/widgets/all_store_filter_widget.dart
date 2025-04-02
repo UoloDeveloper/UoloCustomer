@@ -20,7 +20,7 @@ class AllStoreFilterWidget extends StatelessWidget {
             width: Dimensions.webMaxWidth,
             transform: Matrix4.translationValues(0, -2, 0),
             color: Theme.of(context).colorScheme.surface,
-            padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeSmall),
+            padding: const EdgeInsets.only(left: 10, top: Dimensions.paddingSizeSmall),
             child: ResponsiveHelper.isDesktop(context) ? Row(children: [
              
               filter(context, storeController),

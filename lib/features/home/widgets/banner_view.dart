@@ -10,6 +10,7 @@ import 'package:sixam_mart/features/location/domain/models/zone_response_model.d
 import 'package:sixam_mart/helper/address_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
 import 'package:sixam_mart/util/dimensions.dart';
+import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
 import 'package:sixam_mart/common/widgets/custom_snackbar.dart';
@@ -43,7 +44,7 @@ class BannerView extends StatelessWidget {
                   autoPlay: true,
                   // enlargeCenterPage: true,
                   disableCenter: true,
-                  viewportFraction: 0.95,
+                  viewportFraction: 0.98,
 
                   autoPlayInterval: const Duration(seconds: 5),
                   onPageChanged: (index, reason) {
@@ -162,13 +163,20 @@ class BannerView extends StatelessWidget {
 
 
           ],
-        ) : Shimmer(
+        ) :  isFeatured ? const SizedBox() :
+         Shimmer(
           duration: const Duration(seconds: 2),
           enabled: bannerList == null,
-          child: Container(margin: const EdgeInsets.symmetric(horizontal: 10), decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-            color: Colors.grey[300],
-          )),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8,right: 8),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
+              child: CustomImage(image: Images.placeholder, height: 200, width: double.infinity, fit: BoxFit.cover)),
+          ),
+          //  Container(margin: const EdgeInsets.symmetric(horizontal: 10), decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+          //   color: Colors.grey[300],
+          // )),
         ),
       );
     });

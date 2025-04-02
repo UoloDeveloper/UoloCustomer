@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/common/widgets/custom_asset_image_widget.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
-import 'package:sixam_mart/common/widgets/hover/text_hover.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
@@ -10,13 +9,11 @@ import 'package:sixam_mart/helper/price_converter.dart';
 import 'package:sixam_mart/util/dimensions.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:sixam_mart/util/styles.dart';
-import 'package:sixam_mart/common/widgets/add_favourite_view.dart';
 import 'package:sixam_mart/common/widgets/cart_count_view.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
 import 'package:sixam_mart/common/widgets/discount_tag.dart';
 import 'package:sixam_mart/common/widgets/hover/on_hover.dart';
 import 'package:sixam_mart/common/widgets/not_available_widget.dart';
-import 'package:sixam_mart/common/widgets/organic_tag.dart';
 
 // class ItemCard extends StatelessWidget {
 //   final Item item;
@@ -430,7 +427,8 @@ class ItemCard extends StatelessWidget {
                               bottomRight: Radius.circular(Dimensions.radiusLarge),
                             ),
                           ),
-                          child: const Center(child: Text("ADD",  style:  TextStyle(color:  Color(0xFF1A9E6A)),))
+                          child: const 
+                          Center(child: Text("ADD",style:  TextStyle(color:  Color(0xFF1A9E6A),),))
                           
                           //  Icon(isPopularItemCart ? Icons.add_shopping_cart : Icons.add, color: Theme.of(context).cardColor, size: 20),
                         ),
@@ -444,6 +442,7 @@ class ItemCard extends StatelessWidget {
         ),
       ]),
     );
+
   }
 
   // Widget? showUnitOrRattings(BuildContext context) {

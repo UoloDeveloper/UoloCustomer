@@ -85,6 +85,19 @@ class ReviewController extends GetxController implements GetxService {
     return responseModel;
   }
 
+    Future<ResponseModel> submitReviewfromdialog( ReviewBodyModel reviewBody) async {
+    // _loadingList[index] = true;
+    update();
+    ResponseModel responseModel = await reviewServiceInterface.submitReview(reviewBody);
+    if (responseModel.isSuccess) {
+      // _submitList[index] = true;
+      update();
+    }
+    // _loadingList[index] = false;
+    update();
+    return responseModel;
+  }
+
   Future<ResponseModel> submitDeliveryManReview(ReviewBodyModel reviewBody) async {
     _isLoading = true;
     update();

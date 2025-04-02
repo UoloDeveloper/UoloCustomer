@@ -95,17 +95,55 @@ class _LoyaltyScreenState extends State<LoyaltyScreen> {
           }
         }),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: isLoggedIn && !ResponsiveHelper.isDesktop(context) ? FloatingActionButton.extended(
-          backgroundColor: Theme.of(context).primaryColor,
-          label: Text( 'convert_to_wallet_money'.tr, style: robotoBold.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeDefault)),
-          onPressed: (){
-            Get.dialog(
-              Dialog(backgroundColor: Colors.transparent, child: LoyaltyBottomSheetWidget(
-                  amount: Get.find<ProfileController>().userInfoModel!.loyaltyPoint == null ? '0' : Get.find<ProfileController>().userInfoModel!.loyaltyPoint.toString(),
-              )),
-            );
-          },
-        ) : null,
+        floatingActionButton: isLoggedIn && !ResponsiveHelper.isDesktop(context) 
+  ? Container(
+    width: 200,
+    // height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge + 10),
+        gradient: LinearGradient(
+          colors: [
+            Colors.deepPurple.shade800, // Start color
+            Colors.purple.shade400,      // End color
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        // shape: BoxShape.circle, // Make it circular
+      ),
+      child: FloatingActionButton(
+        backgroundColor: Colors.transparent, // Set background to transparent
+        child: Text(
+          'convert_to_wallet_money'.tr,
+          style: robotoBold.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeDefault ),
+        ),
+        onPressed: () {
+          Get.dialog(
+            Dialog(
+              backgroundColor: Colors.transparent,
+              child: LoyaltyBottomSheetWidget(
+                amount: Get.find<ProfileController>().userInfoModel!.loyaltyPoint == null 
+                  ? '0' 
+                  : Get.find<ProfileController>().userInfoModel!.loyaltyPoint.toString(),
+              ),
+            ),
+          );
+        },
+      ),
+    )
+  : null,
+        // floatingActionButton: isLoggedIn && !ResponsiveHelper.isDesktop(context) ? FloatingActionButton.extended(
+        
+        //   backgroundColor: Theme.of(context).primaryColor,
+        //   label: Text( 'convert_to_wallet_money'.tr, style: robotoBold.copyWith(color: Colors.white, fontSize: Dimensions.fontSizeDefault)),
+        //   onPressed: (){
+        //     Get.dialog(
+        //       Dialog(backgroundColor: Colors.transparent, child: LoyaltyBottomSheetWidget(
+        //           amount: Get.find<ProfileController>().userInfoModel!.loyaltyPoint == null ? '0' : Get.find<ProfileController>().userInfoModel!.loyaltyPoint.toString(),
+        //       )),
+        //     );
+        //   },
+        // ) : null,
         body: GetBuilder<ProfileController>(
             builder: (profileController) {
               return isLoggedIn ? profileController.userInfoModel != null ? SafeArea(

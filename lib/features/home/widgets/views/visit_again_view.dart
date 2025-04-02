@@ -44,7 +44,7 @@ class _VisitAgainViewState extends State<VisitAgainView> {
            child: Column(
              children: [
                Padding(
-                   padding:  EdgeInsets.only(left: 8,bottom: 10,top:widget.itemsview! ? 30 :   0),
+                   padding:  EdgeInsets.only(left: widget.itemsview! ? 10 : 0,bottom: 10,top:widget.itemsview! ? 30 :   0),
                 child: CustomDivider1(text: "Try Again".toUpperCase(),thickness: .2,textAlign: TextAlign.left,color: !widget.itemsview! ? Colors.black : Colors.black,),
                 
                 
@@ -58,7 +58,7 @@ class _VisitAgainViewState extends State<VisitAgainView> {
                  child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.only(left: 8),
+                          padding: EdgeInsets.only(left: widget.itemsview! ? 10 : 0),
                           itemCount: stores.length,
                           itemBuilder: (context, index){
                             return Padding(

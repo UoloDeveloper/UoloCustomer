@@ -1,3 +1,4 @@
+import 'package:sixam_mart/common/widgets/card_design/item_card.dart';
 import 'package:sixam_mart/common/widgets/card_design/store_card_with_distance.dart';
 import 'package:sixam_mart/features/home/widgets/views/new_on_mart_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/visit_again_view.dart';
@@ -26,12 +27,13 @@ class ItemsView extends StatefulWidget {
   final bool isCampaign;
   final bool inStorePage;
   final bool isFeatured;
+  final bool? fromGrocerycategory;
     final bool isHome;
   final bool? isFoodOrGrocery;
   const ItemsView({super.key, required this.stores, required this.items, required this.isStore, this.isScrollable = false,
     this.shimmerLength = 20, this.padding = const EdgeInsets.all(Dimensions.paddingSizeDefault), this.noDataText,
     this.isCampaign = false, this.inStorePage = false, this.isFeatured = false,
-    this.isFoodOrGrocery = true,  this.isHome = false});
+    this.isFoodOrGrocery = true,  this.isHome = false,  this.fromGrocerycategory = false});
 
   @override
   State<ItemsView> createState() => _ItemsViewState();
@@ -297,22 +299,29 @@ class _ItemsViewState extends State<ItemsView> {
    
    
       GridView.builder(
+        
         key: UniqueKey(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
-          mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
+
+          crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.fromGrocerycategory! ? 20 : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
+          mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.fromGrocerycategory! ? 10 : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
           // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
           //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
           //     : 3.3,
+          // childAspectRatio:  200 / 300,
           mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
-              : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 200 : 210
+              : ResponsiveHelper.isMobile(context) ? widget.fromGrocerycategory! ? 270 :    widget.stores != null && widget.isStore ? 200 : 210
               : 122,
-          crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
+          crossAxisCount: ResponsiveHelper.isMobile(context) ? widget.fromGrocerycategory! ?  2 : 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
         ),
         physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
         shrinkWrap: widget.isScrollable ? false : true,
         itemCount: length,
-        padding: widget.padding,
+        // padding: ,
+        padding:  !widget.fromGrocerycategory! ? widget.padding :  EdgeInsets.only(
+          bottom: widget.fromGrocerycategory! ? 150 : 0, 
+          left: 20, right: 20, top: 20
+        ),
         itemBuilder: (context, index) {
          
   //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
@@ -362,7 +371,7 @@ final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems
               :
               
                
-               Column(
+           widget.fromGrocerycategory! ? ItemCard(item: widget.items![index]?? Item(), isFood: false, isShop: false,width: 200,)  :   Column(
                  children: [
                    ItemWidget(
                                isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,

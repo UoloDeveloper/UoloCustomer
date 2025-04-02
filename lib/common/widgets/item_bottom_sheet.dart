@@ -378,7 +378,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                             padding: const EdgeInsets.only(left: 10,right: 10,top: 1,bottom: 1),
                             child: _newVariation ? NewVariationView(
                               item: widget.item, itemController: itemController,
-                              discount: initialDiscount, discountType: discountType, showOriginalPrice: (price > priceWithDiscount) && (discountType == 'percent'),
+                              discount: initialDiscount, discountType: discountType, showOriginalPrice: (price > priceWithDiscount) && (discountType == 'percent'), currency: currency,
                             ) : VariationView(
                               item: widget.item, itemController: itemController,
                             ),
@@ -389,7 +389,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                           (Get.find<SplashController>().configModel!.moduleConfig!.module!.addOn! && widget.item!.addOns!.isNotEmpty)
                               ? Padding(
                            padding: const EdgeInsets.only(left: 10,right: 10,top: 1,bottom: 10),
-                                child: AddonView(itemController: itemController, item: widget.item!),
+                                child: AddonView(itemController: itemController, item: widget.item!, currency: currency,),
                               ): const SizedBox(),
                     
                     

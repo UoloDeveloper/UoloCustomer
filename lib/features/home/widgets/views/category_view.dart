@@ -144,7 +144,9 @@ class CategoryView extends StatelessWidget {
     );
   }
 }
+    
 
+    
 class PharmacyCategoryView extends StatelessWidget {
   final CategoryController categoryController;
   const PharmacyCategoryView({super.key, required this.categoryController});
@@ -692,7 +694,7 @@ class FoodCategoryView extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 0),
       child: Stack(
         children: [
           SizedBox(
@@ -709,7 +711,7 @@ class FoodCategoryView extends StatelessWidget {
                       mainAxisSpacing: 10,
                       childAspectRatio: 1.4, // Adjusted for better alignment
                     ),
-                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    padding: const EdgeInsets.only(left: 0, top: 10),
                     itemCount: categoryController.categoryList!.length > 10
                         ? 40
                         : categoryController.categoryList!.length,

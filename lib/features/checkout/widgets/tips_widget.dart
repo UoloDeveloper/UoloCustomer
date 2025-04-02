@@ -73,10 +73,17 @@ class TipsWidget extends StatelessWidget {
                       isSuggested
                           ? Container(
                         decoration:  BoxDecoration(
-                          color: Theme.of(context).primaryColor
+                          // color: Theme.of(context).primaryColor
                           //  Color(0xFFFE5002)
-,
-
+// ,
+ gradient: LinearGradient(
+          colors:   [
+            Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(Dimensions.radiusSmall),
                             bottomRight: Radius.circular(Dimensions.radiusSmall),

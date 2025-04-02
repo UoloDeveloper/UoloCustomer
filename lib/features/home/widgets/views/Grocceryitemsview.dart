@@ -14,7 +14,8 @@ class Grocceyitemdata extends StatefulWidget {
   final ItemModel? items;
   final String? name;
   // final CategoryController categoryController;
-  const Grocceyitemdata({super.key, required this.items, required this.name,});
+   final int? id;
+  const Grocceyitemdata({super.key, required this.items, required this.name, this.id,});
 
   @override
   State<Grocceyitemdata> createState() => _GrocceyitemdataState();
@@ -47,7 +48,21 @@ class _GrocceyitemdataState extends State<Grocceyitemdata> {
               child: TitleWidget(
                 title: widget.name ?? '' ,
                 // image: Images.discountOfferIcon,
-                onTap: () => Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
+                onTap: () {
+                  //  if(index == 9 && categoryController.categoryList!.length > 10) {
+                  //               Get.toNamed(RouteHelper.getCategoryRoute());
+                  //             } else {
+                  //               Get.toNamed(RouteHelper.getCategoryItemRoute(
+                  //                 categoryController.categoryList![index].id, categoryController.categoryList![index].name!,
+                  //               ));
+                  //             }
+
+                     Get.toNamed(RouteHelper.getCategoryItemRoute(
+                                  widget.id  , widget.name!,
+                                ));
+                }
+                
+                //  Get.toNamed(RouteHelper.getPopularItemRoute(false, true)),
               ),
             )
         //  Padding(

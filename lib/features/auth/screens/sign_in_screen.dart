@@ -99,7 +99,15 @@ class SignInScreenState extends State<SignInScreen> {
                    alignment: Alignment.topCenter,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      // color: Theme.of(context).primaryColor,
+                       gradient: LinearGradient(
+          colors:   [
+            Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
                       borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
                       boxShadow: ResponsiveHelper.isDesktop(context) ? const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)] : null,
                     ),

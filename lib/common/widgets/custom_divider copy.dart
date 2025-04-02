@@ -110,7 +110,7 @@ class CustomDivider2 extends StatelessWidget {
     super.key,
     required this.text,
     this.thickness = 1.0,
-    this.spaceAroundText = 8.0,
+    this.spaceAroundText = 2.0,
     this.color = Colors.black,
     this.textAlign = TextAlign.center,  this.dividercolor = Colors.black ,
   });

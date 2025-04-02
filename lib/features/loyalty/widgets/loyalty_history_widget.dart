@@ -35,7 +35,7 @@ class LoyaltyHistoryWidget extends StatelessWidget {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisSpacing: 50,
               mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0.01,
-              childAspectRatio: ResponsiveHelper.isDesktop(context) ? 7 : 4.45,
+              childAspectRatio: ResponsiveHelper.isDesktop(context) ? 8 : 3.8,
               crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : 1,
             ),
             physics:  const NeverScrollableScrollPhysics(),

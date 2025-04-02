@@ -184,6 +184,27 @@ class OrderController extends GetxController implements GetxService {
     return _orderDetails;
   }
 
+
+   Future<OrderDetailsModel?> getOrderDetailsoneitem(String orderID) async {
+    _orderDetails = null;
+    _isLoading = true;
+    _showCancelled = false;
+
+    if(_trackModel == null || (_trackModel!.orderType != 'parcel' && !_trackModel!.prescriptionOrder!)) {
+      List<OrderDetailsModel>? detailsList = await orderServiceInterface.getOrderDetails(orderID, AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId());
+      _isLoading = false;
+      if (detailsList != null) {
+        _orderDetails = [];
+        _orderDetails!.addAll(detailsList);
+      }
+    }else {
+      _isLoading = false;
+      _orderDetails = [];
+    }
+    update();
+    return _orderDetails![0];
+  }
+
   Future<ResponseModel?> trackOrder(String? orderID, OrderModel? orderModel, bool fromTracking,
       {String? contactNumber, bool? fromGuestInput = false}) async {
     _trackModel = null;
@@ -211,6 +232,37 @@ class OrderController extends GetxController implements GetxService {
       _responseModel = ResponseModel(true, 'Successful');
     }
     return _responseModel;
+  }
+
+
+  
+  Future<OrderModel?> trackOrderfromnotification(String? orderID, OrderModel? orderModel, bool fromTracking,
+      {String? contactNumber, bool? fromGuestInput = false}) async {
+    _trackModel = null;
+    _responseModel = null;
+    if(!fromTracking) {
+      _orderDetails = null;
+    }
+    _showCancelled = false;
+    if(orderModel == null) {
+      _isLoading = true;
+      Response response = await orderServiceInterface.trackOrder(
+        orderID, AuthHelper.isLoggedIn() ? null : AuthHelper.getGuestId(),
+        contactNumber: contactNumber,
+      );
+      if (response.statusCode == 200) {
+        _trackModel = OrderModel.fromJson(response.body);
+        _responseModel = ResponseModel(true, response.body.toString());
+      } else {
+        _responseModel = ResponseModel(false, response.statusText);
+      }
+      _isLoading = false;
+      update();
+    } else {
+      _trackModel = orderModel;
+      _responseModel = ResponseModel(true, 'Successful');
+    }
+    return _trackModel;
   }
 
   Future<ResponseModel?> timerTrackOrder(String orderID, {String? contactNumber}) async {

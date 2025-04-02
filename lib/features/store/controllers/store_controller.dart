@@ -194,10 +194,14 @@ class StoreController extends GetxController implements GetxService {
     StoreModel? storeModel;
     if(source == DataSourceEnum.local && offset == 1) {
       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.local);
+      // storeModel!.stores!.removeWhere((element) => element.distancelimit  == null || element.distancelimit == 0);
+      if (storeModel != null)
+             storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
       _prepareStoreModel(storeModel, offset);
       getStoreList(offset, false, source: DataSourceEnum.client);
     } else {
       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.client);
+      storeModel!.stores!.removeWhere((element) =>  element.distancelimit == 0  );
       _prepareStoreModel(storeModel, offset);
     }
   }
@@ -205,10 +209,12 @@ class StoreController extends GetxController implements GetxService {
   _prepareStoreModel(StoreModel? storeModel, int offset) {
     if (storeModel != null) {
       if (offset == 1) {
+        // _storeModel!.stores!.removeWhere((element) => element.distancelimit  == null || element.distancelimit == 0);
         _storeModel = storeModel;
       }else {
+         
         _storeModel!.totalSize = storeModel.totalSize;
-        _storeModel!.offset = storeModel.offset;
+        _storeModel!.offset = storeModel.offset; 
         _storeModel!.stores!.addAll(storeModel.stores!);
       }
       update();
@@ -260,35 +266,86 @@ class StoreController extends GetxController implements GetxService {
     }
   }
 
-  Future<void> getLatestStoreList(bool reload, String type, bool notify, {DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
-    _type = type;
-    if(reload){
-      _latestStoreList = null;
-    }
-    if(notify) {
-      update();
-    }
-    if(_latestStoreList == null || reload || fromRecall) {
-      List<Store>? latestStoreList;
-      if(dataSource == DataSourceEnum.local) {
-        latestStoreList = await storeServiceInterface.getLatestStoreList(type, source: DataSourceEnum.local);
-        if (latestStoreList != null) {
-          _latestStoreList = [];
-          _latestStoreList!.addAll(latestStoreList);
-        }
-        update();
-        getLatestStoreList(false, type, notify, fromRecall: true, dataSource: DataSourceEnum.client);
-      } else {
-        latestStoreList = await storeServiceInterface.getLatestStoreList(type, source: DataSourceEnum.client);
-        if (latestStoreList != null) {
-          _latestStoreList = [];
-          _latestStoreList!.addAll(latestStoreList);
-        }
-        update();
-      }
-    }
+  // Future<void> getLatestStoreList(bool reload, String type, bool notify, {DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
+  //   _type = type;
+  //   if(reload){
+  //     _latestStoreList = null;
+  //   }
+  //   if(notify) {
+  //     update();
+  //   }
+  //   if(_latestStoreList == null || reload || fromRecall) {
+  //     List<Store>? latestStoreList;
+  //     if(dataSource == DataSourceEnum.local) {
+  //       latestStoreList = await storeServiceInterface.getLatestStoreList(type, source: DataSourceEnum.local);
+              
+  //       if (latestStoreList != null) {
+  //           // latestStoreList!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //             // latestStoreList.removeWhere((element) =>  element.distancelimit == 0  );
+  //             // latestStoreList!.removeWhere((element) => element. )
+  //                    storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //         _latestStoreList = [];
+
+  //         _latestStoreList!.addAll(latestStoreList);
+  //       }
+  //       update();
+  //       getLatestStoreList(false, type, notify, fromRecall: true, dataSource: DataSourceEnum.client);
+  //     } else {
+  //       latestStoreList = await storeServiceInterface.getLatestStoreList(type, source: DataSourceEnum.client);
+  //       if (latestStoreList != null) {
+  //                storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //         //  latestStoreList!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //                 // latestStoreList.removeWhere((element) =>  element.distancelimit == 0  );
+  //         _latestStoreList = [];
+  //         _latestStoreList!.addAll(latestStoreList);
+  //       }
+  //       update();
+  //     }
+  //   }
+  // }
+
+Future<void> getLatestStoreList(
+  bool reload,
+  String type,
+  bool notify, {
+  DataSourceEnum dataSource = DataSourceEnum.local,
+  bool fromRecall = false,
+}) async {
+  _type = type;
+
+  if (reload) {
+    _latestStoreList = null;
   }
 
+  if (notify) {
+    update();
+  }
+
+  if (_latestStoreList == null || reload || fromRecall) {
+    List<Store>? latestStoreList;
+
+    if (dataSource == DataSourceEnum.local) {
+      latestStoreList = await storeServiceInterface.getLatestStoreList(type, source: DataSourceEnum.local);
+    } else {
+      latestStoreList = await storeServiceInterface.getLatestStoreList(type, source: DataSourceEnum.client);
+    }
+
+    if (latestStoreList != null) {
+      // Apply filtration to remove stores where both noservicerestriction and distancelimit are 0
+      latestStoreList.removeWhere((element) => element.noservicerestriction == 0 && element.distancelimit == 0);
+
+      _latestStoreList = [];
+      _latestStoreList!.addAll(latestStoreList);
+    }
+
+    update();
+
+    // If data source is local, fetch from client as well
+    if (dataSource == DataSourceEnum.local) {
+      getLatestStoreList(false, type, notify, fromRecall: true, dataSource: DataSourceEnum.client);
+    }
+  }
+}
   Future<void> getTopOfferStoreList(bool reload, bool notify, {DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
     if(reload){
       _topOfferStoreList = null;
@@ -301,6 +358,7 @@ class StoreController extends GetxController implements GetxService {
       if(dataSource == DataSourceEnum.local) {
         latestStoreList = await storeServiceInterface.getTopOfferStoreList(source: DataSourceEnum.local);
         if (latestStoreList != null) {
+        latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
           _topOfferStoreList = [];
           _topOfferStoreList!.addAll(latestStoreList);
         }
@@ -309,6 +367,7 @@ class StoreController extends GetxController implements GetxService {
       } else {
         latestStoreList = await storeServiceInterface.getTopOfferStoreList(source: DataSourceEnum.client);
         if (latestStoreList != null) {
+              latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
           _topOfferStoreList = [];
           _topOfferStoreList!.addAll(latestStoreList);
         }
@@ -321,10 +380,12 @@ class StoreController extends GetxController implements GetxService {
     List<Store>? stores;
     if(dataSource == DataSourceEnum.local) {
       stores = await storeServiceInterface.getFeaturedStoreList(source: dataSource);
+      stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
       _prepareFeaturedStore(stores);
       getFeaturedStoreList(dataSource: DataSourceEnum.client);
     } else {
       stores = await storeServiceInterface.getFeaturedStoreList(source: dataSource);
+      stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
       _prepareFeaturedStore(stores);
     }
 
@@ -355,10 +416,12 @@ class StoreController extends GetxController implements GetxService {
     List<Store>? stores;
     if(dataSource == DataSourceEnum.local) {
       stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.local);
+            stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
       _prepareVisitAgainStore(stores);
       getVisitAgainStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
     } else {
       stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.client);
+          stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
       _prepareVisitAgainStore(stores);
     }
 
@@ -447,10 +510,12 @@ class StoreController extends GetxController implements GetxService {
     List<Store>? recommendedStoreList;
     if(dataSource == DataSourceEnum.local) {
       recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.local);
+      recommendedStoreList!.removeWhere((element) =>  element.distancelimit == 0  );
       _prepareRecommendedStores(recommendedStoreList);
       getRecommendedStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
     } else {
       recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.client);
+      recommendedStoreList!.removeWhere((element) =>  element.distancelimit == 0  );
       _prepareRecommendedStores(recommendedStoreList);
     }
   }

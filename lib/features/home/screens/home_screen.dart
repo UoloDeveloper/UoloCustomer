@@ -27,6 +27,8 @@ import 'package:sixam_mart/features/location/controllers/location_controller.dar
 import 'package:sixam_mart/features/menu/screens/menu_screen.dart';
 import 'package:sixam_mart/features/notification/controllers/notification_controller.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
+import 'package:sixam_mart/features/order/controllers/order_controller.dart';
+import 'package:sixam_mart/features/review/controllers/review_controller.dart';
 import 'package:sixam_mart/features/store/controllers/store_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/profile/controllers/profile_controller.dart';
@@ -63,6 +65,7 @@ class HomeScreen extends StatefulWidget {
   static Future<void> loadData(bool reload, {bool fromModule = false}) async {
     Get.find<LocationController>().syncZoneData();
     Get.find<FlashSaleController>().setEmptyFlashSale(fromModule: fromModule);
+    //  await Get.find<BannerController>().getBannerList(true);
     // print('------------call from home');
     // await Get.find<CartController>().getCartDataOnline();
         //  if ( Get.find<CategoryController>().GrocerycategoritemyList.isEmpty) {
@@ -71,6 +74,7 @@ class HomeScreen extends StatefulWidget {
         //  Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
     if(AuthHelper.isLoggedIn()) {
       Get.find<StoreController>().getVisitAgainStoreList(fromModule: fromModule);
+
     }
     if(Get.find<SplashController>().module != null && !Get.find<SplashController>().configModel!.moduleConfig!.module!.isParcel!) {
       Get.find<BannerController>().getBannerList(reload);
@@ -109,6 +113,7 @@ class HomeScreen extends StatefulWidget {
       await Get.find<ProfileController>().getUserInfo();
       Get.find<NotificationController>().getNotificationList(reload);
       Get.find<CouponController>().getCouponList();
+    
     }
     Get.find<SplashController>().getModules();
     if(Get.find<SplashController>().module == null && Get.find<SplashController>().configModel!.module == null) {
@@ -129,6 +134,7 @@ class HomeScreen extends StatefulWidget {
         Get.find<ItemController>().getConditionsWiseItem(Get.find<ItemController>().commonConditions![0].id!, false);
       }
     }
+     
   }
 
   @override
@@ -145,9 +151,30 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
      WidgetsBinding.instance.addPostFrameCallback((_) {
-     
+    
+  // final reviewlist =
+  //  Get.find<OrderController>().getHistoryOrders(1).then((value) {
+
+  //     // Get.find<OrderController>().historyOrderModel!.orders!.where(
+  //     //     // (element) => element.rating == null,
+  //     // );
+      
+  //  });
+          
+          //  final reviewlist = Get.find<ReviewController>().storeReviewList!.where(
+          //      (element) => element.rating == null,
+          //  );
+
+          //  if(reviewlist.isNotEmpty) {
+          //      _showModalBottomSheet(context);
+          //  }
+   
       // Get.find<CategoryController>().getFoodCategoryList(false, allCategory: true);
       // _updateStatusBarColor();
+
+      //    Get.find<ReviewController>().storeReviewList!.where(
+      //       (element) => element.rating == null,
+      // );
     });
 
     _scrollController.addListener(_onScroll);
@@ -274,10 +301,12 @@ class _HomeScreenState extends State<HomeScreen> {
   //   Get.to(Notdeliverablescreen());
   // }
 
-  // if (isGrocery ) {
-  //       return const NotDeliverableScreen();
-  //     }
-
+  if (isGrocery ) {
+        return const NotDeliverableScreen();
+      }
+//  if ( Get.find<StoreController>().storeModel!.stores!.isEmpty) {
+//   return const NotDeliverableScreen();
+//  }
 
       return GetBuilder<HomeController>(builder: (homeController) {
 
@@ -439,7 +468,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SizedBox(),
           ) : SliverToBoxAdapter(
                 child:  Padding(
-                padding: const EdgeInsets.only(left:15),
+                padding: const EdgeInsets.only(left:10),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   // Text(
                   // Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! ? 'restaurants'.tr : 'stores'.tr,
@@ -493,7 +522,9 @@ class _HomeScreenState extends State<HomeScreen> {
                
                 : const SliverToBoxAdapter(),
           
-             isGrocery ||  isShop ? SliverToBoxAdapter(
+      // Get.find<StoreController>().storeModel!.stores!.isEmpty ? const SliverToBoxAdapter(child: SizedBox()) :  
+      
+            isGrocery ||  isShop ? SliverToBoxAdapter(
                 child: SizedBox(),
                )  :   SliverToBoxAdapter(child: !showMobileModule ? Center(child: GetBuilder<StoreController>(builder: (storeController) {
                   return 
@@ -515,7 +546,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         isFoodOrGrocery: (isFood || isGrocery),
                         stores: storeController.storeModel?.stores,
                         padding: EdgeInsets.symmetric(
-                          horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall,
+                          horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall ,
                           // vertical: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeDefault,
                         ),
                       ),
@@ -535,7 +566,9 @@ class _HomeScreenState extends State<HomeScreen> {
           //     child: const CashBackLogoWidget(),
           //   ),
    floatingActionButton: GetBuilder<CartController>(builder: (cartController) {
-  return isGrocery ? Stack(
+  return 
+  
+  isGrocery ? Stack(
     children: [
       
       Positioned(
@@ -670,6 +703,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
     ],
   ) : const SizedBox();
+
+
+
 }),
 
           
@@ -714,3 +750,35 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
 
 
 
+
+
+
+void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          width: double.infinity,
+          height: 300,
+          child: Column(
+            children: [
+              Text(
+                'Modal Bottom Sheet',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              // Text('This is a simple bottom sheet example.'),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }

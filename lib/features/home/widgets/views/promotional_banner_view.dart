@@ -12,17 +12,17 @@ class PromotionalBannerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<BannerController>(builder: (bannerController) {
       return bannerController.promotionalBanner != null ? bannerController.promotionalBanner!.bottomSectionBannerFullUrl != null ? Container(
-        height: 90, width: double.infinity,
+        height: 300, width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault, horizontal: Dimensions.paddingSizeDefault),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+          borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
           child: CustomImage(
             image: '${bannerController.promotionalBanner!.bottomSectionBannerFullUrl}',
-            fit: BoxFit.cover, height: 80, width: double.infinity,
+            fit: BoxFit.cover, height: 300, width: double.infinity,
           ),
         ),
       ) : const SizedBox() : const PromotionalBannerShimmerView();
@@ -39,7 +39,7 @@ class PromotionalBannerShimmerView extends StatelessWidget {
       duration: const Duration(seconds: 2),
       enabled: true,
       child: Container(
-        height: 90, width: double.infinity,
+        height: 300, width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),

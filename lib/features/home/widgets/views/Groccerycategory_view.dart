@@ -151,13 +151,10 @@ class GroceryCategoryView extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Text(
-                        //   category!.items![0].name ?? '',
-                        //   // style: Theme.of(context).textTheme.headline,
-                        // ),
+                    
                         SizedBox(
                           // height: 300,
-                          child: Grocceyitemdata(items: category, name: categoryController.GrocerycategoryList![itemIndex].name , ), // Ensure items is not null
+                          child: Grocceyitemdata(items: category, name: categoryController.GrocerycategoryList![itemIndex].name ,id: categoryController.GrocerycategoryList![itemIndex].id, ), // Ensure items is not null
                         ),
                       ],
                     );
@@ -170,4 +167,5 @@ class GroceryCategoryView extends StatelessWidget {
       }),
     );
   }
+
 }

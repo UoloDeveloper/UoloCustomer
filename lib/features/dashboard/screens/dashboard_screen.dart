@@ -411,7 +411,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   const Duration(seconds: 1),
   () => showDialog(
     context: context,
-    barrierColor: Colors.black.withOpacity(0.6), // Ensure the barrier is transparent
+    barrierColor: Colors.black.withOpacity(0.6), 
     builder: (BuildContext context) {
       return const CongratulationDialogue();
     },
@@ -653,7 +653,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ),
                     ]),
-
+                
                   persistentContentHeight: (widget.fromSplash && Get.find<LocationController>().showLocationSuggestion && active) ? 0 : GetPlatform.isIOS ? 110 : 100,
 
                   onIsContractedCallback: () {
@@ -709,4 +709,6 @@ class DashboardScreenState extends State<DashboardScreen> {
 
 
 }
+
+
 

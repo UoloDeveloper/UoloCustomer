@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sixam_mart/common/widgets/custom_image.dart';
 import 'package:sixam_mart/common/widgets/custom_snackbar.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
@@ -26,7 +27,7 @@ import 'package:sixam_mart/common/widgets/custom_button.dart';
           height: GetPlatform.isIOS ? 100 : 100, width: Get.width,
           // padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge,/* vertical: Dimensions.PADDING_SIZE_SMALL*/),
           decoration: BoxDecoration(
-              color: Theme.of(context).cardColor, boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
+              color:  Theme.of(context).cardColor, boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
               borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge)
           ),
           // child:
@@ -70,14 +71,26 @@ Get.toNamed(RouteHelper.getCheckoutRoute('cart'));
                 child: Container(
                   height: 60,
                   width: MediaQuery.of(context).size.width,
-                
-                  decoration: BoxDecoration(
-                    color:  Theme.of(context).primaryColor,
+                decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimensions.radiusLarge ),
+        boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
+        gradient: LinearGradient(
+          colors: [
+            Colors.deepPurple.shade800, 
+            Colors.purple.shade400,     
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        // shape: BoxShape.circle, // Make it circular
+      ),
+                  // decoration: BoxDecoration(
+                  //   color:  Theme.of(context).primaryColor,
                     
-                    // const Color.fromARGB(255, 28, 166, 114),
-                    borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-                    boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
-                  ),
+                  //   // const Color.fromARGB(255, 28, 166, 114),
+                  //   borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+                  //   boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
+                  // ),
                 
                   child: Row(
                     children: [
@@ -181,8 +194,9 @@ Get.toNamed(RouteHelper.getCheckoutRoute('cart'));
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
                 
-                                child: Image.network(
-                                  cartController.cartList[index].item!.imageFullUrl!,
+                                child: CustomImage(
+                                  image:cartController.cartList[index].item!.imageFullUrl ?? "" ,
+                                  
                                   height: 38,
                                   width: 38,
                                   fit: BoxFit.fill,

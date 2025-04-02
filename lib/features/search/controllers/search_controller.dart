@@ -185,6 +185,7 @@ class SearchController extends GetxController implements GetxService {
 
   void sortStoreSearchList() {
     _searchStoreList = searchServiceInterface.sortStoreSearchList(_allStoreList, _storeRating, _storeVeg, _storeNonVeg, _isAvailableStore, _isDiscountedStore, _storeSortIndex);
+  
     update();
   }
 
@@ -202,58 +203,132 @@ class SearchController extends GetxController implements GetxService {
     update();
   }
 
-  void searchData(String? query, bool fromHome) async {
-    if((_isStore && query!.isNotEmpty && query != _storeResultText) || (!_isStore && query!.isNotEmpty && (query != _itemResultText || fromHome))) {
-      _searchHomeText = query;
-      _searchText = query;
-      _rating = -1;
-      _storeRating = -1;
-      _upperValue = 0;
-      _lowerValue = 0;
-      if (_isStore) {
-        _searchStoreList = null;
-        _allStoreList = null;
-      } else {
-        _searchItemList = null;
-        _allItemList = null;
-      }
-      if (!_historyList.contains(query)) {
-        _historyList.insert(0, query);
-      }
-      searchServiceInterface.saveSearchHistory(_historyList);
-      _isSearchMode = false;
-      if(!fromHome) {
-        update();
-      }
+  // void searchData(String? query, bool fromHome) async {
+  //   if((_isStore && query!.isNotEmpty && query != _storeResultText) || (!_isStore && query!.isNotEmpty && (query != _itemResultText || fromHome))) {
+  //     _searchHomeText = query;
+  //     _searchText = query;
+  //     _rating = -1;
+  //     _storeRating = -1;
+  //     _upperValue = 0;
+  //     _lowerValue = 0;
+  //     if (_isStore) {
+  //       _searchStoreList = null;
+  //       _allStoreList = null;
+  //     } else {
+  //       _searchItemList = null;
+  //       _allItemList = null;
+  //     }
+  //     if (!_historyList.contains(query)) {
+  //       _historyList.insert(0, query);
+  //     }
+  //     searchServiceInterface.saveSearchHistory(_historyList);
+  //     _isSearchMode = false;
+  //     if(!fromHome) {
+  //       update();
+  //     }
 
-      Response response = await searchServiceInterface.getSearchData(query, _isStore);
-      if (response.statusCode == 200) {
-        if (query.isEmpty) {
-          if (_isStore) {
-            _searchStoreList = [];
-          } else {
-            _searchItemList = [];
-          }
-        } else {
-          if (_isStore) {
-            _storeResultText = query;
-            _searchStoreList = [];
-            _allStoreList = [];
-            _searchStoreList!.addAll(StoreModel.fromJson(response.body).stores!);
-            _allStoreList!.addAll(StoreModel.fromJson(response.body).stores!);
-          } else {
-            _itemResultText = query;
-            _searchItemList = [];
-            _allItemList = [];
-            _searchItemList!.addAll(ItemModel.fromJson(response.body).items!);
-            _allItemList!.addAll(ItemModel.fromJson(response.body).items!);
-          }
-        }
-      }
+  //     Response response = await searchServiceInterface.getSearchData(query, _isStore);
+  //     if (response.statusCode == 200) {
+  //       if (query.isEmpty) {
+  //         if (_isStore) {
+  //           _searchStoreList = [];
+  //         } else {
+  //           _searchItemList = [];
+  //         }
+  //       } else {
+  //         if (_isStore) {
+  //           _storeResultText = query;
+  //           _searchStoreList = [];
+  //           _allStoreList = [];
+  //           StoreModel.fromJson(response.body).stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //           _searchStoreList!.addAll(StoreModel.fromJson(response.body).stores!);
+  //             // _searchStoreList!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+
+  //           _allStoreList!.addAll(StoreModel.fromJson(response.body).stores!);
+  //               //  _allStoreList!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //         } else {
+  //           _itemResultText = query;
+  //           _searchItemList = [];
+  //           _allItemList = [];
+  //           _searchItemList!.addAll(ItemModel.fromJson(response.body).items!);
+  //           _allItemList!.addAll(ItemModel.fromJson(response.body).items!);
+  //         }
+  //       }
+  //     }
+  //     update();
+  //   }
+  // }
+void searchData(String? query, bool fromHome) async {
+  // Check if the query is valid and not already processed
+  if (query != null && query.isNotEmpty && 
+      ((_isStore && query != _storeResultText) || 
+      (!_isStore && (query != _itemResultText || fromHome)))) {
+    
+    // Update search parameters
+    _searchHomeText = query;
+    _searchText = query;
+    _rating = -1;
+    _storeRating = -1;
+    _upperValue = 0;
+    _lowerValue = 0;
+
+    // Clear previous search results
+    if (_isStore) {
+      _searchStoreList = null;
+      _allStoreList = null;
+    } else {
+      _searchItemList = null;
+      _allItemList = null;
+    }
+
+    // Update search history
+    if (!_historyList.contains(query)) {
+      _historyList.insert(0, query);
+    }
+    searchServiceInterface.saveSearchHistory(_historyList);
+    _isSearchMode = false;
+
+    if (!fromHome) {
       update();
     }
-  }
 
+    // Fetch search data
+    try {
+      Response response = await searchServiceInterface.getSearchData(query, _isStore);
+      if (response.statusCode == 200) {
+        if (_isStore) {
+          _storeResultText = query;
+          _searchStoreList = [];
+          _allStoreList = [];
+          
+          // Parse response once
+          var storeData = StoreModel.fromJson(response.body);
+          storeData.stores!.removeWhere((element) => element.noservicerestriction == 0 && element.distancelimit == 0);
+          
+          _searchStoreList!.addAll(storeData.stores!);
+          _allStoreList!.addAll(storeData.stores!);
+        } else {
+          _itemResultText = query;
+          _searchItemList = [];
+          _allItemList = [];
+          
+          // Parse response once
+          var itemData = ItemModel.fromJson(response.body);
+          _searchItemList!.addAll(itemData.items!);
+          _allItemList!.addAll(itemData.items!);
+        }
+      } else {
+        // Handle unexpected status codes
+        print('Error: Received status code ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle exceptions (e.g., network errors)
+      print('Error fetching search data: $e');
+    }
+
+    update();
+  }
+}
   void getHistoryList() {
     _isSearchMode = true;
     _searchText = '';

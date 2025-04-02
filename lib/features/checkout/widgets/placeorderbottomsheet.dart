@@ -624,18 +624,18 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            InkWell(
-              onTap: () => Get.back(),
-              child: Container(
-                      padding:  const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.1),
-                        shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 5)],
-                      ),
-                      child: const Icon(Icons.close, size: 30,color: Colors.white,),
-                  ),
-            ),
+            // InkWell(
+            //   onTap: () => Get.back(),
+            //   child: Container(
+            //           padding:  const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+            //           decoration: BoxDecoration(
+            //             color: Colors.black.withOpacity(0.1),
+            //             shape: BoxShape.circle,
+            //             boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 5)],
+            //           ),
+            //           child: const Icon(Icons.close, size: 30,color: Colors.white,),
+            //       ),
+            // ),
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
@@ -646,6 +646,9 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+                  Text("Placing Your Order", style: robotoBold.copyWith(fontSize: 20)),
+                  const SizedBox(height: 10),
            widget.isCashOnDeliveryActive == true ?      Row(
                     children: [
                       Container(
@@ -757,13 +760,15 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
                  _isOrderPlaced ?  Row(
                     children: [
                      Expanded(
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.circular(15),
-                          value: _progressValue,
-                          backgroundColor: Colors.grey[300],
-                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-                          minHeight: 15,
-                        ),
+                        child: CustomLinearProgressIndicator(value: _progressValue, ),
+                        //  LinearProgressIndicator(
+                        //   borderRadius: BorderRadius.circular(15),
+
+                        //   value: _progressValue,
+                        //   backgroundColor: Colors.grey[300],
+                        //   valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                        //   minHeight: 20,
+                        // ),
                       ) ,
                       const SizedBox(width: 8),
                       InkWell(
@@ -819,12 +824,12 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
                           // )
                         // },
                         child: Container(
-                          width: 80,
+                          // width: 80,
                           height: 30,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Theme.of(context).primaryColor),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(color: Theme.of(context).primaryColor),
+                          //   borderRadius: BorderRadius.circular(10),
+                          // ),
                           child: Center(child: Text("Cancel",style: TextStyle(
                             color: Theme.of(context).primaryColor,
                           ),)),
@@ -858,6 +863,42 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+class CustomLinearProgressIndicator extends StatelessWidget {
+  final double value;
+
+  const CustomLinearProgressIndicator({Key? key, required this.value}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 23,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.grey[300],
+      ),
+      child: Stack(
+        children: [
+          FractionallySizedBox(
+            widthFactor: value,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [ Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

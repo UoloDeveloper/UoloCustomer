@@ -86,6 +86,8 @@ class Store {
   StoreSubscription? storeSubscription;
   String? storeBusinessModel;
   double? distance;
+  int?   distancelimit;
+  int ? noservicerestriction;
   String? storeOpeningTime;
 
   Store({
@@ -140,6 +142,8 @@ class Store {
     this.storeBusinessModel,
     this.distance,
     this.storeOpeningTime,
+    this.distancelimit,
+    this.noservicerestriction
   });
 
   Store.fromJson(Map<String, dynamic> json) {
@@ -211,6 +215,8 @@ class Store {
     storeBusinessModel = json['store_business_model'];
     distance = json['distance']?.toDouble();
     storeOpeningTime = json['current_opening_time'];
+    distancelimit = json['distance_limit'];
+    noservicerestriction = json['no_service_restriction'];
   }
 
   Map<String, dynamic> toJson() {
@@ -273,6 +279,8 @@ class Store {
     }
     data['store_business_model'] = storeBusinessModel;
     data['distance'] = distance;
+   data['distance_limit'] =   distancelimit ;
+   data ["no_service_restriction"] = noservicerestriction;
     return data;
   }
 }
