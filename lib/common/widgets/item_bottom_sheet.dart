@@ -265,13 +265,13 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                       ),
                                     ),
                                     !widget.isCampaign ? RatingBar(rating: widget.item!.avgRating, size: 15, ratingCount: widget.item!.ratingCount) : const SizedBox(),
-                               price > 2 ?     Text(
+                             widget.item!.price! > 2 ?     Text(
                                       '${PriceConverter.convertPrice(startingPrice, discount: initialDiscount, discountType: discountType)}'
                                           '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice, discount: initialDiscount,
                                           discountType: discountType)}' : ''}',
                                       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
                                     ) : SizedBox(),
-                                    price > priceWithDiscount&&  price > 2 ? Text(
+                                    widget.item!.price!  > priceWithDiscount&&  price > 2 ? Text(
                                       '${PriceConverter.convertPrice(startingPrice)}'
                                           '${endingPrice != null ? ' - ${PriceConverter.convertPrice(endingPrice)}' : ''}', textDirection: TextDirection.ltr,
                                       style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough),

@@ -160,7 +160,7 @@ class _PickMapScreenState extends State<PickMapScreen> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: CustomFloatingActionButton(
-
+            
                     onPressed: () {
                       Get.find<LocationController>().checkPermission(() {
                         Get.find<LocationController>().getCurrentLocation(false, mapController: _mapController);
@@ -207,7 +207,14 @@ class _PickMapScreenState extends State<PickMapScreen> {
                       ),
                       const SizedBox(height: 16),
                       CustomButton(
-                        
+                         gradient: LinearGradient(
+          colors:   [
+            Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
                         isBold: true,
                         radius: Dimensions.radiusSmall,
                         buttonText: locationController.inZone

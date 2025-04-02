@@ -302,11 +302,29 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
 
   if (isGrocery ) {
-        return const NotDeliverableScreen();
+        return  NotDeliverableScreen(
+          restaurantempty: false,
+        );
       }
 //  if ( Get.find<StoreController>().storeModel!.stores!.isEmpty) {
-//   return const NotDeliverableScreen();
+//   return  NotDeliverableScreen(
+//     restaurantempty: true,
+//   );
 //  }
+
+// if (Get.find<StoreController>().storeModel?.stores?.isEmpty ?? false) {
+//   return NotDeliverableScreen(
+//     restaurantempty: true,
+//   );
+// }
+
+//  final storeModel = Get.find<StoreController>().storeModel;
+
+//   if (storeModel == null || storeModel.stores == null || storeModel.stores!.isEmpty) {
+//     return NotDeliverableScreen(
+//       restaurantempty: true,
+//     );
+//   }
 
       return GetBuilder<HomeController>(builder: (homeController) {
 
