@@ -128,12 +128,47 @@ class GroceryCategoryView extends StatelessWidget {
         // Check if the grocery category list is null or empty
         if (categoryController.GrocerycategoryList == null ||
             categoryController.GrocerycategoryList!.isEmpty) {
-          return const Center(child: Text("No categories available"));
+          return const Center(child: SizedBox());
         }
 
     //  categoryController.GrocerycategoritemyList!.removeWhere((element) => element.);
       
-        return categoryController.isLoading ? const Center(child: CircularProgressIndicator()) : SingleChildScrollView(
+        return categoryController.isLoading ?    Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: SizedBox(
+                  // height: 300, // Set a fixed height for the ListView
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) => const SizedBox(height: 25,),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    
+                    itemCount: 2,
+                    itemBuilder: (context, itemIndex) {
+                      //  ItemModel? category = categoryController.GrocerycategoritemyList![itemIndex];
+                      
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      
+                          SizedBox(
+                            height: 220,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) => const SizedBox(width: 10,),
+                              scrollDirection: Axis.horizontal ,
+                              itemBuilder: (context, index) => ShimmerItemCard(
+
+                              ),itemCount: 5,),
+                            
+                            
+                            // ShimmerItemCard()
+                            //  Grocceyitemdata(items: category, name: categoryController.GrocerycategoryList![itemIndex].name ,id: categoryController.GrocerycategoryList![itemIndex].id, ), // Ensure items is not null
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+        ) : SingleChildScrollView(
           child:  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -143,7 +178,7 @@ class GroceryCategoryView extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  
+                  // padding: const EdgeInsets.only(left: 10, right: 10),
                   itemCount: categoryController.GrocerycategoritemyList!.length,
                   itemBuilder: (context, itemIndex) {
                      ItemModel? category = categoryController.GrocerycategoritemyList![itemIndex];

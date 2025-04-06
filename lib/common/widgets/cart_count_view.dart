@@ -155,10 +155,10 @@ class _CartCountViewState extends State<CartCountView> {
                         Visibility(
         visible: widget. item.variations!.isNotEmpty,
         child: Positioned(
-        bottom: -4,
-        left: 11, 
-        right: 11,// Adjust the offset to place it above the button
-        // left: 13, // Center "Optional" if needed
+        bottom: -2,
+        // left: 13, 
+        right: 13,// Adjust the offset to place it above the button
+        left: 13, // Center "Optional" if needed
         child: Container(
           // height: ,
           color: Colors.white,

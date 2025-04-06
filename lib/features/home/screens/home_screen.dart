@@ -65,6 +65,7 @@ class HomeScreen extends StatefulWidget {
   static Future<void> loadData(bool reload, {bool fromModule = false}) async {
     Get.find<LocationController>().syncZoneData();
     Get.find<FlashSaleController>().setEmptyFlashSale(fromModule: fromModule);
+    Get.find<BannerController>().getBannerList(reload);
     //  await Get.find<BannerController>().getBannerList(true);
     // print('------------call from home');
     // await Get.find<CartController>().getCartDataOnline();
@@ -150,8 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+     
      WidgetsBinding.instance.addPostFrameCallback((_) {
-    
+     Get.find<BannerController>().getFeaturedBanner();
   // final reviewlist =
   //  Get.find<OrderController>().getHistoryOrders(1).then((value) {
 
@@ -301,11 +303,11 @@ class _HomeScreenState extends State<HomeScreen> {
   //   Get.to(Notdeliverablescreen());
   // }
 
-  if (isGrocery ) {
-        return  NotDeliverableScreen(
-          restaurantempty: false,
-        );
-      }
+  // if (isGrocery ) {
+  //       return  NotDeliverableScreen(
+  //         restaurantempty: false,
+  //       );
+  //     }
 //  if ( Get.find<StoreController>().storeModel!.stores!.isEmpty) {
 //   return  NotDeliverableScreen(
 //     restaurantempty: true,
@@ -589,32 +591,32 @@ class _HomeScreenState extends State<HomeScreen> {
   isGrocery ? Stack(
     children: [
       
-      Positioned(
-        bottom: 120,
-        right: 5,
-        child:   Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 32, 31, 31),
-        borderRadius: BorderRadius.circular(100),
-      ),
+    //   Positioned(
+    //     bottom: 120,
+    //     right: 5,
+    //     child:   Container(
+    //   width: 60,
+    //   height: 60,
+    //   decoration: BoxDecoration(
+    //     color: const Color.fromARGB(255, 32, 31, 31),
+    //     borderRadius: BorderRadius.circular(100),
+    //   ),
       
-      child: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 32, 31, 31),
-        onPressed: (){
-                  // showgrocceryMenu(
-                  //    context,
-                  // );
+    //   child: FloatingActionButton(
+    //     backgroundColor: const Color.fromARGB(255, 32, 31, 31),
+    //     onPressed: (){
+    //               // showgrocceryMenu(
+    //               //    context,
+    //               // );
         
-      },
-      isExtended: true, 
-       child: const Icon(Icons.menu_book_sharp,color: Colors.white,size: 30,),
+    //   },
+    //   isExtended: true, 
+    //    child: const Icon(Icons.menu_book_sharp,color: Colors.white,size: 30,),
       
-      ),
-    ) ,
+    //   ),
+    // ) ,
    
-      ),
+    //   ),
 
       // Cart Container (Visible only if cart items > 0)
       if (cartController.cartList.isNotEmpty) 

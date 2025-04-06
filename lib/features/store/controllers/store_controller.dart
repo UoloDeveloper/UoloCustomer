@@ -197,11 +197,13 @@ class StoreController extends GetxController implements GetxService {
       // storeModel!.stores!.removeWhere((element) => element.distancelimit  == null || element.distancelimit == 0);
       if (storeModel != null)
              storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+                 update();
       _prepareStoreModel(storeModel, offset);
       getStoreList(offset, false, source: DataSourceEnum.client);
     } else {
       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.client);
       storeModel!.stores!.removeWhere((element) =>  element.distancelimit == 0  );
+          update();
       _prepareStoreModel(storeModel, offset);
     }
   }
@@ -209,7 +211,7 @@ class StoreController extends GetxController implements GetxService {
   _prepareStoreModel(StoreModel? storeModel, int offset) {
     if (storeModel != null) {
       if (offset == 1) {
-        // _storeModel!.stores!.removeWhere((element) => element.distancelimit  == null || element.distancelimit == 0);
+        // _storeModel!.stores!.removeWhere((element) => eleme-nt.distancelimit  == null || element.distancelimit == 0);
         _storeModel = storeModel;
       }else {
          
@@ -333,6 +335,7 @@ Future<void> getLatestStoreList(
     if (latestStoreList != null) {
       // Apply filtration to remove stores where both noservicerestriction and distancelimit are 0
       latestStoreList.removeWhere((element) => element.noservicerestriction == 0 && element.distancelimit == 0);
+          update();
 
       _latestStoreList = [];
       _latestStoreList!.addAll(latestStoreList);
@@ -359,6 +362,7 @@ Future<void> getLatestStoreList(
         latestStoreList = await storeServiceInterface.getTopOfferStoreList(source: DataSourceEnum.local);
         if (latestStoreList != null) {
         latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+            update();
           _topOfferStoreList = [];
           _topOfferStoreList!.addAll(latestStoreList);
         }
@@ -368,6 +372,7 @@ Future<void> getLatestStoreList(
         latestStoreList = await storeServiceInterface.getTopOfferStoreList(source: DataSourceEnum.client);
         if (latestStoreList != null) {
               latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+                  update();
           _topOfferStoreList = [];
           _topOfferStoreList!.addAll(latestStoreList);
         }
@@ -380,12 +385,12 @@ Future<void> getLatestStoreList(
     List<Store>? stores;
     if(dataSource == DataSourceEnum.local) {
       stores = await storeServiceInterface.getFeaturedStoreList(source: dataSource);
-      stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+      // stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
       _prepareFeaturedStore(stores);
       getFeaturedStoreList(dataSource: DataSourceEnum.client);
     } else {
       stores = await storeServiceInterface.getFeaturedStoreList(source: dataSource);
-      stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+      // stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
       _prepareFeaturedStore(stores);
     }
 
@@ -409,41 +414,90 @@ Future<void> getLatestStoreList(
     update();
   }
 
-  Future<void> getVisitAgainStoreList({bool fromModule = false, DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
-    if(fromModule && !fromRecall) {
-      _visitAgainStoreList = null;
-    }
-    List<Store>? stores;
-    if(dataSource == DataSourceEnum.local) {
-      stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.local);
-            stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
-      _prepareVisitAgainStore(stores);
-      getVisitAgainStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
-    } else {
-      stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.client);
-          stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
-      _prepareVisitAgainStore(stores);
-    }
+  // Future<void> getVisitAgainStoreList({bool fromModule = false, DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
+  //   if(fromModule && !fromRecall) {
+  //     _visitAgainStoreList = null;
+  //   }
+  //   List<Store>? stores;
+  //   if(dataSource == DataSourceEnum.local) {
+  //     stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.local);
+  //           stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //               update();
+  //     _prepareVisitAgainStore(stores);
+  //     getVisitAgainStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
+  //   } else {
+  //     stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.client);
+  //         stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+  //             update();
+  //     _prepareVisitAgainStore(stores);
+  //   }
 
+  // }
+
+  Future<void> getVisitAgainStoreList({
+  bool fromModule = false,
+  DataSourceEnum dataSource = DataSourceEnum.local,
+  bool fromRecall = false,
+}) async {
+  if (fromModule && !fromRecall) {
+    _visitAgainStoreList = null;
   }
 
-  _prepareVisitAgainStore(List<Store>? stores) {
-    if (stores != null) {
-      _visitAgainStoreList = [];
-      List<Modules> moduleList = [];
-      moduleList.addAll(storeServiceInterface.moduleList());
-      for (var store in stores) {
+  List<Store>? stores;
+
+  if (dataSource == DataSourceEnum.local) {
+    stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.local);
+    // stores = _filterStores(stores!);
+    update();
+    _prepareVisitAgainStore(stores);
+    getVisitAgainStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
+  } else {
+    stores = await storeServiceInterface.getVisitAgainStoreList(source: DataSourceEnum.client);
+    // stores = _filterStores(stores!);
+    update();
+    _prepareVisitAgainStore(stores);
+  }
+}
+
+  // _prepareVisitAgainStore(List<Store>? stores) {
+  //   if (stores != null) {
+  //     _visitAgainStoreList = [];
+  //     List<Modules> moduleList = [];
+  //     moduleList.addAll(storeServiceInterface.moduleList());
+  //     for (var store in stores) {
+  //       for (var module in moduleList) {
+  //         if(module.id == store.moduleId){
+  //           if(module.pivot!.zoneId == store.zoneId){
+  //             _visitAgainStoreList!.add(store);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   update();
+  // }
+
+  void _prepareVisitAgainStore(List<Store>? stores) {
+  if (stores != null) {
+    _visitAgainStoreList = []; 
+    List<Modules> moduleList = [];
+    moduleList.addAll(storeServiceInterface.moduleList()); 
+
+    for (var store in stores) {
+  
+      if (store.noservicerestriction != 0 || store.distancelimit != 0) {
         for (var module in moduleList) {
-          if(module.id == store.moduleId){
-            if(module.pivot!.zoneId == store.zoneId){
-              _visitAgainStoreList!.add(store);
+          if (module.id == store.moduleId) {
+            if (module.pivot?.zoneId == store.zoneId) {
+              _visitAgainStoreList!.add(store); 
             }
           }
         }
       }
     }
-    update();
   }
+  update(); 
+}
 
   void setCategoryList() {
     if(Get.find<CategoryController>().categoryList != null && _store != null) {
@@ -503,31 +557,64 @@ Future<void> getLatestStoreList(
     return _store;
   }
 
-  Future<void> getRecommendedStoreList({DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
-    if(!fromRecall) {
-      _recommendedStoreList = null;
-    }
-    List<Store>? recommendedStoreList;
-    if(dataSource == DataSourceEnum.local) {
-      recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.local);
-      recommendedStoreList!.removeWhere((element) =>  element.distancelimit == 0  );
-      _prepareRecommendedStores(recommendedStoreList);
-      getRecommendedStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
-    } else {
-      recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.client);
-      recommendedStoreList!.removeWhere((element) =>  element.distancelimit == 0  );
-      _prepareRecommendedStores(recommendedStoreList);
-    }
+  // Future<void> getRecommendedStoreList({DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
+  //   if(!fromRecall) {
+  //     _recommendedStoreList = null;
+  //   }
+  //   List<Store>? recommendedStoreList;
+  //   if(dataSource == DataSourceEnum.local) {
+  //     recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.local);
+  //     // recommendedStoreList!.removeWhere((element) =>  element.distancelimit == 0  );
+  //         update();
+  //     _prepareRecommendedStores(recommendedStoreList);
+  //     getRecommendedStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
+  //   } else {
+  //     recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.client);
+  //     // recommendedStoreList!.removeWhere((element) =>  element.distancelimit == 0  );
+  //     _prepareRecommendedStores(recommendedStoreList);
+  //   }
+  // }
+Future<void> getRecommendedStoreList({
+  DataSourceEnum dataSource = DataSourceEnum.local,
+  bool fromRecall = false,
+}) async {
+  if (!fromRecall) {
+    _recommendedStoreList = null;
   }
 
-  _prepareRecommendedStores(List<Store>? recommendedStoreList) {
-    if (recommendedStoreList != null) {
-      _recommendedStoreList = [];
-      _recommendedStoreList!.addAll(recommendedStoreList);
-    }
+  List<Store>? recommendedStoreList;
+
+  if (dataSource == DataSourceEnum.local) {
+    recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.local);
+    // recommendedStoreList = _filterStores(recommendedStoreList!);
     update();
+    _prepareRecommendedStores(recommendedStoreList);
+    getRecommendedStoreList(dataSource: DataSourceEnum.client, fromRecall: true);
+  } else {
+    recommendedStoreList = await storeServiceInterface.getRecommendedStoreList(source: DataSourceEnum.client);
+    // recommendedStoreList = _filterStores(recommendedStoreList!); 
+    _prepareRecommendedStores(recommendedStoreList);
   }
+}
+  // _prepareRecommendedStores(List<Store>? recommendedStoreList) {
+  //   if (recommendedStoreList != null) {
+  //     _recommendedStoreList = [];
+  //     _recommendedStoreList!.addAll(recommendedStoreList);
+  //   }
+  //   update();
+  // }
 
+ _prepareRecommendedStores(List<Store>? recommendedStoreList) {
+  if (recommendedStoreList != null) {
+    // Filter the recommendedStoreList based on the conditions
+    _recommendedStoreList = recommendedStoreList.where((store) {
+      return store.noservicerestriction != 0 || store.distancelimit != 0;
+    }).toList();
+  } else {
+    _recommendedStoreList = [];
+  }
+  update();
+}
   Future<void> getStoreItemList(int? storeID, int offset, String type, bool notify) async {
     if(offset == 1 || _storeItemModel == null) {
       _type = type;
@@ -674,5 +761,10 @@ _isopen = !_isopen;
 update();
  }
 
- 
+ List<Store> _filterStores(List<Store> stores) {
+  return stores.where((store) {
+
+    return store.noservicerestriction != 0 || store.distancelimit != 0;
+  }).toList();
+}
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:sixam_mart/common/widgets/custom_asset_image_widget.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
@@ -280,12 +281,21 @@ class ItemCard extends StatelessWidget {
                         bottomLeft: Radius.circular( Dimensions.radiusLarge ),
                         bottomRight: Radius.circular( Dimensions.radiusLarge ),
                       ),
-                      child: CustomImage(
+                      child: Stack(
+                        children: [
+
                          
-                        placeholder: Images.placeholder,
-                        image: '${item.imageFullUrl}',
-                        fit: BoxFit.cover, width: double.infinity, height: double.infinity,
-                        
+                          CustomImage(
+                             
+                            placeholder: Images.placeholder,
+                            image: '${item.imageFullUrl}',
+                            fit: BoxFit.cover, width: double.infinity, height: double.infinity,
+                            
+                          ),
+                           item.stock == 0 ? NotAvailableWidget(
+                            
+                           ) : const SizedBox(),
+                        ],
                       ),
                     ),
                   ),
@@ -468,3 +478,124 @@ class ItemCard extends StatelessWidget {
   // }
 
 }
+
+
+
+
+
+
+
+
+
+
+class ShimmerItemCard extends StatelessWidget {
+  final double width;
+  final double height;
+  final bool nopadding;
+
+  const ShimmerItemCard({
+    super.key,
+    this.width = 153,
+    this.height = 290,
+    this.nopadding = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer(
+      colorOpacity: 1,
+      enabled: true,
+      duration: const Duration(seconds: 1),
+      color: Colors.white,
+      child: Container(
+        width: width,
+        height: height,
+        // decoration: BoxDecoration(
+        //   color: Colors.black.withOpacity(0.04),
+        //   borderRadius: BorderRadius.circular(10),
+        // ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image Placeholder
+            Expanded(
+              flex: 11,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.04),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+
+            // Text and Details Placeholder
+            Expanded(
+              flex: 6,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // Store Name Placeholder
+                    Container(
+                      width: 100,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.04),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+
+                    // Item Name Placeholder
+                    Container(
+                      width: 130,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.04),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+
+                    // Rating Placeholder
+                    // Container(
+                    //   width: 80,
+                    //   height: 10,
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.black.withOpacity(0.1),
+                    //     borderRadius: BorderRadius.circular(4),
+                    //   ),
+                    // ),
+
+                    // Price Placeholder
+                    Container(
+                      width: 60,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.04),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+

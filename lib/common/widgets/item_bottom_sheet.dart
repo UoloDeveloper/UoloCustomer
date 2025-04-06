@@ -178,7 +178,7 @@ if (widget.item!.choiceOptions!.isNotEmpty && widget.item!.foodVariations!.isEmp
 double? price = widget.item!.price;
 double variationPrice = 0;
 Variation? variation;
-double? initialDiscount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
+double? initialDiscount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount  : widget.item!.storeDiscount;
 double? discount = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discount : widget.item!.storeDiscount;
 String? discountType = (widget.isCampaign || widget.item!.storeDiscount == 0) ? widget.item!.discountType : 'percent';
 int? stock = widget.item!.stock ?? 0;
@@ -293,13 +293,13 @@ final String currency = widget.item!.currency?.currencyCode ?? '₹ ';
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(19),
                                       child: CustomImage(
-                                        image: '${widget.item!.imageFullUrl}',
+                                        image: '${widget.item!.imageFullUrl ?? ""}',
                                         width: ResponsiveHelper.isMobile(context) ? 80 : 140,
                                         height: ResponsiveHelper.isMobile(context) ? 80 : 140,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                    DiscountTag(discount: initialDiscount, discountType: discountType, fromTop: 20, currency: currency ,),
+                                    DiscountTag(discount: initialDiscount  , discountType: discountType, fromTop: 20, currency: currency ,),
                                   ]),
                                 ),
                                 const SizedBox(width: 10),

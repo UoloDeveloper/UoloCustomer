@@ -111,6 +111,7 @@ class _GrocceryItemBottomSheetState extends State<GrocceryItemBottomSheet> {
                       variationType = '$variationType-$variation';
                     }
                   }
+                  
           
                   double? price = itemController.item!.price;
                   Variation? variation;
@@ -124,7 +125,7 @@ class _GrocceryItemBottomSheetState extends State<GrocceryItemBottomSheet> {
                     }
                   }
           
-                  double? discount = (itemController.item!.availableDateStarts != null || itemController.item!.storeDiscount == 0) ? itemController.item!.discount : itemController.item!.storeDiscount;
+                  double? discount = (itemController.item!.availableDateStarts != null || itemController.item!.storeDiscount == 0) ? itemController.item!.discount ?? 0 : itemController.item!.storeDiscount?? 0;
                   String? discountType = (itemController.item!.availableDateStarts != null || itemController.item!.storeDiscount == 0) ? itemController.item!.discountType : 'percent';
                   double priceWithDiscount = PriceConverter.convertWithDiscount(price, discount, discountType)!;
                   double priceWithQuantity = priceWithDiscount * itemController.quantity!;
@@ -290,13 +291,14 @@ class _GrocceryItemBottomSheetState extends State<GrocceryItemBottomSheet> {
                                               children: [
                                                   ClipRRect(
                                                             borderRadius: BorderRadius.circular(100),
-                                                            child: CustomImage(image: "${itemController.item!.imagesFullUrl!.isEmpty ? '' : itemController.item!.imagesFullUrl![i] ?? ''}",
-                                                            height: 60,
-                                                            width: 60,
-                                                            fit: 
-                                                            BoxFit.contain ,
-                                            
-                                                            )
+                                                            child: CustomImage(
+    image: itemController.item?.imagesFullUrl?.isNotEmpty == true
+        ? itemController.item!.imagesFullUrl!.first ?? ""
+        : "",
+    height: 60,
+    width: 60,
+    fit: BoxFit.contain,
+  ),
                                                             
                                                             //  Container(
                                                             //   height: 80,
@@ -308,7 +310,7 @@ class _GrocceryItemBottomSheetState extends State<GrocceryItemBottomSheet> {
                                                             // )
                                                             
                                                             ),
-                                                Text("${itemController.item!.choiceOptions![index].options![i].trim().toUpperCase()}", style: TextStyle(
+                                                Text("${itemController.item!.choiceOptions![index].options![i].trim().toUpperCase() ?? ""}", style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w300,
                                                   color: Colors.grey[500]

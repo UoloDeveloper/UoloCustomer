@@ -54,46 +54,49 @@ class GroceryHomeScreen extends StatelessWidget {
       
       child: Container(
         color:  Theme.of(context).cardColor,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        
-          // Container(
-          //   width: MediaQuery.of(context).size.width,
-          //   color: Theme.of(context).disabledColor  ,
-          //   child:  const Column(
-          //     children: [
-          //       BadWeatherWidget(),
-        
-          //       BannerView(isFeatured: false),
-          //       SizedBox(height: 12),
-          //     ],
-          //   ),
-          // ),
-        
-          // const CategoryView(),
-          // CustomButton(buttonText: 'Grocery', onPressed: () {
-          //   if ( Get.find<CategoryController>().GrocerycategoritemyList.isEmpty) {
-          //   Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
-          //   }
-          // },),
-            const CategoryView(),
-             BannerView(isFeatured: false ),
-           GroceryCategoryView (),
-          // isLoggedIn ? const VisitAgainView() : const SizedBox(),
-          const SpecialOfferView(isFood: false, isShop: false),
-          const HighlightWidget(),
-          const FlashSaleViewWidget(),
-          // const BestStoreNearbyView(),
-          const MostPopularItemView(isFood: false, isShop: false),
-          const MiddleSectionBannerView(),
-          const BestReviewItemView(),
-          const JustForYouView(),
-          const TopOffersNearMe(),
-          const ItemThatYouLoveView(forShop: false),
-          isLoggedIn ? const PromoCodeBannerView() : const SizedBox(),
-          // const NewOnMartView(isPharmacy: false, isShop: false),
-          const PromotionalBannerView(),
-          SizedBox(height: 200),
-        ]),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 0,right: 0),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   color: Theme.of(context).disabledColor  ,
+            //   child:  const Column(
+            //     children: [
+            //       BadWeatherWidget(),
+          
+            //       BannerView(isFeatured: false),
+            //       SizedBox(height: 12),
+            //     ],
+            //   ),
+            // ),
+          
+            // const CategoryView(),
+            // CustomButton(buttonText: 'Grocery', onPressed: () {
+            //   if ( Get.find<CategoryController>().GrocerycategoritemyList.isEmpty) {
+            //   Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
+            //   }
+            // },),
+              const CategoryView(),
+               BannerView(isFeatured: false ,Grocery: true,),
+             GroceryCategoryView (),
+            // isLoggedIn ? const VisitAgainView() : const SizedBox(),
+            const SpecialOfferView(isFood: false, isShop: false),
+            // const HighlightWidget(),
+            // const FlashSaleViewWidget(),
+            // const BestStoreNearbyView(),
+            const MostPopularItemView(isFood: false, isShop: false),
+            const MiddleSectionBannerView(),
+            const BestReviewItemView(),
+            const JustForYouView(),
+            const TopOffersNearMe(),
+            const ItemThatYouLoveView(forShop: false),
+            isLoggedIn ? const PromoCodeBannerView() : const SizedBox(),
+            // const NewOnMartView(isPharmacy: false, isShop: false),
+            const PromotionalBannerView(),
+            SizedBox(height: 200),
+          ]),
+        ),
       ),
     );
   }

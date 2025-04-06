@@ -41,7 +41,7 @@ class FoodHomeScreen extends StatelessWidget {
         double imageHeight = containerHeight * 0.8;
         double imageTopPosition = containerHeight * 0.2;
     return Padding(
-      padding: const EdgeInsets.only(left: 10,right: 10),
+      padding: const EdgeInsets.only(left: 0,right: 0),
       child: Column(
          
         crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -146,7 +146,7 @@ class FoodHomeScreen extends StatelessWidget {
                           children: [
                             Padding(
                                   // padding: const EdgeInsets.all(8.0),
-                                   padding: EdgeInsets.only(left: 0,top: 0,bottom: 0),
+                                   padding: EdgeInsets.only(left: 10,top: 0,bottom: 0),
                                child: CustomDivider1(text: "RECOMMENDED FOR YOU",thickness: .2, textAlign: TextAlign.left, ),
                              ),
                              SizedBox(height: 10,),
@@ -156,13 +156,14 @@ class FoodHomeScreen extends StatelessWidget {
                                 width: 500,
                                child: 
                                 ListView.separated(
-                        separatorBuilder: (context, index) => const  SizedBox(width: 12),
+                                  padding: const EdgeInsets.only(left: 10, right: 0),
+                        separatorBuilder: (context, index) => const  SizedBox(width: 10),
                       scrollDirection: Axis.horizontal ,
                         itemCount: stores.length,
                         itemBuilder: (context, index) {
                           final store = stores[index];
                           return Padding(
-                            padding: const EdgeInsets.all(0),
+                            padding: const EdgeInsets.only(left: 0),
                             child: Container(
                               height:80,
                               width: 150,

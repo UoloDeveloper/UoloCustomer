@@ -44,7 +44,7 @@ class _GrocceyitemdataState extends State<Grocceyitemdata> {
       children: [
         // Text(widget.name ?? '' ,),
           Padding(
-              padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
+              padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: 10, right: 0),
               child: TitleWidget(
                 title: widget.name ?? '' ,
                 // image: Images.discountOfferIcon,
@@ -75,10 +75,14 @@ class _GrocceyitemdataState extends State<Grocceyitemdata> {
         //         // ),
         //       ),,
         ,
+
+        SizedBox(height: 10,),
         Container(
           height: 300,
-          child: ListView.builder(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => const SizedBox(width: 15),
             scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(left: 10, right: 10),
             itemCount: widget.items!.items!.length,
             shrinkWrap: true,
             physics: AlwaysScrollableScrollPhysics(),
@@ -87,7 +91,7 @@ class _GrocceyitemdataState extends State<Grocceyitemdata> {
                 return const SizedBox.shrink();
               }
               return   Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(0),
                 child: ItemCard(item: widget.items!.items![index], isFood: false, isShop: false),
               );
             }

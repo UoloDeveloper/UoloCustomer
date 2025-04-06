@@ -1431,14 +1431,14 @@ Widget _orderPlaceButton(
             }
           }
         
-         if( checkoutController.store!.scheduleOrder! == false   ) {
+        //  if( checkoutController.store!.scheduleOrder! == false   ) {
 
             
-          showCustomSnackBar("The store isn't serving right now");
+        //   showCustomSnackBar("The store isn't serving right now");
 
 
-          }
-           else if (checkoutController.store!.open == 0  && checkoutController.preferableTime.isEmpty && checkoutController.store!.scheduleOrder! == true) {
+        //   }
+           if (checkoutController.store!.open == 0  && checkoutController.preferableTime.isEmpty && checkoutController.store!.scheduleOrder! == true) {
             print("${checkoutController.preferableTime}");
             // showCustomSnackBar('select_preferable_time'.tr);
              showModalBottomSheet(

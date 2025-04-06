@@ -711,7 +711,7 @@ class FoodCategoryView extends StatelessWidget {
                       mainAxisSpacing: 10,
                       childAspectRatio: 1.4, // Adjusted for better alignment
                     ),
-                    padding: const EdgeInsets.only(left: 0, top: 10),
+                    padding: const EdgeInsets.only(left: 10, top: 10),
                     itemCount: categoryController.categoryList!.length > 10
                         ? 40
                         : categoryController.categoryList!.length,

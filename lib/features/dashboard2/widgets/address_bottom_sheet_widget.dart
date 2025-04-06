@@ -158,7 +158,15 @@ class AddressBottomSheetWidget extends StatelessWidget {
                         alignment: addressController.addressList != null && addressController.addressList!.isEmpty && !fromDialog ? Alignment.center : Alignment.topCenter,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor.withOpacity(0.9),
+                             gradient: LinearGradient(
+        colors: [
+          Colors.deepPurple.shade800,
+          Colors.purple.shade400,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+                            // color: Theme.of(context).primaryColor.withOpacity(0.9),
                             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                           ),
                           child: TextButton.icon(
