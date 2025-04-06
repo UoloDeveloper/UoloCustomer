@@ -144,7 +144,9 @@ class CategoryView extends StatelessWidget {
     );
   }
 }
+    
 
+    
 class PharmacyCategoryView extends StatelessWidget {
   final CategoryController categoryController;
   const PharmacyCategoryView({super.key, required this.categoryController});
@@ -692,7 +694,7 @@ class FoodCategoryView extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 0),
       child: Stack(
         children: [
           SizedBox(

@@ -32,7 +32,10 @@ import 'helper/get_di.dart' as di;
 // @JS('removePreloader') // Link to the JavaScript function
 // external void removePreloader();
 //
-// void callPreloaderRemoveScript() {
+///   Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: List.generate(5, (index) => _buildStar(index + 1)),
+//             ),/ void callPreloaderRemoveScript() {
 //   removePreloader();
 // }
 
@@ -59,16 +62,18 @@ Future<void> main() async {
   };*/
 
   if(GetPlatform.isWeb){
-    await Firebase.initializeApp(options: const FirebaseOptions(
+    await
+     Firebase.initializeApp(options: const FirebaseOptions(
         apiKey: "AIzaSyDFN-73p8zKVZbA0i5DtO215XzAb-xuGSE",
         authDomain: "ammart-8885e.firebaseapp.com",
         projectId: "ammart-8885e",
-        storageBucket: "ammart-8885e.appspot.com",
+        storageBucket: "ammart-8885e.passport.com",
         messagingSenderId: "1000163153346",
         appId: "1:1000163153346:web:4f702a4b5adbd5c906b25b",
     ));
   } else if(GetPlatform.isAndroid) {
-    await Firebase.initializeApp(
+    await 
+    Firebase.initializeApp(
       options: const FirebaseOptions(
         apiKey: "AIzaSyBsKYkb4r9kQjiWIHMcHX8XQ9RGtpiUuf4",
         appId: "1:349709842275:android:c45d0399a7fce637c84556",
@@ -111,7 +116,6 @@ class MyApp extends StatefulWidget {
   final Map<String, Map<String, String>>? languages;
   final NotificationBodyModel? body;
   const MyApp({super.key, required this.languages, required this.body});
-
   @override
   
   State<MyApp> createState() => _MyAppState();
@@ -158,6 +162,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             navigatorKey: Get.key,
             scrollBehavior: const MaterialScrollBehavior().copyWith(
+
               dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
             ),
             theme: themeController.darkTheme ? dark() : light(),
@@ -171,7 +176,7 @@ class _MyAppState extends State<MyApp> {
             builder: (BuildContext context, widget) {
               return MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)), child: Material(
                 child: Stack(children: [
-
+                 
                   widget!,
 
                   GetBuilder<SplashController>(builder: (splashController){
@@ -187,6 +192,8 @@ class _MyAppState extends State<MyApp> {
           );
         });
       });
+      
+
     });
   }
 }

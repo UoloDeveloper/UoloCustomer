@@ -41,7 +41,7 @@ class NewOnMartView extends StatelessWidget {
             child: Column(children: [
             
               Padding(
-                padding:  EdgeInsets.only(left: 8,top:itemsview! ? 30 :   0),
+                padding:  EdgeInsets.only(left: itemsview! ? 10 : 10,top:itemsview! ? 30 :   0),
                 child: CustomDivider1(text: "Newly Added".toUpperCase(),thickness: .2,textAlign: TextAlign.left,color: itemsview! ? Colors.black : Colors.black,),
                 
                 //  TitleWidget(
@@ -70,7 +70,7 @@ class NewOnMartView extends StatelessWidget {
                   controller: ScrollController(),
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+                  padding:  EdgeInsets.only(left: itemsview! ? 10 :  10),
                   itemCount: storeList.length,
                   itemBuilder: (context, index){
                     return Padding(

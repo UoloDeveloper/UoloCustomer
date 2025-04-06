@@ -490,6 +490,14 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: CustomButton(
+                              gradient: LinearGradient(
+          colors:   [
+            Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
                             width: ResponsiveHelper.isDesktop(context) ? 300 : double.infinity,
                             buttonText: 'Back to Home',
                             onPressed: () {

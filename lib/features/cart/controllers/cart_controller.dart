@@ -309,6 +309,7 @@ class CartController extends GetxController implements GetxService {
     return success;
   }
 
+
   Future<bool> clearCartOnline() async {
     _isLoading = true;
     update();

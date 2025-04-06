@@ -375,26 +375,42 @@ class CongratulationDialogue extends StatelessWidget {
                         ),
                       );
                     },
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius : BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        Get.find<AuthController>().saveEarningPoint('');
-                        Get.back();
-                        Get.toNamed(RouteHelper.getLoyaltyRoute());
-                      },
-                      child: Text(
-                        'visit_loyalty_points'.tr,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
+                    child: CustomButton(
+                              gradient: LinearGradient(
+          colors:   [
+            Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+                      buttonText: 'visit_loyalty_points'.tr, onPressed: () {
+                      Get.find<AuthController>().saveEarningPoint('');
+                      Get.back();
+                      Get.toNamed(RouteHelper.getLoyaltyRoute());
+
+                    })
+                    
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: Theme.of(context).primaryColor,
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius : BorderRadius.circular(20),
+                    //     ),
+                    //   ),
+                    //   onPressed: () {
+                    //     Get.find<AuthController>().saveEarningPoint('');
+                    //     Get.back();
+                    //     Get.toNamed(RouteHelper.getLoyaltyRoute());
+                    //   },
+                    //   child: Text(
+                    //     'visit_loyalty_points'.tr,
+                    //     style: TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 16,
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                 ],
               ),

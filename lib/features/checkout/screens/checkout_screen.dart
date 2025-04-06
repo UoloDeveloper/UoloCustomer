@@ -29,6 +29,7 @@ import 'package:sixam_mart/features/checkout/widgets/partial_pay_view.dart';
 import 'package:sixam_mart/features/checkout/widgets/payment_method_bottom_sheet.dart';
 import 'package:sixam_mart/features/checkout/widgets/payment_section.dart';
 import 'package:sixam_mart/features/checkout/widgets/placeorderbottomsheet.dart';
+import 'package:sixam_mart/features/checkout/widgets/time_slot_bottom_sheet.dart';
 import 'package:sixam_mart/features/checkout/widgets/top_section.dart';
 import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
 import 'package:sixam_mart/features/home/controllers/home_controller.dart';
@@ -298,7 +299,10 @@ class _CheckoutState extends State<CheckoutScreen> {
                               double price = _calculatePrice(store: checkoutController.store, cartList: _cartList);
                               double addOns = _calculateAddonsPrice(store: checkoutController.store, cartList: _cartList);
                               double variations = _calculateVariationPrice(store: checkoutController.store, cartList: _cartList, calculateWithoutDiscount: true);
-                              double? discount = _calculateDiscount(
+                              double? discount = 
+                               
+
+                              _calculateDiscount(
                     store: checkoutController.store, cartList: _cartList, price: price, addOns: addOns,
                               );
                               double couponDiscount = PriceConverter.toFixed(couponController.discount!);
@@ -312,7 +316,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                               double referralDiscount = _calculateReferralDiscount(subTotal, discount, couponDiscount);
                     
                               double orderAmount = _calculateOrderAmount(
-                    price: price, variations: variations, discount: discount, addOns: addOns,
+                    price: price, variations: variations, discount: 0, addOns: addOns,
                     couponDiscount: couponDiscount, cartList: _cartList, referralDiscount: referralDiscount,
                               );
                     
@@ -746,8 +750,10 @@ class _CheckoutState extends State<CheckoutScreen> {
                                         maxCodOrderAmount: maxCodOrderAmount, storeId: widget.storeId, taxPercent: _taxPercent, price: price, addOns : addOns,
                                         isPrescriptionRequired: isPrescriptionRequired, checkoutButton: _orderPlaceButton(
                                           checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge,
-                                          tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,currency
+                                          tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,currency,
+                                          module
                                         ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress, time: checkoutController.store!.deliveryTime!,
+
                                       ),
                                     ),
                                                                     
@@ -1189,7 +1195,8 @@ SizedBox(height: 20,),
                 total,
                 maxCodOrderAmount,
                 isPrescriptionRequired,
-                 currency
+                 currency,
+                 module
               ),
             ),
 
@@ -1267,28 +1274,40 @@ SizedBox(height: 20,),
             ),
             const SizedBox(height: 20), 
 
-      
-            ElevatedButton(
-              onPressed: () {
-               Get.toNamed(RouteHelper.getInitialRoute());
-                // Get.back();
-                // Get.find<SplashController>().removeModule();
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor, 
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: Text(
-                'Explore'.tr,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+      CustomButton(
+
+                gradient: LinearGradient(
+          colors:   [
+            Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        
+        buttonText: 'Explore'.tr, onPressed: () => Get.toNamed(RouteHelper.getInitialRoute()), radius: 30, height: 45,width: 160,),
+            // ElevatedButton(
+
+            //   onPressed: () {
+            //    Get.toNamed(RouteHelper.getInitialRoute());
+            //     // Get.back();
+            //     // Get.find<SplashController>().removeModule();
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Theme.of(context).primaryColor, 
+            //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //   ),
+            //   child: Text(
+            //     'Explore'.tr,
+            //     style: const TextStyle(
+            //       fontSize: 16,
+            //       color: Colors.white,
+            //     ),
+            //   ),
+            // ),
           
           ],
         ),
@@ -1377,6 +1396,7 @@ Widget _orderPlaceButton(
   double total,
   double? maxCodOrderAmount,
   bool isPrescriptionRequired,  final String? currency,
+  Module module
 ) {
   return InkWell(
 
@@ -1411,8 +1431,32 @@ Widget _orderPlaceButton(
             }
           }
         
-          if(isGuestLogIn && checkoutController.guestAddress == null && checkoutController.orderType != 'take_away') {
+        //  if( checkoutController.store!.scheduleOrder! == false   ) {
+
+            
+        //   showCustomSnackBar("The store isn't serving right now");
+
+
+        //   }
+           if (checkoutController.store!.open == 0  && checkoutController.preferableTime.isEmpty && checkoutController.store!.scheduleOrder! == true) {
+            print("${checkoutController.preferableTime}");
+            // showCustomSnackBar('select_preferable_time'.tr);
+             showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (con) => TimeSlotBottomSheet(
+                            tomorrowClosed: tomorrowClosed,
+                            todayClosed: todayClosed,
+                            module: module,
+                          ),
+                        );
+          }
+
+           
+        else  if(isGuestLogIn && checkoutController.guestAddress == null && checkoutController.orderType != 'take_away') {
             showCustomSnackBar('please_setup_your_delivery_address_first'.tr);
+
           } else if(isGuestLogIn && checkoutController.orderType == 'take_away' && guestContactPersonNameController.text.isEmpty) {
             showCustomSnackBar('please_enter_contact_person_name'.tr);
           } else if(isGuestLogIn && checkoutController.orderType == 'take_away' && guestContactPersonNumberController.text.isEmpty) {
@@ -1595,10 +1639,23 @@ Widget _orderPlaceButton(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         height: 65,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-      ) ,
+               decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimensions.radiusLarge ),
+        boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
+        gradient: LinearGradient(
+          colors: [
+            Colors.deepPurple.shade800, 
+            Colors.purple.shade400,     
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        // shape: BoxShape.circle, // Make it circular
+      ),
+      // decoration: BoxDecoration(
+      //   color: Theme.of(context).primaryColor,
+      //   borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
+      // ) ,
         padding: const EdgeInsets.symmetric(
           vertical: Dimensions.paddingSizeSmall,
           horizontal: Dimensions.paddingSizeLarge,

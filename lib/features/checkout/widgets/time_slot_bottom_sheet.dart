@@ -23,7 +23,7 @@ class TimeSlotBottomSheet extends StatefulWidget {
 
 class _TimeSlotBottomSheetState extends State<TimeSlotBottomSheet> {
 
-  int selectedTimeSlotIndex = 0;
+  int selectedTimeSlotIndex = -1;
   String selectedTimeSlot = '';
 
   @override
@@ -38,118 +38,147 @@ class _TimeSlotBottomSheetState extends State<TimeSlotBottomSheet> {
     return GetBuilder<CheckoutController>(builder: (checkoutController) {
       return GetBuilder<StoreController>(builder: (storeController) {
         return Container(
-          width: ResponsiveHelper.isDesktop(context) ? 550 : context.width,
-          constraints: BoxConstraints(maxHeight: context.height * 0.8, minHeight: 0),
-          margin: EdgeInsets.only(top: GetPlatform.isWeb ? 0 : 30),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: ResponsiveHelper.isMobile(context) ?
-              const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusExtraLarge))
-              : const BorderRadius.all(Radius.circular(Dimensions.radiusDefault)),
-          ),
-          child: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-
-                !ResponsiveHelper.isDesktop(context) ? InkWell(
-                  onTap: ()=> Get.back(),
-                  child: Container(
-                    height: 4, width: 35,
-                    margin: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                    decoration: BoxDecoration(color: Theme.of(context).disabledColor, borderRadius: BorderRadius.circular(10)),
-                  ),
-                ) : const SizedBox(),
-
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeLarge),
-                    child: Column(mainAxisSize: MainAxisSize.min, children: [
-
-                      Row(children: [
-                        Expanded(
-                          child: tabView(context:context, title: 'today'.tr, isSelected: checkoutController.selectedDateSlot == 0, onTap: (){
-                            checkoutController.updateDateSlot(0, Get.find<StoreController>().store!.orderPlaceToScheduleInterval);
-                          }),
+              width: ResponsiveHelper.isDesktop(context) ? 550 : context.width,
+              constraints: BoxConstraints(maxHeight: context.height * 0.8, minHeight: 0),
+              
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.start
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () => Get.back(),
+                child: Container(
+                        padding:  const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                          boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 5)],
                         ),
+                        child: const Icon(Icons.close, size: 30,color: Colors.white,),
+                    ),
+              ),
 
-                        Expanded(
-                          child: tabView(context:context, title: 'tomorrow'.tr, isSelected: checkoutController.selectedDateSlot == 1, onTap: (){
-                            checkoutController.updateDateSlot(1, Get.find<StoreController>().store!.orderPlaceToScheduleInterval);
-                          }),
-                        ),
-                      ]),
-                      const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                      Flexible(
-                        child: ((checkoutController.selectedDateSlot == 0 && widget.todayClosed) || (checkoutController.selectedDateSlot == 1 && widget.tomorrowClosed))
-                            ? Center(child: Text(widget.module!.showRestaurantText! ? 'restaurant_is_closed'.tr : 'store_is_closed'.tr))
-                            : checkoutController.timeSlots != null
-                            ? checkoutController.timeSlots!.isNotEmpty ? GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: Dimensions.paddingSizeSmall,
-                              crossAxisSpacing: Dimensions.paddingSizeExtraSmall,
-                              childAspectRatio: ResponsiveHelper.isDesktop(context) ? 4 : ResponsiveHelper.isMobile(context) ? 2.5 : 3,
-                            ),
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(left: 2),
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: checkoutController.timeSlots!.length,
-                            itemBuilder: (context, index){
-                              String time = (index == 0 && checkoutController.selectedDateSlot == 0
-                                  && storeController.isStoreOpenNow(storeController.store!.active!, storeController.store!.schedules)
-                                  && (Get.find<SplashController>().configModel!.moduleConfig!.module!.orderPlaceToScheduleInterval! ? storeController.store!.orderPlaceToScheduleInterval == 0 : true))
-                                  ? 'instance'.tr : '${DateConverter.dateToTimeOnly(checkoutController.timeSlots![index].startTime!)} '
-                                  '- ${DateConverter.dateToTimeOnly(checkoutController.timeSlots![index].endTime!)}';
-                              return SlotWidget(
-                                title: time,
-                                isSelected: selectedTimeSlotIndex == index,
-                                onTap: () {
-                                  setState(() {
-                                    selectedTimeSlotIndex = index;
-                                    selectedTimeSlot = time;
-                                  });
-                                },
-                              );
-                            }) : Center(child: Text('no_slot_available'.tr)) : const Center(child: CircularProgressIndicator()),
-                      ),
-
-                    ]),
-                  ),
+              SizedBox(height: 15,),
+              Container(
+                // width: ResponsiveHelper.isDesktop(context) ? 550 : context.width,
+                // constraints: BoxConstraints(maxHeight: context.height * 0.8, minHeight: 0),
+     
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: ResponsiveHelper.isMobile(context) ?
+                    const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusExtraLarge))
+                    : const BorderRadius.all(Radius.circular(Dimensions.radiusDefault)),
                 ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge, vertical: Dimensions.paddingSizeSmall),
-                child: Row(children: [
-                  Expanded(
-                    child: CustomButton(
-                      radius: ResponsiveHelper.isDesktop(context) ?  Dimensions.radiusSmall : Dimensions.radiusDefault,
-                      height: ResponsiveHelper.isDesktop(context) ? 50 : null,
-                      isBold:  ResponsiveHelper.isDesktop(context) ? false : true,
-                      buttonText: 'cancel'.tr,
-                      color: Theme.of(context).disabledColor,
-                      onPressed: () => Get.back(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                            
+                    // !ResponsiveHelper.isDesktop(context) ? InkWell(
+                    //   onTap: ()=> Get.back(),
+                    //   child: Container(
+                    //     height: 4, width: 35,
+                    //     margin: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
+                    //     decoration: BoxDecoration(color: Theme.of(context).disabledColor, borderRadius: BorderRadius.circular(10)),
+                    //   ),
+                    // ) : const SizedBox(),
+                              
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeLarge),
+                        child: Column(mainAxisSize: MainAxisSize.min, children: [
+                              
+                          Row(children: [
+                            Expanded(
+                              child: tabView(context:context, title: 'today'.tr, isSelected: checkoutController.selectedDateSlot == 0, onTap: (){
+                                checkoutController.updateDateSlot(0, Get.find<StoreController>().store!.orderPlaceToScheduleInterval);
+                              }),
+                            ),
+                              
+                            Expanded(
+                              child: tabView(context:context, title: 'tomorrow'.tr, isSelected: checkoutController.selectedDateSlot == 1, onTap: (){
+                                checkoutController.updateDateSlot(1, Get.find<StoreController>().store!.orderPlaceToScheduleInterval);
+                              }),
+                            ),
+                          ]),
+                          const SizedBox(height: Dimensions.paddingSizeSmall),
+                              
+                          Flexible(
+                            child: ((checkoutController.selectedDateSlot == 0 && widget.todayClosed) || (checkoutController.selectedDateSlot == 1 && widget.tomorrowClosed))
+                                ? Center(child: Text(widget.module!.showRestaurantText! ? 'restaurant_is_closed'.tr : 'store_is_closed'.tr))
+                                : checkoutController.timeSlots != null
+                                ? checkoutController.timeSlots!.isNotEmpty ? GridView.builder(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: Dimensions.paddingSizeSmall,
+                                  crossAxisSpacing: Dimensions.paddingSizeExtraSmall,
+                                  childAspectRatio: ResponsiveHelper.isDesktop(context) ? 4 : ResponsiveHelper.isMobile(context) ? 2.5 : 3,
+                                ),
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.only(left: 2),
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: checkoutController.timeSlots!.length,
+                                itemBuilder: (context, index){
+                                  String time = (index == 0 && checkoutController.selectedDateSlot == 0
+                                      && storeController.isStoreOpenNow(storeController.store!.active!, storeController.store!.schedules)
+                                      && (Get.find<SplashController>().configModel!.moduleConfig!.module!.orderPlaceToScheduleInterval! ? storeController.store!.orderPlaceToScheduleInterval == 0 : true))
+                                      ? 'instance'.tr : '${DateConverter.dateToTimeOnly(checkoutController.timeSlots![index].startTime!)} '
+                                      '- ${DateConverter.dateToTimeOnly(checkoutController.timeSlots![index].endTime!)}';
+                                  return SlotWidget(
+                                    title: time,
+                                    isSelected: selectedTimeSlotIndex == index,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedTimeSlotIndex = index;
+                                        selectedTimeSlot = time;
+                                      });
+                                    },
+                                  );
+                                }) : Center(child: Text('no_slot_available'.tr)) : const Center(child: CircularProgressIndicator()),
+                          ),
+                              
+                        ]),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: Dimensions.paddingSizeSmall),
-
-                  Expanded(
-                    child: CustomButton(
-                      radius: ResponsiveHelper.isDesktop(context) ?  Dimensions.radiusSmall : Dimensions.radiusDefault,
-                      height: ResponsiveHelper.isDesktop(context) ? 50 : null,
-                      isBold:  ResponsiveHelper.isDesktop(context) ? false : true,
-                      buttonText: 'schedule'.tr,
-                      onPressed: () {
-                        checkoutController.updateTimeSlot(selectedTimeSlotIndex);
-                        checkoutController.setPreferenceTimeForView(selectedTimeSlot);
-                        Get.back();
-                      },
-                    ),
-                  ),
-                ]),
-              )],
-            ),
+                              
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraLarge, vertical: Dimensions.paddingSizeSmall),
+                    child: Row(children: [
+                      Expanded(
+                        child: CustomButton(
+                          radius: ResponsiveHelper.isDesktop(context) ?  Dimensions.radiusSmall : Dimensions.radiusDefault,
+                          height: ResponsiveHelper.isDesktop(context) ? 50 : null,
+                          isBold:  ResponsiveHelper.isDesktop(context) ? false : true,
+                          buttonText: 'cancel'.tr,
+                          color: Theme.of(context).disabledColor,
+                          onPressed: () => Get.back(),
+                        ),
+                      ),
+                      const SizedBox(width: Dimensions.paddingSizeSmall),
+                              
+                      Expanded(
+                        child: CustomButton(
+                             gradient: LinearGradient(
+                  colors: [ Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight
+                ),
+                          radius: ResponsiveHelper.isDesktop(context) ?  Dimensions.radiusSmall : Dimensions.radiusDefault,
+                          height: ResponsiveHelper.isDesktop(context) ? 50 : null,
+                          isBold:  ResponsiveHelper.isDesktop(context) ? false : true,
+                          buttonText: 'schedule'.tr,
+                          onPressed: () {
+                            checkoutController.updateTimeSlot(selectedTimeSlotIndex);
+                            checkoutController.setPreferenceTimeForView(selectedTimeSlot);
+                            Get.back();
+                          },
+                        ),
+                      ),
+                    ]),
+                  )],
+                ),
+              ),
+            ],
           ),
         );
       });

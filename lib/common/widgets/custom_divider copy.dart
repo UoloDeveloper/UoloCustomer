@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class CustomDivider extends StatelessWidget {
   final double height;
   final Color color;
-  const CustomDivider({super.key, this.height = 1, this.color = Colors.black});
+
+  const CustomDivider({super.key, this.height = 1, this.color = Colors.black, });
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class CustomDivider1 extends StatelessWidget {
   final double spaceAroundText;
   final Color color;
   final TextAlign textAlign;
+    final double? fontsize ;
 
   const CustomDivider1({
     super.key,
@@ -46,7 +48,7 @@ class CustomDivider1 extends StatelessWidget {
     this.thickness = 1.0,
     this.spaceAroundText = 8.0,
     this.color = Colors.black,
-    this.textAlign = TextAlign.center,
+    this.textAlign = TextAlign.center, this.fontsize,
   });
 
   @override
@@ -84,7 +86,7 @@ class CustomDivider1 extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 14,
+        fontSize:   fontsize ??  14  ,
         color: color,
         fontWeight: FontWeight.w600,
       ),
@@ -108,7 +110,7 @@ class CustomDivider2 extends StatelessWidget {
     super.key,
     required this.text,
     this.thickness = 1.0,
-    this.spaceAroundText = 8.0,
+    this.spaceAroundText = 2.0,
     this.color = Colors.black,
     this.textAlign = TextAlign.center,  this.dividercolor = Colors.black ,
   });

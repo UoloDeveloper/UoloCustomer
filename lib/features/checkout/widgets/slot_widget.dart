@@ -19,7 +19,7 @@ class SlotWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall, horizontal: Dimensions.paddingSizeExtraSmall),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).cardColor,
+            color: isSelected ? Theme.of(context).primaryColor.withOpacity(0.9) : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
             boxShadow: [ BoxShadow(color: Colors.grey[Get.isDarkMode ? 800 : 200]!, spreadRadius: 0.5, blurRadius: 0.5)],),
           child: Text(

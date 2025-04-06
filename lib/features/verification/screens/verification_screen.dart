@@ -183,6 +183,14 @@ class VerificationScreenState extends State<VerificationScreen> {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: isDesktop ? 32 : 20),
                   child: CustomButton(
+                    gradient: LinearGradient(
+          colors:   [
+            Colors.deepPurple.shade800 ,
+            Colors.purple.shade400  
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
                     radius: Dimensions.radiusDefault,
                     buttonText: 'verify'.tr,
                     isLoading: verificationController.isLoading || profileController.isLoading,

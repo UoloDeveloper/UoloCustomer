@@ -101,12 +101,12 @@ class TrackDetailsViewWidget extends StatelessWidget {
 
         Align(alignment: Alignment.centerLeft, child: Text(
           takeAway ? Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
-              ? 'store'.tr : 'store'.tr : 'delivery_man'.tr,
+              ? 'store'.tr : 'store'.tr : status!.toLowerCase() == 'Delivered'.toLowerCase() ? ''.tr : 'delivery_man'.tr,
           style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
         )),
-        const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+       status!.toLowerCase() == 'Delivered'.toLowerCase() ? const SizedBox() : const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-        Row(children: [
+      status!.toLowerCase() == 'Delivered'.toLowerCase() ? const SizedBox() :  Row(children: [
           ClipOval(child: CustomImage(
             image: '${takeAway ? (track.store != null ? track.store!.logoFullUrl : '') : track.deliveryMan!.imageFullUrl}',
             height: 35, width: 35, fit: BoxFit.cover,
@@ -114,7 +114,7 @@ class TrackDetailsViewWidget extends StatelessWidget {
           const SizedBox(width: Dimensions.paddingSizeSmall),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              takeAway ? track.store != null ? track.store!.name! : '' : '${track.deliveryMan!.fName} ${track.deliveryMan!.lName}',
+              takeAway ? track.store != null ? track.store!.name! : '' : status!.toLowerCase() == 'Delivered'.toLowerCase() ? ''.tr : '${track.deliveryMan!.fName} ${track.deliveryMan!.lName}',
               maxLines: 1, overflow: TextOverflow.ellipsis,
               style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall),
             ),

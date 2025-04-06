@@ -27,8 +27,10 @@ class _VisitAgainViewState extends State<VisitAgainView> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StoreController>(builder: (storeController) {
-        List<Store>? stores = storeController.visitAgainStoreList;
 
+         
+        List<Store>? stores = storeController.visitAgainStoreList;
+   
       return   stores != null && stores.length > 1 ? stores.isNotEmpty ? 
        Padding(
          padding:  EdgeInsets.only(bottom: widget.itemsview! ? 10 :  0),
@@ -44,7 +46,7 @@ class _VisitAgainViewState extends State<VisitAgainView> {
            child: Column(
              children: [
                Padding(
-                   padding:  EdgeInsets.only(left: 8,bottom: 10,top:widget.itemsview! ? 30 :   0),
+                   padding:  EdgeInsets.only(left: widget.itemsview! ? 10 : 10,bottom: 10,top:widget.itemsview! ? 30 :   0),
                 child: CustomDivider1(text: "Try Again".toUpperCase(),thickness: .2,textAlign: TextAlign.left,color: !widget.itemsview! ? Colors.black : Colors.black,),
                 
                 
@@ -58,7 +60,7 @@ class _VisitAgainViewState extends State<VisitAgainView> {
                  child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.only(left: 8),
+                          padding: EdgeInsets.only(left: widget.itemsview! ? 10 : 10),
                           itemCount: stores.length,
                           itemBuilder: (context, index){
                             return Padding(

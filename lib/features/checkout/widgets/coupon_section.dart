@@ -23,12 +23,15 @@ class CouponSection extends StatelessWidget {
   final double addOns;
   final double deliveryCharge;
   final double variationPrice;
+  
   const CouponSection({super.key, this.storeId, required this.checkoutController, required this.total, required this.price, required this.discount,
     required this.addOns, required this.deliveryCharge, required this.variationPrice});
+
 
   @override
   Widget build(BuildContext context) {
     double totalPrice = total;
+    final String currency = Get.find<CartController>().getCurrncyForUi();
     return storeId == null ? GetBuilder<CouponController>(
       builder: (couponController) {
         return Padding(
@@ -58,8 +61,9 @@ class CouponSection extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
                         Text('You saved ${PriceConverter.convertPrice(discount,currency:  Get.find<CartController>().getCurrncyForUi())} on delivery',style: robotoMedium,),
-                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
                       ],
           
                     ),
@@ -263,10 +267,24 @@ class CouponSection extends StatelessWidget {
                     height: 40, width: (couponController.discount! <= 0 && !couponController.freeDelivery) ? 100 : 50,
                     alignment: Alignment.center,
                     margin: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                    decoration: BoxDecoration(
-                      color: (couponController.discount! <= 0 && !couponController.freeDelivery) ? Color.fromARGB(255, 45, 3, 67) : Colors.transparent,
-                      borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                    ),
+                    // decoration: BoxDecoration(
+                    //   color: (couponController.discount! <= 0 && !couponController.freeDelivery) ? Color.fromARGB(255, 45, 3, 67) : Colors.transparent,
+                    //   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                    // ),
+
+                       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimensions.radiusDefault ),
+        // boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
+        gradient: LinearGradient(
+          colors:   [
+           (couponController.discount! <= 0 && !couponController.freeDelivery) ?  Colors.deepPurple.shade800 : Colors.transparent, 
+           (couponController.discount! <= 0 && !couponController.freeDelivery) ? Colors.purple.shade400 : Colors.transparent,     
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        // shape: BoxShape.circle, 
+      ),
                     child: (couponController.discount! <= 0 && !couponController.freeDelivery) ? !couponController.isLoading ? Text(
                       'apply'.tr,
                       style: robotoMedium.copyWith(color: Theme.of(context).cardColor),

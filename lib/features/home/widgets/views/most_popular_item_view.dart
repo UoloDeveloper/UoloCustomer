@@ -21,36 +21,38 @@ class MostPopularItemView extends StatelessWidget {
     bool isShop = Get.find<SplashController>().module != null && Get.find<SplashController>().module!.moduleType.toString() == AppConstants.ecommerce;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
+      padding: const EdgeInsets.symmetric(vertical: 0),
       child: GetBuilder<ItemController>(builder: (itemController) {
         List<Item>? itemList = itemController.popularItemList;
 
           return (itemList != null) ? itemList.isNotEmpty ? Container(
-            color: Theme.of(context).primaryColor  ,
+            // color: Theme.of(context).primaryColor  ,
             child: Column(children: [
 
               Padding(
-                padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
+                padding: const EdgeInsets.only(left: 10),
                 child: TitleWidget(
+                  
                   title: isShop ? 'most_popular_products'.tr : 'most_popular_items'.tr,
-                  image: Images.mostPopularIcon,
+                  // image: Images.mostPopularIcon,
                   onTap: () => Get.toNamed(RouteHelper.getPopularItemRoute(true, false)),
                 ),
               ),
 
               SizedBox(
                 height: 285, width: Get.width,
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(width: 15),
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
+                  padding: const EdgeInsets.only(left:10),
                   itemCount: itemList.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault),
+                      padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeDefault, right: 0, top: Dimensions.paddingSizeDefault),
                       child: ItemCard(
-                        isPopularItem: isShop ? false : true,
-                        isPopularItemCart: true,
+                        // isPopularItem: isShop ? false : true,
+                        // isPopularItemCart: true,
                         item: itemList[index],
                         isShop: isShop,
                         isFood: isFood,

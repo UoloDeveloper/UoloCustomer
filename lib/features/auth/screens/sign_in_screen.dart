@@ -95,24 +95,79 @@ class SignInScreenState extends State<SignInScreen> {
                   ),
                 ) : const SizedBox(),
                  
-                Align(
-                   alignment: Alignment.topCenter,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
-                      boxShadow: ResponsiveHelper.isDesktop(context) ? const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)] : null,
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    height: 400,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 150, ),
-                      child: Center(
-                        child: Image.asset("assets/image/Asset 1@4x-8.png", height: 250, width: 250),
-                      ),
-                    ),
-                    ),
-                ),
+        //         Align(
+        //            alignment: Alignment.topCenter,
+        //           child: Container(
+        //             decoration: BoxDecoration(
+        //               // color: Theme.of(context).primaryColor,
+        //                gradient: LinearGradient(
+        //   colors:   [
+        //     Colors.deepPurple.shade800 ,
+        //     Colors.purple.shade400  
+        //   ],
+        //   begin: Alignment.topLeft,
+        //   end: Alignment.bottomRight,
+        // ),
+        //               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+        //               boxShadow: ResponsiveHelper.isDesktop(context) ? const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)] : null,
+        //             ),
+        //             width: MediaQuery.of(context).size.width,
+        //             height: 400,
+        //             child: Padding(
+        //               padding: const EdgeInsets.only(top: 150, ),
+        //               child: Center(
+        //                 child: Image.asset("assets/image/Asset 1@4x-8.png", height: 250, width: 250),
+        //               ),
+        //             ),
+        //             ),
+        //         ),
+               
+               Align(
+  alignment: Alignment.topCenter,
+  child: Container(
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          Colors.deepPurple.shade800,
+          Colors.purple.shade400,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(20),
+        bottomRight: Radius.circular(20),
+      ),
+      boxShadow: ResponsiveHelper.isDesktop(context)
+          ? const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 5,
+                spreadRadius: 1,
+              ),
+            ]
+          : null,
+    ),
+    width: MediaQuery.of(context).size.width,
+    height: 400,
+    child: Padding(
+      padding: const EdgeInsets.only(top: 150),
+      child: Center(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+         
+            double imageSize = constraints.maxWidth * 0.5; 
+            return Image.asset(
+              "assets/image/Asset 1@4x-8.png",
+              height: imageSize,
+              width: imageSize,
+            );
+          },
+        ),
+      ),
+    ),
+  ),
+),
                 const SizedBox(height: Dimensions.paddingSizeExtremeLarge),
         
                 Padding(

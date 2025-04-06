@@ -83,7 +83,7 @@ class _JustForYouViewState extends State<JustForYouView> {
               ),
             ),
           ]),
-        ) : const SizedBox() : /*const JustForYouShimmerView();*/ const CircleListViewShimmerView();
+        ) : const SizedBox() : /*const JustForYouShimmerView();*/ SizedBox();
       }
     );
   }
