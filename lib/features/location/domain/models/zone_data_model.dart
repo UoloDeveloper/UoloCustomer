@@ -12,6 +12,7 @@ class ZoneDataModel {
   String? deliverymanWiseTopic;
   double? minimumShippingCharge;
   double? perKmShippingCharge;
+  int? isbusy;
   List<FormatedCoordinates>? formatedCoordinates;
 
   ZoneDataModel({
@@ -26,6 +27,7 @@ class ZoneDataModel {
     this.deliverymanWiseTopic,
     this.minimumShippingCharge,
     this.perKmShippingCharge,
+    this.isbusy,
     this.formatedCoordinates,
   });
 
@@ -34,6 +36,7 @@ class ZoneDataModel {
     name = json['name'];
     coordinates = json['coordinates'] != null ? Coordinates.fromJson(json['coordinates']) : null;
     status = json['status'];
+    isbusy = json['is_busy'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     restaurantWiseTopic = json['restaurant_wise_topic'];
@@ -56,6 +59,7 @@ class ZoneDataModel {
     }
     data['status'] = status;
     data['created_at'] = createdAt;
+    data['is_busy'] = isbusy;
     data['updated_at'] = updatedAt;
     data['restaurant_wise_topic'] = restaurantWiseTopic;
     data['customer_wise_topic'] = customerWiseTopic;

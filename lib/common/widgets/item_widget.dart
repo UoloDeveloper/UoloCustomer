@@ -344,6 +344,7 @@ class _ItemWidgetState extends State<ItemWidget> {
   bool _isAdded = false; 
   bool _isAdding = false; 
   bool _showFullDescription = false;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -381,7 +382,7 @@ class _ItemWidgetState extends State<ItemWidget> {
   String EndTime = DateFormat('hh:mm a').format(DateFormat('HH:mm').parse(widget.item!.availableTimeEnds.toString()));
 
    itemAvailable = DateConverter.isAvailable(widget.item!.availableTimeStarts, widget.item!.availableTimeEnds);
-
+bool isbusy = widget.item!.zone!.isbusy == 1 ?? false;
   print("Item Available: $itemAvailable  ${widget.item!.availableTimeStarts} - ${widget.item!.availableTimeEnds}");
 return Container(
   height: 190,
@@ -405,7 +406,7 @@ return Container(
           child: CustomInkWell(
     
             onTap: () {
-               Get.find<ItemController>().navigateToItemPage(widget.item, context);
+             isbusy ? showCustomSnackBar('store busy'.tr) :  Get.find<ItemController>().navigateToItemPage(widget.item, context);
             },
             
             radius: Dimensions.radiusDefault,
@@ -451,8 +452,32 @@ return Container(
                             ],
                           ),
                           
-                        
-                            !customizable ||  isAvailable   ?  const SizedBox() :     Padding(
+                        if (isbusy)   Padding(
+                              padding: widget.Recomended ? EdgeInsets.only(top: 0) : EdgeInsets.all(0),
+                              child: Container(
+                                height: widget.imageHeight ?? (desktop ? 120 : 145),
+                              width: widget.imageWidth ?? (desktop ? 200 : 145),
+                              color: Colors.black.withOpacity(.5),
+                              child: Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Store Busy',
+                                      style: robotoRegular.copyWith(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                              
+                                      
+                                  ],
+                                ),
+                              ),
+                                                      ),
+                            )  ,
+                  isbusy ? const SizedBox() :          !customizable ||  isAvailable ?  const SizedBox() :     Padding(
                               padding: widget.Recomended ? EdgeInsets.only(top: 0) : EdgeInsets.all(0),
                               child: Container(
                                 height: widget.imageHeight ?? (desktop ? 120 : 145),
@@ -761,7 +786,7 @@ return Container(
                 ),
       
 
-              isAvailable ?   Positioned(
+         isbusy ? const SizedBox() :   isAvailable ?   Positioned(
                                bottom:   !customizable ? widget.Recomended ? 0 : 25 :  widget.Recomended ? 5 :   20,
                       right: widget.Recomended  ? 15 : widget.Recomended ? 15 : 17,
                   child: CartCountView(item: widget.item!, index: widget.index)) : const SizedBox(),

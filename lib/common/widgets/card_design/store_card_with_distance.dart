@@ -61,7 +61,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
     String currencySymbol = splashController.configModel!.currencySymbol!;
     bool isRightSide = splashController.configModel!.currencySymbolDirection == 'right';
         bool isAvailable = widget. store?.open == 1 &&  widget.store?.active == true;
-
+bool isbusy = widget.store?.zone?.isbusy == 1 ?? false;
     return Container(
       width: widget.fromAllStore ? double.infinity : 150,
       height: 300,
@@ -72,14 +72,14 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
       // ),
       child: GestureDetector(
         onTap: () {
-          Get.toNamed(
+       isbusy ? showCustomSnackBar('store busy'.tr) :   Get.toNamed(
             RouteHelper.getStoreRoute(id: widget.store.id, page: 'store'),
             arguments: StoreScreen(store: widget.store, fromModule: false),
           );
         },
         child: Column(
           children: [
-            _buildStoreImage(context, discount, discountType, currencySymbol, isRightSide,isAvailable),
+            _buildStoreImage(context, discount, discountType, currencySymbol, isRightSide,isAvailable,isbusy),
             _buildStoreDetails(context, distance, discount, discountType, currencySymbol, isRightSide),
           ],
         ),
@@ -87,7 +87,7 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
     );
   }
 
-  Widget _buildStoreImage(BuildContext context, double discount, String discountType, String currencySymbol, bool isRightSide,isAvailable) {
+  Widget _buildStoreImage(BuildContext context, double discount, String discountType, String currencySymbol, bool isRightSide,isAvailable, bool isbusy) {
     return Stack(
       children: [
         
@@ -147,6 +147,17 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
           ),
         ),
 
+       if (isbusy && isAvailable)
+                    NotAvailableWidget(
+                      // isStore: true,
+
+                      // store:
+
+                      // widget.store,
+                      fontSize: Dimensions.fontSizeExtraSmall,
+                      isAllSideRound: true,
+                      radius: Dimensions.radiusLarge,
+                    ),
 
         if (!isAvailable)
                     NotAvailableWidget(
