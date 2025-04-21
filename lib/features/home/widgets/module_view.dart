@@ -65,7 +65,7 @@ class ModuleView extends StatelessWidget {
                       crossAxisSpacing: Dimensions.paddingSizeDefault,
                       childAspectRatio: (1 / 1.3),
                     ),
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(15),
                     itemCount: splashController.moduleList!.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -387,94 +387,162 @@ class ModuleView extends StatelessWidget {
             ),
 //
 
+            // splashController.moduleList != null
+            //     ? splashController.moduleList!.isNotEmpty
+            //         ? GridView.builder(
+            //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //               crossAxisCount:
+            //                   splashController.moduleList!.length - 2 == 1
+            //                       ? 1
+            //                       : 2,
+            //               mainAxisSpacing: Dimensions.paddingSizeSmall,
+            //               crossAxisSpacing: Dimensions.paddingSizeDefault + 5,
+            //               childAspectRatio:  splashController.moduleList!.length - 2 != 1 ? 1.6 : (3.7 / 1.5),
+            //             ),
+            //             padding:
+            //                 const EdgeInsets.only( top : Dimensions.paddingSizeSmall,bottom:Dimensions.paddingSizeSmall ),
+            //             itemCount: splashController.moduleList!.length - 2,
+            //             shrinkWrap: true,
+            //             physics: const NeverScrollableScrollPhysics(),
+            //             itemBuilder: (context, index) {
+            //               final actualIndex = index + 2;
+
+            //               return Container(
+            //                 decoration: BoxDecoration(
+            //                   borderRadius: BorderRadius.circular(
+            //                       Dimensions.radiusExtraLarge),
+            //                   boxShadow: [
+            //                     BoxShadow(
+            //                       color: Theme.of(context)
+            //                           .disabledColor
+            //                           .withOpacity(0.1),
+            //                       spreadRadius: 5,
+            //                       blurRadius: 5,
+            //                     ),
+            //                   ],
+            //                 ),
+            //                 child: ClipRRect(
+            //                   borderRadius: BorderRadius.circular(
+            //                       Dimensions.radiusExtraLarge),
+            //                   child: Container(
+            //                     decoration: BoxDecoration(
+            //                       borderRadius: BorderRadius.circular(
+            //                           Dimensions.radiusExtraLarge),
+            //                       color: Theme.of(context).cardColor,
+            //                     ),
+            //                     child: CustomInkWell(
+            //                         onTap: () => splashController.switchModule(
+            //                             actualIndex, true),
+            //                         radius: Dimensions.fontSizeLarge,
+            //                         child: Customcard2(
+            //                           isdynamic: true,
+
+            //                           title: splashController
+            //                                           .moduleList![index]
+            //                                           .moduleName!
+            //                                           .toUpperCase() == "." ? "" :
+            //                                       splashController
+            //                                           .moduleList![index]
+            //                                           .moduleName!
+            //                                           .toUpperCase(),
+            //                           image:
+            //                               '${splashController.moduleList![actualIndex].iconFullUrl}',
+
+            //                           title2:
+            //                               "${     removeHtmlTags(
+            //                                         splashController
+            //                                             .moduleList![index]
+            //                                             .description!
+            //                                             .toUpperCase(),
+            //                                       ) == "." ? "" :   "${removeHtmlTags(
+            //                                         splashController
+            //                                             .moduleList![index]
+            //                                             .description!
+            //                                             .toUpperCase(),
+            //                                       )}"}",
+
+            //                           // isdynamic: true,
+            //                         )),
+            //                   ),
+            //                 ),
+            //               );
+            //             },
+            //           )
+            //         : Center(
+            //             child: Padding(
+            //             padding: const EdgeInsets.only(
+            //                 top: Dimensions.paddingSizeSmall),
+            //             child: Text('no_module_found'.tr),
+            //           ))
+            //     : ModuleShimmer(isEnabled: splashController.moduleList == null),
+
             splashController.moduleList != null
-                ? splashController.moduleList!.isNotEmpty
-                    ? GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:
-                              splashController.moduleList!.length - 2 == 1
-                                  ? 1
-                                  : 2,
-                          mainAxisSpacing: Dimensions.paddingSizeSmall,
-                          crossAxisSpacing: Dimensions.paddingSizeDefault + 5,
-                          childAspectRatio:  splashController.moduleList!.length - 2 != 1 ? 1.6 : (3.7 / 1.5),
-                        ),
-                        padding:
-                            const EdgeInsets.only( top : Dimensions.paddingSizeSmall,bottom:Dimensions.paddingSizeSmall ),
-                        itemCount: splashController.moduleList!.length - 2,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final actualIndex = index + 2;
+    ? splashController.moduleList!.isNotEmpty
+        ? GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount:
+                  splashController.moduleList!.length - 2 <= 1 ? 1 : 2,
+              mainAxisSpacing: Dimensions.paddingSizeSmall,
+              crossAxisSpacing: Dimensions.paddingSizeDefault + 5,
+              childAspectRatio: splashController.moduleList!.length - 2 != 1 ? 1.6 : (3.7 / 1.5),
+            ),
+            padding: const EdgeInsets.only(
+                top: Dimensions.paddingSizeSmall,
+                bottom: Dimensions.paddingSizeSmall),
+            itemCount: splashController.moduleList!.length - 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final actualIndex = index + 2; // Skip the first two items
 
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radiusExtraLarge),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Theme.of(context)
-                                      .disabledColor
-                                      .withOpacity(0.1),
-                                  spreadRadius: 5,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radiusExtraLarge),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radiusExtraLarge),
-                                  color: Theme.of(context).cardColor,
-                                ),
-                                child: CustomInkWell(
-                                    onTap: () => splashController.switchModule(
-                                        actualIndex, true),
-                                    radius: Dimensions.fontSizeLarge,
-                                    child: Customcard2(
-                                      isdynamic: true,
-
-                                      title: splashController
-                                                      .moduleList![index]
-                                                      .moduleName!
-                                                      .toUpperCase() == "." ? "" :
-                                                  splashController
-                                                      .moduleList![index]
-                                                      .moduleName!
-                                                      .toUpperCase(),
-                                      image:
-                                          '${splashController.moduleList![actualIndex].iconFullUrl}',
-
-                                      title2:
-                                          "${     removeHtmlTags(
-                                                    splashController
-                                                        .moduleList![index]
-                                                        .description!
-                                                        .toUpperCase(),
-                                                  ) == "." ? "" :   "${removeHtmlTags(
-                                                    splashController
-                                                        .moduleList![index]
-                                                        .description!
-                                                        .toUpperCase(),
-                                                  )}"}",
-
-                                      // isdynamic: true,
-                                    )),
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).disabledColor.withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radiusExtraLarge),
+                      color: Theme.of(context).cardColor,
+                    ),
+                    child: CustomInkWell(
+                      onTap: () => splashController.switchModule(actualIndex, true),
+                      radius: Dimensions.fontSizeLarge,
+                      child: Customcard2(
+                        isdynamic: true,
+                        title: splashController.moduleList![actualIndex].moduleName!.toUpperCase() == "."
+                            ? ""
+                            : splashController.moduleList![actualIndex].moduleName!.toUpperCase(),
+                        image: '${splashController.moduleList![actualIndex].iconFullUrl}',
+                        title2: removeHtmlTags(
+                                  splashController.moduleList![actualIndex].description!.toUpperCase(),
+                                ) == "."
+                            ? ""
+                            : removeHtmlTags(
+                                splashController.moduleList![actualIndex].description!.toUpperCase(),
                               ),
-                            ),
-                          );
-                        },
-                      )
-                    : Center(
-                        child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: Dimensions.paddingSizeSmall),
-                        child: Text('no_module_found'.tr),
-                      ))
-                : ModuleShimmer(isEnabled: splashController.moduleList == null),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        : Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: Dimensions.paddingSizeSmall),
+              child: Text('no_module_found'.tr),
+            ),
+          )
+    : ModuleShimmer(isEnabled: splashController.moduleList == null),
           ]),
         ),
       

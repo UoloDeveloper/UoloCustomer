@@ -117,7 +117,7 @@ class _CartCountViewState extends State<CartCountView> {
           : InkWell(
               onTap: () {
                 setState(() {
-                  _isAdded = true; // Update the state when the button is clicked
+                  _isAdded = true;
                 });
                 Get.find<ItemController>().itemDirectlyAddToCart(widget.item, context);
               },

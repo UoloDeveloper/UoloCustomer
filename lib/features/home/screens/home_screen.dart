@@ -66,6 +66,7 @@ class HomeScreen extends StatefulWidget {
     Get.find<LocationController>().syncZoneData();
     Get.find<FlashSaleController>().setEmptyFlashSale(fromModule: fromModule);
     Get.find<BannerController>().getBannerList(reload);
+     Get.find<StoreController>().getLatestStoreList(reload, 'all', false);
     //  await Get.find<BannerController>().getBannerList(true);
     // print('------------call from home');
     // await Get.find<CartController>().getCartDataOnline();
@@ -533,6 +534,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                               ),
                             ),
+
+                            // Text('${Get.find<StoreController>}',
+                            //   style: robotoRegular.copyWith(color: Colors.black, fontSize: Dimensions.fontSizeExtraLarge,fontWeight: FontWeight.w600),
+                            // ),
                           ],
                         ),
                       ),

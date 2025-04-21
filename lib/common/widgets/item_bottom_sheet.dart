@@ -497,7 +497,7 @@ final String currency = widget.item!.currency?.currencyCode ?? '₹ ';
                 ),
 
                 ///Bottom side..
-              (!widget.item!.scheduleOrder! && !isAvailable) ? const SizedBox() : Container(
+        !isAvailable ? SizedBox() :      (!widget.item!.scheduleOrder! && !isAvailable) ? const SizedBox() : Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
                     borderRadius: GetPlatform.isWeb ? const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(40)) : const BorderRadius.all(Radius.circular(0)),
