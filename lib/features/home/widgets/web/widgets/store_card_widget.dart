@@ -260,6 +260,7 @@ class StoreCardWidget2 extends StatelessWidget {
     String? discountType = store!.discount != null ? store!.discount!.discountType : 'percent';
     bool isAvailable = store!.open == 1 && store!.active!;
 double distance = (store!.distance! / 1000);
+bool isbusy = store?.zone?.isbusy == 1 ?? false;
     return Padding(
       padding: const EdgeInsets.only(top: 0,bottom: 0),
       child: OnHover(
@@ -273,7 +274,7 @@ double distance = (store!.distance! / 1000);
           ),
           child: CustomInkWell(
             onTap: () {
-              if (store != null) {
+               if (store != null) {
                 if (Get.find<SplashController>().moduleList != null) {
                   for (ModuleModel module in Get.find<SplashController>().moduleList!) {
                     if (module.id == store!.moduleId) {
@@ -282,7 +283,7 @@ double distance = (store!.distance! / 1000);
                     }
                   }
                 }
-                Get.toNamed(
+              isbusy ? showCustomSnackBar('store busy'.tr) :    Get.toNamed(
                   RouteHelper.getStoreRoute(id: store!.id, page: 'item'),
                   arguments: StoreScreen(store: store, fromModule: false),
                 );
@@ -326,7 +327,13 @@ double distance = (store!.distance! / 1000);
                       ),
       
                       // Not Available Indicator
-                      isAvailable
+                    isbusy ?  NotAvailableWidget(
+                            radius: Dimensions.radiusDefault ,
+                              // isStore: true,
+                              // store: store,
+                              fontSize: Dimensions.fontSizeExtraSmall,
+                              isAllSideRound: true,
+                            ) :   isAvailable
                           ? const SizedBox()
                           : NotAvailableWidget(
                             radius: Dimensions.radiusDefault ,
@@ -336,7 +343,7 @@ double distance = (store!.distance! / 1000);
                               isAllSideRound: true,
                             ),
       
-                      // Favorite Icon
+
                       Positioned(
                         top: 10,
                         right: 5,
@@ -381,9 +388,9 @@ double distance = (store!.distance! / 1000);
                   ),
                 ),
       
-                // Right side: Store details
+            
                 Expanded(
-                  flex: 12, // Adjust the space for the details
+                  flex: 12, 
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: Dimensions.paddingSizeSmall,
@@ -394,7 +401,7 @@ double distance = (store!.distance! / 1000);
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Store Name and Rating
+                     
                         Row(
                           children: [
                             Expanded(
@@ -461,7 +468,7 @@ double distance = (store!.distance! / 1000);
                         ),
                         const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                      
-                        // Free Delivery and Delivery Time
+                     
                         Row(
                           children: [
                             if (store!.freeDelivery!)

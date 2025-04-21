@@ -128,7 +128,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _route();
-      //  Get.put(Bottomsheetcontroller()); 
+
   }
 
   void _route() async {

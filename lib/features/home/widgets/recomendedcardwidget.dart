@@ -251,7 +251,7 @@ class RecomendedStoreCardWidget extends StatelessWidget {
     String discountType = store?.discount?.discountType ?? 'percent';
     bool isAvailable = store?.open == 1 && store?.active == true;
     double containerWidth = MediaQuery.of(context).size.width * 0.40;
-
+bool isbusy = store?.zone?.isbusy == 1 ?? false;
     return OnHover(
       isItem: true,
       child: Container(
@@ -276,7 +276,7 @@ class RecomendedStoreCardWidget extends StatelessWidget {
                   (module) => module.id == store!.moduleId,
                 ),
               );
-              Get.toNamed(
+           isbusy ? showCustomSnackBar('store busy'.tr) :   Get.toNamed(
                 RouteHelper.getStoreRoute(id: store!.id, page: 'store'),
                 arguments: StoreScreen(store: store, fromModule: false),
               );
@@ -342,6 +342,15 @@ class RecomendedStoreCardWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                     if (isbusy && isAvailable)
+                    NotAvailableWidget(
+                      // isStore: true,
+                      // store:
+                      //  store,
+                      fontSize: Dimensions.fontSizeExtraSmall,
+                      isAllSideRound: true,
+                      radius: Dimensions.radiusLarge,
+                    ),
                   if (!isAvailable)
                     NotAvailableWidget(
                       isStore: true,

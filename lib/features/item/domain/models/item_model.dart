@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sixam_mart/features/location/domain/models/zone_data_model.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/basic_medicine_model.dart';
 import 'package:get/get.dart';
@@ -108,6 +109,7 @@ class Item {
   List<String>? nutritionsName;
   List<String>? allergiesName;
   List<String>? genericName;
+  ZoneDataModel? zone; 
 
   Item({
     this.id,
@@ -148,6 +150,7 @@ class Item {
     this.nutritionsName,
     this.allergiesName,
     this.genericName,
+       this.zone, 
   });
 
   Item.fromJson(Map<String, dynamic> json) {
@@ -210,6 +213,7 @@ class Item {
     storeName = json['store_name'];
     currency = json['currency'] != null ? CurrencyModel.fromJson(json['currency']) : null;
     zoneId = json['zone_id'];
+     zone = json['zone'] != null ? ZoneDataModel.fromJson(json['zone']) : null; 
     storeDiscount = json['store_discount'].toDouble();
     scheduleOrder = json['schedule_order'];
     avgRating = json['avg_rating'].toDouble();
@@ -253,6 +257,9 @@ class Item {
     }
     if (choiceOptions != null) {
       data['choice_options'] = choiceOptions!.map((v) => v.toJson()).toList();
+    }
+       if (zone != null) {
+      data['zone'] = zone!.toJson(); 
     }
     data['price'] = price;
     data['tax'] = tax;

@@ -1,5 +1,6 @@
 import 'package:sixam_mart/features/category/domain/models/category_model.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
+import 'package:sixam_mart/features/location/domain/models/zone_data_model.dart';
 
 
 class StoreModel {
@@ -34,6 +35,258 @@ class StoreModel {
   }
 }
 
+// class Store {
+//   int? id;
+//   String? name;
+//   String? phone;
+//   String? email;
+//   String? logoFullUrl;
+//   String? latitude;
+//   String? longitude;
+//   String? address;
+//   double? minimumOrder;
+//   // String? currency;
+//    CurrencyModel? currency;
+//   bool? freeDelivery;
+//   String? coverPhotoFullUrl;
+//   bool? delivery;
+//   bool? takeAway;
+//   bool? scheduleOrder;
+//   double? avgRating;
+//   double? tax;
+//   int? ratingCount;
+//   int? featured;
+//   int? zoneId;
+//   int? selfDeliverySystem;
+//   bool? posSystem;
+//   double? minimumShippingCharge;
+//   double? maximumShippingCharge;
+//   double? perKmShippingCharge;
+//   int? open;
+//   bool? active;
+//   String? deliveryTime;
+//   List<int>? categoryIds;
+//   int? veg;
+//   int? nonVeg;
+//   int? moduleId;
+//   int? orderPlaceToScheduleInterval;
+//   Discount? discount;
+//   List<Schedules>? schedules;
+//   int? vendorId;
+//   bool? prescriptionOrder;
+//   bool? cutlery;
+//   String? slug;
+//   bool? announcementActive;
+//   String? announcementMessage;
+//   int? itemCount;
+//   List<Items>? items;
+//   bool? extraPackagingStatus;
+//   double? extraPackagingAmount;
+//   List<int>? ratings;
+//   int? reviewsCommentsCount;
+//   StoreSubscription? storeSubscription;
+//   String? storeBusinessModel;
+//   double? distance;
+//   int?   distancelimit;
+//   int ? noservicerestriction;
+//   String? storeOpeningTime;
+  
+
+//   Store({
+//     this.id,
+//     this.name,
+//     this.phone,
+//     this.email,
+//     this.logoFullUrl,
+//     this.latitude,
+//     this.longitude,
+//     this.address,
+//     this.minimumOrder,
+//     this.currency,
+//     this.freeDelivery,
+//     this.coverPhotoFullUrl,
+//     this.delivery,
+//     this.takeAway,
+//     this.scheduleOrder,
+//     this.avgRating,
+//     this.tax,
+//     this.featured,
+//     this.zoneId,
+//     this.ratingCount,
+//     this.selfDeliverySystem,
+//     this.posSystem,
+//     this.minimumShippingCharge,
+//     this.maximumShippingCharge,
+//     this.perKmShippingCharge,
+//     this.open,
+//     this.active,
+//     this.deliveryTime,
+//     this.categoryIds,
+//     this.veg,
+//     this.nonVeg,
+//     this.moduleId,
+//     this.orderPlaceToScheduleInterval,
+//     this.discount,
+//     this.schedules,
+//     this.vendorId,
+//     this.prescriptionOrder,
+//     this.cutlery,
+//     this.slug,
+//     this.announcementActive,
+//     this.announcementMessage,
+//     this.itemCount,
+//     this.items,
+//     this.extraPackagingStatus,
+//     this.extraPackagingAmount,
+//     this.ratings,
+//     this.reviewsCommentsCount,
+//     this.storeSubscription,
+//     this.storeBusinessModel,
+//     this.distance,
+//     this.storeOpeningTime,
+//     this.distancelimit,
+//     this.noservicerestriction
+//   });
+
+//   Store.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     name = json['name'];
+//     phone = json['phone'];
+//     email = json['email'];
+//     logoFullUrl = json['logo_full_url'] ?? '';
+//     latitude = json['latitude'];
+//     longitude = json['longitude'];
+//     address = json['address'];
+//     minimumOrder = json['minimum_order'] == null ? 0 : json['minimum_order']?.toDouble();
+//     // currency = json['currency'];
+//     currency = json['zone']['currency'] != null ? CurrencyModel.fromJson(json['zone']['currency']) : null;
+//     freeDelivery = json['free_delivery'];
+//     coverPhotoFullUrl = json['cover_photo_full_url'] ?? '';
+//     delivery = json['delivery'];
+//     takeAway = json['take_away'];
+//     scheduleOrder = json['schedule_order'];
+//     avgRating = json['avg_rating']?.toDouble();
+//     tax = json['tax']?.toDouble();
+//     ratingCount = json['rating_count'];
+//     selfDeliverySystem = json['self_delivery_system'];
+//     posSystem = json['pos_system'];
+//     minimumShippingCharge = json['minimum_shipping_charge']?.toDouble();
+//     maximumShippingCharge = /*(json['maximum_shipping_charge'] != null && json['maximum_shipping_charge'] == 0) ? null : */
+//         json['maximum_shipping_charge']?.toDouble();
+//     perKmShippingCharge = json['per_km_shipping_charge'] != null ? json['per_km_shipping_charge'].toDouble() : 0;
+//     open = json['open'];
+//     active = json['active'];
+//     featured = int.parse(json['featured'].toString());
+//     zoneId = json['zone_id'];
+//     deliveryTime = json['delivery_time'];
+//     veg = json['veg'];
+//     nonVeg = json['non_veg'];
+//     moduleId = json['module_id'];
+//     orderPlaceToScheduleInterval = json['order_place_to_schedule_interval'];
+//     categoryIds = json['category_ids'] != null ? json['category_ids'].cast<int>() : [];
+//     discount = json['discount'] != null ? Discount.fromJson(json['discount']) : null;
+//     if (json['schedules'] != null) {
+//       schedules = <Schedules>[];
+//       json['schedules'].forEach((v) {
+//         schedules!.add(Schedules.fromJson(v));
+//       });
+//     }
+//     vendorId = json['vendor_id'];
+//     prescriptionOrder = json['prescription_order'] ?? false;
+//     cutlery = json['cutlery'];
+//     slug = json['slug'];
+//     announcementActive = json['announcement'] == 1;
+//     announcementMessage = json['announcement_message'];
+//     itemCount = json['total_items'];
+//     if (json['items'] != null) {
+//       items = <Items>[];
+//       json['items'].forEach((v) {
+//         items!.add(Items.fromJson(v));
+//       });
+//     }
+//     extraPackagingStatus = json['extra_packaging_status'] ?? false;
+//     extraPackagingAmount = json['extra_packaging_amount']?.toDouble() ?? 0;
+//     if (json['ratings'] != null && json['ratings'] != 0) {
+//       ratings = [];
+//       json['ratings'].forEach((v) {
+//         ratings!.add(v);
+//       });
+//     }
+//     reviewsCommentsCount = json['reviews_comments_count'];
+//     storeSubscription = json['store_sub'] != null ? StoreSubscription.fromJson(json['store_sub']) : null;
+//     storeBusinessModel = json['store_business_model'];
+//     distance = json['distance']?.toDouble();
+//     storeOpeningTime = json['current_opening_time'];
+//     distancelimit = json['distance_limit'];
+//     noservicerestriction = json['no_service_restriction'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['id'] = id;
+//     data['name'] = name;
+//     data['phone'] = phone;
+//     data['email'] = email;
+//     data['logo_full_url'] = logoFullUrl;
+//     data['latitude'] = latitude;
+//     data['longitude'] = longitude;
+//     data['address'] = address;
+//     data['minimum_order'] = minimumOrder;
+//     data['currency'] = currency;
+//     data['free_delivery'] = freeDelivery;
+//     data['cover_photo_full_url'] = coverPhotoFullUrl;
+//     data['delivery'] = delivery;
+//     data['take_away'] = takeAway;
+//     data['schedule_order'] = scheduleOrder;
+//     data['avg_rating'] = avgRating;
+//     data['tax'] = tax;
+//     data['rating_count'] = ratingCount;
+//     data['self_delivery_system'] = selfDeliverySystem;
+//     data['pos_system'] = posSystem;
+//     data['minimum_shipping_charge'] = minimumShippingCharge;
+//     data['maximum_shipping_charge'] = maximumShippingCharge;
+//     data['per_km_shipping_charge'] = perKmShippingCharge;
+//     data['open'] = open;
+//     data['active'] = active;
+//     data['veg'] = veg;
+//     data['featured'] = featured;
+//     data['zone_id'] = zoneId;
+//     data['non_veg'] = nonVeg;
+//     data['module_id'] = moduleId;
+//     data['order_place_to_schedule_interval'] = orderPlaceToScheduleInterval;
+//     data['delivery_time'] = deliveryTime;
+//     data['category_ids'] = categoryIds;
+//     if (discount != null) {
+//       data['discount'] = discount!.toJson();
+//     }
+//     if (schedules != null) {
+//       data['schedules'] = schedules!.map((v) => v.toJson()).toList();
+//     }
+//     data['vendor_id'] = vendorId;
+//     data['prescription_order'] = prescriptionOrder;
+//     data['cutlery'] = cutlery;
+//     data['slug'] = slug;
+//     data['announcement'] = announcementActive;
+//     data['announcement_message'] = announcementMessage;
+//     data['total_items'] = itemCount;
+//     if (items != null) {
+//       data['items'] = items!.map((v) => v.toJson()).toList();
+//     }
+//     data['extra_packaging_status'] = extraPackagingStatus;
+//     data['extra_packaging_amount'] = extraPackagingAmount;
+//     data['ratings'] = ratings;
+//     data['reviews_comments_count'] = reviewsCommentsCount;
+//     if (storeSubscription != null) {
+//       data['store_sub'] = storeSubscription!.toJson();
+//     }
+//     data['store_business_model'] = storeBusinessModel;
+//     data['distance'] = distance;
+//    data['distance_limit'] =   distancelimit ;
+//    data ["no_service_restriction"] = noservicerestriction;
+//     return data;
+//   }
+// }
+
 class Store {
   int? id;
   String? name;
@@ -44,8 +297,7 @@ class Store {
   String? longitude;
   String? address;
   double? minimumOrder;
-  // String? currency;
-   CurrencyModel? currency;
+  CurrencyModel? currency;
   bool? freeDelivery;
   String? coverPhotoFullUrl;
   bool? delivery;
@@ -56,6 +308,7 @@ class Store {
   int? ratingCount;
   int? featured;
   int? zoneId;
+  ZoneDataModel? zone; // Add this line
   int? selfDeliverySystem;
   bool? posSystem;
   double? minimumShippingCharge;
@@ -86,8 +339,8 @@ class Store {
   StoreSubscription? storeSubscription;
   String? storeBusinessModel;
   double? distance;
-  int?   distancelimit;
-  int ? noservicerestriction;
+  int? distancelimit;
+  int? noservicerestriction;
   String? storeOpeningTime;
 
   Store({
@@ -110,6 +363,7 @@ class Store {
     this.tax,
     this.featured,
     this.zoneId,
+    this.zone, 
     this.ratingCount,
     this.selfDeliverySystem,
     this.posSystem,
@@ -143,7 +397,7 @@ class Store {
     this.distance,
     this.storeOpeningTime,
     this.distancelimit,
-    this.noservicerestriction
+    this.noservicerestriction,
   });
 
   Store.fromJson(Map<String, dynamic> json) {
@@ -156,7 +410,6 @@ class Store {
     longitude = json['longitude'];
     address = json['address'];
     minimumOrder = json['minimum_order'] == null ? 0 : json['minimum_order']?.toDouble();
-    // currency = json['currency'];
     currency = json['zone']['currency'] != null ? CurrencyModel.fromJson(json['zone']['currency']) : null;
     freeDelivery = json['free_delivery'];
     coverPhotoFullUrl = json['cover_photo_full_url'] ?? '';
@@ -169,13 +422,13 @@ class Store {
     selfDeliverySystem = json['self_delivery_system'];
     posSystem = json['pos_system'];
     minimumShippingCharge = json['minimum_shipping_charge']?.toDouble();
-    maximumShippingCharge = /*(json['maximum_shipping_charge'] != null && json['maximum_shipping_charge'] == 0) ? null : */
-        json['maximum_shipping_charge']?.toDouble();
+    maximumShippingCharge = json['maximum_shipping_charge']?.toDouble();
     perKmShippingCharge = json['per_km_shipping_charge'] != null ? json['per_km_shipping_charge'].toDouble() : 0;
     open = json['open'];
     active = json['active'];
     featured = int.parse(json['featured'].toString());
     zoneId = json['zone_id'];
+    zone = json['zone'] != null ? ZoneDataModel.fromJson(json['zone']) : null; 
     deliveryTime = json['delivery_time'];
     veg = json['veg'];
     nonVeg = json['non_veg'];
@@ -249,9 +502,12 @@ class Store {
     data['veg'] = veg;
     data['featured'] = featured;
     data['zone_id'] = zoneId;
+    if (zone != null) {
+      data['zone'] = zone!.toJson(); // Add this line
+    }
     data['non_veg'] = nonVeg;
     data['module_id'] = moduleId;
-    data['order_place_to_schedule_interval'] = orderPlaceToScheduleInterval;
+    data['order_place_to schedule_interval'] = orderPlaceToScheduleInterval;
     data['delivery_time'] = deliveryTime;
     data['category_ids'] = categoryIds;
     if (discount != null) {
@@ -279,12 +535,11 @@ class Store {
     }
     data['store_business_model'] = storeBusinessModel;
     data['distance'] = distance;
-   data['distance_limit'] =   distancelimit ;
-   data ["no_service_restriction"] = noservicerestriction;
+    data['distance_limit'] = distancelimit;
+    data["no_service_restriction"] = noservicerestriction;
     return data;
   }
 }
-
 class Discount {
   int? id;
   String? startDate;

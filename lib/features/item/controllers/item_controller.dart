@@ -540,10 +540,17 @@ class ItemController extends GetxController implements GetxService {
       );
       if(Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && item.stock! <= 0){
 
+  print('${item.stock} stock');
+  print("${Get.find<SplashController>().configModel!.moduleConfig!.module!.stock!}");
+
         showCustomSnackBar('out_of_stock'.tr);
-    
+
       }
-      
+      //   if(item.stock! <= 0){
+      //     print('${item.stock} stock');
+      //   showCustomSnackBar('out_of_stock'.tr);
+      // }
+
       else if (Get.find<CartController>().existAnotherStoreItem(cartModel.item!.storeId, ModuleHelper.getModule() != null
           ? ModuleHelper.getModule()?.id : ModuleHelper.getCacheModule()?.id)) {
         Get.dialog(ConfirmationDialog(
