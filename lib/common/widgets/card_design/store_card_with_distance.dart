@@ -60,8 +60,8 @@ class _StoreCardWithDistanceState extends State<StoreCardWithDistance> {
     String discountType = widget.store.discount?.discountType ?? '';
     String currencySymbol = splashController.configModel!.currencySymbol!;
     bool isRightSide = splashController.configModel!.currencySymbolDirection == 'right';
-        bool isAvailable = widget. store?.open == 1 &&  widget.store?.active == true;
-bool isbusy = widget.store?.zone?.isbusy == 1 ?? false;
+    bool isAvailable = widget. store?.open == 1 &&  widget.store?.active == true;
+    bool isbusy = widget.store?.zone?.isbusy == 1 ?? false;
     return Container(
       width: widget.fromAllStore ? double.infinity : 150,
       height: 300,

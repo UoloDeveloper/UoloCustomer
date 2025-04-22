@@ -495,7 +495,8 @@ class _CouponCarouselState extends State<CouponCarousel> {
 
       List<CouponModel> filteredData = couponController.couponList!.where((data) {
     
-        return data.store != null && data.store!.id == widget.storeid || data.store == null &&  (!RegExp(r'^[0]+$').hasMatch(data.title.toString().trim())) ;
+        return data.store != null && data.store!.id == widget.storeid  &&  (!RegExp(r'^[0]+$').hasMatch(data.title.toString().trim())) ;
+        // || data.store == null
       }).toList();
 
       if (filteredData.isEmpty) {

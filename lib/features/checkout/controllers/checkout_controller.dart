@@ -396,7 +396,10 @@ class CheckoutController extends GetxController implements GetxService {
     String userID = '';
     Response response = await checkoutServiceInterface.placeOrder(placeOrderBody, multiParts);
     _isLoading = false;
-
+   if  (response.statusCode == 406) {
+            showCustomSnackBar(response.statusText,);
+            Get.back();
+   }
 
     if (response.statusCode == 200) {
       String? message = response.body['message'];

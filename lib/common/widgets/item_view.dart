@@ -16,419 +16,6 @@ import 'package:sixam_mart/common/widgets/item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// class ItemsView extends StatefulWidget {
-//   final List<Item?>? items;
-//   final List<Store?>? stores;
-//   final bool isStore;
-//   final EdgeInsetsGeometry padding;
-//   final bool isScrollable;
-//   final int shimmerLength;
-//   final String? noDataText;
-//   final bool isCampaign;
-//   final bool inStorePage;
-//   final bool isFeatured;
-//   final bool? fromGrocerycategory;
-//     final bool isHome;
-//   final bool? isFoodOrGrocery;
-//   const ItemsView({super.key, required this.stores, required this.items, required this.isStore, this.isScrollable = false,
-//     this.shimmerLength = 20, this.padding = const EdgeInsets.all(Dimensions.paddingSizeDefault), this.noDataText,
-//     this.isCampaign = false, this.inStorePage = false, this.isFeatured = false,
-//     this.isFoodOrGrocery = true,  this.isHome = false,  this.fromGrocerycategory = false});
-
-//   @override
-//   State<ItemsView> createState() => _ItemsViewState();
-// }
-
-// class _ItemsViewState extends State<ItemsView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     bool isNull = true;
-//     int length = 0;
-//     if(widget.isStore) {
-//       isNull = widget.stores == null;
-//       if(!isNull) {
-//         length = widget.stores!.length;
-//       }
-//     }else {
-//       isNull = widget.items == null;
-//       if(!isNull) {
-//         length = widget.items!.length;
-//       }
-//     }
-
-
-
-//   //    bool isOpen = false;
-
-//   // void toggleContainer() {
-//   //   setState(() {
-//   //     isOpen = !isOpen; 
-//   //   });
-//   // }
-
-//     return Column(
-      
-//       children: [
-//   widget.isHome ?
-  
-//   //  ListView.builder(
-//   //     itemCount: widget.stores!.length,  
-//   //     // shrinkWrap: true,
-//   //      physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-//   //       shrinkWrap: widget.isScrollable ? false : true,
-//   //   itemBuilder: 
-//   //   (context, index) {
-
-//   //      if (index == 3) {
-//   //        return   VisitAgainView(fromFood: true);
-//   //       //  StoreCardWidget2(store: widget.stores![index]);
-//   //      } else if (index == 7) {
-//   //        return  
-//   //            const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false);
-//   //       //  StoreCardWidget2(store: widget.stores![index]);
-//   //      } 
-       
-//   //       else {
-//   //        return StoreCardWidget2(store: widget.stores![index]);
-//   //      }
-//   //     // return StoreCardWidget2(store:  widget.stores![index]);
-//   //   },
-//   //  ) : 
-     
-//      ListView.builder(
-//   itemCount: widget.stores != null ? widget.stores!.length : 10, 
-//   physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-//   shrinkWrap: widget.isScrollable ? false : true,
-//   itemBuilder: (context, index) {
-
-//     if (widget.stores == null) {
-//       return const StoreCardShimmer2();
-//     }
-
-  
-//     if (index -3 % 7 == 1) { 
-//       return VisitAgainView(fromFood: true,itemsview: true,);
-//     } else if (index -3 % 7 == 5) { 
-//       return const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false,itemsview: true,);
-//     } else {
-//       return Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 10),
-//         child: Padding(
-//           padding: const EdgeInsets.only(bottom: 10),
-//           child: Container(
-//             height: 180,
-//           child: StoreCardWidget2(store: widget.stores![index])),
-//         ),
-//       );
-//     }
-//   },
-// )  :
-
-
-//       !isNull ? length > 0 ? 
-//        widget.inStorePage ? 
-//        Column(
-//          children: [
-//           GetBuilder<StoreController>(builder: (storeController) {
-//              ;
-//                return storeController.recommendedItemModel!.items!.isEmpty ?  SizedBox() : Padding(
-//                  padding: const EdgeInsets.all(8.0),
-//                  child: SizedBox(
-                 
-//                   child:
-//                    Container(
-//                     decoration: BoxDecoration(
-//                       color:  Color(0xFFECF3F9),
-//                       borderRadius: BorderRadius.only(
-//                         bottomLeft: Radius.circular(10),
-//                         bottomRight: Radius.circular(10),
-//                         topLeft: Radius.circular(10),
-//                         topRight: Radius.circular(10)
-//                       )
-//                     ),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       children: [
-//                         InkWell(
-//                           onTap:  (){
-//                             // print("Trying to toggle");
-//                        storeController.togglerecommendedContainer();
-//                             // logic for close  recommended container
-//                           },
-//                           child: Container(
-//                             width: MediaQuery.of(context).size.width,
-//                             height: 40,
-//                             color: Colors.transparent,
-//                             child: Row(
-//                               crossAxisAlignment: CrossAxisAlignment.center,
-//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                               children: [
-//                                 Padding(
-//                                   padding: const EdgeInsets.only(left: 20,top: 10),
-//                                   child: Text("Recommended", style: TextStyle(
-//                                     fontSize: 16,fontWeight: FontWeight.w700
-//                                   )),
-//                                 ),
-
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(8.0),
-//                                   child: Icon(storeController.isopen ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor,size: 30,weight: 35,),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-
-//                         SizedBox(height: 10,),
-//                     if (!storeController.isopen)
-//                       ListView.builder(
-//                           padding: EdgeInsets.all(0),
-//                           // separatorBuilder: (context, index) => const Divider(),
-//                           physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-//                           shrinkWrap: true,
-//                           itemCount: storeController.recommendedItemModel!.items!.length ?? 1,
-//                           itemBuilder: (context, index) {
-                          
-//                           return 
-//                           //  Container(
-//                           //   color: Theme.of(context).primaryColor,
-//                           //   child: Text("Recommended $index",)
-//                           // );
-//                           Padding(
-//                             padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
-//                             child: ItemWidget(item:storeController.recommendedItemModel!.items![index] , isStore: false, store: null, index: index, length: length,Recomended: true,),
-//                           );
-//                         }),
-                 
-//                         // SizedBox(height: 10,)
-//                       ],
-//                     ),
-                 
-                    
-//                   ),
-                    
-                    
-//                            ),
-//                );
-//              }
-//            ),
-          
-//            GridView.builder(
-//             key: UniqueKey(),
-//             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-
-//               crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
-//               mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
-//               // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
-//               //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
-//               //     : 3.3,
-//               mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
-//                   : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 170 : 206
-//                   : 122,
-//               crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
-//             ),
-//             physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-//             shrinkWrap: widget.isScrollable ? false : true,
-//             itemCount: length,
-//             padding: widget.padding,
-//             itemBuilder: (context, index) {
-             
-//              //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
-//              // final List<Item?>? filterditems = widget.items!.where((element) => element!.storeId == widget.stores![index]!.id).toList();
-             
-//                 List<Item?> availableItems = [];
-//            List<Item?> notAvailableItems = [];
-//            if (widget.items != null ) {
-            
-//              for (var item in widget.items!) {
-//                if (item != null) { 
-//                  bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds);
-//                  if (isAvailable) {
-//             availableItems.add(item);
-//                  } else {
-//             notAvailableItems.add(item);
-//                  }
-//                }
-//              }
-//            }
-           
-           
-//            final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
-           
-           
-//              // if (index  == 0) {
-//              // print("showing recommended items");
-//              //  return  GetBuilder<StoreController>(builder: (storeController) {
-           
-           
-//              //      return  ItemWidget(
-//              //           isStore: widget.isStore, item: storeController.recommendedItemModel?.items?[index], isFeatured: widget.isFeatured,
-//              //           store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
-//              //           inStore: widget.inStorePage,
-//              //         );
-                 
-                                            
-//              //    }
-//              //  );
-//              // }
-//               return widget.stores != null && widget.isStore ?  widget.isFoodOrGrocery! && widget.isStore
-//                   ?
-                  
-//                   StoreCardWidget2(store: widget.stores![index])
-//                   : StoreCardWithDistance(store: widget.stores![index]!, fromAllStore: true)
-//                   :
-                  
-                   
-//                    Column(
-//                      children: [
-//                        ItemWidget(
-//                                        isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
-//                                        store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
-//                                        inStore: widget.inStorePage,
-//                                      ),
-
-//                                      Divider()
-//                      ],
-//                    );
-//             },
-//                  ),
-//          ],
-//        ) :
-   
-   
-   
-//       GridView.builder(
-        
-//         key: UniqueKey(),
-//         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-
-//           crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.fromGrocerycategory! ? 20 : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
-//           mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.fromGrocerycategory! ? 10 : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
-//           // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
-//           //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
-//           //     : 3.3,
-//           // childAspectRatio:  200 / 300,
-//           mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
-//               : ResponsiveHelper.isMobile(context) ? widget.fromGrocerycategory! ? 270 :    widget.stores != null && widget.isStore ? 200 : 210
-//               : 122,
-//           crossAxisCount: ResponsiveHelper.isMobile(context) ? widget.fromGrocerycategory! ?  2 : 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
-//         ),
-//         physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-//         shrinkWrap: widget.isScrollable ? false : true,
-//         itemCount: length,
-//         // padding: ,
-//         padding:  !widget.fromGrocerycategory! ? widget.padding :  EdgeInsets.only(
-//           bottom: widget.fromGrocerycategory! ? 150 : 0, 
-//           left: 20, right: 20, top: 20
-//         ),
-//         itemBuilder: (context, index) {
-         
-//   //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
-//   // final List<Item?>? filterditems = widget.items!.where((element) => element!.storeId == widget.stores![index]!.id).toList();
-         
-//      List<Item?> availableItems = [];
-// List<Item?> notAvailableItems = [];
-// if (widget.items != null ) {
- 
-//   for (var item in widget.items!) {
-//     if (item != null) { 
-//       bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds);
-//       if (isAvailable) {
-//         availableItems.add(item);
-//       } else {
-//         notAvailableItems.add(item);
-//       }
-//     }
-//   }
-// }
-
-
-// final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
-
-
-//   // if (index  == 0) {
-//   // print("showing recommended items");
-//   //  return  GetBuilder<StoreController>(builder: (storeController) {
-//   //      return  Container(
-//   //       color: Theme.of(context).primaryColor,
-//   //      );
-      
-                                        
-//   //    }
-//   //  );
-//   // }
-//           return widget.stores != null && widget.isStore ?  widget.isFoodOrGrocery! && widget.isStore
-//               ?
-              
-//               Column(
-//                 children: [
-//                   StoreCardWidget2(store: widget.stores![index]),
-//                   Divider()
-//                 ],
-//               )
-//               : StoreCardWithDistance(store: widget.stores![index]!, fromAllStore: true)
-//               :
-              
-               
-//            widget.fromGrocerycategory! ? ItemCard(item: widget.items![index]?? Item(), isFood: false, isShop: false,width: 200,)  :   Column(
-//                  children: [
-//                    ItemWidget(
-//                                isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
-//                                store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
-//                                inStore: widget.inStorePage,
-//                              ),
-//                                  Divider()
-//                  ],
-//                );
-//         },
-//       ) : NoDataScreen(
-//         text: widget.noDataText ?? (widget.isStore ? Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
-//             ? 'no_restaurant_available'.tr : 'no_store_available'.tr : 'no_item_available'.tr),
-//       ) : GridView.builder(
-//         key: UniqueKey(),
-//         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//           crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
-//           mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
-//           // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
-//           //     : ResponsiveHelper.isMobile(context) ? widget.isStore ? 2 : 3.8
-//           //     : 3,
-//           mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
-//               : ResponsiveHelper.isMobile(context) ? widget.isStore ? 200 : 200
-//               : 110,
-//           crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) ? 3 : 3,
-//         ),
-//         physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-//         shrinkWrap: widget.isScrollable ? false : true,
-//         itemCount: widget.shimmerLength,
-//         padding: widget.padding,
-//         itemBuilder: (context, index) {
-//           return widget.isStore ? widget.isFoodOrGrocery!
-//               ? const StoreCardShimmer2()
-//               : const NewOnShimmerView()
-//               : ItemShimmer(isEnabled: isNull, isStore: widget.isStore, hasDivider: index != widget.shimmerLength-1);
-//         },
-//       ),
-
-//     ]);
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class ItemsView extends StatefulWidget {
   final List<Item?>? items;
   final List<Store?>? stores;
@@ -441,525 +28,391 @@ class ItemsView extends StatefulWidget {
   final bool inStorePage;
   final bool isFeatured;
   final bool? fromGrocerycategory;
-  final bool isHome;
+    final bool isHome;
   final bool? isFoodOrGrocery;
-
-  const ItemsView({
-    super.key,
-    required this.stores,
-    required this.items,
-    required this.isStore,
-    this.isScrollable = false,
-    this.shimmerLength = 20,
-    this.padding = const EdgeInsets.all(Dimensions.paddingSizeDefault),
-    this.noDataText,
-    this.isCampaign = false,
-    this.inStorePage = false,
-    this.isFeatured = false,
-    this.isFoodOrGrocery = true,
-    this.isHome = false,
-    this.fromGrocerycategory = false,
-  });
+  const ItemsView({super.key, required this.stores, required this.items, required this.isStore, this.isScrollable = false,
+    this.shimmerLength = 20, this.padding = const EdgeInsets.all(Dimensions.paddingSizeDefault), this.noDataText,
+    this.isCampaign = false, this.inStorePage = false, this.isFeatured = false,
+    this.isFoodOrGrocery = true,  this.isHome = false,  this.fromGrocerycategory = false});
 
   @override
   State<ItemsView> createState() => _ItemsViewState();
 }
 
 class _ItemsViewState extends State<ItemsView> {
-  // Helper function to calculate extra items for VisitAgainView and NewOnMartView
-  int calculateExtraItems(int storeLength) {
-    int extraItems = 0;
-    // Add VisitAgainView every 7 stores starting at index 3 (3, 10, 17, ...)
-    if (storeLength >= 3) {
-      extraItems += ((storeLength - 3) ~/ 7) + 1;
-    }
-    // Add NewOnMartView every 7 stores starting at index 7 (7, 14, 21, ...)
-    if (storeLength >= 7) {
-      extraItems += ((storeLength - 7) ~/ 7) + 1;
-    }
-    return extraItems;
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isNull = true;
     int length = 0;
-    if (widget.isStore) {
+    if(widget.isStore) {
       isNull = widget.stores == null;
-      if (!isNull) {
+      if(!isNull) {
         length = widget.stores!.length;
       }
-    } else {
+    }else {
       isNull = widget.items == null;
-      if (!isNull) {
+      if(!isNull) {
         length = widget.items!.length;
       }
     }
 
+
+
+  //    bool isOpen = false;
+
+  // void toggleContainer() {
+  //   setState(() {
+  //     isOpen = !isOpen; 
+  //   });
+  // }
+
     return Column(
-      children: [
-        widget.isHome
-            ? ListView.builder(
-                itemCount: widget.stores != null
-                    ? widget.stores!.length +
-                        calculateExtraItems(widget.stores!.length)
-                    : 10,
-                physics: widget.isScrollable
-                    ? const BouncingScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                shrinkWrap: widget.isScrollable ? false : true,
-                itemBuilder: (context, index) {
-                  if (widget.stores == null) {
-                    return const StoreCardShimmer2();
-                  }
-
-             
-                  if (index >= 3 && (index - 3) % 7 == 0) {
-                    return const VisitAgainView(
-                        fromFood: true, itemsview: true);
-                  }
       
-                  else if (index >= 7 && (index - 7) % 7 == 0) {
-                    return const NewOnMartView(
-                      isNewStore: true,
-                      isPharmacy: false,
-                      isShop: false,
-                      itemsview: true,
-                    );
-                  }
-           
-                  else {
-                    
-                    int storeIndex = index;
-                  
-                    if (index >= 3) {
-                      storeIndex -= ((index - 3) ~/ 7) + 1;
-                    }
-                 
-                    if (index >= 7) {
-                      storeIndex -= ((index - 7) ~/ 7) + 1;
-                    }
+      children: [
+  widget.isHome ?
+  
+  //  ListView.builder(
+  //     itemCount: widget.stores!.length,  
+  //     // shrinkWrap: true,
+  //      physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+  //       shrinkWrap: widget.isScrollable ? false : true,
+  //   itemBuilder: 
+  //   (context, index) {
 
-              
-                    if (storeIndex >= 0 && storeIndex < widget.stores!.length) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
+  //      if (index == 3) {
+  //        return   VisitAgainView(fromFood: true);
+  //       //  StoreCardWidget2(store: widget.stores![index]);
+  //      } else if (index == 7) {
+  //        return  
+  //            const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false);
+  //       //  StoreCardWidget2(store: widget.stores![index]);
+  //      } 
+       
+  //       else {
+  //        return StoreCardWidget2(store: widget.stores![index]);
+  //      }
+  //     // return StoreCardWidget2(store:  widget.stores![index]);
+  //   },
+  //  ) : 
+     
+     ListView.builder(
+  itemCount: widget.stores != null ? widget.stores!.length : 10, 
+  physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+  shrinkWrap: widget.isScrollable ? false : true,
+  itemBuilder: (context, index) {
+
+    if (widget.stores == null) {
+      return const StoreCardShimmer2();
+    }
+
+  
+    if (index -3 % 7 == 1) { 
+      return VisitAgainView(fromFood: true,itemsview: true,);
+    } else if (index -3 % 7 == 5) { 
+      return const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false,itemsview: true,);
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Container(
+            height: 180,
+          child: StoreCardWidget2(store: widget.stores![index])),
+        ),
+      );
+    }
+  },
+)  :
+
+
+      !isNull ? length > 0 ? 
+       widget.inStorePage ? 
+       Column(
+         children: [
+          GetBuilder<StoreController>(builder: (storeController) {
+             ;
+               return storeController.recommendedItemModel!.items!.isEmpty ?  SizedBox() : Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: SizedBox(
+                 
+                  child:
+                   Container(
+                    decoration: BoxDecoration(
+                      color:  Color(0xFFECF3F9),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10)
+                      )
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap:  (){
+                            // print("Trying to toggle");
+                       storeController.togglerecommendedContainer();
+                            // logic for close  recommended container
+                          },
                           child: Container(
-                            height: 180,
-                            child: StoreCardWidget2(
-                                store: widget.stores![storeIndex]),
+                            width: MediaQuery.of(context).size.width,
+                            height: 40,
+                            color: Colors.transparent,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20,top: 10),
+                                  child: Text("Recommended", style: TextStyle(
+                                    fontSize: 16,fontWeight: FontWeight.w700
+                                  )),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(storeController.isopen ? Icons.keyboard_arrow_right : Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor,size: 30,weight: 35,),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      );
-                    }
-                    return const SizedBox.shrink(); 
-                  }
-                },
-              )
-            : !isNull
-                ? length > 0
-                    ? widget.inStorePage
-                        ? Column(
-                            children: [
-                              GetBuilder<StoreController>(
-                                  builder: (storeController) {
-                                return storeController
-                                        .recommendedItemModel!.items!.isEmpty
-                                    ? const SizedBox()
-                                    : Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                              color: Color(0xFFECF3F9),
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(10),
-                                                bottomRight: Radius.circular(10),
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                              ),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    storeController
-                                                        .togglerecommendedContainer();
-                                                  },
-                                                  child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    height: 40,
-                                                    color: Colors.transparent,
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 20,
-                                                                  top: 10),
-                                                          child: Text(
-                                                            "Recommended",
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Icon(
-                                                            storeController
-                                                                    .isopen
-                                                                ? Icons
-                                                                    .keyboard_arrow_right
-                                                                : Icons
-                                                                    .keyboard_arrow_down,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                            size: 30,
-                                                            weight: 35,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 10),
-                                                if (!storeController.isopen)
-                                                  ListView.builder(
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                    physics: widget.isScrollable
-                                                        ? const BouncingScrollPhysics()
-                                                        : const NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    itemCount: storeController
-                                                            .recommendedItemModel!
-                                                            .items!
-                                                            .length ??
-                                                        1,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets.only(
-                                                                left: 10,
-                                                                right: 10,
-                                                                bottom: 10),
-                                                        child: ItemWidget(
-                                                          item: storeController
-                                                              .recommendedItemModel!
-                                                              .items![index],
-                                                          isStore: false,
-                                                          store: null,
-                                                          index: index,
-                                                          length: length,
-                                                          Recomended: true,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                              }),
-                              GridView.builder(
-                                key: UniqueKey(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: ResponsiveHelper.isDesktop(
-                                          context)
-                                      ? Dimensions.paddingSizeExtremeLarge
-                                      : widget.stores != null
-                                          ? Dimensions.paddingSizeLarge
-                                          : Dimensions.paddingSizeLarge,
-                                  mainAxisSpacing: ResponsiveHelper.isDesktop(
-                                          context)
-                                      ? Dimensions.paddingSizeExtremeLarge
-                                      : widget.stores != null && widget.isStore
-                                          ? Dimensions.paddingSizeLarge
-                                          : Dimensions.paddingSizeSmall,
-                                  mainAxisExtent: ResponsiveHelper.isDesktop(
-                                              context) &&
-                                          widget.isStore
-                                      ? 220
-                                      : ResponsiveHelper.isMobile(context)
-                                          ? widget.stores != null &&
-                                                  widget.isStore
-                                              ? 170
-                                              : 206
-                                          : 122,
-                                  crossAxisCount:
-                                      ResponsiveHelper.isMobile(context)
-                                          ? 1
-                                          : ResponsiveHelper.isDesktop(context) &&
-                                                  widget.stores != null
-                                              ? 3
-                                              : 3,
-                                ),
-                                physics: widget.isScrollable
-                                    ? const BouncingScrollPhysics()
-                                    : const NeverScrollableScrollPhysics(),
-                                shrinkWrap: widget.isScrollable ? false : true,
-                                itemCount: length,
-                                padding: widget.padding,
-                                itemBuilder: (context, index) {
-                                  List<Item?> availableItems = [];
-                                  List<Item?> notAvailableItems = [];
-                                  if (widget.items != null) {
-                                    for (var item in widget.items!) {
-                                      if (item != null) {
-                                        bool isAvailable = DateConverter
-                                            .isAvailable(
-                                                item.availableTimeStarts,
-                                                item.availableTimeEnds);
-                                        if (isAvailable) {
-                                          availableItems.add(item);
-                                        } else {
-                                          notAvailableItems.add(item);
-                                        }
-                                      }
-                                    }
-                                  }
 
-                                  final List<Item?> sortedFilteredItems = [
-                                    ...availableItems,
-                                    ...notAvailableItems
-                                  ];
-
-                                  return widget.stores != null &&
-                                          widget.isStore
-                                      ? widget.isFoodOrGrocery! && widget.isStore
-                                          ? StoreCardWidget2(
-                                              store: widget.stores![index])
-                                          : StoreCardWithDistance(
-                                              store: widget.stores![index]!,
-                                              fromAllStore: true)
-                                      : Column(
-                                          children: [
-                                            ItemWidget(
-                                              isStore: widget.isStore,
-                                              item: widget.isStore
-                                                  ? null
-                                                  : sortedFilteredItems[index],
-                                              isFeatured: widget.isFeatured,
-                                              store: widget.isStore
-                                                  ? widget.stores![index]
-                                                  : null,
-                                              index: index,
-                                              length: length,
-                                              isCampaign: widget.isCampaign,
-                                              inStore: widget.inStorePage,
-                                            ),
-                                            const Divider(),
-                                          ],
-                                        );
-                                },
-                              ),
-                            ],
-                          )
-                        : GridView.builder(
-                            key: UniqueKey(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisSpacing:
-                                  ResponsiveHelper.isDesktop(context)
-                                      ? Dimensions.paddingSizeExtremeLarge
-                                      : widget.fromGrocerycategory!
-                                          ? 20
-                                          : widget.stores != null
-                                              ? Dimensions.paddingSizeLarge
-                                              : Dimensions.paddingSizeLarge,
-                              mainAxisSpacing:
-                                  ResponsiveHelper.isDesktop(context)
-                                      ? Dimensions.paddingSizeExtremeLarge
-                                      : widget.fromGrocerycategory!
-                                          ? 10
-                                          : widget.stores != null &&
-                                                  widget.isStore
-                                              ? Dimensions.paddingSizeLarge
-                                              : Dimensions.paddingSizeSmall,
-                              mainAxisExtent: ResponsiveHelper.isDesktop(
-                                          context) &&
-                                      widget.isStore
-                                  ? 220
-                                  : ResponsiveHelper.isMobile(context)
-                                      ? widget.fromGrocerycategory!
-                                          ? 270
-                                          : widget.stores != null &&
-                                                  widget.isStore
-                                              ? 200
-                                              : 210
-                                      : 122,
-                              crossAxisCount:
-                                  ResponsiveHelper.isMobile(context)
-                                      ? widget.fromGrocerycategory!
-                                          ? 2
-                                          : 1
-                                      : ResponsiveHelper.isDesktop(context) &&
-                                              widget.stores != null
-                                          ? 3
-                                          : 3,
-                            ),
-                            physics: widget.isScrollable
-                                ? const BouncingScrollPhysics()
-                                : const NeverScrollableScrollPhysics(),
-                            shrinkWrap: widget.isScrollable ? false : true,
-                            itemCount: length,
-                            padding: !widget.fromGrocerycategory!
-                                ? widget.padding
-                                : EdgeInsets.only(
-                                    bottom: widget.fromGrocerycategory! ? 150 : 0,
-                                    left: 20,
-                                    right: 20,
-                                    top: 20,
-                                  ),
-                            itemBuilder: (context, index) {
-                              List<Item?> availableItems = [];
-                              List<Item?> notAvailableItems = [];
-                              if (widget.items != null) {
-                                for (var item in widget.items!) {
-                                  if (item != null) {
-                                    bool isAvailable = DateConverter.isAvailable(
-                                        item.availableTimeStarts,
-                                        item.availableTimeEnds);
-                                    if (isAvailable) {
-                                      availableItems.add(item);
-                                    } else {
-                                      notAvailableItems.add(item);
-                                    }
-                                  }
-                                }
-                              }
-
-                              final List<Item?> sortedFilteredItems = [
-                                ...availableItems,
-                                ...notAvailableItems
-                              ];
-
-                              return widget.stores != null && widget.isStore
-                                  ? widget.isFoodOrGrocery! && widget.isStore
-                                      ? Column(
-                                          children: [
-                                            StoreCardWidget2(
-                                                store: widget.stores![index]),
-                                            const Divider(),
-                                          ],
-                                        )
-                                      : StoreCardWithDistance(
-                                          store: widget.stores![index]!,
-                                          fromAllStore: true)
-                                  : widget.fromGrocerycategory!
-                                      ? ItemCard(
-                                          item: widget.items![index] ?? Item(),
-                                          isFood: false,
-                                          isShop: false,
-                                          width: 200,
-                                        )
-                                      : Column(
-                                          children: [
-                                            ItemWidget(
-                                              isStore: widget.isStore,
-                                              item: widget.isStore
-                                                  ? null
-                                                  : sortedFilteredItems[index],
-                                              isFeatured: widget.isFeatured,
-                                              store: widget.isStore
-                                                  ? widget.stores![index]
-                                                  : null,
-                                              index: index,
-                                              length: length,
-                                              isCampaign: widget.isCampaign,
-                                              inStore: widget.inStorePage,
-                                            ),
-                                            const Divider(),
-                                          ],
-                                        );
-                            },
-                          )
-                    : NoDataScreen(
-                        text: widget.noDataText ??
-                            (widget.isStore
-                                ? Get.find<SplashController>()
-                                        .configModel!
-                                        .moduleConfig!
-                                        .module!
-                                        .showRestaurantText!
-                                    ? 'no_restaurant_available'.tr
-                                    : 'no_store_available'.tr
-                                : 'no_item_available'.tr),
-                      )
-                : GridView.builder(
-                    key: UniqueKey(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: ResponsiveHelper.isDesktop(context)
-                          ? Dimensions.paddingSizeExtremeLarge
-                          : widget.stores != null
-                              ? Dimensions.paddingSizeLarge
-                              : Dimensions.paddingSizeLarge,
-                      mainAxisSpacing: ResponsiveHelper.isDesktop(context)
-                          ? Dimensions.paddingSizeLarge
-                          : widget.stores != null
-                              ? Dimensions.paddingSizeLarge
-                              : Dimensions.paddingSizeSmall,
-                      mainAxisExtent: ResponsiveHelper.isDesktop(context) &&
-                              widget.isStore
-                          ? 220
-                          : ResponsiveHelper.isMobile(context)
-                              ? widget.isStore
-                                  ? 200
-                                  : 200
-                              : 110,
-                      crossAxisCount: ResponsiveHelper.isMobile(context)
-                          ? 1
-                          : ResponsiveHelper.isDesktop(context)
-                              ? 3
-                              : 3,
+                        SizedBox(height: 10,),
+                    if (!storeController.isopen)
+                      ListView.builder(
+                          padding: EdgeInsets.all(0),
+                          // separatorBuilder: (context, index) => const Divider(),
+                          physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: storeController.recommendedItemModel!.items!.length ?? 1,
+                          itemBuilder: (context, index) {
+                          
+                          return 
+                          //  Container(
+                          //   color: Theme.of(context).primaryColor,
+                          //   child: Text("Recommended $index",)
+                          // );
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
+                            child: ItemWidget(item:storeController.recommendedItemModel!.items![index] , isStore: false, store: null, index: index, length: length,Recomended: true,),
+                          );
+                        }),
+                 
+                        // SizedBox(height: 10,)
+                      ],
                     ),
-                    physics: widget.isScrollable
-                        ? const BouncingScrollPhysics()
-                        : const NeverScrollableScrollPhysics(),
-                    shrinkWrap: widget.isScrollable ? false : true,
-                    itemCount: widget.shimmerLength,
-                    padding: widget.padding,
-                    itemBuilder: (context, index) {
-                      return widget.isStore
-                          ? widget.isFoodOrGrocery!
-                              ? const StoreCardShimmer2()
-                              : const NewOnShimmerView()
-                          : ItemShimmer(
-                              isEnabled: isNull,
-                              isStore: widget.isStore,
-                              hasDivider: index != widget.shimmerLength - 1);
-                    },
+                 
+                    
                   ),
-      ],
-    );
+                    
+                    
+                           ),
+               );
+             }
+           ),
+          
+           GridView.builder(
+            key: UniqueKey(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+
+              crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
+              mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
+              // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
+              //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
+              //     : 3.3,
+              mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
+                  : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 170 : 206
+                  : 122,
+              crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
+            ),
+            physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+            shrinkWrap: widget.isScrollable ? false : true,
+            itemCount: length,
+            padding: widget.padding,
+            itemBuilder: (context, index) {
+             
+             //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
+             // final List<Item?>? filterditems = widget.items!.where((element) => element!.storeId == widget.stores![index]!.id).toList();
+             
+                List<Item?> availableItems = [];
+           List<Item?> notAvailableItems = [];
+           if (widget.items != null ) {
+            
+             for (var item in widget.items!) {
+               if (item != null) { 
+                 bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds);
+                 if (isAvailable) {
+            availableItems.add(item);
+                 } else {
+            notAvailableItems.add(item);
+                 }
+               }
+             }
+           }
+           
+           
+           final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
+           
+           
+             // if (index  == 0) {
+             // print("showing recommended items");
+             //  return  GetBuilder<StoreController>(builder: (storeController) {
+           
+           
+             //      return  ItemWidget(
+             //           isStore: widget.isStore, item: storeController.recommendedItemModel?.items?[index], isFeatured: widget.isFeatured,
+             //           store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
+             //           inStore: widget.inStorePage,
+             //         );
+                 
+                                            
+             //    }
+             //  );
+             // }
+              return widget.stores != null && widget.isStore ?  widget.isFoodOrGrocery! && widget.isStore
+                  ?
+                  
+                  StoreCardWidget2(store: widget.stores![index])
+                  : StoreCardWithDistance(store: widget.stores![index]!, fromAllStore: true)
+                  :
+                  
+                   
+                   Column(
+                     children: [
+                       ItemWidget(
+                                       isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
+                                       store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
+                                       inStore: widget.inStorePage,
+                                     ),
+
+                                     Divider()
+                     ],
+                   );
+            },
+                 ),
+         ],
+       ) :
+   
+   
+   
+      GridView.builder(
+        
+        key: UniqueKey(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+
+          crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.fromGrocerycategory! ? 20 : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
+          mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.fromGrocerycategory! ? 10 : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
+          // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
+          //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
+          //     : 3.3,
+          // childAspectRatio:  200 / 300,
+          mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
+              : ResponsiveHelper.isMobile(context) ? widget.fromGrocerycategory! ? 270 :    widget.stores != null && widget.isStore ? 200 : 210
+              : 122,
+          crossAxisCount: ResponsiveHelper.isMobile(context) ? widget.fromGrocerycategory! ?  2 : 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
+        ),
+        physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+        shrinkWrap: widget.isScrollable ? false : true,
+        itemCount: length,
+        // padding: ,
+        padding:  !widget.fromGrocerycategory! ? widget.padding :  EdgeInsets.only(
+          bottom: widget.fromGrocerycategory! ? 150 : 0, 
+          left: 20, right: 20, top: 20
+        ),
+        itemBuilder: (context, index) {
+         
+  //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
+  // final List<Item?>? filterditems = widget.items!.where((element) => element!.storeId == widget.stores![index]!.id).toList();
+         
+     List<Item?> availableItems = [];
+List<Item?> notAvailableItems = [];
+if (widget.items != null ) {
+ 
+  for (var item in widget.items!) {
+    if (item != null) { 
+      bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds);
+      if (isAvailable) {
+        availableItems.add(item);
+      } else {
+        notAvailableItems.add(item);
+      }
+    }
   }
 }
 
+
+final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
+
+
+  // if (index  == 0) {
+  // print("showing recommended items");
+  //  return  GetBuilder<StoreController>(builder: (storeController) {
+  //      return  Container(
+  //       color: Theme.of(context).primaryColor,
+  //      );
+      
+                                        
+  //    }
+  //  );
+  // }
+          return widget.stores != null && widget.isStore ?  widget.isFoodOrGrocery! && widget.isStore
+              ?
+              
+              Column(
+                children: [
+                  StoreCardWidget2(store: widget.stores![index]),
+                  Divider()
+                ],
+              )
+              : StoreCardWithDistance(store: widget.stores![index]!, fromAllStore: true)
+              :
+              
+               
+           widget.fromGrocerycategory! ? ItemCard(item: widget.items![index]?? Item(), isFood: false, isShop: false,width: 200,)  :   Column(
+                 children: [
+                   ItemWidget(
+                               isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
+                               store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
+                               inStore: widget.inStorePage,
+                             ),
+                                 Divider()
+                 ],
+               );
+        },
+      ) : NoDataScreen(
+        text: widget.noDataText ?? (widget.isStore ? Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
+            ? 'no_restaurant_available'.tr : 'no_store_available'.tr : 'no_item_available'.tr),
+      ) : GridView.builder(
+        key: UniqueKey(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
+          mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
+          // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
+          //     : ResponsiveHelper.isMobile(context) ? widget.isStore ? 2 : 3.8
+          //     : 3,
+          mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
+              : ResponsiveHelper.isMobile(context) ? widget.isStore ? 200 : 200
+              : 110,
+          crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) ? 3 : 3,
+        ),
+        physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+        shrinkWrap: widget.isScrollable ? false : true,
+        itemCount: widget.shimmerLength,
+        padding: widget.padding,
+        itemBuilder: (context, index) {
+          return widget.isStore ? widget.isFoodOrGrocery!
+              ? const StoreCardShimmer2()
+              : const NewOnShimmerView()
+              : ItemShimmer(isEnabled: isNull, isStore: widget.isStore, hasDivider: index != widget.shimmerLength-1);
+        },
+      ),
+
+    ]);
+  }
+}
 
 class NewOnShimmerView extends StatelessWidget {
   const NewOnShimmerView({super.key, });
