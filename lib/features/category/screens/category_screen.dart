@@ -98,7 +98,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
          bottomNavigationBar: GetBuilder<CartController>(
       builder: (cartController){
         return cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
-         ? const BottomCartWidget(
+         ?  BottomCartWidget(
           fromgroccery: false,
          )
          : const SizedBox();

@@ -116,7 +116,7 @@ class _StoreItemSearchScreenState extends State<StoreItemSearchScreen> {
           ),
 
           bottomNavigationBar: GetBuilder<CartController>(builder: (cartController) {
-            return cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context) ? const BottomCartWidget() : const SizedBox();
+            return cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context) ?  BottomCartWidget() : const SizedBox();
           })
 
         );

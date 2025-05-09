@@ -246,6 +246,7 @@ class CartController extends GetxController implements GetxService {
     List<OnlineCartModel>? onlineCartList = await cartServiceInterface.addToCartOnline(cart);
     _cartList = [];
     _cartList.addAll(cartServiceInterface.formatOnlineCartToLocalCart(onlineCartModel: onlineCartList??[]));
+    print('cartList: $onlineCartList');
     calculationCart();
     success = true;
       _isLoading = false;

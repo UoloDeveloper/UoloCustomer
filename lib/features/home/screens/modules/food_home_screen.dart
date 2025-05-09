@@ -6,6 +6,7 @@ import 'package:sixam_mart/common/widgets/custom_divider.dart';
 import 'package:sixam_mart/features/home/screens/modules/MyFavorites.dart';
 import 'package:sixam_mart/features/home/screens/modules/popular_itemscreen.dart';
 import 'package:sixam_mart/features/home/widgets/highlight_widget.dart';
+import 'package:sixam_mart/features/home/widgets/hilightvideoscreen.dart';
 import 'package:sixam_mart/features/home/widgets/recomendedcardwidget.dart';
 import 'package:sixam_mart/features/home/widgets/views/category_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/top_offers_near_me.dart';
@@ -217,9 +218,10 @@ class FoodHomeScreen extends StatelessWidget {
         //  SizedBox(height: 10),
         // const SpecialOfferView(isFood: false, isShop: true),
         // Padding(
-        //   padding: const EdgeInsets.all(8.0),
+        //   padding: const EdgeInsets.all(0),
         //   child: const HighlightWidget(),
         // ),
+        PromotionalVideoSection (),
         // const TopOffersNearMe(),
         // const BestReviewItemView(),
         

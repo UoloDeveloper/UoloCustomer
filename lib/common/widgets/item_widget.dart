@@ -611,7 +611,7 @@ return Container(
                              overflow: TextOverflow.ellipsis,
                              
                            ),
-                        widget.notinStore ? const SizedBox() :   Text(
+                        widget.inStore ? const SizedBox() :   Text(
                             //  widget.isStore
                                   // widget.store?.name ?? ''.toString(),
                                   widget.item?.storeName ?? ''.toString(),
@@ -636,7 +636,8 @@ return Container(
                                   _getPrice(widget.item),
                                   discount: discount,
                                   discountType: discountType,
-                                  currency: widget.item?.currency?.currencyCode 
+                                  currency: widget.item?.currency?.currencyCode ,
+                                  surcharge: widget.store?.surcharge_perc,
                                 ),
                                 style: robotoMedium.copyWith(
                                   fontSize: Dimensions.fontSizeDefault,
@@ -646,7 +647,7 @@ return Container(
                                const SizedBox(width: 8,),
                                 if (discount! > 0  && customizable )
                             Text(
-                              PriceConverter.convertPrice(widget.item?.price,currency: widget.item?.currency?.currencyCode ),
+                              PriceConverter.convertPrice(widget.item?.price,currency: widget.item?.currency?.currencyCode,  ),
                               style: robotoMedium.copyWith(
                                 fontSize: Dimensions.fontSizeDefault,
                                 color: Theme.of(context).disabledColor,

@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sixam_mart/common/widgets/endscreendialog_widget.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
@@ -1017,6 +1018,7 @@ class _StoreScreenState extends State<StoreScreen> {
   }
    initCall2() async {
       bool isLoggedIn = AuthHelper.isLoggedIn();
+  
        Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
       // Get.find<CheckoutController>().setGuestAddress(null, isUpdate: false);
       Get.find<CheckoutController>().setPaymentMethod(0, isUpdate: false);
@@ -2001,8 +2003,12 @@ CouponCarousel(storeid: store!.id,),
               )),
 
 
-       SliverToBoxAdapter(child: SizedBox(height: 200,))
-
+       SliverToBoxAdapter(child: SizedBox(height: 50,)),
+  SliverToBoxAdapter(
+          child: EndScreenDialog(
+            
+          ),
+        ),
             ],
           ) :
           CustomScrollView(
@@ -2309,6 +2315,12 @@ CouponCarousel(storeid: store!.id,),
                 : (storeController.storeItemModel!.items!.length - 4).clamp(0, storeController.storeItemModel!.items!.length),
           ),
         ),
+
+        SliverToBoxAdapter(
+          child: EndScreenDialog (
+            
+          ),
+        ),
   ],
 ) : 
 //            CustomScrollView(
@@ -2514,15 +2526,15 @@ CouponCarousel(storeid: store!.id,),
       }),
     
     
-    
-    
-         bottomNavigationBar:  GetBuilder<StoreController>(
+      
+    resizeToAvoidBottomInset: true,
+         bottomSheet:  GetBuilder<StoreController>(
                              builder: (storeController) {
                        return (storeController.store != null &&
                    storeController.store!.name != null) ? GetBuilder<CartController>(
                              builder: (cartController){
                                return  !isShop ? cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
-                                ? const BottomCartWidget(
+                                ?  BottomCartWidget(
                                  fromgroccery: false,
                                 )
                                 : const SizedBox() : const SizedBox();
@@ -2535,6 +2547,7 @@ CouponCarousel(storeid: store!.id,),
        
         //  floatingActionButton:  IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart_outlined,color: Theme.of(context).primaryColor,)) ,
         floatingActionButton:
+   
      !isShop ?    Container(
     width: 60,
     height: 60,

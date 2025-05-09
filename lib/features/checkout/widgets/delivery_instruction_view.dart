@@ -91,7 +91,7 @@ class _DeliveryInstructionViewState extends State<DeliveryInstructionView> {
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Icon(
-                                    Icons.integration_instructions,
+                                    Icons.notifications_active_outlined,
                                     color: isSelected
                                         ? Theme.of(context).primaryColor
                                         : Theme.of(context).disabledColor,

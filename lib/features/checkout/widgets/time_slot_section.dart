@@ -96,42 +96,45 @@ class TimeSlotSection extends StatelessWidget {
                         );
                       }
                     },
-                    child: Padding(
-                         padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.paddingSizeLarge),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                child: const Icon(Icons.access_time),
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                'Prefered Time',
-                                style: robotoMedium,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                // Ensure preferableTime is showing the correct selected time, otherwise show 'Select time'
-                                checkoutController.preferableTime.isNotEmpty
-                                    ? checkoutController.preferableTime
-                                    : 'Instance',
-                                style: robotoMedium,
-                              ),
-                              const SizedBox(width: 5),
-                              const Icon(
-                                Icons.arrow_forward_ios_sharp,
-                                size: 15,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
-                        ],
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Padding(
+                           padding: const EdgeInsets.symmetric(
+                                        horizontal: Dimensions.paddingSizeLarge),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  child: const Icon(Icons.access_time),
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Prefered Time',
+                                  style: robotoMedium,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  // Ensure preferableTime is showing the correct selected time, otherwise show 'Select time'
+                                  checkoutController.preferableTime.isNotEmpty
+                                      ? checkoutController.preferableTime
+                                      : 'Instance',
+                                  style: robotoMedium,
+                                ),
+                                const SizedBox(width: 5),
+                                const Icon(
+                                  Icons.arrow_forward_ios_sharp,
+                                  size: 15,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )

@@ -321,7 +321,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                               );
                     
                               double tax = _calculateTax(
-                    taxIncluded: taxIncluded, orderAmount: orderAmount, taxPercent: _taxPercent,
+                    taxIncluded: taxIncluded, orderAmount: orderAmount - discount, taxPercent: _taxPercent,
                               );
                     
                               double additionalCharge =  Get.find<SplashController>().configModel!.additionalChargeStatus!
@@ -636,7 +636,7 @@ class _CheckoutState extends State<CheckoutScreen> {
             ),
       ) : SizedBox(),
           const SizedBox(height: Dimensions.paddingSizeLarge),
-                                                                          ExtraPackagingWidget(cartController: cartController),
+                                                                          // ExtraPackagingWidget(cartController: cartController),
                                                                         ]),
                                                                       ),
                                                                     ),

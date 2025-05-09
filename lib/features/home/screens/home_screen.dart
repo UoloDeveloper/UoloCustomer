@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
 import 'package:sixam_mart/common/widgets/card_design/store_card.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
+import 'package:sixam_mart/common/widgets/endscreendialog_widget.dart';
 import 'package:sixam_mart/features/banner/controllers/banner_controller.dart';
 import 'package:sixam_mart/features/brands/controllers/brands_controller.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
@@ -67,6 +68,8 @@ class HomeScreen extends StatefulWidget {
     Get.find<FlashSaleController>().setEmptyFlashSale(fromModule: fromModule);
     Get.find<BannerController>().getBannerList(reload);
      Get.find<StoreController>().getLatestStoreList(reload, 'all', false);
+          Get.find<BannerController>().getFeaturedBanner();
+           Get.find<AdvertisementController>().getAdvertisementList();
     //  await Get.find<BannerController>().getBannerList(true);
     // print('------------call from home');
     // await Get.find<CartController>().getCartDataOnline();
@@ -579,7 +582,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }),) : const SizedBox()),
           
+
+                SliverToBoxAdapter(child: EndScreenDialog()),
               ],
+
             ),
           ),
 

@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
+import 'package:sixam_mart/common/widgets/custom_loader.dart';
 import 'package:sixam_mart/features/address/domain/models/address_model.dart';
 import 'package:sixam_mart/features/auth/controllers/auth_controller.dart';
 import 'package:sixam_mart/features/chat/domain/models/conversation_model.dart';
@@ -597,6 +598,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   // Order Info Widget
                   SliverToBoxAdapter(
                     child: ResponsiveHelper.isDesktop(context) ? const SizedBox() : OrderInfoWidget(
+                      track: order,
                       order: order,
                       ongoing: ongoing,
                       parcel: parcel,
@@ -644,7 +646,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
              ResponsiveHelper.isDesktop(context) ? const SizedBox() : _bottomView(orderController, order, parcel, _calculateTotal(orderController, order)),
           ],
-        ) : const Center(child: CircularProgressIndicator());
+        ) : const Center(child: CustomLoaderWidget());
      
         }),
 

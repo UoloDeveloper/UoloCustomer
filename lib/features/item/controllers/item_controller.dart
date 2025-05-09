@@ -538,7 +538,9 @@ class ItemController extends GetxController implements GetxService {
         '', null, ModuleHelper.getModuleConfig(item.moduleType).newVariation! ? [] : null,
         1, [], [], [], 'Item',
       );
-      if(Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && item.stock! <= 0){
+      if(
+        // Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! &&
+         item.stock! < 0){
 
   print('${item.stock} stock');
   print("${Get.find<SplashController>().configModel!.moduleConfig!.module!.stock!}");
@@ -553,11 +555,19 @@ class ItemController extends GetxController implements GetxService {
 
       else if (Get.find<CartController>().existAnotherStoreItem(cartModel.item!.storeId, ModuleHelper.getModule() != null
           ? ModuleHelper.getModule()?.id : ModuleHelper.getCacheModule()?.id)) {
-        Get.dialog(ConfirmationDialog(
+
+
+        Get.dialog(
+          
+          ConfirmationDialog(
+
           icon: Images.warning,
           title: 'are_you_sure_to_reset'.tr,
-          description: Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText!
+          description: 
+          Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! 
+             
               ? 'if_you_continue'.tr : 'if_you_continue_without_another_store'.tr,
+                 
           onYesPressed: () {
             Get.find<CartController>().clearCartOnline().then((success) async {
                  Get.back();
@@ -568,7 +578,11 @@ class ItemController extends GetxController implements GetxService {
               }
             });
           },
-        ), barrierDismissible: false);
+        ),
+        
+         barrierDismissible: false);
+
+
       } else {
          _isAdding = true;
         Get.find<CartController>().addToCartOnline(onlineCart);

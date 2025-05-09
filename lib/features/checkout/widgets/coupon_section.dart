@@ -74,6 +74,8 @@ class CouponSection extends StatelessWidget {
           
                   ],
           
+
+
           
                   // Text('promo_code'.tr, style: robotoMedium),
                   // InkWell(
@@ -263,7 +265,9 @@ class CouponSection extends StatelessWidget {
                       showCustomSnackBar('enter_a_coupon_code'.tr);
                     }
                   },
-                  child: Container(
+                  child:
+                  
+                   Container(
                     height: 40, width: (couponController.discount! <= 0 && !couponController.freeDelivery) ? 100 : 50,
                     alignment: Alignment.center,
                     margin: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
@@ -294,6 +298,7 @@ class CouponSection extends StatelessWidget {
                     )
                         : Icon(Icons.clear, color: Theme.of(context).colorScheme.error),
                   ),
+              
                 ),
               ]),
             ),
@@ -303,49 +308,54 @@ class CouponSection extends StatelessWidget {
                   onTap:   () {
             Get.to(() => CouponPage(storeId: storeId, checkoutController: checkoutController));
             },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-          
-                    Row(
-                      children: [
-                        Container(
-                          child: SvgPicture.asset(
-                            Images.dlcard,
-                            width: 20,
-                            height: 20,
-                          ),
-          
-                        ),
-                              const SizedBox(width: 5,),
-                              Text('View all payment coupons',style: robotoMedium,),
-                      ],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
                     ),
-          
-                      
-                    Container(child:
-          
-                      const Row(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                              
+                      Row(
                         children: [
-          
-                          Icon(Icons.arrow_forward_ios_sharp,size: 15, color: Colors.black),
-          
+                          Container(
+                            child: SvgPicture.asset(
+                              Images.dlcard,
+                              width: 20,
+                              height: 20,
+                            ),
+                              
+                          ),
+                                const SizedBox(width: 5,),
+                                Text('View all payment coupons',style: robotoMedium,),
                         ],
                       ),
-          
+                              
+                        
+                      Container(child:
+                              
+                        const Row(
+                          children: [
+                              
+                            Icon(Icons.arrow_forward_ios_sharp,size: 15, color: Colors.black),
+                              
+                          ],
+                        ),
+                              
+                      ),
+                              
+                              
+                              
+                              
+                              
+                      // SizedBox(width:175,),
+                      // Icon(Icons.arrow_forward_ios_sharp,size: 15, color: Colors.black),
+                              
+                    ],
+                              
+                              
+                              
                     ),
-          
-          
-          
-          
-          
-                    // SizedBox(width:175,),
-                    // Icon(Icons.arrow_forward_ios_sharp,size: 15, color: Colors.black),
-          
-                  ],
-          
-          
-          
                   ),
                 ),
           

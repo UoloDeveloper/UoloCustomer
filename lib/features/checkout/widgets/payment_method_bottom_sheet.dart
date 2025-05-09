@@ -214,7 +214,7 @@ class _PaymentMethodBottomSheetState extends State<PaymentMethodBottomSheet> {
                                         checkoutController.setPaymentMethod(2);
                                        Get.back();
                                       checkoutController.changeDigitalPaymentName(Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWay!);
-                                     
+                                      
                                   
                                   },
                                   dynamic: true,

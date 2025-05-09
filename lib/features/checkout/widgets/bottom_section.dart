@@ -5,6 +5,7 @@ import 'package:sixam_mart/common/widgets/address_widget.dart';
 import 'package:sixam_mart/features/address/domain/models/address_model.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/checkout/screens/checkout_screen.dart';
+import 'package:sixam_mart/features/checkout/widgets/Gstrestaurentchargetooltip.dart';
 import 'package:sixam_mart/features/checkout/widgets/prescription_image_picker_widget.dart';
 import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
@@ -433,6 +434,7 @@ class BottomSection extends StatelessWidget {
 
 void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutController  checkoutController, tax,  CouponController couponController,distance,deliveryCharge,discount,subtotal) {
    String currency = Get.find<CartController>().getCurrncyForUi();
+  double PackingCharge = checkoutController.store!.extraPackagingStatus! ? checkoutController.store!.extraPackagingAmount! : 0.0;
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -589,33 +591,35 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                           ) : const SizedBox(),
                          // const SizedBox(height: 5,),
                           // const SizedBox(height: 10),
-                           Row(
-                            children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset("assets/image/icons/Group 14459.svg", height: 17, width: 17, color: Colors.black87),
-                                  const SizedBox(width: 5),
-                                   Text(
-                                    "GST and restaurant charge",
-                                    style: TextStyle(
-                                      fontSize: Dimensions.fontSizeDefault,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Spacer(),
-                               Text(
-                                PriceConverter.convertPrice(tax,currency: currency),
-                                style: TextStyle(
-                                  fontSize: Dimensions.fontSizeDefault,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
+                          //  Row(
+                          //   children: [
+                          //     Row(
+                          //       children: [
+                          //         SvgPicture.asset("assets/image/icons/Group 14459.svg", height: 17, width: 17, color: Colors.black87),
+                          //         const SizedBox(width: 5),
+                          //          Text(
+                          //           "GST and restaurant charge",
+                          //           style: TextStyle(
+                          //             fontSize: Dimensions.fontSizeDefault,
+                          //             fontWeight: FontWeight.w400,
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     const Spacer(),
+                          //      Text(
+                          //       PriceConverter.convertPrice(tax,currency: currency),
+                          //       style: TextStyle(
+                          //         fontSize: Dimensions.fontSizeDefault,
+                          //         fontWeight: FontWeight.w500,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                     
+                     TooltipExample(checkoutController: checkoutController, currency: currency, tax: tax,),
                               const SizedBox(height: 10,),
-                           Row(
+                   checkoutController.tips == 0   ?  SizedBox( ) :       Row(
                             children: [
                               Row(
                                 children: [
@@ -640,7 +644,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                               ),
                             ],
                           ),
-                             const SizedBox(height: 10,),
+                         checkoutController.tips == 0   ?  SizedBox( ) :    const SizedBox(height: 10,),
 
                         
                            Row(
@@ -749,16 +753,44 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
 //                               ),
                             ],
                           ) : const SizedBox(),
-                          
-                           SizedBox(height: Get.find<SplashController>().configModel!.additionalChargeStatus! && !(AuthHelper.isGuestLoggedIn() && checkoutController.guestAddress == null) ? Dimensions.paddingSizeSmall : 0),
+                        // checkoutController.store!.extraPackagingStatus! ?      Row(
+                        //     children: [
+                        //       Row(
+                        //         children: [
+                        //           Icon(Icons.card_giftcard, size: 17),
+                        //           // SvgPicture.asset("assets/image/icons/Group 14459.svg", height: 17, width: 17, color: Colors.black87),
+                        //           const SizedBox(width: 5),
+                        //            Text(
+                        //             "Packing Charge",
+                        //             style: TextStyle(
+                        //               fontSize: Dimensions.fontSizeDefault,
+                        //               fontWeight: FontWeight.w400,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       const Spacer(),
+                        //        Text(
+                        //         PriceConverter.convertPrice(checkoutController.store!.extraPackagingAmount,currency: currency),
+                        //         style: TextStyle(
+                        //           fontSize: Dimensions.fontSizeDefault,
+                        //           fontWeight: FontWeight.w500,
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ) : const SizedBox(),
+                             
+                             
+                              const SizedBox(height: 10,),
+                          //  SizedBox(height: Get.find<SplashController>().configModel!.additionalChargeStatus! && !(AuthHelper.isGuestLoggedIn() && checkoutController.guestAddress == null) ? Dimensions.paddingSizeSmall : 0),
 
-            Get.find<SplashController>().configModel!.additionalChargeStatus! ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(Get.find<SplashController>().configModel!.additionalChargeName!, style: robotoRegular),
-              Text(
-                ' ${PriceConverter.convertPrice(Get.find<SplashController>().configModel!.additionCharge,currency: currency)}',
-                style: robotoRegular, textDirection: TextDirection.ltr,
-              ),
-            ]) : const SizedBox(),
+            // Get.find<SplashController>().configModel!.additionalChargeStatus! ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            //   Text(Get.find<SplashController>().configModel!.additionalChargeName!, style: robotoRegular),
+            //   Text(
+            //     ' ${PriceConverter.convertPrice(Get.find<SplashController>().configModel!.additionCharge,currency: currency)}',
+            //     style: robotoRegular, textDirection: TextDirection.ltr,
+            //   ),
+            // ]) : const SizedBox(),
                           const Divider(),
                           Row(
                             children: [

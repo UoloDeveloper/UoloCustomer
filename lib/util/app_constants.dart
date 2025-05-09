@@ -188,7 +188,7 @@ class AppConstants {
   static const String searchHistory = 'Uolo Delivery_search_history';
   static const String intro = 'Uolo Delivery_intro';
   static const String notificationCount = 'Uolo Delivery_notification_count';
-  static const String dmTipIndex = 'Uolo Delivery_dm_tip_index';
+  static const String dmTipIndex = 'bolo Delivery_dm_tip_index';
   static const String earnPoint = 'Uolo Delivery_earn_point';
   static const String acceptCookies = 'Uolo Delivery_accept_cookies';
   static const String suggestedLocation = 'Uolo Delivery_suggested_location';
@@ -218,10 +218,10 @@ class AppConstants {
   ];
 
   /// Delivery Tips
-  static List<String> tips = ['0' ,'15', '10', '20', '40', 'custom'];
+  static List<String> tips = ['0' , '10','15', '20', '40', 'custom'];
   static List<String> deliveryInstructionList = [
     'deliver_to_front_door'.tr,
-    'deliver_the_reception_desk'.tr,
+    // 'deliver_the_reception_desk'.tr,
     'avoid_calling_phone'.tr,
     'come_with_no_sound'.tr,
   ];

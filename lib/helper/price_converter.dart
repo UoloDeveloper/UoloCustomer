@@ -45,35 +45,80 @@ class PriceConverter {
   //       '${isRightSide ? ' ${Get.find<SplashController>().configModel!.currencySymbol!}' : ''}';
   // } 
   
-static String convertPrice(double? price, {double? discount, String? discountType, bool forDM = false, bool isFoodVariation = false, String? currency}) {
-    if (discount != null && discountType != null) {
-        if (discountType == 'amount' && !isFoodVariation) {
-            price = price! - discount;
-        } else if (discountType == 'percent') {
-            price = price! - ((discount / 100) * price);
-        }
+// static String convertPrice(double? price, {double? discount, String? discountType, bool forDM = false, bool isFoodVariation = false, String? currency, String? surcharge}) {
+//    double?  surcharge = surcharge?.toDouble();
+//     if (discount != null && discountType != null) {
+//         if (discountType == 'amount' && !isFoodVariation) {
+//             price = price! - discount;
+//         } else if (discountType == 'percent') {
+//             price = price! - ((discount / 100) * price);
+//         }
+//     }
+
+//     // Round the price to the nearest integer and remove decimal points
+//     int roundedPrice = price?.round() ?? 0;
+
+//     if (currency != null) {
+//         if (currency == 'INR') {
+//             currency = '₹ ';
+//         }
+
+//         bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+//         log(Get.find<SplashController>().configModel!.toString());
+//         return '${isRightSide ? ' ' : currency}'
+//             "$roundedPrice"
+//             '${isRightSide ? ' ${currency} ' : ''}';
+//     }
+
+//     bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+//     log(Get.find<SplashController>().configModel!.toString());
+//     return '${isRightSide ? '' : '${Get.find<SplashController>().configModel!.currencySymbol!} '}'
+//         "$roundedPrice"
+//         '${isRightSide ? ' ${Get.find<SplashController>().configModel!.currencySymbol!}' : ''}';
+// }
+ 
+ 
+ static String convertPrice(double? price, {double? discount, String? discountType, bool forDM = false, bool isFoodVariation = false, String? currency, String? surcharge}) {
+  // Initialize price if null
+  price ??= 0;
+
+  // Apply discount if provided
+  if (discount != null && discountType != null) {
+    if (discountType == 'amount' && !isFoodVariation) {
+      price = price - discount;
+    } else if (discountType == 'percent') {
+      price = price - ((discount / 100) * price);
     }
+  }
 
-    // Round the price to the nearest integer and remove decimal points
-    int roundedPrice = price?.round() ?? 0;
+  // Apply surcharge if provided (surcharge is a percentage in string format, e.g., "40" for 40%)
+  if (surcharge != null && surcharge.isNotEmpty) {
+    double surchargePercentage = double.tryParse(surcharge) ?? 0;
+    double surchargeAmount = (surchargePercentage / 100) * price;
+    price += surchargeAmount;
+  }
 
-    if (currency != null) {
-        if (currency == 'INR') {
-            currency = '₹ ';
-        }
+  // Round the price to the nearest integer and remove decimal points
+  int roundedPrice = price.round();
 
-        bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
-        log(Get.find<SplashController>().configModel!.toString());
-        return '${isRightSide ? ' ' : currency}'
-            "$roundedPrice"
-            '${isRightSide ? ' ${currency} ' : ''}';
+  // Handle currency formatting
+  if (currency != null) {
+    if (currency == 'INR') {
+      currency = '₹ ';
     }
 
     bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
     log(Get.find<SplashController>().configModel!.toString());
-    return '${isRightSide ? '' : '${Get.find<SplashController>().configModel!.currencySymbol!} '}'
+    return '${isRightSide ? '' : currency}'
         "$roundedPrice"
-        '${isRightSide ? ' ${Get.find<SplashController>().configModel!.currencySymbol!}' : ''}';
+        '${isRightSide ? ' $currency' : ''}';
+  }
+
+  bool isRightSide = Get.find<SplashController>().configModel!.currencySymbolDirection == 'right';
+  log(Get.find<SplashController>().configModel!.toString());
+  return '${isRightSide ? '' : '${Get.find<SplashController>().configModel!.currencySymbol!} '}'
+      "$roundedPrice"
+      '${isRightSide ? ' ${Get.find<SplashController>().configModel!.currencySymbol!}' : ''}';
 }
   // static Widget convertAnimationPrice(double? price, {double? discount, String? discountType, bool forDM = false, TextStyle? textStyle,String? currency}) {
   //   if(discount != null && discountType != null){

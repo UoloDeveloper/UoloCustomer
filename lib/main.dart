@@ -100,7 +100,11 @@ Future<void> main() async {
       await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
       FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
     }
-  }catch(_) {}
+  }catch(_) {
+
+
+    
+  }
 
   if (ResponsiveHelper.isWeb()) {
     await FacebookAuth.instance.webAndDesktopInitialize(
@@ -140,7 +144,7 @@ class _MyAppState extends State<MyApp> {
         Get.find<AuthController>().clearSharedAddress();
       }
 
-      if(!AuthHelper.isLoggedIn() && !AuthHelper.isGuestLoggedIn() /*&& !ResponsiveHelper.isDesktop(Get.context!)*/) {
+      if(!AuthHelper.isLoggedIn() && !AuthHelper.isGuestLoggedIn() ) {
         await Get.find<AuthController>().guestLogin();
       }
 
@@ -165,7 +169,9 @@ class _MyAppState extends State<MyApp> {
             navigatorKey: Get.key,
             scrollBehavior: const MaterialScrollBehavior().copyWith(
 
-              dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+              dragDevices: {PointerDeviceKind.mouse, 
+              
+              PointerDeviceKind.touch},
             ),
             theme: themeController.darkTheme ? dark() : light(),
             locale: localizeController.locale,
@@ -177,7 +183,9 @@ class _MyAppState extends State<MyApp> {
             transitionDuration: const Duration(milliseconds: 500),
             builder: (BuildContext context, widget) {
               return MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)), child: Material(
-                child: Stack(children: [
+                child:
+                
+                 Stack(children: [
                  
                   widget!,
 
@@ -199,6 +207,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 }
+
 
 class MyHttpOverrides extends HttpOverrides {
   @override

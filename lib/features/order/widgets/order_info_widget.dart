@@ -35,8 +35,9 @@ class OrderInfoWidget extends StatelessWidget {
   final Function timerCancel;
   final Function startApiCall;
   final bool showChatPermission;
+    final OrderModel track;
   const OrderInfoWidget({super.key, required this.order, required this.ongoing, required this.parcel, required this.prescriptionOrder, required this.orderController,
-    required this.timerCancel, required this.startApiCall, required this.showChatPermission});
+    required this.timerCancel, required this.startApiCall, required this.showChatPermission, required this.track});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class OrderInfoWidget extends StatelessWidget {
     bool isGuestLoggedIn = AuthHelper.isGuestLoggedIn();
     return Stack(children: [
 
-      !isDesktop ? OrderBannerViewWidget(
+      !isDesktop &&  ( track.deliveryMan != null)  ? OrderBannerViewWidget(
         order: order, orderController: orderController, ongoing: ongoing,
         parcel: parcel, prescriptionOrder: prescriptionOrder,
       ) : const SizedBox(),
@@ -75,7 +76,7 @@ class OrderInfoWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeLarge ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
 
-              isDesktop ? OrderBannerViewWidget(
+              isDesktop  ? OrderBannerViewWidget(
                 order: order, orderController: orderController, ongoing: ongoing,
                 parcel: parcel, prescriptionOrder: prescriptionOrder,
               ) : const SizedBox(),

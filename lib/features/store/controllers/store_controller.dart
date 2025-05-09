@@ -202,7 +202,8 @@ class StoreController extends GetxController implements GetxService {
       getStoreList(offset, false, source: DataSourceEnum.client);
     } else {
       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.client);
-      storeModel!.stores!.removeWhere((element) =>  element.distancelimit == 0  );
+      // storeModel!.stores!.removeWhere((element) =>  element.distancelimit == 0  );
+storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
           update();
       _prepareStoreModel(storeModel, offset);
     }

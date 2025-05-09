@@ -283,7 +283,7 @@ class _PopularState extends State<Popular> with SingleTickerProviderStateMixin {
          bottomNavigationBar: GetBuilder<CartController>(
   builder: (cartController){
     return cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
-           ? const BottomCartWidget(
+           ? BottomCartWidget(
             // fromgroccery: true,
            )
            : const SizedBox();

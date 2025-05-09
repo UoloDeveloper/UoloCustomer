@@ -1,3 +1,5 @@
+import 'package:sixam_mart/features/store/domain/models/store_model.dart';
+
 class AdvertisementModel {
   int? id;
   int? storeId;
@@ -21,6 +23,7 @@ class AdvertisementModel {
   int? isUpdated;
   String? cancellationNote;
   String? coverImageFullUrl;
+  // Store? store;
   String? profileImageFullUrl;
   String? videoAttachmentFullUrl;
   double? averageRating;
@@ -46,6 +49,7 @@ class AdvertisementModel {
     this.status,
     this.createdAt,
     this.updatedAt,
+    // this.store,
     this.isUpdated,
     this.cancellationNote,
     this.coverImageFullUrl,
@@ -83,6 +87,9 @@ class AdvertisementModel {
     videoAttachmentFullUrl = json['video_attachment_full_url'];
     averageRating = json['average_rating']?.toDouble();
     reviewsCommentsCount = json['reviews_comments_count'];
+    // if (json['store'] != null) {
+    //   store = Store.fromJson(json['store']);
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -114,6 +121,9 @@ class AdvertisementModel {
     data['video_attachment_full_url'] = videoAttachmentFullUrl;
     data['average_rating'] = averageRating;
     data['reviews_comments_count'] = reviewsCommentsCount;
+    // if (store != null) {
+    //   data['store'] = store!.toJson();
+    // }
     return data;
   }
 }

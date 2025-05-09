@@ -429,7 +429,7 @@ class _VideoContainerState extends State<VideoContainer> {
                           },
                           child: Container(
                             height: 34,
-                            width: 71,
+                            // width: 71,
                             decoration: const BoxDecoration(
                               color: Colors.white60,
                               borderRadius: BorderRadius.all(Radius.circular(50)),

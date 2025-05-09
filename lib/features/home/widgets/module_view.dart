@@ -293,7 +293,7 @@ class ModuleView extends StatelessWidget {
         // }),
 
         // const PopularStoreView(isPopular: false, isFeatured: true),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.only(left: 5, right: 5),
           child: Column(children: [
@@ -383,7 +383,7 @@ class ModuleView extends StatelessWidget {
               child: Image.asset("assets/image/static_banner/uolo app 2 copy 2.jpg",fit: BoxFit.cover,)),
 
             SizedBox(
-              height: 20,
+              height: 10,
             ),
 //
 
@@ -487,13 +487,15 @@ class ModuleView extends StatelessWidget {
               childAspectRatio: splashController.moduleList!.length - 2 != 1 ? 1.6 : (3.7 / 1.5),
             ),
             padding: const EdgeInsets.only(
+              left: 5,
+              right: 5,
                 top: Dimensions.paddingSizeSmall,
                 bottom: Dimensions.paddingSizeSmall),
             itemCount: splashController.moduleList!.length - 2,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              final actualIndex = index + 2; // Skip the first two items
+              final actualIndex = index + 2; 
 
               return Container(
                 decoration: BoxDecoration(
@@ -589,7 +591,7 @@ class ModuleView extends StatelessWidget {
         //     ],
         //   ),
 
-        const SizedBox(height: 150),
+        const SizedBox(height: 0),
 
         //  EnhancedCardStackToGrid(images: [
 

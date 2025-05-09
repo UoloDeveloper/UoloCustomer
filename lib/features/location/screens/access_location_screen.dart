@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:sixam_mart/common/widgets/address_widget.dart';
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/location/controllers/location_controller.dart';
 import 'package:sixam_mart/features/address/controllers/address_controller.dart';
 import 'package:sixam_mart/features/address/domain/models/address_model.dart';
@@ -97,6 +98,7 @@ class _AccessLocationScreenState extends State<AccessLocationScreen> {
                         address: locationController.addressList![index],
                         fromAddress: false,
                         onTap: () {
+                           Get.find<CartController>().clearCartList();
                           Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
                           AddressModel address = locationController.addressList![index];
                           Get.find<LocationController>().saveAddressAndNavigate(
@@ -156,7 +158,9 @@ class BottomButton extends StatelessWidget {
           Get.find<LocationController>().checkPermission(() async {
             Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
             AddressModel address = await Get.find<LocationController>().getCurrentLocation(true);
-            ZoneResponseModel response = await Get.find<LocationController>().getZone(address.latitude, address.longitude, false);
+            ZoneResponseModel response = await Get.find<LocationController>().getZone(address.latitude, address.longitude, false,
+            clearcart: true
+            );
             if(response.isSuccess) {
               Get.find<LocationController>().saveAddressAndNavigate(
                 address, fromSignUp, route, route != null, ResponsiveHelper.isDesktop(Get.context),

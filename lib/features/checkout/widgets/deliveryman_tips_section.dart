@@ -140,70 +140,187 @@ class _DeliveryManTipsSectionState extends State<DeliveryManTipsSection> {
                   // ),
                   SizedBox(height: checkoutController.selectedTips == AppConstants.tips.length-1 ? Dimensions.paddingSizeDefault : 0),
                           
-                  checkoutController.selectedTips == AppConstants.tips.length-1 ? Row(children: [
-                    Expanded(
-                      child: CustomTextField(
-                        titleText: 'enter_amount'.tr,
-                        controller: checkoutController.tipController,
-                        inputAction: TextInputAction.done,
-                        inputType: TextInputType.number,
-                        onChanged: (String value) async {
-                          if(value.isNotEmpty) {
-                            try {
-                              if(double.parse(value) >= 0){
-                                if(AuthHelper.isLoggedIn()) {
-                                  total = total - checkoutController.tips;
-                                  await checkoutController.addTips(double.parse(value));
-                                  total = total + checkoutController.tips;
-                                  widget.onTotalChange(total);
-                                  if(Get.find<ProfileController>().userInfoModel!.walletBalance! < total && checkoutController.paymentMethodIndex == 1){
-                                    checkoutController.checkBalanceStatus(total, 0);
-                                    canCheckSmall = true;
-                                  } else if(Get.find<ProfileController>().userInfoModel!.walletBalance! > total && canCheckSmall && checkoutController.isPartialPay){
-                                    checkoutController.checkBalanceStatus(total, 0);
-                                  }
-                                } else {
-                                  checkoutController.addTips(double.parse(value));
-                                }
+                  // checkoutController.selectedTips == AppConstants.tips.length-1 ? Row(children: [
+                  //   Expanded(
+                  //     child: CustomTextField(
+                  //       titleText: 'enter_amount'.tr,
+                  //       controller: checkoutController.tipController,
+                  //       inputAction: TextInputAction.done,
+                  //       inputType: TextInputType.number,
+                  //       onChanged: (String value) async {
+                  //         if(value.isNotEmpty) {
+                  //           try {
+                  //             if(double.parse(value) >= 0){
+                  //               if(AuthHelper.isLoggedIn()) {
+                  //                 total = total - checkoutController.tips;
+                  //                 await checkoutController.addTips(double.parse(value));
+                  //                 total = total + checkoutController.tips;
+                  //                 widget.onTotalChange(total);
+                  //                 if(Get.find<ProfileController>().userInfoModel!.walletBalance! < total && checkoutController.paymentMethodIndex == 1){
+                  //                   checkoutController.checkBalanceStatus(total, 0);
+                  //                   canCheckSmall = true;
+                  //                 } else if(Get.find<ProfileController>().userInfoModel!.walletBalance! > total && canCheckSmall && checkoutController.isPartialPay){
+                  //                   checkoutController.checkBalanceStatus(total, 0);
+                  //                 }
+                  //               } else {
+                  //                 checkoutController.addTips(double.parse(value));
+                  //               }
                           
-                              }else{
-                                showCustomSnackBar('tips_can_not_be_negative'.tr);
-                              }
-                            }catch(e) {
-                              showCustomSnackBar('invalid_input'.tr);
-                              checkoutController.addTips(0.0);
-                              checkoutController.tipController.text = checkoutController.tipController.text.substring(0, checkoutController.tipController.text.length-1);
-                              checkoutController.tipController.selection = TextSelection.collapsed(offset: checkoutController.tipController.text.length);
+                  //             }else{
+                  //               showCustomSnackBar('tips_can_not_be_negative'.tr);
+                  //             }
+                  //           }catch(e) {
+                  //             showCustomSnackBar('invalid_input'.tr);
+                  //             checkoutController.addTips(0.0);
+                  //             checkoutController.tipController.text = checkoutController.tipController.text.substring(0, checkoutController.tipController.text.length-1);
+                  //             checkoutController.tipController.selection = TextSelection.collapsed(offset: checkoutController.tipController.text.length);
+                  //           }
+                  //         }else {
+                  //           checkoutController.addTips(0.0);
+                  //         }
+                  //       },
+                          
+                  //     ),
+                  //   ),
+                  //   // const SizedBox(width: Dimensions.paddingSizeSmall),
+                  //   const SizedBox(height: Dimensions.paddingSizeDefault),
+                          
+                  //   InkWell(
+                  //     onTap: () {
+                  //       checkoutController.updateTips(0);
+                  //       checkoutController.showTipsField();
+                  //       if(checkoutController.isPartialPay) {
+                  //         checkoutController.changePartialPayment();
+                  //       }
+                  //     },
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Theme.of(context).primaryColor.withOpacity(0.5),
+                  //       ),
+                  //       padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                  //       child: const Icon(Icons.clear),
+                  //     ),
+                  //   ),
+                          
+                  // ]) : const SizedBox(),
+
+                  checkoutController.selectedTips == AppConstants.tips.length - 1
+    ? Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  titleText: 'enter_amount'.tr,
+                  controller: checkoutController.tipController,
+                  inputAction: TextInputAction.done,
+                  inputType: TextInputType.number,
+                  onChanged: (String value) async {
+                    if (value.isNotEmpty) {
+                      try {
+                        double tipAmount = double.parse(value);
+                        if (tipAmount >= 0) {
+                          if (AuthHelper.isLoggedIn()) {
+                            total -= checkoutController.tips;
+                            await checkoutController.addTips(tipAmount);
+                            total += checkoutController.tips;
+                            widget.onTotalChange(total);
+
+                            final profileController = Get.find<ProfileController>();
+                            if (profileController.userInfoModel!.walletBalance! < total &&
+                                checkoutController.paymentMethodIndex == 1) {
+                              checkoutController.checkBalanceStatus(total, 0);
+                              canCheckSmall = true;
+                            } else if (profileController.userInfoModel!.walletBalance! > total &&
+                                canCheckSmall &&
+                                checkoutController.isPartialPay) {
+                              checkoutController.checkBalanceStatus(total, 0);
                             }
-                          }else {
-                            checkoutController.addTips(0.0);
+                          } else {
+                            checkoutController.addTips(tipAmount);
                           }
-                        },
-                          
-                      ),
-                    ),
-                    // const SizedBox(width: Dimensions.paddingSizeSmall),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-                          
-                    InkWell(
-                      onTap: () {
-                        checkoutController.updateTips(0);
-                        checkoutController.showTipsField();
-                        if(checkoutController.isPartialPay) {
-                          checkoutController.changePartialPayment();
+                        } else {
+                          showCustomSnackBar('tips_can_not_be_negative'.tr);
                         }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Theme.of(context).primaryColor.withOpacity(0.5),
-                        ),
-                        padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                        child: const Icon(Icons.clear),
-                      ),
+                      } catch (e) {
+                        showCustomSnackBar('invalid_input'.tr);
+                        checkoutController.addTips(0.0);
+                        checkoutController.tipController.text =
+                            checkoutController.tipController.text.substring(
+                                0, checkoutController.tipController.text.length - 1);
+                        checkoutController.tipController.selection = TextSelection.collapsed(
+                            offset: checkoutController.tipController.text.length);
+                      }
+                    } else {
+                      checkoutController.addTips(0.0);
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(width: Dimensions.paddingSizeSmall),
+              // InkWell(
+              //   onTap: () {
+              //     checkoutController.updateTips(0);
+              //     checkoutController.showTipsField();
+              //     if (checkoutController.isPartialPay) {
+              //       checkoutController.changePartialPayment();
+              //     }
+              //   },
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       color: Theme.of(context).primaryColor.withOpacity(0.5),
+              //     ),
+              //     padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+              //     child: const Icon(Icons.clear),
+              //   ),
+              // ),
+   InkWell(
+    onTap: () {
+      // checkoutController.updateTips(0);
+      checkoutController.showTipsField();
+      // if (checkoutController.isPartialPay) {
+      //   checkoutController.changePartialPayment();
+      // }
+    },
+     child: Container(
+      
+                      height: 40, width:  100 ,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                      // decoration: BoxDecoration(
+                      //   color: (couponController.discount! <= 0 && !couponController.freeDelivery) ? Color.fromARGB(255, 45, 3, 67) : Colors.transparent,
+                      //   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                      // ),
+     
+                         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault ),
+          // boxShadow: [BoxShadow(color: const Color(0xFF2A2A2A).withOpacity(0.1), blurRadius: 10, offset: const Offset(0, -5))],
+          gradient: LinearGradient(
+            colors:   [
+              Colors.deepPurple.shade800 ,
+              Colors.purple.shade400 
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          // shape: BoxShape.circle, 
+        ),
+                      child:  Text(
+                       !checkoutController.canShowTipsField && checkoutController.tips != 0 ?  "Applied": 'apply'.tr,
+                        style: robotoMedium.copyWith(color: Theme.of(context).cardColor),
+                      ) 
+                        
                     ),
-                          
-                  ]) : const SizedBox(),
+   ),
+              
+            ],
+          ),
+          const SizedBox(height: Dimensions.paddingSizeDefault),
+      ],
+      )
+    : const SizedBox(),
                           
                                 ]),
                               ),

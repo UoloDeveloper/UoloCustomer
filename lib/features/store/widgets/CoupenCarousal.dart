@@ -484,7 +484,7 @@ class CouponCarousel extends StatefulWidget {
 }
 
 class _CouponCarouselState extends State<CouponCarousel> {
-  int currentIndex = 0; // Move currentIndex to the state class
+  int currentIndex = 0; 
 
   @override
   Widget build(BuildContext context) {

@@ -91,7 +91,7 @@ class FavouriteScreenState extends State<FavouriteScreen> with SingleTickerProvi
     return cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
            ? Padding(
              padding: const EdgeInsets.only(bottom: 50),
-             child: const BottomCartWidget(
+             child:  BottomCartWidget(
               // fromgroccery: true,
              ),
            )

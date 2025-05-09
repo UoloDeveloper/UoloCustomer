@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/location/controllers/location_controller.dart';
 import 'package:sixam_mart/features/location/widgets/customflotingaction.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
@@ -228,6 +229,7 @@ class _PickMapScreenState extends State<PickMapScreen> {
                             : (locationController.buttonDisabled || locationController.loading)
                                 ? null
                                 : () {
+                                     Get.find<CartController>().clearCartList();
                                     _onPickAddressButtonPressed(locationController);
                                   },
                       ),

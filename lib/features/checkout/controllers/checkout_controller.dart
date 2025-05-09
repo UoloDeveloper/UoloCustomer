@@ -68,7 +68,7 @@ class CheckoutController extends GetxController implements GetxService {
   bool _isPartialPay = false;
   bool get isPartialPay => _isPartialPay;
 
-  double _tips = 0.0;
+  double _tips = 0;
   double get tips => _tips;
 
   int _selectedTips = 0;
@@ -394,11 +394,14 @@ class CheckoutController extends GetxController implements GetxService {
       //          ); 
     String orderID = '';
     String userID = '';
+     print("placeOrderBody: ${placeOrderBody.toJson()}");
     Response response = await checkoutServiceInterface.placeOrder(placeOrderBody, multiParts);
     _isLoading = false;
+
    if  (response.statusCode == 406) {
             showCustomSnackBar(response.statusText,);
             Get.back();
+               Get.back();
    }
 
     if (response.statusCode == 200) {
@@ -481,7 +484,7 @@ class CheckoutController extends GetxController implements GetxService {
           String? hostname = html.window.location.hostname;
           String protocol = html.window.location.protocol;
           String selectedUrl;
-          selectedUrl = '${AppConstants.baseUrl}/payment-mobile?order_id=$orderID&&customer_id=${Get.find<ProfileController>().userInfoModel?.id ?? (userID.isNotEmpty ? userID : AuthHelper.getGuestId())}'
+          selectedUrl = '${AppConstants.baseUrl}/payment-mobile? zone_id=$zoneID&& order_id=$orderID&&customer_id=${Get.find<ProfileController>().userInfoModel?.id ?? (userID.isNotEmpty ? userID : AuthHelper.getGuestId())}'
               '&payment_method=$digitalPaymentName&payment_platform=web&&callback=$protocol//$hostname${RouteHelper.orderSuccess}?id=$orderID&status=';
 
           html.window.open(selectedUrl,"_self");

@@ -296,6 +296,8 @@ class Store {
   String? latitude;
   String? longitude;
   String? address;
+  String? surcharge_perc;
+  String? zoneName;
   double? minimumOrder;
   CurrencyModel? currency;
   bool? freeDelivery;
@@ -308,7 +310,8 @@ class Store {
   int? ratingCount;
   int? featured;
   int? zoneId;
-  ZoneDataModel? zone; // Add this line
+  ZoneDataModel? zone;
+  // int? zoneId;
   int? selfDeliverySystem;
   bool? posSystem;
   double? minimumShippingCharge;
@@ -348,6 +351,7 @@ class Store {
     this.name,
     this.phone,
     this.email,
+    this.surcharge_perc,
     this.logoFullUrl,
     this.latitude,
     this.longitude,
@@ -406,6 +410,7 @@ class Store {
     phone = json['phone'];
     email = json['email'];
     logoFullUrl = json['logo_full_url'] ?? '';
+    surcharge_perc = json['surcharge_perc'] ?? "" ;
     latitude = json['latitude'];
     longitude = json['longitude'];
     address = json['address'];
@@ -482,6 +487,7 @@ class Store {
     data['latitude'] = latitude;
     data['longitude'] = longitude;
     data['address'] = address;
+    data['surcharge_perc'] = surcharge_perc;
     data['minimum_order'] = minimumOrder;
     data['currency'] = currency;
     data['free_delivery'] = freeDelivery;

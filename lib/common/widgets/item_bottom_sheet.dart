@@ -6,6 +6,7 @@
 
 
 
+import 'package:sixam_mart/common/widgets/cart_snackbar.dart';
 import 'package:sixam_mart/common/widgets/custom_asset_image_widget.dart';
 import 'package:sixam_mart/common/widgets/custom_tool_tip_widget.dart';
 import 'package:sixam_mart/common/widgets/rating_bar.dart';
@@ -20,6 +21,7 @@ import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/common/models/module_model.dart';
 import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/date_converter.dart';
+import 'package:sixam_mart/helper/module_helper.dart';
 import 'package:sixam_mart/helper/price_converter.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
@@ -1351,11 +1353,47 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                                         quantity, [], [], [], 'Item',
                                       );
                   
-                          await Get.find<CartController>().addToCartOnline(onlineCart).then((success) {
-                            if (success) {
-                              print("Item added to cart");
-                            }
-                          });
+
+                       if (Get.find<CartController>().existAnotherStoreItem(item!.storeId, ModuleHelper.getModule() != null
+          ? ModuleHelper.getModule()?.id : ModuleHelper.getCacheModule()?.id)) {
+
+
+        Get.dialog(
+          
+          ConfirmationDialog(
+
+          icon: Images.warning,
+          title: 'are_you_sure_to_reset'.tr,
+          description: 
+          Get.find<SplashController>().configModel!.moduleConfig!.module!.showRestaurantText! 
+             
+              ? 'if_you_continue'.tr : 'if_you_continue_without_another_store'.tr,
+                 
+          onYesPressed: () {
+            Get.find<CartController>().clearCartOnline().then((success) async {
+                 Get.back();
+              if (success) {
+                await Get.find<CartController>().addToCartOnline(onlineCart);
+             
+                             showCartSnackBar();
+              }
+            });
+          },
+        ),
+        
+         barrierDismissible: false);
+
+                          
+                        
+                        } else {
+                            await Get.find<CartController>().addToCartOnline(onlineCart).then((success) {
+                              if (success) {
+                                // showCartSnackBar();
+
+                              }
+                            });
+                          }
+                          
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,

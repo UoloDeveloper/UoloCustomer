@@ -600,7 +600,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
            bottomNavigationBar: isgrocery ? SizedBox(): GetBuilder<CartController>(
       builder: (cartController){
         return  cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
-         ? const BottomCartWidget(
+         ?  BottomCartWidget(
           fromgroccery: false,
          )
          : const SizedBox() ;

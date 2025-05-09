@@ -8,6 +8,7 @@ import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'package:sixam_mart/common/widgets/address_widget.dart';
 import 'package:sixam_mart/common/widgets/cancellation_dialog.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
+import 'package:sixam_mart/common/widgets/custom_loader.dart';
 import 'package:sixam_mart/features/address/domain/models/address_model.dart';
 import 'package:sixam_mart/features/checkout/domain/models/place_order_body_model.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
@@ -557,7 +558,9 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
 
         setState(() {
           _isOrderPlaced = false;
+          Get.to(CustomLoaderWidget());
         });
+        print("cart id :${widget.placeOrderBody.toJson()}");
         widget.checkoutController.placeOrder(
           widget.placeOrderBody,
           widget.checkoutController.store!.zoneId,
@@ -567,6 +570,8 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
           widget.isCashOnDeliveryActive!,
           widget.checkoutController.pickedPrescriptions,
         );
+
+        
       }
     });
 
@@ -778,6 +783,7 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
                             context: context,
                             builder: (BuildContext context) {
                               return CancellationDialog(
+                                
                                         icon: Images.warning,
                                         onYesPressed: () {
                                           // Cancel the order
@@ -836,28 +842,30 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
                         ),
                       ),
                     ],
-                  ) : Container(
-                    width: MediaQuery.sizeOf(context).width ,
+                  ) : 
+                   SizedBox(height: 10,),
+                  // Container(
+                  //   width: MediaQuery.sizeOf(context).width ,
 
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(child: Text("Order Placed")),
-                              SizedBox(width: 10,),
-                              Container(
-                                height: 15,
-                                width: 15,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Theme.of(context).primaryColor,
+                  //   child: Container(
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //           children: [
+                  //             Center(child: Text("Order Placed")),
+                  //             SizedBox(width: 10,),
+                  //             Container(
+                  //               height: 15,
+                  //               width: 15,
+                  //               child: CircularProgressIndicator(
+                  //                 strokeWidth: 2,
+                  //                 color: Theme.of(context).primaryColor,
                                   
-                                ),
-                              )
-                            ],
-                          ),
-                    ),
-                  ), 
+                  //               ),
+                  //             )
+                  //           ],
+                  //         ),
+                  //   ),
+                  // ), 
                 ],
               ),
             ),

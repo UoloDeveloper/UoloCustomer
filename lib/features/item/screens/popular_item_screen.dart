@@ -87,7 +87,7 @@ class _PopularItemScreenState extends State<PopularItemScreen> {
            bottomNavigationBar: GetBuilder<CartController>(
       builder: (cartController){
         return  !isShop ? cartController.cartList.isNotEmpty && !ResponsiveHelper.isDesktop(context)
-         ? const BottomCartWidget(
+         ?  BottomCartWidget(
           fromgroccery: false,
          )
          : const SizedBox() : const SizedBox();

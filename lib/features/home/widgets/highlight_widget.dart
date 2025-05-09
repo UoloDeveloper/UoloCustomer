@@ -40,10 +40,10 @@ class _HighlightWidgetState extends State<HighlightWidget> {
         child: Stack(
           children: [
 
-            CustomAssetImageWidget(
-              Get.isDarkMode ? Images.highlightDarkBg : Images.highlightBg, width: context.width,
-              fit: BoxFit.cover,
-            ),
+            // CustomAssetImageWidget(
+            //   Get.isDarkMode ? Images.highlightDarkBg : Images.highlightBg, width: context.width,
+            //   fit: BoxFit.cover,
+            // ),
 
             Column(children: [
 
@@ -53,19 +53,19 @@ class _HighlightWidgetState extends State<HighlightWidget> {
                 ),
                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('highlights_for_you'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black)),
-                      const SizedBox(width: 5),
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text('highlights_for_you'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black)),
+                  //     const SizedBox(width: 5),
 
-                      Text('see_our_most_popular_store_and_item'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall)),
-                    ],
-                  ),
+                  //     Text('see_our_most_popular_store_and_item'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall)),
+                  //   ],
+                  // ),
 
-                  const CustomAssetImageWidget(
-                    Images.highlightIcon, height: 50, width: 50,
-                  ),
+                  // const CustomAssetImageWidget(
+                  //   Images.highlightIcon, height: 50, width: 50,
+                  // ),
 
                 ]),
               ),
@@ -77,7 +77,7 @@ class _HighlightWidgetState extends State<HighlightWidget> {
                   enableInfiniteScroll: advertisementController.advertisementList!.length > 1,
                   autoPlay: advertisementController.autoPlay,
                   enlargeCenterPage: false,
-                  height: 280,
+                  height: 190,
                   viewportFraction: 1,
                   disableCenter: true,
                   onPageChanged: (index, reason) {
@@ -243,6 +243,147 @@ class HighlightStoreWidget extends StatelessWidget {
   }
 }
 
+// class HighlightVideoWidget extends StatefulWidget {
+//   final AdvertisementModel advertisement;
+//   const HighlightVideoWidget({super.key, required this.advertisement});
+
+//   @override
+//   State<HighlightVideoWidget> createState() => _HighlightVideoWidgetState();
+// }
+
+// class _HighlightVideoWidgetState extends State<HighlightVideoWidget> {
+
+//   late VideoPlayerController videoPlayerController;
+//   ChewieController? _chewieController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     initializePlayer();
+
+//     videoPlayerController.addListener(() {
+//       if(videoPlayerController.value.duration == videoPlayerController.value.position){
+//         if(GetPlatform.isWeb){
+//           Future.delayed(const Duration(seconds: 4), () {
+//             Get.find<AdvertisementController>().updateAutoPlayStatus(status: true, shouldUpdate: true);
+//           });
+//         }else{
+//           Get.find<AdvertisementController>().updateAutoPlayStatus(status: true, shouldUpdate: true);
+//         }
+//       }
+//     });
+//   }
+
+//   Future<void> initializePlayer() async {
+//     videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
+//       widget.advertisement.videoAttachmentFullUrl ?? "",
+//     ));
+
+//     await Future.wait([
+//       videoPlayerController.initialize(),
+//     ]);
+
+//     _createChewieController();
+//     setState(() {});
+//   }
+
+//   void _createChewieController() {
+//     _chewieController = ChewieController(
+//       videoPlayerController: videoPlayerController,
+//       autoPlay: true,
+//       aspectRatio: videoPlayerController.value.aspectRatio * (ResponsiveHelper.isDesktop(context) ? 1 : 1.3),
+//     );
+//     _chewieController?.setVolume(0);
+//   }
+
+//   @override
+//   void dispose() {
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetBuilder<AdvertisementController>(builder: (advertisementController) {
+//       return Container(
+//         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+//         height: 280,
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+//           color: Theme.of(context).cardColor,
+//           border: Border.all(color: Theme.of(context).disabledColor, width: 2),
+//         ),
+//         child: Column(children: [
+
+//           Expanded(
+//             flex: 5,
+//             child: ClipRRect(
+//               borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusDefault)),
+//               child: Stack(
+//                 children: [
+//                   _chewieController != null &&  _chewieController!.videoPlayerController.value.isInitialized ? Stack(
+//                     children: [
+//                       Container(color: Colors.black, child: Chewie(controller: _chewieController!)),
+//                     ],
+//                   ) : const Center(child: CircularProgressIndicator()),
+//                 ],
+//               ),
+//             ),
+//           ),
+
+//           Expanded(
+//             flex: 3,
+//             child: Padding(
+//               padding: const EdgeInsets.all(12),
+//               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
+//                 Text(
+//                   widget.advertisement.title ?? '',
+//                   style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600),
+//                   maxLines: 1, overflow: TextOverflow.ellipsis,
+//                 ),
+//                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
+//                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
+//                   Expanded(
+//                     child: Text(
+//                       widget.advertisement.description ?? '',
+//                       style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor),
+//                       maxLines: 2, overflow: TextOverflow.ellipsis,
+//                     ),
+//                   ),
+//                   const SizedBox(width: Dimensions.paddingSizeDefault),
+
+//                   InkWell(
+//                     onTap: (){
+//                       Get.toNamed(RouteHelper.getStoreRoute(id: widget.advertisement.storeId, page: 'store'),
+//                         arguments: StoreScreen(store: Store(id: widget.advertisement.storeId), fromModule: false),
+//                       );
+//                     },
+//                     child: Container(
+//                       padding: const EdgeInsets.all(7),
+//                       decoration: BoxDecoration(
+//                         color: Theme.of(context).primaryColor,
+//                         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+//                       ),
+//                       child: Icon(Icons.arrow_forward, color: Theme.of(context).cardColor, size: 20),
+//                     ),
+//                   ),
+
+//                 ]),
+
+//               ]),
+//             ),
+//           ),
+
+//         ]),
+//       );
+//     });
+//   }
+// }
+
+
+
 class HighlightVideoWidget extends StatefulWidget {
   final AdvertisementModel advertisement;
   const HighlightVideoWidget({super.key, required this.advertisement});
@@ -251,25 +392,31 @@ class HighlightVideoWidget extends StatefulWidget {
   State<HighlightVideoWidget> createState() => _HighlightVideoWidgetState();
 }
 
-class _HighlightVideoWidgetState extends State<HighlightVideoWidget> {
-
+class _HighlightVideoWidgetState extends State<HighlightVideoWidget> with SingleTickerProviderStateMixin {
   late VideoPlayerController videoPlayerController;
   ChewieController? _chewieController;
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
     initializePlayer();
 
+    // Animation for button
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
     videoPlayerController.addListener(() {
-      if(videoPlayerController.value.duration == videoPlayerController.value.position){
-        if(GetPlatform.isWeb){
-          Future.delayed(const Duration(seconds: 4), () {
-            Get.find<AdvertisementController>().updateAutoPlayStatus(status: true, shouldUpdate: true);
-          });
-        }else{
+      if (videoPlayerController.value.duration == videoPlayerController.value.position) {
+        Future.delayed( Duration(seconds: GetPlatform.isWeb ? 4 : 0), () {
           Get.find<AdvertisementController>().updateAutoPlayStatus(status: true, shouldUpdate: true);
-        }
+        });
       }
     });
   }
@@ -279,108 +426,209 @@ class _HighlightVideoWidgetState extends State<HighlightVideoWidget> {
       widget.advertisement.videoAttachmentFullUrl ?? "",
     ));
 
-    await Future.wait([
-      videoPlayerController.initialize(),
-    ]);
-
+    await videoPlayerController.initialize();
     _createChewieController();
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   void _createChewieController() {
     _chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
       autoPlay: true,
-      aspectRatio: videoPlayerController.value.aspectRatio * (ResponsiveHelper.isDesktop(context) ? 1 : 1.3),
+      looping: true,
+      aspectRatio: videoPlayerController.value.aspectRatio * (ResponsiveHelper.isDesktop(context) ? 1 : 1.2),
+      showControls: true,
+      materialProgressColors: ChewieProgressColors(
+        playedColor: Theme.of(context).primaryColor,
+        handleColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.grey.withOpacity(0.3),
+        bufferedColor: Theme.of(context).primaryColor.withOpacity(0.5),
+      ),
     );
-    _chewieController?.setVolume(0);
+    _chewieController?.setVolume(5);
   }
 
   @override
   void dispose() {
+    videoPlayerController.dispose();
+    _chewieController?.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AdvertisementController>(builder: (advertisementController) {
-      return Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        height: 280,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-          color: Theme.of(context).cardColor,
-          border: Border.all(color: Theme.of(context).disabledColor, width: 2),
-        ),
-        child: Column(children: [
-
-          Expanded(
-            flex: 5,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusDefault)),
-              child: Stack(
-                children: [
-                  _chewieController != null &&  _chewieController!.videoPlayerController.value.isInitialized ? Stack(
-                    children: [
-                      Container(color: Colors.black, child: Chewie(controller: _chewieController!)),
-                    ],
-                  ) : const Center(child: CircularProgressIndicator()),
-                ],
-              ),
-            ),
-          ),
-
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                Text(
-                  widget.advertisement.title ?? '',
-                  style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600),
-                  maxLines: 1, overflow: TextOverflow.ellipsis,
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        child: GestureDetector(
+          onTap: () {
+            Get.toNamed(
+              RouteHelper.getStoreRoute(id: widget.advertisement.storeId, page: 'store'),
+              arguments: StoreScreen(store: Store(id: widget.advertisement.storeId), fromModule: false),
+            );
+          },
+          child: Container(
+            height: 300,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Theme.of(context).cardColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 ),
-                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Video Player Section
+                Expanded(
+                  flex: 6,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(20),bottom: Radius.circular(20)),
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        _chewieController != null && _chewieController!.videoPlayerController.value.isInitialized
+                            ? Chewie(controller: _chewieController!)
+                            : Container(
+                                color: Colors.grey[900],
+                                child: const Center(child: CircularProgressIndicator()),
+                              ),
+                      
+                        Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.6),
+                              ],
+                            ),
+                          ),
+                        ),
+                  
+                        Positioned(
+                          bottom: 16,
+                          left: 16,
+                          right: 16,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.advertisement.title ?? '',
+                                style: robotoBold.copyWith(
+                                  fontSize: Dimensions.fontSizeLarge,
+                                  color: Colors.white.withAlpha(150),
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 4,
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: const Offset(1, 1),
+                                    ),
+                                  ],
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
 
-                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                  Expanded(
-                    child: Text(
-                      widget.advertisement.description ?? '',
-                      style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor),
-                      maxLines: 2, overflow: TextOverflow.ellipsis,
+                                Text(
+                                widget.advertisement.description ?? '',
+                                style: robotoBold.copyWith(
+                                  fontSize: Dimensions.fontSizeLarge,
+                                  color: Colors.white.withAlpha(150),
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 4,
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: const Offset(1, 1),
+                                    ),
+                                  ],
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: Dimensions.paddingSizeDefault),
-
-                  InkWell(
-                    onTap: (){
-                      Get.toNamed(RouteHelper.getStoreRoute(id: widget.advertisement.storeId, page: 'store'),
-                        arguments: StoreScreen(store: Store(id: widget.advertisement.storeId), fromModule: false),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                      ),
-                      child: Icon(Icons.arrow_forward, color: Theme.of(context).cardColor, size: 20),
-                    ),
-                  ),
-
-                ]),
-
-              ]),
+                ),
+                // Content Section
+                // Expanded(
+                //   flex: 3,
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(16),
+                //     child: Row(
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: [
+                //         // Description
+                //         Expanded(
+                //           child: Text(
+                //             widget.advertisement.description ?? '',
+                //             style: robotoRegular.copyWith(
+                //               fontSize: Dimensions.fontSizeDefault,
+                //               color: Theme.of(context).hintColor,
+                //             ),
+                //             maxLines: 2,
+                //             overflow: TextOverflow.ellipsis,
+                //           ),
+                //         ),
+                //         const SizedBox(width: 12),
+                //         // CTA Button with Animation
+                //         ScaleTransition(
+                //           scale: _scaleAnimation,
+                //           child: ElevatedButton(
+                //             onPressed: () {
+                //               Get.toNamed(
+                //                 RouteHelper.getStoreRoute(id: widget.advertisement.storeId, page: 'store'),
+                //                 arguments: StoreScreen(store: Store(id: widget.advertisement.storeId), fromModule: false),
+                //               );
+                //             },
+                //             style: ElevatedButton.styleFrom(
+                //               backgroundColor: Theme.of(context).primaryColor,
+                //               foregroundColor: Theme.of(context).cardColor,
+                //               shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(12),
+                //               ),
+                //               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                //               elevation: 2,
+                //             ),
+                //             child: Row(
+                //               mainAxisSize: MainAxisSize.min,
+                //               children: [
+                //                 Text(
+                //                   'Explore',
+                //                   style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
+                //                 ),
+                //                 const SizedBox(width: 6),
+                //                 const Icon(Icons.arrow_forward_ios, size: 16),
+                //               ],
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+            
+              ],
             ),
           ),
-
-        ]),
+        ),
       );
     });
   }
 }
+
+
+
 
 class AdvertisementIndicator extends StatelessWidget {
   const AdvertisementIndicator({super.key});
