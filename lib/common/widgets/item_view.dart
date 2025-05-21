@@ -71,29 +71,6 @@ class _ItemsViewState extends State<ItemsView> {
       children: [
   widget.isHome ?
   
-  //  ListView.builder(
-  //     itemCount: widget.stores!.length,  
-  //     // shrinkWrap: true,
-  //      physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-  //       shrinkWrap: widget.isScrollable ? false : true,
-  //   itemBuilder: 
-  //   (context, index) {
-
-  //      if (index == 3) {
-  //        return   VisitAgainView(fromFood: true);
-  //       //  StoreCardWidget2(store: widget.stores![index]);
-  //      } else if (index == 7) {
-  //        return  
-  //            const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false);
-  //       //  StoreCardWidget2(store: widget.stores![index]);
-  //      } 
-       
-  //       else {
-  //        return StoreCardWidget2(store: widget.stores![index]);
-  //      }
-  //     // return StoreCardWidget2(store:  widget.stores![index]);
-  //   },
-  //  ) : 
      
      ListView.builder(
   itemCount: widget.stores != null ? widget.stores!.length : 10, 

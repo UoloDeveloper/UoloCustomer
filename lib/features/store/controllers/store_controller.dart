@@ -253,6 +253,7 @@ storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 
         popularStoreList = await storeServiceInterface.getPopularStoreList(type, source: DataSourceEnum.local);
         if (popularStoreList != null) {
           _popularStoreList = [];
+          popularStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
           _popularStoreList!.addAll(popularStoreList);
         }
         update();
@@ -261,6 +262,7 @@ storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 
         popularStoreList = await storeServiceInterface.getPopularStoreList(type, source: DataSourceEnum.client);
         if (popularStoreList != null) {
           _popularStoreList = [];
+             popularStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
           _popularStoreList!.addAll(popularStoreList);
         }
         update();

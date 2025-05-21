@@ -68,6 +68,7 @@ class ApiClient extends GetxService {
   Map<String, String> getHeader() => _mainHeaders;
 
   Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers, bool handleError = true}) async {
+    print('Headers: $uri');
     try {
       if (kDebugMode) {
         print('====> API Call: $uri\nHeader: ${headers ?? _mainHeaders}');

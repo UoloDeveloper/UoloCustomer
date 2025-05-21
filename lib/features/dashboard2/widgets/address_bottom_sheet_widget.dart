@@ -140,13 +140,15 @@ class AddressBottomSheetWidget extends StatelessWidget {
                               address: addressController.addressList![index],
                               fromAddress: false, isSelected: selected, fromDashBoard: true,
                               onTap: () {
-                                Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
-                                AddressModel address = addressController.addressList![index];
-                                Get.find<LocationController>().saveAddressAndNavigate(
-                                  address, false, null, false, ResponsiveHelper.isDesktop(context),
-                                );
-        
-                                Get.find<SplashController>().saveWebSuggestedLocationStatus(true);
+                                print('============================================================address id: ${addressController.addressList![index].id}===============================================================================');
+                                  Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
+                            AddressModel address = addressController.addressList![index];
+                            Get.find<LocationController>().saveAddressAndNavigate(
+                              address, false, null, false, ResponsiveHelper.isDesktop(context),
+                            );
+
+                            Get.find<LocationController>().hideSuggestedLocation();
+                            Get.find<SplashController>().saveWebSuggestedLocationStatus(true);
                               },
                             )));
                           }, separatorBuilder: (BuildContext context, int index) { 

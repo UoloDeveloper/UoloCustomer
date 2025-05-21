@@ -292,7 +292,7 @@ import 'package:sixam_mart/common/widgets/custom_button.dart';
           // ),
           TextSpan(
             text: " FREE DELIVERY".tr,
-            style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,fontSize: 15),
+            style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold,fontSize: 16),
           ),
         ],
       ),

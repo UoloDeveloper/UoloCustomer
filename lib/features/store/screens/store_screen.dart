@@ -989,6 +989,7 @@ class _StoreScreenState extends State<StoreScreen> {
     // if(Get.find<StoreController>().isSearching) {
     //   Get.find<StoreController>().changeSearchStatus(isUpdate: false);
     // }
+     Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
        isShop =  Get.find<SplashController>().module!.moduleType.toString() == AppConstants.ecommerce;
     Get.find<StoreController>().hideAnimation();
     await Get.find<StoreController>().getStoreDetails(Store(id: widget.store!.id), widget.fromModule, slug: widget.slug).then((value) {
@@ -1019,7 +1020,7 @@ class _StoreScreenState extends State<StoreScreen> {
    initCall2() async {
       bool isLoggedIn = AuthHelper.isLoggedIn();
   
-       Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
+      
       // Get.find<CheckoutController>().setGuestAddress(null, isUpdate: false);
       Get.find<CheckoutController>().setPaymentMethod(0, isUpdate: false);
       Get.find<CheckoutController>().streetNumberController.text = AddressHelper.getUserAddressFromSharedPref()!.streetNumber ?? '';
@@ -1065,7 +1066,7 @@ class _StoreScreenState extends State<StoreScreen> {
       //   }
       // }
       if(widget.store!.id != null){
-        Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
+        // Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
         Get.find<CouponController>().removeCouponData(false);
       }
       Get.find<CheckoutController>().pickPrescriptionImage(isRemove: true, isCamera: false);
@@ -1258,73 +1259,7 @@ class _StoreScreenState extends State<StoreScreen> {
         ),
       ),
                                                       StoreBannerWidget(storeController: storeController),
-                                                      // const SizedBox(height: Dimensions.paddingSizeLarge),
-                                                      // GetBuilder<CouponController>(builder: (couponController) {
-
-
-                                                      //     return ListView.builder(
-                                                      //       scrollDirection: Axis.horizontal,
-                                                      //       itemCount: couponController.couponList!.length,
-                                                      //       itemBuilder: (context, index) {
-                                                          
-                                                      //       return Container(
-                                                      //         height: 100,
-                                                      //      decoration: BoxDecoration(
-                                                      //       color: Colors.red
-                                                      //      ),
-                                                      //         child: Text('${couponController.couponList![index].code}'),
-                                                      //       );
-                                                          
-                                                      //     });
-                                                      //   }
-                                                      // ),
-                                               
-                                                  
-                                                      // (!ResponsiveHelper.isDesktop(context) &&
-                                                      //         storeController.recommendedItemModel != null &&
-                                                      //         storeController.recommendedItemModel!.items!.isNotEmpty)
-                                                      //     ? Column(
-                                                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                                                      //         children: [
-                                                      //           Text('recommended_items'.tr, style: robotoMedium),
-                                                      //           const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                                                      //           SizedBox(
-                                                      //             height: ResponsiveHelper.isDesktop(context) ? 150 : 185,
-                                                      //             child: ListView.builder(
-                                                      //               scrollDirection: Axis.horizontal,
-                                                      //               itemCount: storeController.recommendedItemModel!.items!.length,
-                                                      //               physics: const BouncingScrollPhysics(),
-                                                      //               itemBuilder: (context, index) {
-                                                      //                 return Padding(
-                                                      //                   padding: ResponsiveHelper.isDesktop(context)
-                                                      //                       ? const EdgeInsets.symmetric(vertical: 20)
-                                                      //                       : const EdgeInsets.symmetric(vertical: 10),
-                                                      //                   child: Container(
-                                                      //                     width: ResponsiveHelper.isDesktop(context) ? 500 : 300,
-                                                      //                     padding: const EdgeInsets.only(
-                                                      //                         right: Dimensions.paddingSizeSmall,
-                                                      //                         left: Dimensions.paddingSizeExtraSmall),
-                                                      //                     margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-                                                      //                     child: ItemWidget(
-                                                      //                       isStore: false,
-                                                      //                       item: storeController.recommendedItemModel!.items![index],
-                                                      //                       store: null,
-                                                      //                       index: index,
-                                                      //                       length: storeController.recommendedItemModel!.items!.length,
-                                                      //                       isCampaign: false,
-                                                      //                       inStore: true,
-                                                      //                     ),
-                                                      //                   ),
-                                                      //                 );
-                                                      //               },
-                                                      //             ),
-                                                      //           ),
-                                                      //         ],
-                                                      //       )
-                                                      //     : const SizedBox(),
-                              
-                              
-                                                      // SizedBox(height: 40,),
+                                                    
 CouponCarousel(storeid: store!.id,),
 
                                              // SizedBox(height: 40,),             StoreBannerWidget(storeController: storeController)
@@ -1410,60 +1345,7 @@ CouponCarousel(storeid: store!.id,),
                                          ],
                                        ),
                                      
-                                     
-                                      //  SizedBox(height: 10,),
-                                      // SizedBox(
-                                      //   height: 30,
-                                      //   child: ListView.builder(
-                                      //     scrollDirection: Axis.horizontal,
-                                      //     itemCount: storeController.categoryList!.length,
-                                      //     padding:
-                                      //         const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
-                                      //     physics: const BouncingScrollPhysics(),
-                                      //     itemBuilder: (context, index) {
-                                      //       return InkWell(
-                                      //         onTap: () => storeController.setCategoryIndex(index),
-                                      //         child: Container(
-                                      //           padding: const EdgeInsets.symmetric(
-                                      //               horizontal: Dimensions.paddingSizeDefault,
-                                      //               vertical: Dimensions.paddingSizeExtraSmall),
-                                      //           margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-                                      //           decoration: BoxDecoration(
-                                      //             border: Border.all(
-                                      //                 color: Theme.of(context)
-                                      //                     .primaryColor
-                                      //                     .withOpacity(0.2)),
-                                      //             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                                      //             color: index == storeController.categoryIndex
-                                      //                 ? Colors.black
-                                      //                 : Colors.transparent,
-                                      //           ),
-                                      //           child: Column(
-                                      //               mainAxisAlignment: MainAxisAlignment.center,
-                                      //               children: [
-                                      //                 Text(
-                                      //                   storeController
-                                      //                       .categoryList![index].name!,
-                                      //                   style: index ==
-                                      //                           storeController
-                                      //                               .categoryIndex
-                                      //                       ? robotoMedium.copyWith(
-                                      //                           fontSize: Dimensions
-                                      //                               .fontSizeSmall,
-                                      //                           color: Colors
-                                      //                               .white)
-                                      //                       : robotoRegular.copyWith(
-                                      //                           fontSize: Dimensions
-                                      //                               .fontSizeSmall,
-                                      //                           color: Colors
-                                      //                               .black),
-                                      //                 ),
-                                      //               ]),
-                                      //         ),
-                                      //       );
-                                      //     },
-                                      //   ),
-                                      // ),
+                                
                                  
                                     ],
                                   ),
@@ -1473,87 +1355,7 @@ CouponCarousel(storeid: store!.id,),
     
     
     
-                    //  (storeController.categoryList!.isNotEmpty)  &&  (!ResponsiveHelper.isDesktop(context) &&
-                    //             storeController.recommendedItemModel != null &&
-                    //             storeController.recommendedItemModel!.items!.isNotEmpty)
-    
-                    //     ? SliverPersistentHeader(
-                    //       floating: false,
-                    //         // pinned: true,
-                    //         delegate: SliverDelegate(
-                    //             height: 240,
-                    //             child: Center(
-                    //                 child: Container(
-                    //               width: Dimensions.webMaxWidth,
-                    //               decoration: BoxDecoration(
-                    //                 color: Theme.of(context).cardColor,
-                    //                 // boxShadow: const [
-                    //                 //   BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)
-                    //                 // ],
-                    //               ),
-                    //               padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),
-                    //               child: Column(
-                    //                 children: [
-    
-                    //                   //  const SizedBox(height: Dimensions.paddingSizeLarge),
-                    //     (!ResponsiveHelper.isDesktop(context) &&
-                    //             storeController.recommendedItemModel != null &&
-                    //             storeController.recommendedItemModel!.items!.isNotEmpty)
-                    //         ? Padding(
-                    //           padding: const EdgeInsets.only(left: 10),
-                    //           child: Column(
-                    //               crossAxisAlignment: CrossAxisAlignment.start,
-                    //               children: [
-                    //                 Padding(
-                    //                    padding: const EdgeInsets.only(left: 10),
-                    //                   child: Text('recommended'.tr, style: TextStyle(
-                    //                     fontSize: 16,fontWeight: FontWeight.w700
-                    //                   )),
-                    //                 ),
-                    //                 const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                    //                 SizedBox(
-                    //                   height: ResponsiveHelper.isDesktop(context) ? 150 : 185,
-                    //                   child: ListView.builder(
-                    //                     scrollDirection: Axis.horizontal,
-                    //                     itemCount: storeController.recommendedItemModel!.items!.length,
-                    //                     physics: const BouncingScrollPhysics(),
-                    //                     itemBuilder: (context, index) {
-                    //                       return Padding(
-                    //                         padding: ResponsiveHelper.isDesktop(context)
-                    //                             ? const EdgeInsets.symmetric(vertical: 20)
-                    //                             : const EdgeInsets.symmetric(vertical: 10),
-                    //                         child: Container(
-                    //                           width: ResponsiveHelper.isDesktop(context) ? 500 : 300,
-                    //                           padding: const EdgeInsets.only(
-                    //                               right: Dimensions.paddingSizeSmall,
-                    //                               left: Dimensions.paddingSizeExtraSmall),
-                    //                           margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-                    //                           child: ItemWidget(
-                    //                             // notinStore: true,
-                    //                             // Recomended: true,
-                    //                             isStore: false,
-                    //                             item: storeController.recommendedItemModel!.items![index],
-                    //                             store: null,
-                    //                             index: index,
-                    //                             length: storeController.recommendedItemModel!.items!.length,
-                    //                             isCampaign: false,
-                    //                             inStore: true,
-                    //                           ),
-                    //                         ),
-                    //                       );
-                    //                     },
-                    //                   ),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //         )
-                    //         : const SizedBox(),
-                                  
-                    //                 ],
-                    //               ),
-                    //             ))),
-                    //       )
-                    //     : const SliverToBoxAdapter(child: SizedBox()),
+            
     
                           (storeController.categoryList!.isNotEmpty)
                         ? SliverPersistentHeader(
@@ -1574,64 +1376,7 @@ CouponCarousel(storeid: store!.id,),
                                   child: Column(
                                     children: [
     
-            //                            Row(
-            //                              children: [
-            //                            storeController.type.isNotEmpty ?     Expanded(
-            //                              child: Padding(
-            //                                padding: const EdgeInsets.only(left: 15,right: 0,bottom: 15),
-            //                                child: InkWell(
-            //                                 onTap: ()=> Get.toNamed(RouteHelper.getSearchStoreItemRoute(store!.id)),
-            //                                  child: Container(
-            //                                   height: 40,
-            //                                   // width: MediaQuery.of(context).size.width,
-            //                                   decoration: BoxDecoration(
-            //                                     borderRadius: BorderRadius.circular(15),
-            //                                     color:const Color.fromARGB(255, 244, 243, 243),
-            //                                     border: Border.all(
-            //   width: .3,
-            //   color: Colors.grey
-            // )
-    
-                                                
-    
-            //                                   ),
-    
-            //                                   child: Stack(
-            //                                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                                     children: [
-            //                                       Positioned(
-            //                                         top: 10,
-            //                                         left: 20,
-            //                                         child: SizedBox(
-            //                                           width: 200,
-            //                                           child: Text("Search in ${store!.name != null ?  store.name : "Uolo"}",
-            //                                           overflow: TextOverflow.ellipsis,maxLines: 1 ,),
-            //                                         )),
-                                                  
-            //                                       const Positioned(
-            //                                         right: 10,
-            //                                         top: 5,
-            //                                         child: Icon(Icons.search,size: 30,color: Colors.red, ))
-            //                                     ],
-            //                                   ),
-            //                                  ),
-            //                                ),
-            //                              ),
-            //                            ) : const SizedBox(),
-    
-            //                                 storeController.type.isNotEmpty ? Padding(
-            //                                   padding: const EdgeInsets.only(bottom: 12,right: 5),
-            //                                   child: VegFilterWidget2(
-            //                                                                 type: storeController.type,
-            //                                                                 onSelected: (String type) {
-            //                                                                   storeController.getStoreItemList(storeController.store!.id, 1, type, true);
-            //                                                                 },
-            //                                                             ),
-            //                                 ) : const SizedBox()
-            //                              ],
-            //                            ),
-                                    
-            //                           //  SizedBox(height: 10,),
+       
                                       SizedBox(
                                         height: 30,
                                         child: ListView.builder(
@@ -1702,274 +1447,7 @@ CouponCarousel(storeid: store!.id,),
     
     
     
-    
-    // SliverToBoxAdapter(child: 
-    // Container(
-    //   height: 100,
-    //   child: GetBuilder<CouponController>(builder: (couponController){
-    //           List filteredData = couponController.couponList!.where((data) {
-    //         return data.id == store!.id;
-    //   }).toList();
-    //       return ListView.builder(
-            
-    //         itemCount: filteredData.length,
-    //        scrollDirection: Axis.horizontal
-    //         ,
-    //         itemBuilder: (context ,index) {
-    //             print("printing${ filteredData.toList()}");
-    //           return Container(
-          
-    //             child: Container(
-    //               width: 100,
-    //               child: Center(child: Text(" data${filteredData[index]}"))),
-    //           );
-    //         }
-    //       );
-    //     }
-    //   ),
-    // ),),
 
-//     SliverToBoxAdapter(
-//   child: Padding(
-//     padding: const EdgeInsets.all(10),
-//     child: Container(
-//         decoration: BoxDecoration(
-//           // color: Colors.blue,
-//           borderRadius: BorderRadius.circular(
-//             10
-//           ),
-//           border: Border.all(
-//             color: Colors.black26
-//           ),
-//         ),
-//       child: Row(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-
-//           Padding(
-//             padding: const EdgeInsets.only(left: 00,right: 00),
-//             child: ClipRRect(
-//               borderRadius: BorderRadius.circular(10),
-//               child: Container(
-//                 // width: m00,
-//                  // Set a specific width for the red container
-//                 color: Colors.transparent,
-//                 child: GetBuilder<CouponController>(
-//                   builder: (couponController) {
-//                     if (couponController.couponList == null || couponController.couponList!.isEmpty) {
-//                       return Center(child: Text("No coupons available", style: TextStyle(fontSize: 16)));
-//                     }
-            
-//                     if (store == null) {
-//                       return Center(child: Text("Store information is not available", style: TextStyle(fontSize: 16)));
-//                     }
-            
-//                     List filteredData = couponController.couponList!.where((data) {
-//                       return data.storeId == store!.id; 
-//                     }).toList();
-            
-//                     if (filteredData.isEmpty) {
-//                       return Center(child: Text("No coupons available for this store", style: TextStyle(fontSize: 16)));
-//                     }
-            
-//                     return Container(
-//                       // width: 300,
-//                       height: 100,
-//                       child: CarouselSlider.builder(
-//                         itemCount: filteredData.length,
-//                         itemBuilder: (context, index, realIndex) {
-//                           return Container(
-//                             // width: 250, // Width of each slider item
-//                             margin: EdgeInsets.symmetric(horizontal: 5), // Margin between items
-//                             decoration: BoxDecoration(
-//                               // color: Colors.blueAccent, 
-//                               borderRadius: BorderRadius.circular(15), 
-//                               // boxShadow: [
-//                               //   BoxShadow(
-//                               //     color: Colors.black26,
-//                               //     blurRadius: 5,
-//                               //     offset: Offset(0, 3),
-//                               //   ),
-//                               // ],
-//                             ),
-//                             child: Column(
-//                               children: [
-
-//                                 Text("Flat ${filteredData[index]}"),
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(20.0),
-//                                   child: Text(
-//                                     "Coupon: ${filteredData[index].code}", 
-//                                     style: TextStyle(
-//                                       color: Colors.black,
-//                                       fontSize: 18,
-//                                       fontWeight: FontWeight.bold,
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           );
-//                         },
-//                         options: CarouselOptions(
-//                           pauseAutoPlayInFiniteScroll: false,
-//                           pageSnapping: true,
-//                           height: 80, 
-//                           autoPlay: true,
-//                           enlargeCenterPage: false,
-//                           aspectRatio: 16 / 9,
-//                           viewportFraction: 1,
-//                         ),
-//                       ),
-//                     );
-//                   },
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-//   ),
-// ),
-    
-//     SliverToBoxAdapter(
-//   child: ClipRRect(
-
-//     borderRadius: BorderRadius.circular(10),
-
-//     child: Container(
-//       // height: 200,
-//       width: 10,
-//       color: Colors.red,
-//       child: GetBuilder<CouponController>(
-//         builder: (couponController) {
-      
-//           if (couponController.couponList == null || couponController.couponList!.isEmpty) {
-//             return Center(child: Text("No coupons available", style: TextStyle(fontSize: 16)));
-//           }
-    
-         
-//           if (store == null) {
-//             return Center(child: Text("Store information is not available", style: TextStyle(fontSize: 16)));
-//           }
-    
-          
-//           List filteredData = couponController.couponList!.where((data) {
-//               print("Coupen id :${data.storeId} store id:${store!.id} ");
-//             return data.storeId == store!.id; 
-//           }).toList();
-    
-       
-//           if (filteredData.isEmpty) {
-    
-          
-//             return Center(child: Text("No coupons available for this store", style: TextStyle(fontSize: 16)));
-//           }
-    
-//           return CarouselSlider.builder(
-//             itemCount: filteredData.length,
-//             itemBuilder: (context, index, realIndex) {
-//               return Container(
-//                 width: 250,
-//                 margin: EdgeInsets.symmetric(horizontal: 10),
-//                 decoration: BoxDecoration(
-//                   color: Colors.blueAccent, 
-//                   borderRadius: BorderRadius.circular(15), 
-//                   boxShadow: [
-//                     BoxShadow(
-//                       color: Colors.black26,
-//                       blurRadius: 5,
-//                       offset: Offset(0, 3),
-//                     ),
-//                   ],
-//                 ),
-//                 child: Center(
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(20.0),
-//                     child: Text(
-//                       "Coupon: ${filteredData[index].code}", 
-//                       style: TextStyle(
-//                         color: Colors.white,
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               );
-//             },
-//             options: CarouselOptions(
-//               pauseAutoPlayInFiniteScroll: false,
-    
-//               pageSnapping: true,
-//               height: 80,
-//               autoPlay: true,
-//               enlargeCenterPage: false,
-//               aspectRatio: 16 / 9,
-//               viewportFraction: 0.9,
-//             ),
-//           );
-//         },
-//       ),
-//     ),
-//   ),
-// ),
-    
-  //  SliverToBoxAdapter(
-  //     child: Container(
-  //       height: 200, 
-  //       child: GetBuilder<CouponController>(
-  //         builder: (couponController) {
-  //           List filteredData = couponController.couponList!.where((data) {
-  //             return data.id  == store!.id ;
-  //           }).toList();
-
-  //           return filteredData.isEmpty  ? SizedBox() : CarouselSlider.builder(
-  //             itemCount: filteredData.length,
-  //             itemBuilder: (context, index, realIndex) {
-  //               return Container(
-  //                 margin: EdgeInsets.symmetric(horizontal: 10),
-  //                 decoration: BoxDecoration(
-  //                   color: Colors.blueAccent, 
-  //                   borderRadius: BorderRadius.circular(15), 
-  //                   boxShadow: [
-  //                     BoxShadow(
-  //                       color: Colors.black26,
-  //                       blurRadius: 5,
-  //                       offset: Offset(0, 3),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 child: Center(
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.all(20.0),
-  //                     child: Text(
-  //                       "Coupon: ${filteredData[index].code}", 
-  //                       style: TextStyle(
-  //                         color: Colors.white,
-  //                         fontSize: 18,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               );
-  //             },
-  //             options: CarouselOptions(
-  //               height: 200,
-  //               autoPlay: true,
-  //               enlargeCenterPage: true,
-  //               aspectRatio: 16 / 9,
-  //               viewportFraction: 0.8,
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     ),
-  //   ),
-
-    
     
                     ResponsiveHelper.isDesktop(context) ? const SliverToBoxAdapter(child:SizedBox()) :
               SliverToBoxAdapter(

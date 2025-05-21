@@ -352,6 +352,8 @@ class _MyFavoriteState extends State<MyFavorite> with SingleTickerProviderStateM
               children: [
                 // Dishes Tab
                 GetBuilder<FavouriteController>(builder: (favouriteController) {
+
+                  // List<Item?>? data = favouriteController.wishItemList.removeWhere((element) =>  element.store!.noservicerestriction == 0 &&  element.store!.distancelimit == 0  );
                   List<Item?>? items = favouriteController.wishItemList;
 
                   if (items == null || items.isEmpty) {

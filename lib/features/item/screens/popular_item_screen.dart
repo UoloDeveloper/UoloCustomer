@@ -50,7 +50,7 @@ class _PopularItemScreenState extends State<PopularItemScreen> {
           appBar: CustomAppBar(
             key: scaffoldKey,
             title: widget.isPopular ? isShop ? 'most_popular_products'.tr : 'most_popular_items'.tr : widget.isSpecial ? 'special_offer'.tr : 'best_reviewed_item'.tr,
-            showCart: true,
+            // showCart: ,
             type: widget.isPopular ? itemController.popularType : widget.isSpecial ? itemController.discountedType : itemController.reviewType,
             onVegFilterTap: (String type) {
               if(widget.isPopular) {

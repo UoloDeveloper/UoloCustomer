@@ -31,14 +31,23 @@ class FavouriteService implements FavouriteServiceInterface {
     for (var zone in AddressHelper.getUserAddressFromSharedPref()!.zoneData!) {
       for (var module in zone.modules!) {
         if(module.id == item.moduleId){
-          if(module.pivot!.zoneId == item.zoneId){
-            wishItemList.add(item);
+          if(module.pivot!.zoneId == item.zoneId ){
+             if (item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0 ) {
+              //  wishItemList.add(item);
+              print('item name: ${item.storeName}  wishItemList: ${item.store!.noservicerestriction} ${item.store!.distancelimit}');
+             } 
+             else{
+ wishItemList.add(item);
+             }
+           
           }
         }
       }
     }
     return wishItemList;
   }
+
+
 
   @override
   List<int?> wishItemIdList (Item item) {

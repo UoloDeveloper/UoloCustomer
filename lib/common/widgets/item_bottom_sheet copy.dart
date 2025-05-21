@@ -523,7 +523,8 @@ class _ItemBottomSheetState extends State<ItemBottomSheet1> {
 
                                     if(widget.isCampaign) {
                                       Get.toNamed(RouteHelper.getCheckoutRoute('campaign'), arguments: CheckoutScreen(
-                                        storeId: null, fromCart: false, cartList: [cartModel],
+                                        storeId: null,
+                                         fromCart: false, cartList: [cartModel],
                                       ));
                                     }else {
                                       if (Get.find<CartController>().existAnotherStoreItem(

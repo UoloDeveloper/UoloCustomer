@@ -160,9 +160,9 @@ class ModuleView extends StatelessWidget {
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: robotoMedium.copyWith(
-                                                      fontSize: 20,
+                                                      fontSize: 19,
                                                       fontWeight:
-                                                          FontWeight.w800,
+                                                          FontWeight.w700,
                                                       color:
                                                           const Color.fromARGB(
                                                               214, 48, 46, 46)),
@@ -380,7 +380,7 @@ class ModuleView extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(15),
                   bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
-              child: Image.asset("assets/image/static_banner/uolo app 2 copy 2.jpg",fit: BoxFit.cover,)),
+              child: Image.asset("assets/image/static_banner/Uolo savory Banner 00022.png",fit: BoxFit.cover,)),
 
             SizedBox(
               height: 10,

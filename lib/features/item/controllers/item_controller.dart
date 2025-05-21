@@ -160,10 +160,12 @@ class ItemController extends GetxController implements GetxService {
       List<Item>? items;
       if(dataSource == DataSourceEnum.local) {
         items = await itemServiceInterface.getPopularItemList(type, dataSource);
+        items!.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
         _preparePopularItems(items);
         getPopularItemList(false, type, notify, dataSource: DataSourceEnum.client, fromRecall: true);
       } else {
         items = await itemServiceInterface.getPopularItemList(type, dataSource);
+        items!.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
         _preparePopularItems(items);
       }
 
@@ -173,6 +175,7 @@ class ItemController extends GetxController implements GetxService {
   _preparePopularItems(List<Item>? items) {
     if (items != null) {
       _popularItemList = [];
+      
       _popularItemList!.addAll(items);
       _isLoading = false;
     }
@@ -227,6 +230,7 @@ class ItemController extends GetxController implements GetxService {
         items = await itemServiceInterface.getDiscountedItemList(type, dataSource);
         if (items != null) {
           _discountedItemList = [];
+          items.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
           _discountedItemList!.addAll(items);
           _isLoading = false;
         }
@@ -236,6 +240,7 @@ class ItemController extends GetxController implements GetxService {
         items = await itemServiceInterface.getDiscountedItemList(type, dataSource);
         if (items != null) {
           _discountedItemList = [];
+          items.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
           _discountedItemList!.addAll(items);
           _isLoading = false;
         }

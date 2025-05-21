@@ -533,7 +533,7 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
   bool _isOrderPlaced = false;
   bool _isOrderCanceled = false;
   bool _isTimerPaused = false;
-  int _progressDuration = 4; // 10 seconds
+  int _progressDuration = 4; 
   double _progressValue = 0.0;
   Timer? _timer;
   int _currentStep = 0;
@@ -580,7 +580,7 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
 
   void _startTimer() {
     const interval = Duration(milliseconds: 100);
-    int totalSteps = _progressDuration * 10;
+    int totalSteps = _progressDuration * 6;
 
     _timer = Timer.periodic(interval, (Timer timer) {
       if (_currentStep >= totalSteps || _isOrderCanceled || _isTimerPaused) {

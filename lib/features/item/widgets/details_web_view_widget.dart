@@ -270,7 +270,8 @@ class DetailsWebViewWidget extends StatelessWidget {
                                 onPressed: (!Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! || stock! > 0) ?  () async {
                                   if(itemController.item!.availableDateStarts != null) {
                                     Get.toNamed(RouteHelper.getCheckoutRoute('campaign'), arguments: CheckoutScreen(
-                                      storeId: null, fromCart: false, cartList: [cartModel],
+                                      storeId: null,
+                                       fromCart: false, cartList: [cartModel],
                                     ));
                                   }else if (Get.find<CartController>().existAnotherStoreItem(cartModel!.item!.storeId, Get.find<SplashController>().module!.id)) {
                                     Get.dialog(ConfirmationDialog(

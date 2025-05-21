@@ -197,7 +197,9 @@ class SearchController extends GetxController implements GetxService {
   void getSuggestedItems() async {
     List<Item>? suggestedItemList = await searchServiceInterface.getSuggestedItems();
     if(suggestedItemList != null) {
+
       _suggestedItemList = [];
+suggestedItemList.removeWhere((element) => element.store!.noservicerestriction == 0 && element.store!.distancelimit == 0);
       _suggestedItemList!.addAll(suggestedItemList);
     }
     update();
@@ -258,13 +260,88 @@ class SearchController extends GetxController implements GetxService {
   //     update();
   //   }
   // }
-void searchData(String? query, bool fromHome) async {
-  // Check if the query is valid and not already processed
-  if (query != null && query.isNotEmpty && 
-      ((_isStore && query != _storeResultText) || 
-      (!_isStore && (query != _itemResultText || fromHome)))) {
+// void searchData(String? query, bool fromHome) async {
+//   // Check if the query is valid and not already processed
+//   if (query != null && query.isNotEmpty && 
+//       ((_isStore && query != _storeResultText) || 
+//       (!_isStore && (query != _itemResultText || fromHome)))) {
     
-    // Update search parameters
+//     // Update search parameters
+//     _searchHomeText = query;
+//     _searchText = query;
+//     _rating = -1;
+//     _storeRating = -1;
+//     _upperValue = 0;
+//     _lowerValue = 0;
+
+//     // Clear previous search results
+//     if (_isStore) {
+//       _searchStoreList = null;
+//       _allStoreList = null;
+//     } else {
+//       _searchItemList = null;
+//       _allItemList = null;
+//     }
+
+//     // Update search history
+//     if (!_historyList.contains(query)) {
+//       _historyList.insert(0, query);
+//     }
+//     searchServiceInterface.saveSearchHistory(_historyList);
+//     _isSearchMode = false;
+
+//     if (!fromHome) {
+//       update();
+//     }
+
+//     // Fetch search data
+//     try {
+//       Response response = await searchServiceInterface.getSearchData(query, _isStore);
+//       if (response.statusCode == 200) {
+//         if (_isStore) {
+//           _storeResultText = query;
+//           _searchStoreList = [];
+//           _allStoreList = [];
+          
+//           // Parse response once
+//           var storeData = StoreModel.fromJson(response.body);
+//           storeData.stores!.removeWhere((element) => element.noservicerestriction == 0 && element.distancelimit == 0);
+          
+//           _searchStoreList!.addAll(storeData.stores!);
+//           _allStoreList!.addAll(storeData.stores!);
+//         } else {
+//           _itemResultText = query;
+//           _searchItemList = [];
+//           _allItemList = [];
+          
+//           // Parse response once
+//           var itemData = ItemModel.fromJson(response.body);
+//                 itemData.items!.removeWhere((element) => element.store!.noservicerestriction == 0 && element.store!.distancelimit == 0);
+//           print(" ======================================== the search data${response.body.toString()}=========================================================");
+//           _searchItemList!.addAll(itemData.items!);
+//           _allItemList!.addAll(itemData.items!);
+//         }
+//       } else {
+//         // Handle unexpected status codes
+//         print('Error: Received status code ${response.statusCode}');
+//       }
+//     } catch (e) {
+//       // Handle exceptions (e.g., network errors)
+//       print('Error fetching search data: $e');
+//     }
+
+//     update();
+//   }
+// }
+  
+  
+  void searchData(String? query, bool fromHome) async {
+
+  if (query != null &&
+      query.isNotEmpty &&
+      ((_isStore && query != _storeResultText) ||
+          (!_isStore && (query != _itemResultText || fromHome)))) {
+   
     _searchHomeText = query;
     _searchText = query;
     _rating = -1;
@@ -272,16 +349,15 @@ void searchData(String? query, bool fromHome) async {
     _upperValue = 0;
     _lowerValue = 0;
 
-    // Clear previous search results
+
     if (_isStore) {
-      _searchStoreList = null;
-      _allStoreList = null;
+      _searchStoreList = [];
+      _allStoreList = [];
     } else {
-      _searchItemList = null;
-      _allItemList = null;
+      _searchItemList = [];
+      _allItemList = [];
     }
 
-    // Update search history
     if (!_historyList.contains(query)) {
       _historyList.insert(0, query);
     }
@@ -292,7 +368,7 @@ void searchData(String? query, bool fromHome) async {
       update();
     }
 
-    // Fetch search data
+
     try {
       Response response = await searchServiceInterface.getSearchData(query, _isStore);
       if (response.statusCode == 200) {
@@ -300,29 +376,55 @@ void searchData(String? query, bool fromHome) async {
           _storeResultText = query;
           _searchStoreList = [];
           _allStoreList = [];
-          
-          // Parse response once
-          var storeData = StoreModel.fromJson(response.body);
-          storeData.stores!.removeWhere((element) => element.noservicerestriction == 0 && element.distancelimit == 0);
-          
-          _searchStoreList!.addAll(storeData.stores!);
-          _allStoreList!.addAll(storeData.stores!);
+
+
+          final storeData = StoreModel.fromJson(response.body);
+          if (storeData.stores == null || storeData.stores!.isEmpty) {
+            print('No stores found in response');
+            update();
+            return;
+          }
+
+          final filteredStores = storeData.stores!.where((element) {
+            return !(element.noservicerestriction == 0 && element.distancelimit == 0);
+          }).toList();
+
+     
+          _searchStoreList!.addAll(filteredStores);
+          _allStoreList!.addAll(filteredStores);
+          print('Filtered ${filteredStores.length} stores');
         } else {
           _itemResultText = query;
           _searchItemList = [];
           _allItemList = [];
-          
-          // Parse response once
-          var itemData = ItemModel.fromJson(response.body);
-          _searchItemList!.addAll(itemData.items!);
-          _allItemList!.addAll(itemData.items!);
+
+       
+          final itemData = ItemModel.fromJson(response.body);
+          if (itemData.items == null || itemData.items!.isEmpty) {
+            print('No items found in response');
+            update();
+            return;
+          }
+
+        
+          final filteredItems = itemData.items!.where((element) {
+            final store = element.store;
+            print('=======================================Store: ${store?.name}, noservicerestriction: ${store?.noservicerestriction}, distancelimit: ${store?.distancelimit}===========================================================');
+            if (store == null) return false; 
+            return !(store.noservicerestriction == 0 && store.distancelimit == 0);
+          }).toList();
+
+        
+          _searchItemList!.addAll(filteredItems);
+          _allItemList!.addAll(filteredItems);
+          print('Filtered ${filteredItems.length} items');
         }
       } else {
-        // Handle unexpected status codes
+        
         print('Error: Received status code ${response.statusCode}');
       }
     } catch (e) {
-      // Handle exceptions (e.g., network errors)
+    
       print('Error fetching search data: $e');
     }
 
@@ -399,6 +501,7 @@ void searchData(String? query, bool fromHome) async {
     List<String> items = <String>[];
     _searchSuggestionModel = await searchServiceInterface.getSearchSuggestions(searchText);
     if(_searchSuggestionModel != null) {
+      
       for (var item in _searchSuggestionModel!.items!) {
         items.add(item.name!);
       }

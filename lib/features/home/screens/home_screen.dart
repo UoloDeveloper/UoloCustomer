@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
 import 'package:sixam_mart/common/widgets/card_design/store_card.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
+import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
 import 'package:sixam_mart/common/widgets/endscreendialog_widget.dart';
 import 'package:sixam_mart/features/banner/controllers/banner_controller.dart';
 import 'package:sixam_mart/features/brands/controllers/brands_controller.dart';
@@ -14,6 +15,7 @@ import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/home/controllers/advertisement_controller.dart';
 import 'package:sixam_mart/features/home/controllers/home_controller.dart';
 import 'package:sixam_mart/features/home/notdeliverablescreen.dart';
+import 'package:sixam_mart/features/home/screens/modules/popular_itemscreen.dart';
 import 'package:sixam_mart/features/home/screens/videobanner.dart';
 import 'package:sixam_mart/features/home/widgets/all_store_filter_widget.dart';
 import 'package:sixam_mart/features/home/widgets/cashback_logo_widget.dart';
@@ -83,6 +85,7 @@ class HomeScreen extends StatefulWidget {
     }
     if(Get.find<SplashController>().module != null && !Get.find<SplashController>().configModel!.moduleConfig!.module!.isParcel!) {
       Get.find<BannerController>().getBannerList(reload);
+            await Get.find<StoreController>().getLatestStoreList(true, 'all', false);
       Get.find<StoreController>().getRecommendedStoreList();
       if(Get.find<SplashController>().module!.moduleType.toString() == AppConstants.grocery) {
         Get.find<FlashSaleController>().getFlashSale(reload, false);
@@ -113,6 +116,7 @@ class HomeScreen extends StatefulWidget {
       Get.find<StoreController>().getStoreList(1, reload);
       Get.find<AdvertisementController>().getAdvertisementList();
     }
+
     if(AuthHelper.isLoggedIn()) {
       // Get.find<StoreController>().getVisitAgainStoreList(fromModule: fromModule);
       await Get.find<ProfileController>().getUserInfo();
@@ -408,7 +412,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       alignment: Alignment.topCenter,
                       child: Stack(
                         children: [
-                          VideoContainer( link: "assets/image/static_banner/videobanner.mp4",),
+                         CustomInkWell(
+                          onTap: (){
+                            if (isFood) {
+                              Get.to( Popular());
+                            } 
+                            // else if (isGrocery) {
+                            //   Get.toNamed(RouteHelper.getGroceryCategoryRoute());
+                            // } else if (isPharmacy) {
+                            //   Get.toNamed(RouteHelper.getPharmacyCategoryRoute());
+                            // } else if (isShop) {
+                            //   Get.toNamed(RouteHelper.getShopCategoryRoute());
+                            // }
+                          },
+                          child: VideoContainer( isimage: true,home: showMobileModule,)),
 
                             //  if (!showMobileModule)
                                 Padding(
@@ -669,9 +686,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                             
                                   for (int index = 0;
-                                  //  index < cartController.cartList.length  ; 
+                             
                                   index < min(cartController.cartList.length , 3);
-                                  //  index < min(cartController.cartList.length, 3);
+                               
                                       index++) ...[
                                     Positioned(
                                       left: index * 20,

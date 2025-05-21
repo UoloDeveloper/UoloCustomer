@@ -321,7 +321,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
           mainAxisSpacing: 0.10,
           childAspectRatio: 0.65,
         ),
-        itemCount: item != null ? item!.length : 0, // Check if item is null
+        itemCount: item != null ? item!.length : 0, 
         itemBuilder: (context, index) {
           return ItemCard(item: item![index], isFood: false, isShop: false, width: 180);
         },

@@ -50,7 +50,7 @@ class CouponSection extends StatelessWidget {
                 
                 const SizedBox(height: Dimensions.paddingSizeSmall),
                   
-                Row( children: [
+          discount <= 0 ?  SizedBox() :     Row( children: [
           
                     SvgPicture.asset(
                       Images.dltick,

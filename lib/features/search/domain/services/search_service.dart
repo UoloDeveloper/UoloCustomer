@@ -39,7 +39,9 @@ class SearchService implements SearchServiceInterface {
   @override
   List<Item>? sortItemSearchList( List<Item>? allItemList, double upperValue, double lowerValue, int rating, bool veg, bool nonVeg, bool isAvailableItems, bool isDiscountedItems, int sortIndex) {
     List<Item>? searchItemList= [];
+    allItemList!.removeWhere((element) => element.store!.noservicerestriction == 0 && element.store!.noservicerestriction == 0);
     searchItemList.addAll(allItemList!);
+    // searchItemList.iremoveWhere((product) => produc);
     if(upperValue > 0) {
       searchItemList.removeWhere((product) => product.price! <= lowerValue || product.price! > upperValue);
     }

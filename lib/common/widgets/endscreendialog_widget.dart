@@ -31,7 +31,7 @@ class HungerFixWidget extends StatelessWidget {
           
               fontSize: 60,
               fontWeight: FontWeight.bold,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 142, 141, 141),
             ),
           ),
         ),
@@ -42,7 +42,7 @@ class HungerFixWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 40,
               fontWeight: FontWeight.bold,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 142, 141, 141),
             ),
           ),
         ),
@@ -55,7 +55,7 @@ class HungerFixWidget extends StatelessWidget {
                   text: "Powered by ",
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey,
+                    color: Color.fromARGB(255, 142, 141, 141),
                   ),
                 ),
                 TextSpan(
@@ -76,7 +76,7 @@ class HungerFixWidget extends StatelessWidget {
             "(Kerala Hotel & Restaurant Association)",
             style: TextStyle(
               fontSize: 14,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 142, 141, 141),
             ),
           ),
         ),

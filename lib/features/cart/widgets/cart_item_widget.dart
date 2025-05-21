@@ -435,27 +435,27 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
               
               children: [
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault + 2),
-                        child: CustomImage(
-                          image: '${cart.item!.imageFullUrl}',
-                          height: ResponsiveHelper.isDesktop(context) ? 90 : 40, width: ResponsiveHelper.isDesktop(context) ? 90 : 40, fit: BoxFit.cover,
-                        ),
-                      ),
-                      isAvailable ? const SizedBox() : Positioned(
-                        top: 0, left: 0, bottom: 0, right: 0,
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), color: Colors.black.withOpacity(0.6)),
-                          child: Text('not_available_now_break'.tr, textAlign: TextAlign.center, style: robotoRegular.copyWith(
-                            color: Colors.white, fontSize: 8,
-                          )),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Stack(
+                  //   children: [
+                  //     ClipRRect(
+                  //       borderRadius: BorderRadius.circular(Dimensions.radiusDefault + 2),
+                  //       child: CustomImage(
+                  //         image: '${cart.item!.imageFullUrl}',
+                  //         height: ResponsiveHelper.isDesktop(context) ? 90 : 40, width: ResponsiveHelper.isDesktop(context) ? 90 : 40, fit: BoxFit.cover,
+                  //       ),
+                  //     ),
+                  //     isAvailable ? const SizedBox() : Positioned(
+                  //       top: 0, left: 0, bottom: 0, right: 0,
+                  //       child: Container(
+                  //         alignment: Alignment.center,
+                  //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radiusSmall), color: Colors.black.withOpacity(0.6)),
+                  //         child: Text('not_available_now_break'.tr, textAlign: TextAlign.center, style: robotoRegular.copyWith(
+                  //           color: Colors.white, fontSize: 8,
+                  //         )),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(width: Dimensions.paddingSizeSmall),
 
                   Expanded(

@@ -511,38 +511,7 @@ return Container(
                                                       ),
                             )  ,
                         
-                          // isAvailable ? const SizedBox() :  Container(
-                          //     height: widget.imageHeight ?? (desktop ? 120 :  widget.Recomended ? 120 : 145),
-                          //   width: widget.imageWidth ?? (desktop ? 200 :  widget.Recomended ? 120 : 145),
-                          //   color: Colors.black.withOpacity(.6),
-                          //   child: Center(
-                          //     child: Column(
-                          //       crossAxisAlignment: CrossAxisAlignment.center,
-                          //       mainAxisAlignment: MainAxisAlignment.center,
-                          //       children: [
-                        
-                          //         Text(
-                          //           'Not Available',
-                          //           style: robotoRegular.copyWith(
-                          //             fontSize: 12,
-                          //             color: Colors.white,
-                                      
-                          //           ),
-                          //           textAlign: TextAlign.center,
-                          //         ),
-                          //         Text(
-                          //           'available@ $startTime - $EndTime',
-                          //           style: robotoRegular.copyWith(
-                          //             fontSize: 8,
-                          //             color: Colors.white,
-                                      
-                          //           ),
-                          //           textAlign: TextAlign.center,
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
+                
                        
                        
                         ],
@@ -659,41 +628,7 @@ return Container(
                         
                           const SizedBox(height: 5),
                       
-                          // // Rating Section
-                          // if (!widget.isStore &&
-                          //     widget.item?.ratingCount != null &&
-                          //     widget.item!.ratingCount! > 0)
-                          //   Align(
-                          //     alignment: Alignment.topLeft,
-                          //     child: Row(
-                          //       crossAxisAlignment: CrossAxisAlignment.start,
-                          //       children: [
-                          //         SvgPicture.asset(
-                          //           Images.foodratingstar,
-                          //           height: 16,
-                          //           width: 16,
-                          //           fit: BoxFit.contain,
-                          //         ),
-                          //         const SizedBox(
-                          //             width: Dimensions.paddingSizeExtraSmall),
-                          //         Text(
-                          //           widget.item!.avgRating!.toStringAsFixed(1),
-                          //           style: robotoMedium.copyWith(
-                          //               fontSize: Dimensions.fontSizeSmall),
-                          //         ),
-                          //         const SizedBox(
-                          //             width: Dimensions.paddingSizeExtraSmall),
-                          //         Text(
-                          //           '(${widget.item!.ratingCount})',
-                          //           style: robotoRegular.copyWith(
-                          //             fontSize: Dimensions.fontSizeSmall,
-                          //             color: Theme.of(context).hintColor,
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                      
+                     
                              GetBuilder<FavouriteController>(
                                 builder: (favouriteController) {
                                   bool isWished =

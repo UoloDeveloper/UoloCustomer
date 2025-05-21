@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sixam_mart/common/widgets/custom_image.dart';
+import 'package:sixam_mart/common/widgets/custom_loader.dart';
 import 'package:sixam_mart/common/widgets/footer_view.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
@@ -120,7 +121,9 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
             return;
           }
         },
-        child: Scaffold(
+        child:
+         
+         Scaffold(
           backgroundColor: Theme.of(context).cardColor,
           appBar: (ResponsiveHelper.isDesktop(context) ? const WebMenuBar() : AppBar(
             backgroundColor: Theme.of(context).cardColor,
@@ -215,7 +218,12 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
             ],
           )),
           endDrawer: const MenuDrawer(),endDrawerEnableOpenDragGesture: false,
-          body:  ResponsiveHelper.isDesktop(context) ?  SingleChildScrollView(
+          body:    catController.isLoading ? Center(
+            child: Padding(
+              padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+              child: CustomLoaderWidget(),
+            ),
+          ) : ResponsiveHelper.isDesktop(context) ?  SingleChildScrollView(
             child:  FooterView(
               child: Center(child: SizedBox(
                 width: Dimensions.webMaxWidth,

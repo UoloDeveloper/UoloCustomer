@@ -175,6 +175,7 @@ class CategoryController extends GetxController implements GetxService {
     update();
   }
   void getSubCategoryList(String? categoryID) async {
+     _isLoading = true;
     _subCategoryIndex = 0;
     _subCategoryList = null;
     _categoryItemList = null;
@@ -185,6 +186,9 @@ class CategoryController extends GetxController implements GetxService {
       _subCategoryList!.addAll(subCategoryList);
       getCategoryItemList(categoryID, 1, 'all', false);
     }
+
+     _isLoading = false;
+    update();
   }
 
   void setSubCategoryIndex(int index, String? categoryID) {
@@ -197,6 +201,7 @@ class CategoryController extends GetxController implements GetxService {
   }
 
   void getCategoryItemList(String? categoryID, int offset, String type, bool notify) async {
+   
     _offset = offset;
     if(offset == 1) {
       if(_type == type) {
@@ -213,10 +218,12 @@ class CategoryController extends GetxController implements GetxService {
       if (offset == 1) {
         _categoryItemList = [];
       }
+      categoryItem.items!.removeWhere((element) =>  element.store!.noservicerestriction == 0 &&  element.store!.distancelimit == 0  );
       _categoryItemList!.addAll(categoryItem.items!);
       _pageSize = categoryItem.totalSize;
       _isLoading = false;
     }
+   
     update();
   }
 

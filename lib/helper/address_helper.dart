@@ -28,6 +28,7 @@ class AddressHelper {
     AddressModel? addressModel;
     try {
       addressModel = AddressModel.fromJson(jsonDecode(sharedPreferences.getString(AppConstants.userAddress)!));
+      print('====================================== AddressModel: ${addressModel.toJson()}=========================================================');
     }catch(e) {
       if(!GetPlatform.isWeb) {
         debugPrint('Address Catch exception : $e');

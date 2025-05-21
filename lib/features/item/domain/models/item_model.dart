@@ -5,6 +5,7 @@ import 'package:sixam_mart/features/item/domain/models/basic_medicine_model.dart
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/basic_medicine_model.dart';
+import 'package:sixam_mart/features/store/domain/models/store_model.dart';
 
 class ItemModel {
   int? totalSize;
@@ -110,6 +111,8 @@ class Item {
   List<String>? allergiesName;
   List<String>? genericName;
   ZoneDataModel? zone; 
+  Store? store; 
+  
 
   Item({
     this.id,
@@ -151,6 +154,7 @@ class Item {
     this.allergiesName,
     this.genericName,
        this.zone, 
+       this.store
   });
 
   Item.fromJson(Map<String, dynamic> json) {
@@ -233,6 +237,9 @@ class Item {
     nutritionsName = json['nutritions_name']?.cast<String>();
     allergiesName = json['allergies_name']?.cast<String>();
     genericName = json['generic_name']?.cast<String>();
+    if (json['store_details'] != null) {
+      store = Store.fromJson(json['store_details']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -289,6 +296,7 @@ class Item {
     data['nutritions_name'] = nutritionsName;
     data['allergies_name'] = allergiesName;
     data['generic_name'] = genericName;
+    data['store_details'] = store != null ? store!.toJson() : null;
     return data;
   }
 }

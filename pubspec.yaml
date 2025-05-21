@@ -98,7 +98,6 @@ flutter:
     - assets/image/location_icon.svg
     - assets/animations/
     - assets/success-1-6297.mp3
-    - assets/image/static_banner/videobanner.mp4
 
   fonts:
     - family: Poppins

@@ -329,7 +329,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                           if(!Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! || stock! > 0) {
                             if(itemController.item!.availableDateStarts != null) {
                               Get.toNamed(RouteHelper.getCheckoutRoute('campaign'), arguments: CheckoutScreen(
-                                storeId: null, fromCart: false, cartList: [cartModel],
+                                storeId: null,
+                                 fromCart: false, cartList: [cartModel],
                               ));
                             }else {
                               if (cartController.existAnotherStoreItem(cartModel!.item!.storeId, Get.find<SplashController>().module == null ? Get.find<SplashController>().cacheModule!.id : Get.find<SplashController>().module!.id)) {

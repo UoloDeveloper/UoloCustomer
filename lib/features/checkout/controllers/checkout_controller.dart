@@ -141,6 +141,7 @@ class CheckoutController extends GetxController implements GetxService {
   bool get isExpand => _isExpand;
 
   Future<void> initCheckoutData(int? storeId) async {
+    _isLoading = true;
     Get.find<CouponController>().removeCouponData(false);
     clearPrevData();
     _store = await Get.find<StoreController>().getStoreDetails(Store(id: storeId), false);
@@ -148,6 +149,7 @@ class CheckoutController extends GetxController implements GetxService {
       return;
     }
     initializeTimeSlot(_store!);
+    _isLoading = false;
   }
 
   void showTipsField(){
@@ -377,63 +379,297 @@ class CheckoutController extends GetxController implements GetxService {
     }
   }
 
-  Future<String> placeOrder(PlaceOrderBodyModel placeOrderBody, int? zoneID, double amount, double? maximumCodOrderAmount, bool fromCart, bool isCashOnDeliveryActive, List<XFile>? orderAttachment, {bool isOfflinePay = false}) async {
-    List<MultipartBody>? multiParts = [];
-    for(XFile file in orderAttachment!) {
-      multiParts.add(MultipartBody('order_attachment[]', file));
-    }
-    _isLoading = true;
-    update();
+  // Future<String> placeOrder(PlaceOrderBodyModel placeOrderBody, int? zoneID, double amount, double? maximumCodOrderAmount, bool fromCart, bool isCashOnDeliveryActive, List<XFile>? orderAttachment, {bool isOfflinePay = false}) async {
+  //   List<MultipartBody>? multiParts = [];
+  //   for(XFile file in orderAttachment!) {
+  //     multiParts.add(MultipartBody('order_attachment[]', file));
+  //   }
+  //   _isLoading = true;
+  //   update();
 
-      // Get.snackbar( 
-      //         "${placeOrderBody.cart!.length} items exists in  cart", 
-      //          "Hello everyone", 
-      //          icon: Icon(Icons.person, color: Colors.white), 
-      //          snackPosition: SnackPosition.TOP, 
+  //     // Get.snackbar( 
+  //     //         "${placeOrderBody.cart!.length} items exists in  cart", 
+  //     //          "Hello everyone", 
+  //     //          icon: Icon(Icons.person, color: Colors.white), 
+  //     //          snackPosition: SnackPosition.TOP, 
                  
-      //          ); 
-    String orderID = '';
-    String userID = '';
-     print("placeOrderBody: ${placeOrderBody.toJson()}");
-    Response response = await checkoutServiceInterface.placeOrder(placeOrderBody, multiParts);
-    _isLoading = false;
+  //     //          ); 
+  //   String orderID = '';
+  //   String userID = '';
+  //    print("placeOrderBody: ${placeOrderBody.toJson()}");
+  //   Response response = await checkoutServiceInterface.placeOrder(placeOrderBody, multiParts);
+  //   _isLoading = false;
 
-   if  (response.statusCode == 406) {
-            showCustomSnackBar(response.statusText,);
-            Get.back();
-               Get.back();
-   }
+  //  if  (response.statusCode == 406) {
+  //           showCustomSnackBar(response.statusText,);
+  //           Get.back();
+  //              Get.back();
+  //  }
+
+  //   if (response.statusCode == 200) {
+  //     String? message = response.body['message'];
+  //     orderID = response.body['order_id'].toString();
+  //     if(response.body['user_id'] != null) {
+  //       userID = response.body['user_id'].toString();
+  //     }
+
+  //     if(!isOfflinePay) {
+  //       callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!, userID);
+  //     } else {
+  //       Get.find<CartController>().getCartDataOnline();
+  //     }
+  //     _orderAttachment = null;
+  //     _rawAttachment = null;
+  //     if (kDebugMode) {
+  //       print('-------- Order placed successfully $orderID ----------');
+  //     }
+  //   } else {
+
+  //     if(!isOfflinePay) {
+  //       callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber, userID);
+  //     } else {
+  //       showCustomSnackBar(response.statusText);
+  //     }
+  //   }
+  //   update();
+
+  //   return orderID;
+  // }
+
+
+// Future<String> placeOrder(
+//   PlaceOrderBodyModel placeOrderBody,
+//   int? zoneID,
+//   double amount,
+//   double? maximumCodOrderAmount,
+//   bool fromCart,
+//   bool isCashOnDeliveryActive,
+//   List<XFile>? orderAttachment, {
+//   bool isOfflinePay = false,
+// }) async {
+//   _isLoading = true;
+//   update();
+
+//   try {
+
+//     final multiParts = orderAttachment?.map((file) => MultipartBody('order_attachment[]', file)).toList();
+
+//     // Log request body only in debug mode
+//     if (kDebugMode) {
+//       print("placeOrderBody: ${placeOrderBody.toJson()}");
+//     }
+
+//     // Make API call
+//     final response = await checkoutServiceInterface.placeOrder(placeOrderBody, multiParts ?? []);
+
+//     if (response.statusCode == 200) {
+//       final orderID = response.body['order_id'].toString();
+//       final userID = response.body['user_id']?.toString() ?? '';
+//       final message = response.body['message'] as String?;
+
+//       if (!isOfflinePay) {
+//         callback(
+//           true,
+//           message,
+//           orderID,
+//           zoneID,
+//           amount,
+//           maximumCodOrderAmount,
+//           fromCart,
+//           isCashOnDeliveryActive,
+//           placeOrderBody.contactPersonNumber!,
+//           userID,
+//         );
+//       } else {
+//         Get.find<CartController>().getCartDataOnline();
+//       }
+
+//       // Clear attachments
+//       _orderAttachment = null;
+//       _rawAttachment = null;
+
+//       if (kDebugMode) {
+//         print('Order placed: $orderID');
+//       }
+//       return orderID;
+//     }
+
+//     // Handle errors
+//     final errorMessage = response.statusText ?? 'Unknown error';
+//     final userID = response.body['user_id']?.toString() ?? '';
+//     if (response.statusCode == 406) {
+//       showCustomSnackBar(errorMessage);
+//       Get.back(closeOverlays: true); // Combine navigation
+//     } else if (!isOfflinePay) {
+//       callback(
+//         false,
+//         errorMessage,
+//         '-1',
+//         zoneID,
+//         amount,
+//         maximumCodOrderAmount,
+//         fromCart,
+//         isCashOnDeliveryActive,
+//         placeOrderBody.contactPersonNumber,
+//         userID,
+//       );
+//     } else {
+//       showCustomSnackBar(errorMessage);
+//     }
+//     return '';
+//   } catch (e) {
+//     if (kDebugMode) {
+//       print('Error placing order: $e');
+//     }
+//     if (!isOfflinePay) {
+//       callback(
+//         false,
+//         'Failed to place order: $e',
+//         '-1',
+//         zoneID,
+//         amount,
+//         maximumCodOrderAmount,
+//         fromCart,
+//         isCashOnDeliveryActive,
+//         placeOrderBody.contactPersonNumber,
+//         '', 
+//       );
+//     } else {
+//       showCustomSnackBar('Failed to place order: $e');
+//     }
+//     return '';
+//   } finally {
+//     _isLoading = false;
+//     update();
+//   }
+// }
+  
+  
+  Future<String> placeOrder(
+  PlaceOrderBodyModel placeOrderBody,
+  int? zoneID,
+  double amount,
+  double? maximumCodOrderAmount,
+  bool fromCart,
+  bool isCashOnDeliveryActive,
+  List<XFile>? orderAttachment, {
+  bool isOfflinePay = false,
+}) async {
+  // Show snackbar for initialization
+  Get.snackbar('Debug: Initialization', 'Starting order placement',
+      snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
+
+  _isLoading = true;
+  update();
+
+  try {
+    // Prepare multipart files efficiently
+    // Get.snackbar('Debug: Multipart Prep', 'Preparing ${orderAttachment?.length ?? 0} attachments',
+        // snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
+    final multiParts = orderAttachment?.map((file) => MultipartBody('order_attachment[]', file)).toList();
+
+    // Log request body and show snackbar
+    if (kDebugMode) {
+      print("placeOrderBody: ${placeOrderBody.toJson()}");
+    }
+    // Get.snackbar('Debug: API Call', 'Sending order request',
+    //     snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
+
+    // Make API call
+    final response = await checkoutServiceInterface.placeOrder(placeOrderBody, multiParts ?? []);
 
     if (response.statusCode == 200) {
-      String? message = response.body['message'];
-      orderID = response.body['order_id'].toString();
-      if(response.body['user_id'] != null) {
-        userID = response.body['user_id'].toString();
-      }
+      final orderID = response.body['order_id'].toString();
+      final userID = response.body['user_id']?.toString() ?? '';
+      final message = response.body['message'] as String?;
 
-      if(!isOfflinePay) {
-        callback(true, message, orderID, zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber!, userID);
+      // Show success snackbar
+      // Get.snackbar('Debug: Success', 'Order placed successfully: $orderID',
+      //     snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
+
+      if (!isOfflinePay) {
+        callback(
+          true,
+          message,
+          orderID,
+          zoneID,
+          amount,
+          maximumCodOrderAmount,
+          fromCart,
+          isCashOnDeliveryActive,
+          placeOrderBody.contactPersonNumber!,
+          userID,
+        );
       } else {
         Get.find<CartController>().getCartDataOnline();
       }
+
+      // Clear attachments
       _orderAttachment = null;
       _rawAttachment = null;
+
       if (kDebugMode) {
-        print('-------- Order placed successfully $orderID ----------');
+        print('Order placed: $orderID');
       }
-    } else {
-
-      if(!isOfflinePay) {
-        callback(false, response.statusText, '-1', zoneID, amount, maximumCodOrderAmount, fromCart, isCashOnDeliveryActive, placeOrderBody.contactPersonNumber, userID);
-      } else {
-        showCustomSnackBar(response.statusText);
-      }
+      return orderID;
     }
+
+    // Handle errors
+    final errorMessage = response.statusText ?? 'Unknown error';
+    final userID = response.body['user_id']?.toString() ?? '';
+    // Get.snackbar('Debug: Error', 'Error occurred: $errorMessage (Status: ${response.statusCode})',
+    //     snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
+
+    if (response.statusCode == 406) {
+      showCustomSnackBar(errorMessage);
+      Get.back(closeOverlays: true);
+    } else if (!isOfflinePay) {
+      callback(
+        false,
+        errorMessage,
+        '-1',
+        zoneID,
+        amount,
+        maximumCodOrderAmount,
+        fromCart,
+        isCashOnDeliveryActive,
+        placeOrderBody.contactPersonNumber,
+        userID,
+      );
+    } else {
+      showCustomSnackBar(errorMessage);
+    }
+    return '';
+  } catch (e) {
+    // // Show exception snackbar
+    // Get.snackbar('Debug: Exception', 'Unexpected error: $e',
+    //     snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
+
+    if (kDebugMode) {
+      print('Error placing order: $e');
+    }
+    if (!isOfflinePay) {
+      callback(
+        false,
+        'Failed to place order: $e',
+        '-1',
+        zoneID,
+        amount,
+        maximumCodOrderAmount,
+        fromCart,
+        isCashOnDeliveryActive,
+        placeOrderBody.contactPersonNumber,
+        '',
+      );
+    } else {
+      showCustomSnackBar('Failed to place order: $e');
+    }
+    return '';
+  } finally {
+    _isLoading = false;
     update();
-
-    return orderID;
   }
-
+}
   Future<void> placePrescriptionOrder(int? storeId, int? zoneID, double? distance, String address, String longitude, String latitude, String note, List<XFile> orderAttachment,
       String dmTips, String deliveryInstruction, double orderAmount, double maxCodAmount, bool fromCart, bool isCashOnDeliveryActive) async {
     List<MultipartBody> multiParts = [];

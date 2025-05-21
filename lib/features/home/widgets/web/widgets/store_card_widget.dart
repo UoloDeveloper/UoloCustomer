@@ -259,7 +259,8 @@ class StoreCardWidget2 extends StatelessWidget {
     double? discount = store!.discount != null ? store!.discount!.discount : 0;
     String? discountType = store!.discount != null ? store!.discount!.discountType : 'percent';
     bool isAvailable = store!.open == 1 && store!.active!;
-double distance = (store!.distance! / 1000);
+// double distance = (store!.distance! / 1000);
+    double distance = (store!.distance ?? 0) / 1000;
 bool isbusy = store?.zone?.isbusy == 1 ?? false;
     return Padding(
       padding: const EdgeInsets.only(top: 0,bottom: 0),
