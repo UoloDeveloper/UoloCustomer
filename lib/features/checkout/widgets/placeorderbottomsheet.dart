@@ -669,7 +669,7 @@ class _PlaceorderbottomsheetState extends State<Placeorderbottomsheet> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text("Pay ${widget.total.round()} Cash on Delivery"),
+                      Text("Pay ${widget.total.round()} ${ widget.isCashOnDeliveryActive! ? "Cash on Delivery" : "Online"  }"),
                     ],
                   ) : SizedBox(),
                 //       const SizedBox(height: 10),

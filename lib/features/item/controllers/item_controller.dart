@@ -160,28 +160,52 @@ class ItemController extends GetxController implements GetxService {
       List<Item>? items;
       if(dataSource == DataSourceEnum.local) {
         items = await itemServiceInterface.getPopularItemList(type, dataSource);
-        items!.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
+        // items!.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
         _preparePopularItems(items);
         getPopularItemList(false, type, notify, dataSource: DataSourceEnum.client, fromRecall: true);
       } else {
         items = await itemServiceInterface.getPopularItemList(type, dataSource);
-        items!.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
+        // items!.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
         _preparePopularItems(items);
       }
 
     }
   }
 
-  _preparePopularItems(List<Item>? items) {
-    if (items != null) {
-      _popularItemList = [];
-      
-      _popularItemList!.addAll(items);
-      _isLoading = false;
-    }
-    update();
+  // _preparePopularItems(List<Item>? items) {
+  //   if (items != null) {
+  //     _popularItemList = [];
+  //         items!.removeWhere((item) => item.store!.noservicerestriction == 0 &&  item.store!.distancelimit == 0);
+  //     _popularItemList!.addAll(items);
+  //     _isLoading = false;
+  //   }
+  //   update();
+  // }
+void _preparePopularItems(List<Item>? items) {
+  // Initialize _popularItemList if null
+  _popularItemList ??= [];
+
+  // Clear previous items
+  _popularItemList!.clear();
+
+  if (items != null && items.isNotEmpty) {
+    // Filter items without modifying the input list
+    final filteredItems = items.where((item) {
+      // Safely check if store is non-null and conditions are met
+      if (item.store == null) return false;
+      return !(item.store!.noservicerestriction == 0 && item.store!.distancelimit == 0);
+    }).toList();
+
+    // Add filtered items to _popularItemList
+    _popularItemList!.addAll(filteredItems);
   }
 
+  // Always set loading state
+  _isLoading = false;
+
+  // Notify listeners
+  update();
+}
   Future<void> getReviewedItemList(bool reload, String type, bool notify, {DataSourceEnum dataSource = DataSourceEnum.local, bool fromRecall = false}) async {
     _reviewedType = type;
     if(reload) {

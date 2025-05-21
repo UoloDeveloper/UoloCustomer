@@ -326,7 +326,18 @@ class _CheckoutState extends State<CheckoutScreen> {
                      double tax =  _calculateTax(taxIncluded: taxIncluded, orderAmount: orderAmount, taxPercent: _taxPercent) ;
                               double additionalCharge =  Get.find<SplashController>().configModel!.additionalChargeStatus!
                       ? Get.find<SplashController>().configModel!.additionCharge! : 0;
-                              double originalCharge = _calculateOriginalDeliveryCharge(
+            
+                              if(_payableAmount != checkoutController.viewTotalPrice && checkoutController.distance != null && isLoggedIn) {
+                    _payableAmount = checkoutController.viewTotalPrice;
+                    showCashBackSnackBar();
+                              }
+                    
+                              _setSinglePaymentActive();
+
+
+                         
+
+                                  double originalCharge = _calculateOriginalDeliveryCharge(
                     store: checkoutController.store, address: AddressHelper.getUserAddressFromSharedPref()!,
                     distance: checkoutController.distance, extraCharge: checkoutController.extraCharge,
                               );
@@ -358,21 +369,12 @@ class _CheckoutState extends State<CheckoutScreen> {
                     checkoutController.setPaymentMethod(0, isUpdate: false);
                               }
                               checkoutController.setTotalAmount(total - (checkoutController.isPartialPay ? Get.find<ProfileController>().userInfoModel!.walletBalance! : 0));
-                    
-                              if(_payableAmount != checkoutController.viewTotalPrice && checkoutController.distance != null && isLoggedIn) {
-                    _payableAmount = checkoutController.viewTotalPrice;
-                    showCashBackSnackBar();
-                              }
-                    
-                              _setSinglePaymentActive();
-
-
-                                 AddressModel? selectedAddress = checkoutController.addressIndex != null 
+                            AddressModel? selectedAddress = checkoutController.addressIndex != null 
         ? address[checkoutController.addressIndex!] 
         : null;
 
 
-        if(selectedAddress != null) {
+        if   (selectedAddress != null && checkoutController.distance == null)   {
                   checkoutController.getDistanceInKM(
                     LatLng(double.parse(selectedAddress.latitude!), double.parse(selectedAddress.longitude!)),
                     LatLng(double.parse(checkoutController.store!.latitude!), double.parse(checkoutController.store!.longitude!)),
@@ -407,7 +409,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                               address
                             
                             
-                                            ); // Show the bottom sheet
+                                            ); 
                                             },
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -432,10 +434,10 @@ class _CheckoutState extends State<CheckoutScreen> {
                                                   fontWeight: FontWeight.w600,
                                                 ),),
                                                                   Container(
-                                                    height: 13, // Thickness of the divider
-                                                    width: 1, // Width of the divider
-                                                    color: const Color.fromARGB(239, 55, 55, 55), // Color of the divider
-                                                    margin: EdgeInsets.symmetric(horizontal: 8), // Space around the divider
+                                                    height: 13,
+                                                    width: 1, 
+                                                    color: const Color.fromARGB(239, 55, 55, 55), 
+                                                    margin: EdgeInsets.symmetric(horizontal: 8), 
                                                   ),
                                                                         Flexible(
                                                                           child: Text("${selectedAddress!.address}",style: TextStyle(

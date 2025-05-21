@@ -238,13 +238,13 @@ class _TooltipExampleState extends State<TooltipExample> {
            
                 const SizedBox(height: 4),
                 
-                 Text(
+              splashController.configModel!.additionalChargeStatus! ?   Text(
                   'Inclusive of GST. This fee helps us operate and maintain Uolo platform',
                   style: TextStyle(
                     fontSize: 12,
                     color: Color.fromARGB(165, 102, 102, 102),
                   ),
-                ),
+                ) : const SizedBox(),
               
               ],
             ),

@@ -147,9 +147,17 @@ class FavouriteController extends GetxController implements GetxService {
       }
 
       response.body['store'].forEach((store) async {
-        if(Get.find<SplashController>().module == null){
-          _wishStoreList!.addAll(favouriteServiceInterface.wishStoreList(store));
-          _wishStoreIdList.addAll(favouriteServiceInterface.wishStoreIdList(store));
+        if(Get.find<SplashController>().module == null){  
+           print('==========================================================STORE DATA: ${store}========================================================================');
+        if (store["no_service_restriction"] == 0 && store["distance_limit"] == 0){
+  print('item name: ${store["name"]}  wishItemList: ${store["no_service_restriction"]} ${store["distance_limit"]}');
+} else {
+  // _wishStoreList!.add(Store.fromJson(store));
+  // _wishStoreIdList.add(store['id']);
+  _wishStoreList!.addAll(favouriteServiceInterface.wishStoreList(store));
+  _wishStoreIdList.addAll(favouriteServiceInterface.wishStoreIdList(store));
+}
+      
         }else{
           Store? s;
           try{
@@ -158,8 +166,14 @@ class FavouriteController extends GetxController implements GetxService {
             debugPrint('exception create in store list create : $e');
           }
           if(s != null && Get.find<SplashController>().module!.id == s.moduleId) {
-            _wishStoreList!.add(s);
+            if (s.noservicerestriction == 0 && s.distancelimit == 0) {
+              print('item name: ${s.name}  wishItemList: ${s.noservicerestriction} ${s.distancelimit}');
+            } else {
+              // _wishStoreList!.add(s);
+                    _wishStoreList!.add(s);
             _wishStoreIdList.add(s.id);
+            }
+      
           }
         }
       });

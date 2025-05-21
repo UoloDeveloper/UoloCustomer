@@ -556,8 +556,8 @@ class CheckoutController extends GetxController implements GetxService {
   bool isOfflinePay = false,
 }) async {
   // Show snackbar for initialization
-  Get.snackbar('Debug: Initialization', 'Starting order placement',
-      snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
+  // Get.snackbar('Debug: Initialization', 'Starting order placement',
+  //     snackPosition: SnackPosition.TOP, duration: Duration(seconds: 2));
 
   _isLoading = true;
   update();
@@ -806,5 +806,28 @@ class CheckoutController extends GetxController implements GetxService {
       update();
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
