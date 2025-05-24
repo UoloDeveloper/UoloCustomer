@@ -66,13 +66,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeSmall),
                         child: SafeArea(
-                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                             !ResponsiveHelper.isDesktop(context) ? IconButton(
                               onPressed: () => Get.back(),
-                              icon: const Icon(Icons.arrow_back_ios),
+                              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                             ) : const SizedBox(),
 
-                            Text('profile'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
+                            Text('profile'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge,color: Colors.white )),
                             const SizedBox(width: 50),
                           ]),
                         ),
@@ -81,19 +81,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: Dimensions.paddingSizeExtremeLarge, right: Dimensions.paddingSizeExtremeLarge, bottom: Dimensions.paddingSizeLarge),
                         child: Row(children: [
-
-                          ClipOval(child: CustomImage(
-                            placeholder: Images.guestIcon,
-                            image: '${(profileController.userInfoModel != null && isLoggedIn) ? profileController.userInfoModel!.imageFullUrl : ''}',
-                            height: 70, width: 70, fit: BoxFit.cover,
-                          )),
+     profileController.userInfoModel!.imageFullUrl == null ?  ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Image.asset(
+                              "assets/image/vecteezy_3d-cartoon-man-with-glasses-and-beard-illustration_51767450.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ) :
+                    Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(1),
+                  child: ClipOval(child: CustomImage(
+                    placeholder: Images.guestIconLight,
+                    image: '${(profileController.userInfoModel != null && isLoggedIn) ? profileController.userInfoModel!.imageFullUrl : ''}',
+                    height: 70, width: 70, fit: BoxFit.cover,
+                  )),
+                ),
+                          // ClipOval(child: CustomImage(
+                          //   placeholder: Images.guestIcon,
+                          //   image: '${(profileController.userInfoModel != null && isLoggedIn) ? profileController.userInfoModel!.imageFullUrl : ''}',
+                          //   height: 70, width: 70, fit: BoxFit.cover,
+                          // )),
                           const SizedBox(width: Dimensions.paddingSizeDefault),
 
                           Expanded(
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                               Text(
                                 isLoggedIn ? '${profileController.userInfoModel?.fName ?? ''} ${profileController.userInfoModel?.lName ?? ''}' : 'guest_user'.tr,
-                                style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge),
+                                style: robotoBold.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Colors.white),
                               ),
                               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
@@ -195,9 +221,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             const SizedBox(height: Dimensions.paddingSizeDefault),
 
-                            ProfileButtonWidget(icon: Icons.tonality_outlined, title: 'dark_mode'.tr, isButtonActive: Get.isDarkMode, onTap: () {
-                              Get.find<ThemeController>().toggleTheme();
-                            }),
+                            // ProfileButtonWidget(icon: Icons.tonality_outlined, title: 'dark_mode'.tr, isButtonActive: Get.isDarkMode, onTap: () {
+                            //   Get.find<ThemeController>().toggleTheme();
+                            // }),
                             const SizedBox(height: Dimensions.paddingSizeSmall),
 
                             isLoggedIn ? GetBuilder<AuthController>(builder: (authController) {

@@ -14,6 +14,9 @@ class ZoneDataModel {
   double? perKmShippingCharge;
   int? isbusy;
   List<FormatedCoordinates>? formatedCoordinates;
+  String? payment_gateway_title;
+  String? payment_gateway_api_key;
+  String? payment_gateway_api_secret;
 
   ZoneDataModel({
     this.id,
@@ -29,6 +32,9 @@ class ZoneDataModel {
     this.perKmShippingCharge,
     this.isbusy,
     this.formatedCoordinates,
+    this.payment_gateway_title,
+    this.payment_gateway_api_key,
+    this.payment_gateway_api_secret,
   });
 
   ZoneDataModel.fromJson(Map<String, dynamic> json) {
@@ -41,9 +47,12 @@ class ZoneDataModel {
     updatedAt = json['updated_at'];
     restaurantWiseTopic = json['restaurant_wise_topic'];
     customerWiseTopic = json['customer_wise_topic'];
+    payment_gateway_title = json['payment_gateway_title'];
     deliverymanWiseTopic = json['deliveryman_wise_topic'];
     minimumShippingCharge = json['minimum_shipping_charge'] != null ? json['minimum_shipping_charge'].toDouble() : 0;
     perKmShippingCharge = json['per_km_shipping_charge'] != null ? json['per_km_shipping_charge'].toDouble() : 0;
+    payment_gateway_api_key = json['payment_gateway_api_key'];
+    payment_gateway_api_secret = json['payment_gateway_api_secret'];
     if (json['formated_coordinates'] != null) {
       formatedCoordinates = <FormatedCoordinates>[];
       json['formated_coordinates'].forEach((v) { formatedCoordinates!.add(FormatedCoordinates.fromJson(v)); });
@@ -65,7 +74,10 @@ class ZoneDataModel {
     data['customer_wise_topic'] = customerWiseTopic;
     data['deliveryman_wise_topic'] = deliverymanWiseTopic;
     data['minimum_shipping_charge'] = minimumShippingCharge;
+    data['payment_gateway_title'] = payment_gateway_title;
+    data['payment_gateway_api_key'] = payment_gateway_api_key;
     data['per_km_shipping_charge'] = perKmShippingCharge;
+    data['payment_gateway_api_secret'] = payment_gateway_api_secret;
     if (formatedCoordinates != null) {
       data['formated_coordinates'] = formatedCoordinates!.map((v) => v.toJson()).toList();
     }

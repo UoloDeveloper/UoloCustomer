@@ -989,7 +989,7 @@ class _StoreScreenState extends State<StoreScreen> {
     // if(Get.find<StoreController>().isSearching) {
     //   Get.find<StoreController>().changeSearchStatus(isUpdate: false);
     // }
-     Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
+    //  Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
        isShop =  Get.find<SplashController>().module!.moduleType.toString() == AppConstants.ecommerce;
     Get.find<StoreController>().hideAnimation();
     await Get.find<StoreController>().getStoreDetails(Store(id: widget.store!.id), widget.fromModule, slug: widget.slug).then((value) {
@@ -1000,7 +1000,7 @@ class _StoreScreenState extends State<StoreScreen> {
     // }
     // Get.find<StoreController>().getStoreBannerList(widget.store!.id ?? Get.find<StoreController>().store!.id);
     Get.find<StoreController>().getRestaurantRecommendedItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, false);
-    Get.find<StoreController>().getStoreItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, 1, 'all', false);
+    // Get.find<StoreController>().getStoreItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, 1, 'all', false);
 
     scrollController.addListener(() {
       if(scrollController.position.userScrollDirection == ScrollDirection.reverse){
@@ -1020,7 +1020,7 @@ class _StoreScreenState extends State<StoreScreen> {
    initCall2() async {
       bool isLoggedIn = AuthHelper.isLoggedIn();
   
-      
+        Get.find<CheckoutController>().initCheckoutData(widget.store!.id);
       // Get.find<CheckoutController>().setGuestAddress(null, isUpdate: false);
       Get.find<CheckoutController>().setPaymentMethod(0, isUpdate: false);
       Get.find<CheckoutController>().streetNumberController.text = AddressHelper.getUserAddressFromSharedPref()!.streetNumber ?? '';

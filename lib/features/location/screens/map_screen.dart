@@ -228,7 +228,7 @@ class MapScreenState extends State<MapScreen> {
       });
     }
 
-    /// Animate to coordinate
+   
     LatLngBounds? bounds;
     if(_mapController != null) {
       if(address != null){
@@ -272,7 +272,7 @@ class MapScreenState extends State<MapScreen> {
       }
     }
 
-    ///current location marker set
+    
     if(address != null) {
       _markers.add(Marker(
         markerId: const MarkerId('id--2'),

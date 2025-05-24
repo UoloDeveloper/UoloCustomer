@@ -17,7 +17,7 @@ class ProfileCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
         color: Theme.of(context).cardColor,
         border: Border.all(color: Theme.of(context).primaryColor, width: 0.1),
-        boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 5, spreadRadius: 1)],
+        // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor  , blurRadius: 5, spreadRadius: 1)],
       ),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Image.asset(image, height: 30, width: 30),

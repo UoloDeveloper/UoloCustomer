@@ -26,11 +26,15 @@ class LocationRepository implements LocationRepositoryInterface {
 
   @override
   Future<ZoneResponseModel> getZone(String? lat, String? lng, {bool handleError = false}) async {
+
     Response response = await apiClient.getData('${AppConstants.zoneUri}?lat=$lat&lng=$lng', handleError: handleError);
     if(response.statusCode == 200) {
-      ZoneResponseModel responseModel;
+    
+
+     ZoneResponseModel responseModel;
       List<int>? zoneIds = ZoneModel.fromJson(response.body).zoneIds;
       List<ZoneData>? zoneData = ZoneModel.fromJson(response.body).zoneData;
+  print('=========================================================== Zone Response: ${zoneData![0].payment_gateway_title}==============================================================================');
       responseModel = ZoneResponseModel(true, '' , zoneIds ?? [], zoneData??[], [], response.statusCode);
       return responseModel;
     } else {

@@ -524,10 +524,11 @@ Future<void> getLatestStoreList(
   Future<Store?> getStoreDetails(Store store, bool fromModule, {bool fromCart = false, String slug = ''}) async {
     _categoryIndex = 0;
     if(store.name != null) {
-      _store = store;
+      _store = store; 
     }else {
       _isLoading = true;
       _store = null;
+      getStoreItemList(store.id, 1, Get.find<StoreController>().type, false);
       Store? storeDetails = await storeServiceInterface.getStoreDetails(store.id.toString(), fromCart, slug, Get.find<LocalizationController>().locale.languageCode,
           ModuleHelper.getModule(), ModuleHelper.getCacheModule()?.id, ModuleHelper.getModule()?.id);
       if (storeDetails != null) {
@@ -618,32 +619,78 @@ Future<void> getRecommendedStoreList({
   }
   update();
 }
-  Future<void> getStoreItemList(int? storeID, int offset, String type, bool notify) async {
-    if(offset == 1 || _storeItemModel == null) {
+  // Future<void> getStoreItemList(int? storeID, int offset, String type, bool notify) async {
+  //   if(offset == 1 || _storeItemModel == null) {
+  //     _type = type;
+  //     _storeItemModel = null;
+  //     if(notify) {
+  //       update();
+  //     }
+  //   }
+  //   ItemModel? storeItemModel = await storeServiceInterface.getStoreItemList(
+  //     storeID, offset,
+  //     (_store != null && _store!.categoryIds!.isNotEmpty && _categoryIndex != 0) ? _categoryList![_categoryIndex].id : 0, type,
+  //   );
+
+    
+  //   if (storeItemModel != null) {
+  //     if (offset == 1) {
+  //       _storeItemModel = storeItemModel;
+  //     }else {
+  //       _storeItemModel!.items!.addAll(storeItemModel.items!);
+  //       _storeItemModel!.totalSize = storeItemModel.totalSize;
+  //       _storeItemModel!.offset = storeItemModel.offset;
+  //     }
+  //   }
+  //   update();
+  // }
+
+Future<void> getStoreItemList(int? storeID, int offset, String type, bool notify) async {
+  try {
+
+    if (offset == 1 || _storeItemModel == null) {
       _type = type;
       _storeItemModel = null;
-      if(notify) {
+      if (notify) {
         update();
       }
     }
-    ItemModel? storeItemModel = await storeServiceInterface.getStoreItemList(
-      storeID, offset,
-      (_store != null && _store!.categoryIds!.isNotEmpty && _categoryIndex != 0) ? _categoryList![_categoryIndex].id : 0, type,
-    );
 
     
+    final categoryId = (_store?.categoryIds?.isNotEmpty ?? false) && _categoryIndex != 0
+        ? _categoryList![_categoryIndex].id
+        : 0;
+
+    
+    final storeItemModel = await storeServiceInterface.getStoreItemList(
+      storeID,
+      offset,
+      categoryId,
+      type,
+    );
+     
+  
     if (storeItemModel != null) {
       if (offset == 1) {
         _storeItemModel = storeItemModel;
-      }else {
-        _storeItemModel!.items!.addAll(storeItemModel.items!);
-        _storeItemModel!.totalSize = storeItemModel.totalSize;
-        _storeItemModel!.offset = storeItemModel.offset;
+      } else {
+        _storeItemModel ??= ItemModel(items: [], totalSize: 0, offset: 0);
+        _storeItemModel!
+          ..items!.addAll(storeItemModel.items ?? [])
+          ..totalSize = storeItemModel.totalSize
+          ..offset = storeItemModel.offset;
       }
+      update();
     }
-    update();
+  } catch (e) {
+   
+    print('Error fetching store items: $e');
+ 
+    if (notify) {
+      update();
+    }
   }
-
+}
   Future<void> getStoreSearchItemList(String searchText, String? storeID, int offset, String type) async {
     if(searchText.isEmpty) {
       showCustomSnackBar('write_item_name'.tr);

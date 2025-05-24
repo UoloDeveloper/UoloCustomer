@@ -98,7 +98,7 @@ class _AccessLocationScreenState extends State<AccessLocationScreen> {
                         address: locationController.addressList![index],
                         fromAddress: false,
                         onTap: () {
-                           Get.find<CartController>().clearCartList();
+                          
                           Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
                           AddressModel address = locationController.addressList![index];
                           Get.find<LocationController>().saveAddressAndNavigate(

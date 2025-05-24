@@ -10,13 +10,13 @@ class AppConstants {
   static const String fontFamily = 'Poppins';
   static const bool payInWevView = false;
   static const int balanceInputLen = 10;
-  static const String webHostedUrl = 'https://Uolo Delivery-web.6amtech.com';
+  static const String webHostedUrl = 'https://uolodelivery.com/';
   static const bool useReactWebsite = false;
 
   // static const String baseUrl = 'https://Uolo Delivery-admin.6amtech.com';
   static const String baseUrl = 
-  // "https://testorders.uolodelivery.com";
-  "https://orders.uolodelivery.com";
+  "https://testorders.uolodelivery.com";
+  // "https://orders.uolodelivery.com";
   // 'https://uolo.v-nexus.com';
   // "https://test.uolodelivery.com";
 

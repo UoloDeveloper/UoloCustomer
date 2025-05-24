@@ -25,6 +25,9 @@ class ZoneData {
   int? increaseDeliveryFeeStatus;
   String? increaseDeliveryFeeMessage;
   List<Modules>? modules;
+    String? payment_gateway_title;
+  String? payment_gateway_api_key;
+  String? payment_gateway_api_secret;
 
   ZoneData({
     this.id,
@@ -36,6 +39,9 @@ class ZoneData {
     this.increaseDeliveryFeeStatus,
     this.increaseDeliveryFeeMessage,
     this.modules,
+        this.payment_gateway_title,
+    this.payment_gateway_api_key,
+    this.payment_gateway_api_secret,
   });
 
   ZoneData.fromJson(Map<String, dynamic> json) {
@@ -47,6 +53,9 @@ class ZoneData {
     increaseDeliveryFee = json['increased_delivery_fee']?.toDouble();
     increaseDeliveryFeeStatus = json['increased_delivery_fee_status'];
     increaseDeliveryFeeMessage = json['increase_delivery_charge_message'];
+    payment_gateway_title = json['payment_gateway_title'];
+        payment_gateway_api_key = json['payment_gateway_api_key'];
+    payment_gateway_api_secret = json['payment_gateway_api_secret'];
     if (json['modules'] != null) {
       modules = <Modules>[];
       json['modules'].forEach((v) {
@@ -65,6 +74,9 @@ class ZoneData {
     data['increased_delivery_fee'] = increaseDeliveryFee;
     data['increased_delivery_fee_status'] = increaseDeliveryFeeStatus;
     data['increase_delivery_charge_message'] = increaseDeliveryFeeMessage;
+    data['payment_gateway_title'] = payment_gateway_title;
+    data['payment_gateway_api_key'] = payment_gateway_api_key;
+    data['payment_gateway_api_secret'] = payment_gateway_api_secret;
     if (modules != null) {
       data['modules'] = modules!.map((v) => v.toJson()).toList();
     }

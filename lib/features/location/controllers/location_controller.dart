@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
+import 'package:sixam_mart/features/location/domain/models/zone_model.dart';
 import 'package:sixam_mart/features/location/screens/pick_map_screen.dart';
 import 'package:sixam_mart/features/profile/controllers/profile_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
@@ -77,6 +78,9 @@ class LocationController extends GetxController implements GetxService {
   List<PredictionModel> _predictionList = [];
   List<PredictionModel> get predictionList => _predictionList;
 
+  List<ZoneData>? _zoneData;
+  List<ZoneData>? get zoneData => _zoneData;
+
   void hideSuggestedLocation(){
     _showLocationSuggestion = !_showLocationSuggestion;
   }
@@ -136,7 +140,7 @@ class LocationController extends GetxController implements GetxService {
     fromAddress ? _address = addressFromGeocode : _pickAddress = addressFromGeocode;
     ZoneResponseModel responseModel = await getZone(myPosition.latitude.toString(), myPosition.longitude.toString(), true);
     _buttonDisabled = !responseModel.isSuccess;
-
+     
     addressModel = AddressModel(
       latitude: myPosition.latitude.toString(), longitude: myPosition.longitude.toString(), addressType: 'others',
       zoneId: responseModel.isSuccess ? responseModel.zoneIds[0] : 0, zoneIds: responseModel.zoneIds,
@@ -165,11 +169,14 @@ class LocationController extends GetxController implements GetxService {
       update();
     }
     ZoneResponseModel responseModel = await locationServiceInterface.getZone(lat, lng, handleError: handleError);
+
     _inZone = responseModel.isSuccess;
     _zoneID = responseModel.zoneIds.isNotEmpty ? responseModel.zoneIds[0] : 0;
     if(updateInAddress && responseModel.isSuccess) {
       AddressModel address = AddressHelper.getUserAddressFromSharedPref()!;
       address.zoneData = responseModel.zoneData;
+      _zoneData = responseModel.zoneData;
+      
       AddressHelper.saveUserAddressInSharedPref(address);
     }
     if(markerLoad) {
@@ -178,6 +185,7 @@ class LocationController extends GetxController implements GetxService {
       _isLoading = false;
     }
     update();
+    print("=================================================== zone data : ${responseModel.zoneData!.map((e) => e.toJson()).toList()}==========================================");
     return responseModel;
   }
 
@@ -237,9 +245,10 @@ class LocationController extends GetxController implements GetxService {
   }
 
   void _prepareZoneData(AddressModel address, bool fromSignUp, String? route, bool canRoute, bool isDesktop) {
-    getZone(address.latitude, address.longitude, false).then((response) async {
+    getZone(address.latitude, address.longitude, false,clearcart: true).then((response) async {
       if (response.isSuccess) {
-        Get.find<CartController>().getCartDataOnline();
+        // Get.find<CartController>().getCartDataOnline();
+        
         address.zoneId = response.zoneIds[0];
         address.zoneIds = [];
         address.zoneIds!.addAll(response.zoneIds);
