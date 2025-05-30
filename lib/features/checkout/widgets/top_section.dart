@@ -272,7 +272,8 @@ class TopSection extends StatelessWidget {
         // ),
         // SizedBox(height: isDesktop ? Dimensions.paddingSizeLarge : 0),
 
-
+                  // AddressWidget(address: address, fromAddress: false),
+              
       ]),
     );
   }

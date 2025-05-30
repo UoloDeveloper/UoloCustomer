@@ -146,7 +146,7 @@ class _TooltipExampleState extends State<TooltipExample> {
               children: [
                
                 const Text(
-                  'GST & OTHER CHARGES',
+                  'GST & Other Charges',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

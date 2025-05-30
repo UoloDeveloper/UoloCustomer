@@ -25,8 +25,13 @@ import 'package:sixam_mart/common/widgets/rating_bar.dart';
 import 'package:sixam_mart/common/widgets/title_widget.dart';
 import 'package:sixam_mart/features/store/screens/store_screen.dart';
 
+import '../../../../common/widgets/custom_divider copy.dart';
+
 class BestStoreNearbyView extends StatelessWidget {
-  const BestStoreNearbyView({super.key});
+   final bool? fromFood;
+  final bool isshop;
+  final bool? itemsview;
+  const BestStoreNearbyView({super.key ,this.fromFood = false,  this.isshop = false,  this.itemsview = false,});
 
   @override
   Widget build(BuildContext context) {
@@ -41,42 +46,51 @@ class BestStoreNearbyView extends StatelessWidget {
       return storeList != null ? storeList.isNotEmpty ? Padding(
         padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
         child: Container(
-          color: isPharmacy ? null : Theme.of(context).disabledColor  ,
+          // color: isPharmacy ? null : Theme.of(context).disabledColor  ,
           child: Column(children: [
-
-            (isPharmacy || isFood) ? Padding(
-              padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
-              child: TitleWidget(
-                title: isPharmacy ? 'featured_store'.tr : 'best_store_nearby'.tr,
-                onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute(isPharmacy ? 'featured' : 'popular', isNearbyStore: true)),
+  Padding(
+                   padding:  EdgeInsets.only(left: itemsview! ? 10 : 10,bottom: 10,top:itemsview! ? 30 :   0),
+                child: CustomDivider1(text: 'best_store_nearby'.tr.toUpperCase(),thickness: .2,textAlign: TextAlign.left,color: itemsview! ? Colors.black : Colors.black,),
+                
+                
+                //  TitleWidget(
+                //   title: 'Try Again'.tr,
+                //   onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('latest')),
+                // ),
               ),
-            ) : Padding(
-              padding: EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: ltr ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeDefault,
-                  right: ltr ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
-              child: FittedBox(
-                child: Row(children: [
+            // (isPharmacy || isFood) ? Padding(
+            //   padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault),
+            //   child: TitleWidget(
+            //     title: isPharmacy ? 'featured_store'.tr : 'best_store_nearby'.tr,
+            //     onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute(isPharmacy ? 'featured' : 'popular', isNearbyStore: true)),
+            //   ),
+            // ) : Padding(
+            //   padding: EdgeInsets.only(top: Dimensions.paddingSizeDefault, left: ltr ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeDefault,
+            //       right: ltr ? Dimensions.paddingSizeDefault : Dimensions.paddingSizeLarge),
+            //   child: FittedBox(
+            //     child: Row(children: [
 
-                  Container(
-                    height: 2, width: context.width * 0.75,
-                    color: Theme.of(context).primaryColor  ,
-                  ),
-                  Container(transform: Matrix4.translationValues(-5, 0, 0),child: Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor  )),
+            //       Container(
+            //         height: 2, width: context.width * 0.75,
+            //         color: Theme.of(context).primaryColor  ,
+            //       ),
+            //       Container(transform: Matrix4.translationValues(-5, 0, 0),child: Icon(Icons.arrow_forward, size: 18, color: Theme.of(context).primaryColor  )),
 
 
-                  InkWell(
-                    onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('popular', isNearbyStore: true)),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(ltr ? 10 : 0, 5, ltr ? 0 : 10, 5),
-                      child: Text(
-                        'see_all'.tr,
-                        style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor, decoration: TextDecoration.underline),
-                      ),
-                    ),
-                  ),
+            //       InkWell(
+            //         onTap: () => Get.toNamed(RouteHelper.getAllStoreRoute('popular', isNearbyStore: true)),
+            //         child: Padding(
+            //           padding: EdgeInsets.fromLTRB(ltr ? 10 : 0, 5, ltr ? 0 : 10, 5),
+            //           child: Text(
+            //             'see_all'.tr,
+            //             style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor, decoration: TextDecoration.underline),
+            //           ),
+            //         ),
+            //       ),
 
-                ]),
-              ),
-            ),
+            //     ]),
+            //   ),
+            // ),
 
             isPharmacy ? SizedBox(
               height: 130, width: Get.width,
@@ -93,7 +107,7 @@ class BestStoreNearbyView extends StatelessWidget {
                 },
               ),
             ) : isFood ? SizedBox(
-              height: 215,
+              height: 275,
               child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
@@ -101,7 +115,7 @@ class BestStoreNearbyView extends StatelessWidget {
                   itemCount: storeList.length,
                   itemBuilder: (context, index){
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: InkWell(
                         onTap: () {
                           if(Get.find<SplashController>().moduleList != null) {

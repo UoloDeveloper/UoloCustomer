@@ -367,11 +367,15 @@ class _OrderSuccessfulScreenState extends State<OrderSuccessfulScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Success Animation
-                        Lottie.asset(
+                     success ?   Lottie.asset(
                           'assets/animations/Animation - 1738995586744.json',
                           width: 200,
                           height: 200,
                           repeat: false,
+                        ) : Image.asset(
+                          Images.warning,
+                          width: 100,
+                          height: 100,
                         ),
                         const SizedBox(height: 20),
 

@@ -77,7 +77,7 @@ class StoreDescriptionViewWidget extends StatelessWidget {
                   ),
                    
                    const Expanded(child: SizedBox()),
-                   InkWell(
+                store!.ratingCount! < 1 ? const SizedBox() :   InkWell(
                                   onTap: () => Get.to(ReviewScreen(store: store, storeID: store!.id.toString(),)),
                                   //  Get.toNamed(RouteHelper.getStoreReviewRoute(store!.id, store!.name, store!))
                                   

@@ -53,6 +53,10 @@ class ItemController extends GetxController implements GetxService {
   
   List<List<bool?>> _selectedVariations = [];
   List<List<bool?>> get selectedVariations => _selectedVariations;
+  set selectedVariations(List<List<bool?>> variations) {
+    _selectedVariations = variations;
+    update();
+  }
   
   int? _quantity = 1;
   int? get quantity => _quantity;
@@ -469,7 +473,7 @@ void _preparePopularItems(List<Item>? items) {
     update();
   }
 
-  void setNewCartVariationIndex(int index, int i, Item item) {
+  void setNewCartVariationIndex(int index, int i, Item item, {bool notify = false}) {
     _selectedVariations = itemServiceInterface.setNewCartVariationIndex(index, i, item.foodVariations!, _selectedVariations);
     setExistInCart(item, _selectedVariations);
     // if(!item.foodVariations![index].multiSelect!) {
@@ -494,7 +498,10 @@ void _preparePopularItems(List<Item>? items) {
     //     _selectedVariations[index][i] = !_selectedVariations[index][i]!;
     //   }
     // }
-    update();
+    if(notify) {
+      update();
+    }
+    // update();
   }
 
   int selectedVariationLength(List<List<bool?>> selectedVariations, int index) {
@@ -635,7 +642,22 @@ void _preparePopularItems(List<Item>? items) {
 
     
   }
-  
+void setItem(Item? item) {
+    _item = item;
+    if (_item != null && _item!.foodVariations != null) {
+      // Initialize selectedVariations with first option selected for each variation
+      selectedVariations = RxList<List<bool>>.generate(
+        _item!.foodVariations!.length,
+        (index) => List<bool>.generate(
+          _item!.foodVariations![index].variationValues!.length,
+          (i) => i == 0, // Select the first option by default
+        ),
+      );
+    } else {
+      selectedVariations = [];
+    }
+    update();
+  }
 }
 
 
@@ -648,4 +670,7 @@ void showGroceryItemBottomSheet(BuildContext context , item,inStorePage) {
       return  GrocceryItemBottomSheet(inStorePage: inStorePage ,item: item,);
     },
   );
+
+
+  
 }

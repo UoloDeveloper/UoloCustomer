@@ -60,6 +60,7 @@ class PaymentScreenState extends State<PaymentScreen> {
   }
 
   void _initData() async {
+print('======================================================================================selectedUrl $selectedUrl============================================================================================================================================================================');
 
     if(widget.addFundUrl == '' && widget.addFundUrl!.isEmpty && widget.subscriptionUrl == '' && widget.subscriptionUrl!.isEmpty){
       for(ZoneData zData in AddressHelper.getUserAddressFromSharedPref()!.zoneData!) {
@@ -99,9 +100,10 @@ class PaymentScreenState extends State<PaymentScreen> {
         ));
       }
     }
-
     await browser.openUrlRequest(
-      urlRequest: URLRequest(url: WebUri(selectedUrl)),
+      urlRequest: URLRequest(url: WebUri(
+        selectedUrl
+        )),
       settings: InAppBrowserClassSettings(
         webViewSettings: InAppWebViewSettings(useShouldOverrideUrlLoading: true, useOnLoadResource: true),
         browserSettings: InAppBrowserSettings(hideUrlBar: true, hideToolbarTop: GetPlatform.isAndroid),

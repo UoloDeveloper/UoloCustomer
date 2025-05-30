@@ -32,16 +32,16 @@ class WebCardItemsWidget extends StatelessWidget {
               WebConstrainedBox(
                 dataLength: cartList.length, minLength: 5, minHeight: 0.6,
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  ListView.separated(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: cartList.length,
-                    padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                    itemBuilder: (context, index) {
-                      return CartItemWidget(cart: cartList[index], cartIndex: index, addOns: cartController.addOnsList[index], isAvailable: cartController.availableList[index]);
-                    },
-                    separatorBuilder: (BuildContext context, int index) => const Divider(),
-                  ),
+                  // ListView.separated(
+                  //   physics: const NeverScrollableScrollPhysics(),
+                  //   shrinkWrap: true,
+                  //   itemCount: cartList.length,
+                  //   padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                  //   itemBuilder: (context, index) {
+                  //     return CartItemWidget(cart: cartList[index], cartIndex: index, addOns: cartController.addOnsList[index], isAvailable: cartController.availableList[index]);
+                  //   },
+                  //   separatorBuilder: (BuildContext context, int index) => const Divider(),
+                  // ),
 
                   const Divider(thickness: 0.5, height: 5),
 

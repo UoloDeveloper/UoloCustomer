@@ -999,7 +999,7 @@ class _StoreScreenState extends State<StoreScreen> {
     //   Get.find<CategoryController>().getCategoryList(true);
     // }
     // Get.find<StoreController>().getStoreBannerList(widget.store!.id ?? Get.find<StoreController>().store!.id);
-    Get.find<StoreController>().getRestaurantRecommendedItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, false);
+    // Get.find<StoreController>().getRestaurantRecommendedItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, false);
     // Get.find<StoreController>().getStoreItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, 1, 'all', false);
 
     scrollController.addListener(() {
@@ -1120,7 +1120,7 @@ class _StoreScreenState extends State<StoreScreen> {
           }
     
           return (storeController.store != null &&
-                   storeController.store!.name != null)
+                   storeController.store!.name != null) 
               ?  !isShop ?     CustomScrollView(
                 scrollBehavior: const MaterialScrollBehavior().copyWith(
                   

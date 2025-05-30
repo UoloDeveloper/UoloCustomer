@@ -5,7 +5,7 @@ import 'package:sixam_mart/util/images.dart';
 
 class AppConstants {
   static const String appName = 'Uolo Delivery';
-  static const double appVersion = 7; ///Flutter Version: 3.24.5
+  static const double appVersion = 8; ///Flutter Version: 3.24.5
 
   static const String fontFamily = 'Poppins';
   static const bool payInWevView = false;
@@ -15,8 +15,8 @@ class AppConstants {
 
   // static const String baseUrl = 'https://Uolo Delivery-admin.6amtech.com';
   static const String baseUrl = 
-  "https://testorders.uolodelivery.com";
-  // "https://orders.uolodelivery.com";
+  // "https://testorders.uolodelivery.com";
+  "https://orders.uolodelivery.com";
   // 'https://uolo.v-nexus.com';
   // "https://test.uolodelivery.com";
 

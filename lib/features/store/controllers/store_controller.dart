@@ -522,6 +522,7 @@ Future<void> getLatestStoreList(
   }
 
   Future<Store?> getStoreDetails(Store store, bool fromModule, {bool fromCart = false, String slug = ''}) async {
+    // _isLoading = true;
     _categoryIndex = 0;
     if(store.name != null) {
       _store = store; 
@@ -529,6 +530,7 @@ Future<void> getLatestStoreList(
       _isLoading = true;
       _store = null;
       getStoreItemList(store.id, 1, Get.find<StoreController>().type, false);
+       Get.find<StoreController>().getRestaurantRecommendedItemList(store!.id ?? Get.find<StoreController>().store!.id, false);
       Store? storeDetails = await storeServiceInterface.getStoreDetails(store.id.toString(), fromCart, slug, Get.find<LocalizationController>().locale.languageCode,
           ModuleHelper.getModule(), ModuleHelper.getCacheModule()?.id, ModuleHelper.getModule()?.id);
       if (storeDetails != null) {

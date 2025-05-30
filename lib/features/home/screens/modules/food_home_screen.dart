@@ -191,7 +191,7 @@ class FoodHomeScreen extends StatelessWidget {
         const CategoryView(),
        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         
-      
+          const BestStoreNearbyView(),
          BannerView(isFeatured: false),
         //  const Padding(
         //    padding: EdgeInsets.only(left: 10),
@@ -232,6 +232,7 @@ class FoodHomeScreen extends StatelessWidget {
           child: const JustForYouView(),
         ),
         // const NewOnMartView(isNewStore: true, isPharmacy: false, isShop: false),
+         
       ]),
     );
   }

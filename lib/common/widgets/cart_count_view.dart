@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
+import 'package:sixam_mart/features/checkout/screens/checkout_screen.dart';
 import 'package:sixam_mart/features/item/controllers/item_controller.dart';
 import 'package:sixam_mart/features/item/domain/models/item_model.dart';
 import 'package:sixam_mart/util/dimensions.dart';
@@ -120,6 +121,10 @@ class _CartCountViewState extends State<CartCountView> {
                   _isAdded = true;
                 });
                 Get.find<ItemController>().itemDirectlyAddToCart(widget.item, context);
+                // var checkoutScreenState = Get.find<CheckoutScreen>().createState();
+                // checkoutScreenState.initState();
+              // checkoutScreenState.initState();
+              setState(() {});
               },
               child:  Stack(
                 children: [

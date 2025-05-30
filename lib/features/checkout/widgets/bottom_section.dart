@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/common/widgets/address_widget.dart';
+import 'package:sixam_mart/common/widgets/custom_dropdown.dart';
 import 'package:sixam_mart/features/address/domain/models/address_model.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 import 'package:sixam_mart/features/checkout/screens/checkout_screen.dart';
 import 'package:sixam_mart/features/checkout/widgets/Gstrestaurentchargetooltip.dart';
+import 'package:sixam_mart/features/checkout/widgets/delivery_section.dart';
 import 'package:sixam_mart/features/checkout/widgets/prescription_image_picker_widget.dart';
 import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
@@ -49,12 +51,20 @@ class BottomSection extends StatelessWidget {
   final double distance;
   final double dicount;
   final String time;
+  final List<AddressModel> address;
+  final List<DropdownItem<int>> addressList;
+   final TextEditingController guestNameTextEditingController;
+  final TextEditingController guestNumberTextEditingController;
+  final TextEditingController guestEmailController;
+  final FocusNode guestNumberNode;
+  final FocusNode guestEmailNode;
+  
 
   const BottomSection({super.key, required this.checkoutController, required this.total, required this.module, required this.subTotal,
     required this.discount, required this.couponController, required this.taxIncluded, required this.tax,
     required this.deliveryCharge, required this.todayClosed, required this.tomorrowClosed,
     required this.orderAmount, this.maxCodOrderAmount, this.storeId, this.taxPercent, required this.price,
-    required this.addOns, this.checkoutButton, required this.isPrescriptionRequired, required this.referralDiscount, required this.variationPrice, required this.distance, required this.dicount, required this.SelectedAddress, required this.time});
+    required this.addOns, this.checkoutButton, required this.isPrescriptionRequired, required this.referralDiscount, required this.variationPrice, required this.distance, required this.dicount, required this.SelectedAddress, required this.time, required this.address, required this.addressList, required this.guestNameTextEditingController, required this.guestNumberTextEditingController, required this.guestEmailController, required this.guestNumberNode, required this.guestEmailNode});
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +134,11 @@ class BottomSection extends StatelessWidget {
                                         ),
                                            const Divider(),
 
-                                           AddressWidget(address: SelectedAddress, fromAddress: false),
+                                          //  AddressWidget(address: SelectedAddress, fromAddress: false),
+                                                             DeliverySection(checkoutController: checkoutController, address: address, addressList: addressList,
+          guestNameTextEditingController: guestNameTextEditingController, guestNumberTextEditingController: guestNumberTextEditingController,
+          guestNumberNode: guestNumberNode, guestEmailController: guestEmailController, guestEmailNode: guestEmailNode,
+        ),
                                              const Divider(),
                          GetBuilder<ProfileController>(builder: (profileController) {
                               return Padding(
@@ -684,6 +698,33 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                             ],
                           ),
  const SizedBox(height: 10,),
+
+   (couponController.discount! > 0 || couponController.freeDelivery) ? Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Row(
+                  children: [
+                    Icon(Icons.discount_outlined, size: 17, color: Colors.black87),
+                    const SizedBox(width: 5),
+                    Text('coupon_discount'.tr, style:    TextStyle(
+                                          fontSize: Dimensions.fontSizeDefault,
+                                          fontWeight: FontWeight.w400,
+                                        )),
+                  ],
+                ),
+                (couponController.coupon != null && couponController.coupon!.couponType == 'free_delivery') ? Text(
+                  'free_delivery'.tr, style: TextStyle(
+                                  fontSize: Dimensions.fontSizeDefault,
+                                  fontWeight: FontWeight.w500,),
+                ) : Text(
+                  '- ${PriceConverter.convertPrice(couponController.discount,currency: Get.find<CartController>().getCurrncyForUi())}',
+                  style: TextStyle(
+                                  fontSize: Dimensions.fontSizeDefault,
+                                  fontWeight: FontWeight.w500,), textDirection: TextDirection.ltr,
+                ),
+              ]),
+              const SizedBox(height: Dimensions.paddingSizeSmall),
+            ]) : const SizedBox(),
+             const SizedBox(height: 10,),
                          checkoutController.isPartialPay ?  Row(children: [
                                Row(
                                 children: [

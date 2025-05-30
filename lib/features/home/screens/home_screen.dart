@@ -72,13 +72,7 @@ class HomeScreen extends StatefulWidget {
      Get.find<StoreController>().getLatestStoreList(reload, 'all', false);
           Get.find<BannerController>().getFeaturedBanner();
            Get.find<AdvertisementController>().getAdvertisementList();
-    //  await Get.find<BannerController>().getBannerList(true);
-    // print('------------call from home');
-    // await Get.find<CartController>().getCartDataOnline();
-        //  if ( Get.find<CategoryController>().GrocerycategoritemyList.isEmpty) {
-        // Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
-        // }
-        //  Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
+ 
     if(AuthHelper.isLoggedIn()) {
       Get.find<StoreController>().getVisitAgainStoreList(fromModule: fromModule);
 
@@ -92,9 +86,7 @@ class HomeScreen extends StatefulWidget {
           if ( Get.find<CategoryController>().GrocerycategoritemyList.isEmpty) {
         Get.find<CategoryController>().getGrocceryCategoryList(allCategory: false, true);
         }
-      //  if(  Get.find<CategoryController>().categoryItemList == null && Get.find<CategoryController>().categoryItemList!.isEmpty) {
-      //        Get.find<CategoryController>().getCategoryList(false, allCategory: false);
-      //  }
+     
       }
       
       if(Get.find<SplashController>().module!.moduleType.toString() == AppConstants.ecommerce) {
@@ -118,7 +110,7 @@ class HomeScreen extends StatefulWidget {
     }
 
     if(AuthHelper.isLoggedIn()) {
-      // Get.find<StoreController>().getVisitAgainStoreList(fromModule: fromModule);
+      
       await Get.find<ProfileController>().getUserInfo();
       Get.find<NotificationController>().getNotificationList(reload);
       Get.find<CouponController>().getCouponList();

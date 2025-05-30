@@ -175,7 +175,8 @@ class CartController extends GetxController implements GetxService {
     return _subTotal;
   }
 
- double calculateTax({required bool taxIncluded, required double orderAmount, required double? taxPercent}) {
+ double calculateTax({required bool taxIncluded, required double orderAmount, required double? taxPercent, }) {
+
     double tax = 0;
     if(taxIncluded){
       tax = orderAmount * taxPercent! /(100 + taxPercent);
@@ -185,6 +186,7 @@ class CartController extends GetxController implements GetxService {
     _tax = tax;
     update();
     return PriceConverter.toFixed(tax);
+    
   }
   Future<void> addToCart(CartModel cartModel, int? index) async {
     if(index != null && index != -1) {

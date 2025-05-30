@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
+import 'package:sixam_mart/features/location/controllers/location_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/profile/controllers/profile_controller.dart';
 import 'package:sixam_mart/features/checkout/controllers/checkout_controller.dart';
@@ -115,182 +116,203 @@ class _PaymentMethodBottomSheetState extends State<PaymentMethodBottomSheet> {
             ),
       
               padding: EdgeInsets.symmetric(horizontal: isDesktop ? Dimensions.paddingSizeSmall : Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeLarge),
-            child: Column(
-              children: [
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: isDesktop ? Dimensions.paddingSizeDefault : 0),
-                    child: GetBuilder<CheckoutController>(
-                      builder: (checkoutController) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // const SizedBox(height: Dimensions.paddingSizeDefault),
-            
-                            // Align(alignment: Alignment.center, child: Text('payment_method'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge))),
-                            const SizedBox(height: Dimensions.paddingSizeLarge),
-            
-                            notHideCod && (widget.isCashOnDeliveryActive && notHideCod) || (widget.storeId == null && widget.isWalletActive && notHideWallet && isLoggedIn)
-                            ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                              Text('choose_payment_method'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-            
-                              const SizedBox(height: Dimensions.paddingSizeLarge),
-                            ]) : const SizedBox(),
-            
-                            Column(
-                children: [
-                  if (widget.isCashOnDeliveryActive && notHideCod)
-                    Padding(
-                      padding: EdgeInsets.only(
-              bottom: widget.storeId == null && widget.isWalletActive && notHideWallet && isLoggedIn
-                  ? Dimensions.paddingSizeSmall
-                  : 0,
-                      ),
-                      child: PaymentButtonNew(
-                        subtitle: "Pay cash or ask for QR code",
-                        // assets\image\money2.png
-              icon: "assets/image/money2.png",
-              title: "Pay on Delivery (Cash/UPI)",
-              isSelected: checkoutController.paymentMethodIndex == 0,
-              onTap: () {
-                checkoutController.setPaymentMethod(0);
-                    Get.back();
-              },
-                      ),
-                    ),
-            
-                  if (widget.storeId == null && widget.isWalletActive && notHideWallet && isLoggedIn)
-                    Padding(
-                      padding: EdgeInsets.only(
-              top: widget.isCashOnDeliveryActive && notHideCod
-                  ? 0
-                  : 0,
-                      ),
-                      child: PaymentButtonNew(            
-              icon: Images.partialWallet,
-              // "assets/image/wallet2.png",
-              title: 'pay_via_wallet'.tr,
-              isSelected: checkoutController.paymentMethodIndex == 1,
-              onTap: () {
-                if (canSelectWallet) {
-                  checkoutController.setPaymentMethod(1);
-                  Get.back();
-                  
-                } else if (checkoutController.isPartialPay) {
-                  showCustomSnackBar('you_can_not_user_wallet_in_partial_payment'.tr);
-                  Get.back();
-                } else {
-                  showCustomSnackBar('your_wallet_have_not_sufficient_balance'.tr);
-                  Get.back();
-                }
-              },
-                      ),
-                    ),
-                ],
-                            ),
-                            const SizedBox(height: Dimensions.paddingSizeSmall),
-            
-                            // widget.storeId == null && widget.isDigitalPaymentActive && notHideDigital ? Row(children: [
-                            //   Text('pay_via_online'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
-                            //   Text(
-                            //     'faster_and_secure_way_to_pay_bill'.tr,
-                            //     style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor),
-                            //   ),
-                            // ]) : const SizedBox(),
-                            // SizedBox(height: widget.storeId == null && widget.isDigitalPaymentActive && notHideDigital ? Dimensions.paddingSizeLarge : 0),
-            
-                            widget.storeId == null && widget.isDigitalPaymentActive && notHideDigital ? ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                itemCount: Get.find<SplashController>().configModel!.activePaymentMethodList!.length,
-                                itemBuilder: (context, index) {
-                                  bool isSelected = checkoutController.paymentMethodIndex == 2 && Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWay! == checkoutController.digitalPaymentName;
-                                return  Padding(
-                                  padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
-                                  child: PaymentButtonNew(isSelected: isSelected, icon: "${Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayImageFullUrl!}", title: Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayTitle!, onTap: (){
-                                  
-                                        checkoutController.setPaymentMethod(2);
-                                       Get.back();
-                                      checkoutController.changeDigitalPaymentName(Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWay!);
-                                      
-                                  
-                                  },
-                                  dynamic: true,
-                                  ),
-                                );
-                                
-                              //   InkWell(
-                              //     onTap: (){
-                              //       checkoutController.setPaymentMethod(2);
-                              //        Get.back();
-                              //       checkoutController.changeDigitalPaymentName(Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWay!);
-                                   
-                              //     },
-                              //     child:
-                                  
-                              //      Container(
-                              //       decoration: BoxDecoration(
-                              //           color: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
-                              //           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                              //         // border: Border.all(color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).disabledColor, width: 0.5)
-                              //       ),
-                              //       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeLarge),
-                              //       margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
-                              //       child: Row(children: [
+            child: GetBuilder<LocationController>(
 
-                              //          CustomImage(
-                              //           height: 30, fit: BoxFit.contain,
-                              //           image: Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayImageFullUrl!,
-                              //         ),
-                                   
-                              //         const SizedBox(width: Dimensions.paddingSizeDefault),
-            
-                              //         Expanded(
-                              //           child: Text(
-                              //             Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayTitle!,
-                              //             style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
-                              //             overflow: TextOverflow.ellipsis, maxLines: 1,
-                              //           ),
-                              //         ),
-            
-                              //           Container(
-                              //           height: 20, width: 20,
-                              //           decoration: BoxDecoration(
-                              //               shape: BoxShape.circle, color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).cardColor,
-                              //               border: Border.all(color: Theme.of(context).disabledColor)
-                              //           ),
-                              //           child: Icon(Icons.check, color: Theme.of(context).cardColor, size: 16),
-                              //         ),
-                              //         const SizedBox(width: Dimensions.paddingSizeSmall),
-                              //       ]),
-                              //     ),
-                            
-                            
-                              // );
-                              
-                              
-                                }) : const SizedBox(),
-            
-            
-                            OfflinePaymentButton(
-                              isSelected: checkoutController.paymentMethodIndex == 3,
-                              offlineMethodList: checkoutController.offlineMethodList,
-                              isOfflinePaymentActive: widget.isOfflinePaymentActive,
-                              onTap: () {
-                                checkoutController.setPaymentMethod(3);
-                                    Get.back();
-                              },
-                              checkoutController: checkoutController, tooltipController: tooltipController,
-                            ),
-                          ],
-                        );
-                      }
+              
+              builder: (locationController) {
+                   
+                return Column(
+                  children: [
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: isDesktop ? Dimensions.paddingSizeDefault : 0),
+                        child: GetBuilder<CheckoutController>(
+                          builder: (checkoutController) {
+
+                             bool zonepaymentisSelected = checkoutController.paymentMethodIndex == 2 && locationController.zoneData![0].payment_gateway_title == checkoutController.digitalPaymentName;
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // const SizedBox(height: Dimensions.paddingSizeDefault),
+                
+                                // Align(alignment: Alignment.center, child: Text('payment_method'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge))),
+                                const SizedBox(height: Dimensions.paddingSizeLarge),
+                
+                                notHideCod && (widget.isCashOnDeliveryActive && notHideCod) || (widget.storeId == null && widget.isWalletActive && notHideWallet && isLoggedIn)
+                                ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                  Text('choose_payment_method'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                                  const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                
+                                  const SizedBox(height: Dimensions.paddingSizeLarge),
+                                ]) : const SizedBox(),
+                
+                                Column(
+                    children: [
+                      if (widget.isCashOnDeliveryActive && notHideCod)
+                        Padding(
+                          padding: EdgeInsets.only(
+                  bottom: widget.storeId == null && widget.isWalletActive && notHideWallet && isLoggedIn
+                      ? Dimensions.paddingSizeSmall
+                      : 0,
+                          ),
+                          child: PaymentButtonNew(
+                            subtitle: "Pay cash or ask for QR code",
+                            // assets\image\money2.png
+                  icon: "assets/image/money2.png",
+                  title: "Pay on Delivery (Cash/UPI)",
+                  isSelected: checkoutController.paymentMethodIndex == 0,
+                  onTap: () {
+                    checkoutController.setPaymentMethod(0);
+                        Get.back();
+                  },
+                          ),
+                        ),
+                
+                      if (widget.storeId == null && widget.isWalletActive && notHideWallet && isLoggedIn)
+                        Padding(
+                          padding: EdgeInsets.only(
+                  top: widget.isCashOnDeliveryActive && notHideCod
+                      ? 0
+                      : 0,
+                          ),
+                          child: PaymentButtonNew(            
+                  icon: Images.partialWallet,
+                  // "assets/image/wallet2.png",
+                  title: 'pay_via_wallet'.tr,
+                  isSelected: checkoutController.paymentMethodIndex == 1,
+                  onTap: () {
+                    if (canSelectWallet) {
+                      checkoutController.setPaymentMethod(1);
+                      Get.back();
+                      
+                    } else if (checkoutController.isPartialPay) {
+                      showCustomSnackBar('you_can_not_user_wallet_in_partial_payment'.tr);
+                      Get.back();
+                    } else {
+                      showCustomSnackBar('your_wallet_have_not_sufficient_balance'.tr);
+                      Get.back();
+                    }
+                  },
+                          ),
+                        ),
+                    ],
+                                ),
+                                const SizedBox(height: Dimensions.paddingSizeSmall),
+                
+                                // widget.storeId == null && widget.isDigitalPaymentActive && notHideDigital ? Row(children: [
+                                //   Text('pay_via_online'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault)),
+                                //   Text(
+                                //     'faster_and_secure_way_to_pay_bill'.tr,
+                                //     style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor),
+                                //   ),
+                                // ]) : const SizedBox(),
+                                // SizedBox(height: widget.storeId == null && widget.isDigitalPaymentActive && notHideDigital ? Dimensions.paddingSizeLarge : 0),
+                
+                                widget.storeId == null && widget.isDigitalPaymentActive && notHideDigital ? ListView.builder(
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.zero,
+                                    itemCount: Get.find<SplashController>().configModel!.activePaymentMethodList!.length,
+                                    itemBuilder: (context, index) {
+                                      bool isSelected = checkoutController.paymentMethodIndex == 2 && Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWay! == checkoutController.digitalPaymentName;
+                                    return  Padding(
+                                      padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+                                      child: PaymentButtonNew(isSelected: isSelected, icon: "${Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayImageFullUrl!}", title: Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayTitle!, onTap: (){
+                                      
+                                            checkoutController.setPaymentMethod(2);
+                                           Get.back();
+                                          checkoutController.changeDigitalPaymentName(Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWay!);
+                                          
+                                      
+                                      },
+                                      dynamic: true,
+                                      ),
+                                    );
+                                    
+                                  //   InkWell(
+                                  //     onTap: (){
+                                  //       checkoutController.setPaymentMethod(2);
+                                  //        Get.back();
+                                  //       checkoutController.changeDigitalPaymentName(Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWay!);
+                                       
+                                  //     },
+                                  //     child:
+                                      
+                                  //      Container(
+                                  //       decoration: BoxDecoration(
+                                  //           color: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+                                  //           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                                  //         // border: Border.all(color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).disabledColor, width: 0.5)
+                                  //       ),
+                                  //       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeLarge),
+                                  //       margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+                                  //       child: Row(children: [
+                
+                                  //          CustomImage(
+                                  //           height: 30, fit: BoxFit.contain,
+                                  //           image: Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayImageFullUrl!,
+                                  //         ),
+                                       
+                                  //         const SizedBox(width: Dimensions.paddingSizeDefault),
+                
+                                  //         Expanded(
+                                  //           child: Text(
+                                  //             Get.find<SplashController>().configModel!.activePaymentMethodList![index].getWayTitle!,
+                                  //             style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
+                                  //             overflow: TextOverflow.ellipsis, maxLines: 1,
+                                  //           ),
+                                  //         ),
+                
+                                  //           Container(
+                                  //           height: 20, width: 20,
+                                  //           decoration: BoxDecoration(
+                                  //               shape: BoxShape.circle, color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).cardColor,
+                                  //               border: Border.all(color: Theme.of(context).disabledColor)
+                                  //           ),
+                                  //           child: Icon(Icons.check, color: Theme.of(context).cardColor, size: 16),
+                                  //         ),
+                                  //         const SizedBox(width: Dimensions.paddingSizeSmall),
+                                  //       ]),
+                                  //     ),
+                                
+                                
+                                  // );
+                                  
+                                  
+                                    }) : const SizedBox(),
+                
+                             locationController.zoneData != null && locationController.zoneData!.isNotEmpty && locationController.zoneData![0].digitalPayment != null
+    ? (locationController.zoneData![0].digitalPayment! ? 
+    PaymentButtonNew(isSelected: zonepaymentisSelected, icon: "${""}", title: locationController.zoneData![0].payment_gateway_title!, onTap: (){
+                                      
+                                            checkoutController.setPaymentMethod(2);
+                                           Get.back();
+                                          checkoutController.changeDigitalPaymentName(locationController.zoneData![0].payment_gateway_title!);
+                                          
+                                      
+                                      },
+                                      dynamic: true,
+                                      ) : const SizedBox())
+    : const SizedBox(),
+                                OfflinePaymentButton(
+                                  isSelected: checkoutController.paymentMethodIndex == 3,
+                                  offlineMethodList: checkoutController.offlineMethodList,
+                                  isOfflinePaymentActive: widget.isOfflinePaymentActive,
+                                  onTap: () {
+                                    checkoutController.setPaymentMethod(3);
+                                        Get.back();
+                                  },
+                                  checkoutController: checkoutController, tooltipController: tooltipController,
+                                ),
+                              ],
+                            );
+                          }
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              }
             ),
           ),
 

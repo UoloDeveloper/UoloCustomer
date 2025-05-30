@@ -659,7 +659,7 @@ class _CheckoutState extends State<CheckoutScreen> {
                                           checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge,
                                           tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,currency,
                                           module
-                                        ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress, time: checkoutController.store!.deliveryTime!,
+                                        ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress, time: checkoutController.store!.deliveryTime!, address: address,addressList: addressList,guestEmailController: guestEmailController,guestEmailNode: guestEmailNode ,guestNameTextEditingController: guestContactPersonNameController,guestNumberTextEditingController: guestContactPersonNumberController,guestNumberNode: guestNumberNode
 
                                       ),
                                     ),
@@ -1989,225 +1989,6 @@ Widget _orderPlaceButton(
 
 
 
-// void _showAddressDropdown(BuildContext context, List addressList, checkoutController, List address) {
-//   // Define the height of each item (you can adjust this based on your AddressWidget)
-//   const double itemHeight = 70.0; // Example height of each item
-//   const double titleHeight = 60.0; // Height for title and padding
-//   const double addAddressHeight = 50.0; // Height for the add address button
-//   const double textFieldHeight = 60.0; // Height for text fields
-//   const double padding = 16.0; // Padding around the container
-
-//   // Calculate the total height based on the number of items and other components
-//   final double bottomSheetHeight = (addressList.length * itemHeight) + titleHeight + addAddressHeight + (textFieldHeight * 3) + (padding * 2);
-
-//   showModalBottomSheet(
-//     context: context,
-//     backgroundColor: Colors.transparent,
-//     isScrollControlled: true, // Allow the bottom sheet to take full height
-//     builder: (BuildContext context) {
-//       return Container(
-//         // padding: const EdgeInsets.all(padding),
-//         constraints: BoxConstraints(
-//           maxHeight: MediaQuery.of(context).size.height * 0.5,
-//           // minHeight:MediaQuery.of(context).size.height * 0.8  // Limit the height to 80% of the screen height
-//         ),
-//         child: Column(
-//           mainAxisSize: MainAxisSize.max, // Use min to allow for scrolling
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-
-//               Container(
-//                 height: 50,
-//                 width: MediaQuery.of(context).size.width,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.only(
-//                     // topLeft: Radius.circular(Dimensions.radiusLarge),
-//                     // topRight: Radius.circular(Dimensions.radiusLarge)
-//                   )
-//                 ),
-
-//                 child: Center(
-//                   child: Container(
-//                height: 40,
-//                width: 40,
-//                     decoration: BoxDecoration(
-//                            color: const Color.fromARGB(146, 0, 0, 0),
-//                       borderRadius: BorderRadius.circular(
-//                         100
-//                       )
-//                     ),
-//                     child: Center(
-//                       child: IconButton(onPressed: (){
-//                         Get.back();
-//                       }, icon: Icon(
-//                         Icons.close,
-//                         color: const Color.fromARGB(209, 255, 255, 255),
-//                         size: 25,
-//                       )),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-
-//               SizedBox(height: 5,),
-//            Expanded(
-//              child: Container(
-//                decoration: BoxDecoration(
-//                  color: Colors.white,
-//                   borderRadius: BorderRadius.only(
-//                     topLeft: Radius.circular(Dimensions.radiusExtraLarge + 5),
-//                     topRight: Radius.circular(Dimensions.radiusExtraLarge + 5)
-//                   )
-//                 ),
-             
-//               child: Padding(
-//                 padding: const EdgeInsets.all(10.0),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-                  
-//                              children: [
-//                   Padding(
-//                     padding: const EdgeInsets.only(left: 10,top: 10),
-//                     child: Text(
-//                     'Choose a delivery address',
-//                     style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
-//                                     ),
-//                   ),
-//                 const SizedBox(height: 10),
-//                 Expanded(
-//                   child: ListView.builder(
-//                     itemCount: addressList.length,
-//                     itemBuilder: (context, index) {
-//                       return InkWell(
-//                         onTap: () {
-//                           checkoutController.getDistanceInKM(
-//                             LatLng(
-//                               double.parse(address[index].latitude!),
-//                               double.parse(address[index].longitude!),
-//                             ),
-//                             LatLng(
-//                               double.parse(checkoutController.store!.latitude!),
-//                               double.parse(checkoutController.store!.longitude!),
-//                             ),
-//                           );
-//                           checkoutController.setAddressIndex(index);
-//                           Get.back();
-//                         },
-//                         child: AddressWidget(
-//                           address: address[index],
-//                           fromAddress: false,
-//                           fromCheckout: true,
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 ),
-//                          const SizedBox(height: Dimensions.paddingSizeSmall),
-//                 // Text fields for address details
-//                 Padding(
-//                   padding:  const EdgeInsets.only(left: 8,right: 8),
-//                   child: CustomTextField(
-//                          radius: Dimensions.radiusLarge,
-//                     labelText: 'street_number'.tr,
-//                     titleText: 'write_street_number'.tr,
-//                     inputType: TextInputType.streetAddress,
-//                     focusNode: checkoutController.streetNode,
-//                     nextFocus: checkoutController.houseNode,
-//                     controller: checkoutController.streetNumberController,
-//                   ),
-//                 ),
-//                 SizedBox(height: Dimensions.paddingSizeLarge),
-//                 Padding(
-//                   padding: const EdgeInsets.only(left: 8,right: 8),
-//                   child: Row(
-//                     children: [
-                    
-//                       Expanded(
-//                         child: CustomTextField(
-//                                radius: Dimensions.radiusLarge,
-//                           titleText: 'write_house_number'.tr,
-//                           labelText: 'house'.tr,
-//                           inputType: TextInputType.text,
-//                           focusNode: checkoutController.houseNode,
-//                           nextFocus: checkoutController.floorNode,
-//                           controller: checkoutController.houseController,
-//                         ),
-//                       ),
-//                       const SizedBox(width: Dimensions.paddingSizeSmall),
-//                       Expanded(
-//                         child: CustomTextField(
-//                           radius: Dimensions.radiusLarge,
-//                           titleText: 'write_floor_number'.tr,
-//                           labelText: 'floor'.tr,
-//                           inputType: TextInputType.text,
-//                           focusNode: checkoutController.floorNode,
-//                           inputAction: TextInputAction.done,
-//                           controller: checkoutController.floorController,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//                          const SizedBox(height: Dimensions.paddingSizeSmall),
-                             
-//                   Padding(
-//                   padding: const EdgeInsets.all(12),
-//                   child: CustomInkWell(
-//                     onTap: () async {
-//                       Get.back();
-//                       var newAddress = await Get.toNamed(RouteHelper.getAddAddressRoute(true, false, checkoutController.store!.zoneId));
-//                       if (newAddress != null) {
-//                         checkoutController.getDistanceInKM(
-//                           LatLng(double.parse(newAddress.latitude), double.parse(newAddress.longitude)),
-//                           LatLng(double.parse(checkoutController.store!.latitude!), double.parse(checkoutController.store!.longitude!)),
-//                         );
-//                         checkoutController.streetNumberController.text = newAddress.streetNumber ?? '';
-//                         checkoutController.houseController.text = newAddress.house ?? '';
-//                         checkoutController.floorController.text = newAddress.floor ?? '';
-//                       }
-//                     },
-//                     child: Row(
-//                       children: [
-//                         Container(
-//                           decoration: BoxDecoration(
-//                             borderRadius: BorderRadius.all(Radius.circular(5)),
-//                             border: Border.all(color: Theme.of(context).primaryColor),
-//                           ),
-//                           child: Padding(
-//                             padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
-//                             child: Icon(Icons.add, size: 18, color: Theme.of(context).primaryColor),
-//                           ),
-//                         ),
-//                         SizedBox(width: 20),
-//                         Text('Add New Address'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
-//                         Spacer(),
-//                         Icon(Icons.arrow_right),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-                             
-//                              ],
-                             
-//                 ),
-//               ),
-//              ),
-//            ),
-            
-           
-           
-//           ],
-//         ),
-//       );
-//     },
-//   );
-// }
-
-
-
-
-
-
 void _showAddressDropdown(BuildContext context, List addressList, checkoutController, List address) {
   // Define the height of each item (you can adjust this based on your AddressWidget)
   const double itemHeight = 70.0; // Example height of each item
@@ -2224,219 +2005,438 @@ void _showAddressDropdown(BuildContext context, List addressList, checkoutContro
     backgroundColor: Colors.transparent,
     isScrollControlled: true, // Allow the bottom sheet to take full height
     builder: (BuildContext context) {
-      return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom), // Adjust for keyboard
-        child: Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.8, // Limit to 80% of screen height
-          ),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min, // Use min to fit content
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Close button
+      return Container(
+        // padding: const EdgeInsets.all(padding),
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.5,
+          // minHeight:MediaQuery.of(context).size.height * 0.8  // Limit the height to 80% of the screen height
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max, // Use min to allow for scrolling
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
               Container(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    // topLeft: Radius.circular(Dimensions.radiusLarge),
+                    // topRight: Radius.circular(Dimensions.radiusLarge)
+                  )
+                ),
+
                 child: Center(
                   child: Container(
-                    height: 40,
-                    width: 40,
+               height: 40,
+               width: 40,
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(146, 0, 0, 0),
-                      borderRadius: BorderRadius.circular(100),
+                           color: const Color.fromARGB(146, 0, 0, 0),
+                      borderRadius: BorderRadius.circular(
+                        100
+                      )
                     ),
                     child: Center(
-                      child: IconButton(
-                        onPressed: () => Get.back(),
-                        icon: const Icon(
-                          Icons.close,
-                          color: Color.fromARGB(209, 255, 255, 255),
-                          size: 25,
-                        ),
-                      ),
+                      child: IconButton(onPressed: (){
+                        Get.back();
+                      }, icon: Icon(
+                        Icons.close,
+                        color: const Color.fromARGB(209, 255, 255, 255),
+                        size: 25,
+                      )),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
-              // Scrollable content
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+
+              SizedBox(height: 5,),
+           Expanded(
+             child: Container(
+               decoration: BoxDecoration(
+                 color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Dimensions.radiusExtraLarge + 5),
+                    topRight: Radius.circular(Dimensions.radiusExtraLarge + 5)
+                  )
+                ),
+             
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  
+                             children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10,top: 10),
+                    child: Text(
+                    'Choose a delivery address',
+                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+                                    ),
+                  ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: addressList.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          checkoutController.getDistanceInKM(
+                            LatLng(
+                              double.parse(address[index].latitude!),
+                              double.parse(address[index].longitude!),
+                            ),
+                            LatLng(
+                              double.parse(checkoutController.store!.latitude!),
+                              double.parse(checkoutController.store!.longitude!),
+                            ),
+                          );
+                          checkoutController.setAddressIndex(index);
+                          Get.back();
+                        },
+                        child: AddressWidget(
+                          address: address[index],
+                          fromAddress: false,
+                          fromCheckout: true,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                         const SizedBox(height: Dimensions.paddingSizeSmall),
+                // Text fields for address details
+                Padding(
+                  padding:  const EdgeInsets.only(left: 8,right: 8),
+                  child: CustomTextField(
+                         radius: Dimensions.radiusLarge,
+                    labelText: 'street_number'.tr,
+                    titleText: 'write_street_number'.tr,
+                    inputType: TextInputType.streetAddress,
+                    focusNode: checkoutController.streetNode,
+                    nextFocus: checkoutController.houseNode,
+                    controller: checkoutController.streetNumberController,
+                  ),
+                ),
+                SizedBox(height: Dimensions.paddingSizeLarge),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8,right: 8),
+                  child: Row(
+                    children: [
+                    
+                      Expanded(
+                        child: CustomTextField(
+                               radius: Dimensions.radiusLarge,
+                          titleText: 'write_house_number'.tr,
+                          labelText: 'house'.tr,
+                          inputType: TextInputType.text,
+                          focusNode: checkoutController.houseNode,
+                          nextFocus: checkoutController.floorNode,
+                          controller: checkoutController.houseController,
+                        ),
+                      ),
+                      const SizedBox(width: Dimensions.paddingSizeSmall),
+                      Expanded(
+                        child: CustomTextField(
+                          radius: Dimensions.radiusLarge,
+                          titleText: 'write_floor_number'.tr,
+                          labelText: 'floor'.tr,
+                          inputType: TextInputType.text,
+                          focusNode: checkoutController.floorNode,
+                          inputAction: TextInputAction.done,
+                          controller: checkoutController.floorController,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                         const SizedBox(height: Dimensions.paddingSizeSmall),
+                             
+                  Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: CustomInkWell(
+                    onTap: () async {
+                      Get.back();
+                      var newAddress = await Get.toNamed(RouteHelper.getAddAddressRoute(true, false, checkoutController.store!.zoneId));
+                      if (newAddress != null) {
+                        checkoutController.getDistanceInKM(
+                          LatLng(double.parse(newAddress.latitude), double.parse(newAddress.longitude)),
+                          LatLng(double.parse(checkoutController.store!.latitude!), double.parse(checkoutController.store!.longitude!)),
+                        );
+                        checkoutController.streetNumberController.text = newAddress.streetNumber ?? '';
+                        checkoutController.houseController.text = newAddress.house ?? '';
+                        checkoutController.floorController.text = newAddress.floor ?? '';
+                      }
+                    },
+                    child: Row(
                       children: [
-                        // Title
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10, top: 10),
-                          child: Text(
-                            'Choose a delivery address',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            border: Border.all(color: Theme.of(context).primaryColor),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+                            child: Icon(Icons.add, size: 18, color: Theme.of(context).primaryColor),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        // Address list
-                        SizedBox(
-                          height: addressList.length * itemHeight, // Fixed height for list
-                          child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(), // Disable inner scrolling
-                            itemCount: addressList.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  checkoutController.getDistanceInKM(
-                                    LatLng(
-                                      double.parse(address[index].latitude!),
-                                      double.parse(address[index].longitude!),
-                                    ),
-                                    LatLng(
-                                      double.parse(checkoutController.store!.latitude!),
-                                      double.parse(checkoutController.store!.longitude!),
-                                    ),
-                                  );
-                                  checkoutController.setAddressIndex(index);
-                                  Get.back();
-                                },
-                                child: AddressWidget(
-                                  address: address[index],
-                                  fromAddress: false,
-                                  fromCheckout: true,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: Dimensions.paddingSizeSmall),
-                        // Text fields
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          child: CustomTextField(
-                            radius: Dimensions.radiusLarge,
-                            labelText: 'street_number'.tr,
-                            titleText: 'write_street_number'.tr,
-                            inputType: TextInputType.streetAddress,
-                            focusNode: checkoutController.streetNode,
-                            nextFocus: checkoutController.houseNode,
-                            controller: checkoutController.streetNumberController,
-                          ),
-                        ),
-                        const SizedBox(height: Dimensions.paddingSizeLarge),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: CustomTextField(
-                                  radius: Dimensions.radiusLarge,
-                                  titleText: 'write_house_number'.tr,
-                                  labelText: 'house'.tr,
-                                  inputType: TextInputType.text,
-                                  focusNode: checkoutController.houseNode,
-                                  nextFocus: checkoutController.floorNode,
-                                  controller: checkoutController.houseController,
-                                ),
-                              ),
-                              const SizedBox(width: Dimensions.paddingSizeSmall),
-                              Expanded(
-                                child: CustomTextField(
-                                  radius: Dimensions.radiusLarge,
-                                  titleText: 'write_floor_number'.tr,
-                                  labelText: 'floor'.tr,
-                                  inputType: TextInputType.text,
-                                  focusNode: checkoutController.floorNode,
-                                  inputAction: TextInputAction.done,
-                                  controller: checkoutController.floorController,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: Dimensions.paddingSizeSmall),
-                        // Add new address button
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: CustomInkWell(
-                            onTap: () async {
-                              Get.back();
-                              var newAddress = await Get.toNamed(
-                                RouteHelper.getAddAddressRoute(
-                                  true,
-                                  false,
-                                  checkoutController.store!.zoneId,
-                                ),
-                              );
-                              if (newAddress != null) {
-                                checkoutController.getDistanceInKM(
-                                  LatLng(
-                                    double.parse(newAddress.latitude),
-                                    double.parse(newAddress.longitude),
-                                  ),
-                                  LatLng(
-                                    double.parse(checkoutController.store!.latitude!),
-                                    double.parse(checkoutController.store!.longitude!),
-                                  ),
-                                );
-                                checkoutController.streetNumberController.text =
-                                    newAddress.streetNumber ?? '';
-                                checkoutController.houseController.text = newAddress.house ?? '';
-                                checkoutController.floorController.text = newAddress.floor ?? '';
-                              }
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                    border: Border.all(color: Theme.of(context).primaryColor),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 18,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                Text(
-                                  'Add New Address'.tr,
-                                  style: robotoMedium.copyWith(
-                                    fontSize: Dimensions.fontSizeLarge,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                const Spacer(),
-                                const Icon(Icons.arrow_right),
-                              ],
-                            ),
-                          ),
-                        ),
+                        SizedBox(width: 20),
+                        Text('Add New Address'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
+                        Spacer(),
+                        Icon(Icons.arrow_right),
                       ],
                     ),
                   ),
                 ),
+                             
+                             ],
+                             
+                ),
               ),
-            ],
-          ),
+             ),
+           ),
+            
+           
+           
+          ],
         ),
       );
     },
   );
 }
+
+
+
+
+
+
+// void _showAddressDropdown(BuildContext context, List addressList, checkoutController, List address) {
+//   // Define the height of each item (you can adjust this based on your AddressWidget)
+//   const double itemHeight = 70.0; // Example height of each item
+//   const double titleHeight = 60.0; // Height for title and padding
+//   const double addAddressHeight = 50.0; // Height for the add address button
+//   const double textFieldHeight = 60.0; // Height for text fields
+//   const double padding = 16.0; // Padding around the container
+
+//   // Calculate the total height based on the number of items and other components
+//   final double bottomSheetHeight = (addressList.length * itemHeight) + titleHeight + addAddressHeight + (textFieldHeight * 3) + (padding * 2);
+
+//   showModalBottomSheet(
+//     context: context,
+//     backgroundColor: Colors.transparent,
+//     isScrollControlled: true, // Allow the bottom sheet to take full height
+//     builder: (BuildContext context) {
+//       return Padding(
+//         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom), // Adjust for keyboard
+//         child: Container(
+//           constraints: BoxConstraints(
+//             maxHeight: MediaQuery.of(context).size.height * 0.8, // Limit to 80% of screen height
+//           ),
+//           decoration: const BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.only(
+//               topLeft: Radius.circular(20),
+//               topRight: Radius.circular(20),
+//             ),
+//           ),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min, // Use min to fit content
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               // Close button
+//               Container(
+//                 height: 50,
+//                 width: MediaQuery.of(context).size.width,
+//                 child: Center(
+//                   child: Container(
+//                     height: 40,
+//                     width: 40,
+//                     decoration: BoxDecoration(
+//                       color: const Color.fromARGB(146, 0, 0, 0),
+//                       borderRadius: BorderRadius.circular(100),
+//                     ),
+//                     child: Center(
+//                       child: IconButton(
+//                         onPressed: () => Get.back(),
+//                         icon: const Icon(
+//                           Icons.close,
+//                           color: Color.fromARGB(209, 255, 255, 255),
+//                           size: 25,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(height: 5),
+//               // Scrollable content
+//               Expanded(
+//                 child: SingleChildScrollView(
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(10.0),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         // Title
+//                         const Padding(
+//                           padding: EdgeInsets.only(left: 10, top: 10),
+//                           child: Text(
+//                             'Choose a delivery address',
+//                             style: TextStyle(
+//                               color: Colors.black,
+//                               fontSize: 15,
+//                               fontWeight: FontWeight.w600,
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(height: 10),
+//                         // Address list
+//                         SizedBox(
+//                           height: addressList.length * itemHeight, // Fixed height for list
+//                           child: ListView.builder(
+//                             physics: const NeverScrollableScrollPhysics(), // Disable inner scrolling
+//                             itemCount: addressList.length,
+//                             itemBuilder: (context, index) {
+//                               return InkWell(
+//                                 onTap: () {
+//                                   checkoutController.getDistanceInKM(
+//                                     LatLng(
+//                                       double.parse(address[index].latitude!),
+//                                       double.parse(address[index].longitude!),
+//                                     ),
+//                                     LatLng(
+//                                       double.parse(checkoutController.store!.latitude!),
+//                                       double.parse(checkoutController.store!.longitude!),
+//                                     ),
+//                                   );
+//                                   checkoutController.setAddressIndex(index);
+//                                   Get.back();
+//                                 },
+//                                 child: AddressWidget(
+//                                   address: address[index],
+//                                   fromAddress: false,
+//                                   fromCheckout: true,
+//                                 ),
+//                               );
+//                             },
+//                           ),
+//                         ),
+//                         const SizedBox(height: Dimensions.paddingSizeSmall),
+//                         // Text fields
+//                         Padding(
+//                           padding: const EdgeInsets.only(left: 8, right: 8),
+//                           child: CustomTextField(
+//                             radius: Dimensions.radiusLarge,
+//                             labelText: 'street_number'.tr,
+//                             titleText: 'write_street_number'.tr,
+//                             inputType: TextInputType.streetAddress,
+//                             focusNode: checkoutController.streetNode,
+//                             nextFocus: checkoutController.houseNode,
+//                             controller: checkoutController.streetNumberController,
+//                           ),
+//                         ),
+//                         const SizedBox(height: Dimensions.paddingSizeLarge),
+//                         Padding(
+//                           padding: const EdgeInsets.only(left: 8, right: 8),
+//                           child: Row(
+//                             children: [
+//                               Expanded(
+//                                 child: CustomTextField(
+//                                   radius: Dimensions.radiusLarge,
+//                                   titleText: 'write_house_number'.tr,
+//                                   labelText: 'house'.tr,
+//                                   inputType: TextInputType.text,
+//                                   focusNode: checkoutController.houseNode,
+//                                   nextFocus: checkoutController.floorNode,
+//                                   controller: checkoutController.houseController,
+//                                 ),
+//                               ),
+//                               const SizedBox(width: Dimensions.paddingSizeSmall),
+//                               Expanded(
+//                                 child: CustomTextField(
+//                                   radius: Dimensions.radiusLarge,
+//                                   titleText: 'write_floor_number'.tr,
+//                                   labelText: 'floor'.tr,
+//                                   inputType: TextInputType.text,
+//                                   focusNode: checkoutController.floorNode,
+//                                   inputAction: TextInputAction.done,
+//                                   controller: checkoutController.floorController,
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                         const SizedBox(height: Dimensions.paddingSizeSmall),
+//                         // Add new address button
+//                         Padding(
+//                           padding: const EdgeInsets.all(12),
+//                           child: CustomInkWell(
+//                             onTap: () async {
+//                               Get.back();
+//                               var newAddress = await Get.toNamed(
+//                                 RouteHelper.getAddAddressRoute(
+//                                   true,
+//                                   false,
+//                                   checkoutController.store!.zoneId,
+//                                 ),
+//                               );
+//                               if (newAddress != null) {
+//                                 checkoutController.getDistanceInKM(
+//                                   LatLng(
+//                                     double.parse(newAddress.latitude),
+//                                     double.parse(newAddress.longitude),
+//                                   ),
+//                                   LatLng(
+//                                     double.parse(checkoutController.store!.latitude!),
+//                                     double.parse(checkoutController.store!.longitude!),
+//                                   ),
+//                                 );
+//                                 checkoutController.streetNumberController.text =
+//                                     newAddress.streetNumber ?? '';
+//                                 checkoutController.houseController.text = newAddress.house ?? '';
+//                                 checkoutController.floorController.text = newAddress.floor ?? '';
+//                               }
+//                             },
+//                             child: Row(
+//                               children: [
+//                                 Container(
+//                                   decoration: BoxDecoration(
+//                                     borderRadius: const BorderRadius.all(Radius.circular(5)),
+//                                     border: Border.all(color: Theme.of(context).primaryColor),
+//                                   ),
+//                                   child: Padding(
+//                                     padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+//                                     child: Icon(
+//                                       Icons.add,
+//                                       size: 18,
+//                                       color: Theme.of(context).primaryColor,
+//                                     ),
+//                                   ),
+//                                 ),
+//                                 const SizedBox(width: 20),
+//                                 Text(
+//                                   'Add New Address'.tr,
+//                                   style: robotoMedium.copyWith(
+//                                     fontSize: Dimensions.fontSizeLarge,
+//                                     color: Theme.of(context).primaryColor,
+//                                   ),
+//                                 ),
+//                                 const Spacer(),
+//                                 const Icon(Icons.arrow_right),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       );
+//     },
+//   );
+// }
 
 
 class Paymenticoncard extends StatelessWidget {

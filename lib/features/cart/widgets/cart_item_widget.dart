@@ -2,6 +2,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sixam_mart/common/widgets/custom_asset_image_widget.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
 import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
+import 'package:sixam_mart/features/coupon/controllers/coupon_controller.dart';
 import 'package:sixam_mart/features/language/controllers/language_controller.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/features/cart/domain/models/cart_model.dart';
@@ -400,6 +401,8 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
             SlidableAction(
               onPressed: (context) {
                 Get.find<CartController>().removeFromCart(cartIndex, item: cart.item);
+                Get.find<CouponController>().removeCouponData( true);
+                Get.find<CartController>().calculateTax(taxIncluded: Get.find<SplashController>().configModel!.taxIncluded == 1, orderAmount:   Get.find<CartController>().subTotal -  (Get.find<CouponController>().discount ?? 0), taxPercent: cart.item!.store!.tax);
               },
               backgroundColor: Theme.of(context).colorScheme.error,
               borderRadius: BorderRadius.horizontal(right: Radius.circular(Get.find<LocalizationController>().isLtr ? Dimensions.radiusDefault : 0), left: Radius.circular(Get.find<LocalizationController>().isLtr ? 0 : Dimensions.radiusDefault)),
@@ -610,9 +613,13 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
                               onTap: cartController.isLoading ? null : () {
                                 if (cart.quantity! > 1) {
                                   Get.find<CartController>().setQuantity(false, cartIndex, cart.stock, cart.quantityLimit);
+                                    Get.find<CouponController>().removeCouponData( true);
+                                     Get.find<CartController>().calculateTax(taxIncluded: Get.find<SplashController>().configModel!.taxIncluded == 1, orderAmount:   Get.find<CartController>().subTotal -  (Get.find<CouponController>().discount ?? 0), taxPercent: cart.item!.store!.tax);
                                   // fromcheckout ? CheckoutScreenState().initCall() : null;
                                 }else {
                                   Get.find<CartController>().removeFromCart(cartIndex, item: cart.item);
+                                    Get.find<CouponController>().removeCouponData( true);
+                                     Get.find<CartController>().calculateTax(taxIncluded: Get.find<SplashController>().configModel!.taxIncluded == 1, orderAmount:   Get.find<CartController>().subTotal -  (Get.find<CouponController>().discount ?? 0), taxPercent: cart.item!.store!.tax);
                                 }
                               },
                               isIncrement: false,
@@ -628,6 +635,8 @@ double? variationprice =  getSelectedOptionPrice(cart.toJson());
                               onTap: cartController.isLoading ? null : () {
                                 Get.find<CartController>().forcefullySetModule(Get.find<CartController>().cartList[0].item!.moduleId!);
                                 Get.find<CartController>().setQuantity(true, cartIndex, cart.stock, cart.quantityLimit);
+                                  Get.find<CouponController>().removeCouponData( true);
+                                   Get.find<CartController>().calculateTax(taxIncluded: Get.find<SplashController>().configModel!.taxIncluded == 1, orderAmount:   Get.find<CartController>().subTotal -  (Get.find<CouponController>().discount ?? 0), taxPercent: cart.item!.store!.tax);
                                   // fromcheckout ? CheckoutScreenState().initCall() : null;
                               },
                               isIncrement: true,

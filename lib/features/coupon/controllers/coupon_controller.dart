@@ -1,3 +1,5 @@
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
+import 'package:sixam_mart/features/checkout/controllers/checkout_controller.dart';
 import 'package:sixam_mart/features/coupon/domain/models/coupon_model.dart';
 import 'package:sixam_mart/helper/price_converter.dart';
 import 'package:sixam_mart/common/widgets/custom_snackbar.dart';
@@ -52,6 +54,7 @@ class CouponController extends GetxController implements GetxService {
   }
 
   Future<double?> applyCoupon(String coupon, double order, double? deliveryCharge, int? storeID) async {
+       final  order1 = Get.find<CartController>().subTotal;
     _isLoading = true;
     _discount = 0;
     update();
@@ -59,9 +62,9 @@ class CouponController extends GetxController implements GetxService {
     if (couponModel != null) {
       _coupon = couponModel;
       if(_coupon!.couponType == 'free_delivery') {
-        _processFreeDeliveryCoupon(deliveryCharge!, order);
+        _processFreeDeliveryCoupon(deliveryCharge!, order1);
       }else {
-        _processCoupon(order);
+        _processCoupon(order1);
       }
     } else {
       _discount = 0.0;
@@ -132,6 +135,45 @@ class CouponController extends GetxController implements GetxService {
     update();
     return _discount;
   }
+
+
+
+
+// validateCoupen  (CouponModel? coupon, double order, double? deliveryCharge, ) {
+//   // coupon = _coupon;
+//     showCustomSnackBar('validating_coupon'.tr, isError: false);
+//       print("order amount is ${order}");
+//     if (coupon == null) {
+//       showCustomSnackBar('please_enter_a_coupon_code'.tr);
+//       return false;
+//     } 
+  
+//     else if (order <= coupon.minPurchase!) {
+//       showCustomSnackBar('${'the_minimum_item_purchase_amount_for_this_coupon_is'.tr} '
+//           '${PriceConverter.convertPrice(coupon.minPurchase)} '
+//           '${'but_you_have'.tr} ${PriceConverter.convertPrice(order)}');
+//       showCustomSnackBar('your_order_amount_is_too_low'.tr);
+//       removeCouponData( true);
+//       Get.find<CheckoutController>().couponController.text = '';
+//       return false;
+//     } else if (deliveryCharge != null && deliveryCharge < 0) {
+//       showCustomSnackBar('invalid_delivery_charge'.tr);
+//       return false;
+//     // } else if (storeID == null || storeID <= 0) {
+//     //   showCustomSnackBar('invalid_store_id'.tr);
+//     //   return false;
+//     }
+//     return true;
+//   }
+
+
+
+
+
+
+
+
+
 
   void removeCouponData(bool notify) {
     _coupon = null;
