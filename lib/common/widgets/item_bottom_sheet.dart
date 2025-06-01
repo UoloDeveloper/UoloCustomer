@@ -456,10 +456,14 @@ final String currency = widget.item!.currency?.currencyCode ?? '₹ ';
                           // Variation
                           Padding(
                             padding: const EdgeInsets.only(left: 10,right: 10,top: 1,bottom: 1),
-                            child: _newVariation ? NewVariationView(
+                            child: _newVariation ? 
+                            NewVariationView(
                               item: widget.item, itemController: itemController,
                               discount: initialDiscount, discountType: discountType, showOriginalPrice: (price > priceWithDiscount) && (discountType == 'percent'), currency: currency,
-                            ) : VariationView(
+                            ) 
+                            :  
+                            // SizedBox(),
+                            VariationView(
                               item: widget.item, itemController: itemController,
                             ),
                           ),
@@ -1480,7 +1484,11 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                               // currency: item?.currency?.currencyCode,
                             )}',
                             style: itemController.selectedVariations[variationIndex][valueIndex] ?? false
-                                ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall)
+                                ? robotoRegular.copyWith(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600
+                                  )
                                 : robotoRegular.copyWith(
                                     fontSize: 14,
                                     color: Colors.black,

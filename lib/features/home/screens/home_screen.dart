@@ -575,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollController: _scrollController,
                       totalSize: storeController.storeModel?.totalSize,
                       offset: storeController.storeModel?.offset,
-                      onPaginate: (int? offset) async => await storeController.getStoreList(offset!, false),
+                      onPaginate: (int? offset  ) async => await storeController.getStoreList(offset! , false),
                       itemView: ItemsView(
                         isHome: true,
                         isStore: true,
@@ -591,8 +591,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }),) : const SizedBox()),
           
+SliverToBoxAdapter(
+  child: _buildPaginationFooter(context),
+),
 
-                SliverToBoxAdapter(child: EndScreenDialog()),
+ showMobileModule ? SliverToBoxAdapter(child: EndScreenDialog()) : const SliverToBoxAdapter(child: SizedBox()),
+
+        // Get.find<StoreController>().storeModel!.totalSize == ( Get.find<StoreController>().storeModel?.stores!.length! + 1) ? const SliverToBoxAdapter(child: SizedBox()) :        SliverToBoxAdapter(child: EndScreenDialog()),
               ],
 
             ),
@@ -789,7 +794,23 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
 
 
 
+Widget _buildPaginationFooter(BuildContext context) {
+  final storeController = Get.find<StoreController>();
+  final storeModel = storeController.storeModel;
 
+
+  if (storeModel == null || storeModel.stores == null) {
+    return const SizedBox(); 
+  }
+
+  final totalSize = storeModel.totalSize ?? 0;
+  final currentItems = storeModel.stores!.length + 1;
+  final isLastPage = currentItems >= totalSize;
+  print("totalSize: $totalSize  currentItems: $currentItems" " isLastPage: $isLastPage");
+  return !isLastPage
+      ? const SizedBox() 
+      : EndScreenDialog(); 
+}
 
 
 

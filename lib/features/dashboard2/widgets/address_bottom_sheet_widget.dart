@@ -184,6 +184,9 @@ class AddressBottomSheetWidget extends StatelessWidget {
                                   Get.find<LocationController>().saveAddressAndNavigate(
                                     address, false, '', false, ResponsiveHelper.isDesktop(Get.context),
                                   );
+                                  
+                            Get.find<LocationController>().hideSuggestedLocation();
+                            Get.find<SplashController>().saveWebSuggestedLocationStatus(true);
                                 }else {
                                   Get.back();
                                   if(ResponsiveHelper.isDesktop(Get.context)) {
@@ -206,7 +209,7 @@ class AddressBottomSheetWidget extends StatelessWidget {
                               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusDefault))),
                               fixedSize: const Size(220, 40),
                                 backgroundColor: addressController.addressList != null && addressController.addressList!.isEmpty
-                              ? Theme.of(context).primaryColor : Colors.transparent,
+                              ? Colors.transparent : Colors.transparent,
                             ),
                             icon:  Icon( Icons.my_location, color: addressController.addressList != null && addressController.addressList!.isEmpty
                                 ? Theme.of(context).cardColor : Theme.of(context).cardColor),

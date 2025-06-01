@@ -1482,11 +1482,14 @@ CouponCarousel(storeid: store!.id,),
 
 
        SliverToBoxAdapter(child: SizedBox(height: 50,)),
-  SliverToBoxAdapter(
-          child: EndScreenDialog(
-            
-          ),
+         SliverToBoxAdapter(
+          child: _buildPaginationFooter(context),
         ),
+  // SliverToBoxAdapter(
+  //         child: EndScreenDialog(
+            
+  //         ),
+  //       ),
             ],
           ) :
           CustomScrollView(
@@ -1795,9 +1798,7 @@ CouponCarousel(storeid: store!.id,),
         ),
 
         SliverToBoxAdapter(
-          child: EndScreenDialog (
-            
-          ),
+          child: _buildPaginationFooter(context),
         ),
   ],
 ) : 
@@ -2162,7 +2163,23 @@ void showGridMenu(BuildContext context) {
   );
 }
 
+Widget _buildPaginationFooter(BuildContext context) {
+  final storeController = Get.find<StoreController>();
+  final storeModel = storeController.storeItemModel;
 
+
+  if (storeModel == null || storeModel.items == null) {
+    return const SizedBox(); 
+  }
+
+  final totalSize = storeModel.totalSize ?? 0;
+  final currentItems = storeModel.items!.length + 1;
+  final isLastPage = currentItems >= totalSize;
+  print("totalSize: $totalSize  currentItems: $currentItems" " isLastPage: $isLastPage");
+  return !isLastPage
+      ? const SizedBox() 
+      : EndScreenDialog(); 
+}
 
 class MyStoreShimmer extends StatefulWidget {
 final bool  isloader;
