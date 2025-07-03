@@ -592,7 +592,7 @@ final String currency = widget.item!.currency?.currencyCode ?? '₹ ';
                                     isLoading: cartController.isLoading,
                                     buttonText: (Get.find<SplashController>().configModel!.moduleConfig!.module!.stock! && stock! <= 0)
                                         ? 'out_of_stock'.tr : widget.isCampaign ? 'order_now'.tr
-                                        : (widget.cart != null || itemController.cartIndex != -1) ? 'update_in_cart'.tr : withAddonCost.toInt() == 0 ? 'Add item'.tr :  'Add Item ${withAddonCost.toInt() }'.tr,
+                                        : (widget.cart != null || itemController.cartIndex != -1) ? 'update_in_cart'.tr : withAddonCost.toInt() == 0 ? 'Add item'.tr :  'Add Item'.tr,
                                     onPressed: 
                                      isMultiSelect ? (){
                                       Get.back();
@@ -1336,7 +1336,9 @@ CartModel? cart =  findindex != -1 ? cartController.cartList[findindex] :  null;
                               // currency: item?.currency?.currencyCode,
                             )}',
                             style: itemController.selectedVariations[variationIndex][valueIndex] ?? false
-                                ? robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall)
+                                ? robotoMedium.copyWith(   fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600)
                                 : robotoRegular.copyWith(
                                     fontSize: 14,
                                     color: Colors.black,

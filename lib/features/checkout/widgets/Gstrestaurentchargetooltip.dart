@@ -145,21 +145,21 @@ class _TooltipExampleState extends State<TooltipExample> {
               mainAxisSize: MainAxisSize.min,
               children: [
                
-                const Text(
-                  'GST & Other Charges',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 8),
+                // const Text(
+                //   'GST & Other Charges',
+                //   style: TextStyle(
+                //     fontSize: 14,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.black,
+                //   ),
+                // ),
+                // const SizedBox(height: 8),
               
         widget.checkoutController.store!.extraPackagingStatus!   ?         Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:  [
                     Text(
-                      'Restaurant Packaging',
+                      'GST & Other Charges',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -181,7 +181,7 @@ class _TooltipExampleState extends State<TooltipExample> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:  [
                     Text(
-                      'Restaurant GST',
+                      'GST & Other Charges',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -199,21 +199,29 @@ class _TooltipExampleState extends State<TooltipExample> {
                   ],
                 ),
            widget.tax < 0 ? SizedBox() :      const SizedBox(height: 4),
-           widget.tax < 0 ? SizedBox() :      const Text(
-                  'Uolo plays no role in the taxes and charges levied by the govt. and restaurant',
+ 
+       widget.tax < 0 ? SizedBox() :
+        widget.checkoutController.store!.tax!.toDouble()
+         < 5.5 ? Text(
+                  'Uolo plays no role in the taxes and charges levied by the government and restaurant.',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color.fromARGB(165, 102, 102, 102),
+                  ),
+                ): const Text(
+                  'Government taxes like GST are levied as per applicable laws.\nUolo charges a handling fee solely for supporting and maintaining the app.',
                   style: TextStyle(
                     fontSize: 12,
                     color: Color.fromARGB(165, 102, 102, 102),
                   ),
                 ),
-       
            
           
          
              
                 const SizedBox(height: 8),
                 // Platform Fee Section
-       splashController.configModel!.additionalChargeStatus! ?         Row(
+       splashController.configModel!.additionCharge! < 0 ?         Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:  [
                     Text(
@@ -238,7 +246,7 @@ class _TooltipExampleState extends State<TooltipExample> {
            
                 const SizedBox(height: 4),
                 
-              splashController.configModel!.additionalChargeStatus! ?   Text(
+             splashController.configModel!.additionCharge! < 0  ?   Text(
                   'Inclusive of GST. This fee helps us operate and maintain Uolo platform',
                   style: TextStyle(
                     fontSize: 12,

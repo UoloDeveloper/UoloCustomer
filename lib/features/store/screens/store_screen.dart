@@ -995,9 +995,9 @@ class _StoreScreenState extends State<StoreScreen> {
     await Get.find<StoreController>().getStoreDetails(Store(id: widget.store!.id), widget.fromModule, slug: widget.slug).then((value) {
       Get.find<StoreController>().showButtonAnimation();
     });
-    // if(Get.find<CategoryController>().categoryList == null) {
-    //   Get.find<CategoryController>().getCategoryList(true);
-    // }
+    if(Get.find<CategoryController>().categoryList == null) {
+      Get.find<CategoryController>().getCategoryList(true);
+    }
     // Get.find<StoreController>().getStoreBannerList(widget.store!.id ?? Get.find<StoreController>().store!.id);
     // Get.find<StoreController>().getRestaurantRecommendedItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, false);
     // Get.find<StoreController>().getStoreItemList(widget.store!.id ?? Get.find<StoreController>().store!.id, 1, 'all', false);

@@ -380,7 +380,7 @@ class ModuleView extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(15),
                   bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
-              child: Image.asset("assets/image/static_banner/Uolo savory Banner 00022.png",fit: BoxFit.cover,)),
+              child: Image.asset("assets/image/static_banner/Uolo savory Banner 00022.jpg",fit: BoxFit.cover,)),
 
             SizedBox(
               height: 10,

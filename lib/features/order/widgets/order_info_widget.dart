@@ -44,12 +44,13 @@ class OrderInfoWidget extends StatelessWidget {
     ExpansionTileController controller = ExpansionTileController();
     bool isDesktop = ResponsiveHelper.isDesktop(context);
     bool isGuestLoggedIn = AuthHelper.isGuestLoggedIn();
-    return Stack(children: [
+    return Stack(
+      children: [
 
-      !isDesktop &&  ( track.deliveryMan != null)  ? OrderBannerViewWidget(
-        order: order, orderController: orderController, ongoing: ongoing,
-        parcel: parcel, prescriptionOrder: prescriptionOrder,
-      ) : const SizedBox(),
+      // !isDesktop &&  ( track.deliveryMan != null)  ? OrderBannerViewWidget(
+      //   order: order, orderController: orderController, ongoing: ongoing,
+      //   parcel: parcel, prescriptionOrder: prescriptionOrder,
+      // ) : const SizedBox(),
 
 
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -58,14 +59,14 @@ class OrderInfoWidget extends StatelessWidget {
           // isDesktop ? Text('general_info'.tr, style: robotoMedium) : const SizedBox(),
         //   isDesktop ? const SizedBox(height: Dimensions.paddingSizeExtraLarge) : const SizedBox(),
 
-        !isDesktop ? SizedBox(height: DateConverter.isBeforeTime(order.scheduleAt) && Get.find<SplashController>().getModuleConfig(order.moduleType).newVariation!
-            ? (order.orderStatus != 'delivered' && order.orderStatus != 'failed'
-            && order.orderStatus != 'canceled' && order.orderStatus != 'refund_requested' && order.orderStatus != 'refunded'
-            && order.orderStatus != 'refund_request_canceled' ) ? 80 : 140 :
-        parcel || prescriptionOrder || (orderController.orderDetails!.isNotEmpty && orderController.orderDetails![0].itemDetails!.moduleType == 'grocery')
-            || (orderController.orderDetails!.isNotEmpty && orderController.orderDetails![0].itemDetails!.moduleType == 'ecommerce')
-            || (orderController.orderDetails!.isNotEmpty && orderController.orderDetails![0].itemDetails!.moduleType == 'pharmacy')
-            ? 40 : 0) : const SizedBox(),
+        // !isDesktop ? SizedBox(height: DateConverter.isBeforeTime(order.scheduleAt) && Get.find<SplashController>().getModuleConfig(order.moduleType).newVariation!
+        //     ? (order.orderStatus != 'delivered' && order.orderStatus != 'failed'
+        //     && order.orderStatus != 'canceled' && order.orderStatus != 'refund_requested' && order.orderStatus != 'refunded'
+        //     && order.orderStatus != 'refund_request_canceled' ) ? 80 : 140 :
+        // parcel || prescriptionOrder || (orderController.orderDetails!.isNotEmpty && orderController.orderDetails![0].itemDetails!.moduleType == 'grocery')
+        //     || (orderController.orderDetails!.isNotEmpty && orderController.orderDetails![0].itemDetails!.moduleType == 'ecommerce')
+        //     || (orderController.orderDetails!.isNotEmpty && orderController.orderDetails![0].itemDetails!.moduleType == 'pharmacy')
+        //     ? 40 : 0) : const SizedBox(),
 
           Container(
             decoration: BoxDecoration(

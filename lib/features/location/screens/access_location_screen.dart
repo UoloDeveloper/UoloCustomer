@@ -297,18 +297,19 @@ class BottomButton2 extends StatelessWidget {
         //   padding: EdgeInsets.zero,
         // ),
         onPressed: () {
-          if(ResponsiveHelper.isDesktop(Get.context)) {
-            showGeneralDialog(context: Get.context!, pageBuilder: (_,__,___) {
-              return SizedBox(
-                  height: 300, width: 300,
-                  child: PickMapScreen(fromSignUp: fromSignUp, canRoute: route != null, fromAddAddress: false, route: route ?? RouteHelper.accessLocation)
-              );
-            });
-          }else {
-            Get.toNamed(RouteHelper.getPickMapRoute(
-              route ?? (fromSignUp ? RouteHelper.signUp : RouteHelper.accessLocation), route != null,
-            ));
-          }
+          // if(ResponsiveHelper.isDesktop(Get.context)) {
+          //   showGeneralDialog(context: Get.context!, pageBuilder: (_,__,___) {
+          //     return SizedBox(
+          //         height: 300, width: 300,
+          //         child: PickMapScreen(fromSignUp: fromSignUp, canRoute: route != null, fromAddAddress: false, route: route ?? RouteHelper.accessLocation)
+          //     );
+          //   });
+          // }else {
+          //   Get.toNamed(RouteHelper.getPickMapRoute(
+          //     route ?? (fromSignUp ? RouteHelper.signUp : RouteHelper.accessLocation), route != null,
+          //   ));
+          // }
+          Get.toNamed(RouteHelper.getAddAddressRoute(false, false, 0, isNavbar: true));
         },
         child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Padding(

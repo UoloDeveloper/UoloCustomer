@@ -233,18 +233,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateStatusBarColor() {
     print("Scroll Offset: ${_scrollController.offset}");
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
 
     if (_scrollController.offset > 50) {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
 
       ));
     } else {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
+
+        
       ));
     }
   }
@@ -417,7 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             //   Get.toNamed(RouteHelper.getShopCategoryRoute());
                             // }
                           },
-                          child: VideoContainer( isimage: true,home: showMobileModule,)),
+                          child: VideoContainer( isimage: true,home: false,)),
 
                             //  if (!showMobileModule)
                                 Padding(
@@ -592,10 +596,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 }),) : const SizedBox()),
           
 SliverToBoxAdapter(
-  child: _buildPaginationFooter(context),
+  child: createPaginationFooter(showMobileModule: showMobileModule),
 ),
 
- showMobileModule ? SliverToBoxAdapter(child: EndScreenDialog()) : const SliverToBoxAdapter(child: SizedBox()),
+//  showMobileModule ? SliverToBoxAdapter(child: EndScreenDialog()) : const SliverToBoxAdapter(child: SizedBox()),
 
         // Get.find<StoreController>().storeModel!.totalSize == ( Get.find<StoreController>().storeModel?.stores!.length! + 1) ? const SliverToBoxAdapter(child: SizedBox()) :        SliverToBoxAdapter(child: EndScreenDialog()),
               ],
@@ -794,25 +798,43 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
 
 
 
-Widget _buildPaginationFooter(BuildContext context) {
+// Widget _buildPaginationFooter(BuildContext context, 
+
+// bool  showMobileModule ) {
+//   final storeController = Get.find<StoreController>();
+//   final storeModel = storeController.storeModel;
+  
+
+
+//   if (storeModel == null || storeModel.stores == null) {
+//     return const SizedBox(); 
+//   }
+
+//   final totalSize = storeModel.totalSize ?? 0;
+//   final currentItems = storeModel.stores!.length + 1;
+//   final isLastPage = currentItems >= totalSize;
+//   print("totalSize: $totalSize  currentItems: $currentItems" " isLastPage: $isLastPage");
+//   return !isLastPage
+//       ? const SizedBox() 
+//       :showMobileModule ? EndScreenDialog() : EndScreenDialog(); 
+// }
+
+Widget createPaginationFooter({required bool showMobileModule}) {
   final storeController = Get.find<StoreController>();
   final storeModel = storeController.storeModel;
 
-
   if (storeModel == null || storeModel.stores == null) {
-    return const SizedBox(); 
+    return const SizedBox.shrink();
   }
 
   final totalSize = storeModel.totalSize ?? 0;
-  final currentItems = storeModel.stores!.length + 1;
+  final currentItems = storeModel.stores!.length;
   final isLastPage = currentItems >= totalSize;
-  print("totalSize: $totalSize  currentItems: $currentItems" " isLastPage: $isLastPage");
-  return !isLastPage
-      ? const SizedBox() 
-      : EndScreenDialog(); 
+
+  debugPrint('Pagination Info - Total: $totalSize, Current: $currentItems, IsLastPage: $isLastPage, MobileModule: $showMobileModule');
+
+  return isLastPage || showMobileModule ? EndScreenDialog() : const SizedBox.shrink();
 }
-
-
 
 void _showModalBottomSheet(BuildContext context) {
     showModalBottomSheet(

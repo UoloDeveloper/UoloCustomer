@@ -121,6 +121,8 @@ class CustomTextFieldState extends State<CustomTextField> {
             FocusScope.of(context).requestFocus(widget.focusNode);
           },
           child: TextFormField(
+            
+            showCursor: false,
             maxLines: widget.maxLines,
             controller: widget.controller,
             focusNode: widget.focusNode,

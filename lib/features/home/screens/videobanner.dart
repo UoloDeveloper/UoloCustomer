@@ -327,7 +327,7 @@ class _VideoContainerState extends State<VideoContainer> {
         ),
       ),
       width: MediaQuery.of(context).size.width,
-      height: 415,
+      height: 490,
       child: Container(
         // color: Theme.of(context).cardColor,
         decoration:  BoxDecoration(
@@ -356,7 +356,7 @@ class _VideoContainerState extends State<VideoContainer> {
                       bottomRight: Radius.circular(19),
                     ),
                   child: Container(
-                    height: 415,
+                    height: 490,
                     width:MediaQuery.of(context).size.width ,
                     child: Image.asset(
                     "assets/image/static_banner/Uolo App Cover 02.jpg",
@@ -364,13 +364,13 @@ class _VideoContainerState extends State<VideoContainer> {
                        
                     ),
                   ),
-                ):  ClipRRect(
+                ) :  ClipRRect(
                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(19),
                       bottomRight: Radius.circular(19),
                     ),
                   child: Container(
-                    height: 415,
+                    height: 490,
                     width:MediaQuery.of(context).size.width ,
                     child: Image.asset(
                        "assets/image/static_banner/Uolo App Cover 00-01.jpg",

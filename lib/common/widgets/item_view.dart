@@ -220,7 +220,7 @@ class _ItemsViewState extends State<ItemsView> {
             
              for (var item in widget.items!) {
                if (item != null) { 
-                 bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds);
+                 bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds) ;
                  if (isAvailable) {
             availableItems.add(item);
                  } else {

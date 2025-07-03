@@ -9,17 +9,18 @@ class SearchController extends GetxController implements GetxService {
   final SearchServiceInterface searchServiceInterface;
   SearchController({required this.searchServiceInterface});
 
-  List<Item>? _searchItemList;
-  List<Item>? get searchItemList => _searchItemList;
+  // List<Item>? _searchItemList;
+  // List<Item>? get searchItemList => _searchItemList;
   
   List<Item>? _allItemList;
   List<Item>? get allItemList => _allItemList;
-  
+  RxList<Item>? searchItemList = <Item>[].obs;
+final RxList<Store>? searchStoreList = <Store>[].obs;
   List<Item>? _suggestedItemList;
   List<Item>? get suggestedItemList => _suggestedItemList;
   
-  List<Store>? _searchStoreList;
-  List<Store>? get searchStoreList => _searchStoreList;
+  // List<Store>? _searchStoreList;
+  // List<Store>? get searchStoreList => _searchStoreList;
   
   List<Store>? _allStoreList;
   List<Store>? get allStoreList => _allStoreList;
@@ -39,7 +40,8 @@ class SearchController extends GetxController implements GetxService {
   
   List<String> _historyList = [];
   List<String> get historyList => _historyList;
-  
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   bool _isSearchMode = true;
   bool get isSearchMode => _isSearchMode;
   
@@ -147,8 +149,8 @@ class SearchController extends GetxController implements GetxService {
       _storeResultText = '';
       _allStoreList = null;
       _allItemList = null;
-      _searchItemList = null;
-      _searchStoreList = null;
+      searchItemList!.clear();
+      searchStoreList!.clear();
       _sortIndex = -1;
       _storeSortIndex = -1;
       _isDiscountedItems = false;
@@ -179,12 +181,13 @@ class SearchController extends GetxController implements GetxService {
   }
 
   void sortItemSearchList() {
-    _searchItemList = searchServiceInterface.sortItemSearchList(_allItemList, _upperValue, _lowerValue, _rating, _veg, _nonVeg, _isAvailableItems, _isDiscountedItems, _sortIndex);
+    searchItemList!.value = searchServiceInterface.sortItemSearchList(_allItemList, _upperValue, _lowerValue, _rating, _veg, _nonVeg, _isAvailableItems, _isDiscountedItems, _sortIndex)! ;
     update();
   }
 
   void sortStoreSearchList() {
-    _searchStoreList = searchServiceInterface.sortStoreSearchList(_allStoreList, _storeRating, _storeVeg, _storeNonVeg, _isAvailableStore, _isDiscountedStore, _storeSortIndex);
+    searchStoreList!.clear();
+    searchStoreList!.value = searchServiceInterface.sortStoreSearchList(_allStoreList, _storeRating, _storeVeg, _storeNonVeg, _isAvailableStore, _isDiscountedStore, _storeSortIndex)!;
   
     update();
   }
@@ -336,7 +339,8 @@ suggestedItemList.removeWhere((element) => element.store!.noservicerestriction =
   
   
   void searchData(String? query, bool fromHome) async {
-
+_isLoading = true;
+// update();
   if (query != null &&
       query.isNotEmpty &&
       ((_isStore && query != _storeResultText) ||
@@ -351,10 +355,10 @@ suggestedItemList.removeWhere((element) => element.store!.noservicerestriction =
 
 
     if (_isStore) {
-      _searchStoreList = [];
+      searchStoreList!.value = [];
       _allStoreList = [];
     } else {
-      _searchItemList = [];
+      searchItemList!.value = [];
       _allItemList = [];
     }
 
@@ -374,13 +378,15 @@ suggestedItemList.removeWhere((element) => element.store!.noservicerestriction =
       if (response.statusCode == 200) {
         if (_isStore) {
           _storeResultText = query;
-          _searchStoreList = [];
+          searchStoreList!.value = [];
           _allStoreList = [];
 
 
           final storeData = StoreModel.fromJson(response.body);
           if (storeData.stores == null || storeData.stores!.isEmpty) {
             print('No stores found in response');
+                _isLoading = false;
+update();
             update();
             return;
           }
@@ -390,19 +396,21 @@ suggestedItemList.removeWhere((element) => element.store!.noservicerestriction =
           }).toList();
 
      
-          _searchStoreList!.addAll(filteredStores);
+          searchStoreList!.addAll(filteredStores);
           _allStoreList!.addAll(filteredStores);
           print('Filtered ${filteredStores.length} stores');
         } else {
           _itemResultText = query;
-          _searchItemList = [];
+          searchItemList!.value = [];
           _allItemList = [];
 
        
           final itemData = ItemModel.fromJson(response.body);
           if (itemData.items == null || itemData.items!.isEmpty) {
             print('No items found in response');
-            update();
+            // update();
+               _isLoading = false;
+update();
             return;
           }
 
@@ -415,7 +423,7 @@ suggestedItemList.removeWhere((element) => element.store!.noservicerestriction =
           }).toList();
 
         
-          _searchItemList!.addAll(filteredItems);
+          searchItemList!.addAll(filteredItems);
           _allItemList!.addAll(filteredItems);
           print('Filtered ${filteredItems.length} items');
         }
@@ -430,6 +438,8 @@ suggestedItemList.removeWhere((element) => element.store!.noservicerestriction =
 
     update();
   }
+    _isLoading = false;
+update();
 }
   void getHistoryList() {
     _isSearchMode = true;

@@ -47,6 +47,11 @@ Future<void> main() async {
   if(ResponsiveHelper.isMobilePhone()) {
     HttpOverrides.global = MyHttpOverrides();
   }
+  WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //   statusBarColor: Colors.transparent,
+  //   statusBarIconBrightness: Brightness.light,
+  // ));
   setPathUrlStrategy();
 
   /*///Pass all uncaught "fatal" errors from the framework to Crashlytics
@@ -186,15 +191,23 @@ class _MyAppState extends State<MyApp> {
                MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)), child: Material(
                 child:
                 
-                 Stack(children: [
-                 
+                 Stack(children: [ 
                   widget!,
-
+     
                   GetBuilder<SplashController>(builder: (splashController){
                     if(!splashController.savedCookiesData && !splashController.getAcceptCookiesStatus(splashController.configModel != null ? splashController.configModel!.cookiesText! : '')){
-                      return ResponsiveHelper.isWeb() ? const Align(alignment: Alignment.bottomCenter, child: CookiesView()) : const SizedBox();
+                      return ResponsiveHelper.isWeb() ? const Align(
+                        
+                        alignment: Alignment.bottomCenter,
+
+                         child: CookiesView(
+                          
+                         )
+                         ) : const SizedBox()
+                         ;
                     }else{
-                      return const SizedBox();
+                      return const SizedBox(
+                      );
                     }
                   })
                 ]),
