@@ -249,29 +249,41 @@ class BottomButton2 extends StatelessWidget {
         //   padding: EdgeInsets.zero,
         // ),
         onPressed: () async {
-          Get.find<LocationController>().checkPermission(() async {
-            Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
-            AddressModel address = await Get.find<LocationController>().getCurrentLocation(true);
-            ZoneResponseModel response = await Get.find<LocationController>().getZone(address.latitude, address.longitude, false);
-            if(response.isSuccess) {
-              Get.find<LocationController>().saveAddressAndNavigate(
-                address, fromSignUp, route, route != null, ResponsiveHelper.isDesktop(Get.context),
+          // Get.find<LocationController>().checkPermission(() async {
+          //   Get.dialog(const CustomLoaderWidget(), barrierDismissible: false);
+          //   AddressModel address = await Get.find<LocationController>().getCurrentLocation(true);
+          //   ZoneResponseModel response = await Get.find<LocationController>().getZone(address.latitude, address.longitude, false);
+          //   if(response.isSuccess) {
+          //     Get.find<LocationController>().saveAddressAndNavigate(
+          //       address, fromSignUp, route, route != null, ResponsiveHelper.isDesktop(Get.context),
+          //     );
+          //   }else {
+          //     Get.back();
+          //     if(ResponsiveHelper.isDesktop(Get.context)) {
+          //       showGeneralDialog(context: Get.context!, pageBuilder: (_,__,___) {
+          //         return SizedBox(
+          //             height: 300, width: 300,
+          //             child: PickMapScreen(fromSignUp: fromSignUp, canRoute: route != null, fromAddAddress: false, route: route ?? RouteHelper.accessLocation)
+          //         );
+          //       });
+          //     }else {
+          //       Get.toNamed(RouteHelper.getPickMapRoute(route ?? RouteHelper.accessLocation, route != null));
+          //       showCustomSnackBar('service_not_available_in_current_location'.tr);
+          //     }
+          //   }
+          // });
+            if(ResponsiveHelper.isDesktop(Get.context)) {
+            showGeneralDialog(context: Get.context!, pageBuilder: (_,__,___) {
+              return SizedBox(
+                  height: 300, width: 300,
+                  child: PickMapScreen(fromSignUp: fromSignUp, canRoute: route != null, fromAddAddress: false, route: route ?? RouteHelper.accessLocation)
               );
-            }else {
-              Get.back();
-              if(ResponsiveHelper.isDesktop(Get.context)) {
-                showGeneralDialog(context: Get.context!, pageBuilder: (_,__,___) {
-                  return SizedBox(
-                      height: 300, width: 300,
-                      child: PickMapScreen(fromSignUp: fromSignUp, canRoute: route != null, fromAddAddress: false, route: route ?? RouteHelper.accessLocation)
-                  );
-                });
-              }else {
-                Get.toNamed(RouteHelper.getPickMapRoute(route ?? RouteHelper.accessLocation, route != null));
-                showCustomSnackBar('service_not_available_in_current_location'.tr);
-              }
-            }
-          });
+            });
+          }else {
+            Get.toNamed(RouteHelper.getPickMapRoute(
+              route ?? (fromSignUp ? RouteHelper.signUp : RouteHelper.accessLocation), route != null,
+            ));
+          }
         }, child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           // IconButton(onPressed: () {}, icon: const Icon(Icons.my_location),),
                     Padding(
