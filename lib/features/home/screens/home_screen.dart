@@ -828,12 +828,16 @@ Widget createPaginationFooter({required bool showMobileModule}) {
   }
 
   final totalSize = storeModel.totalSize ?? 0;
-  final currentItems = storeModel.stores!.length;
+  final currentItems = storeModel.stores!.length +1;
   final isLastPage = currentItems >= totalSize;
 
   debugPrint('Pagination Info - Total: $totalSize, Current: $currentItems, IsLastPage: $isLastPage, MobileModule: $showMobileModule');
 
-  return isLastPage || showMobileModule ? EndScreenDialog() : const SizedBox.shrink();
+if (isLastPage && !showMobileModule) {
+    return  EndScreenDialog();
+  }
+
+  return     const SizedBox.shrink();
 }
 
 void _showModalBottomSheet(BuildContext context) {

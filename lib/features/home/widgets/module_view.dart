@@ -1,5 +1,6 @@
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
+import 'package:sixam_mart/common/widgets/endscreendialog_widget.dart';
 import 'package:sixam_mart/features/home/widgets/web/customcards.dart';
 import 'package:sixam_mart/features/splash/controllers/splash_controller.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
@@ -619,6 +620,8 @@ class ModuleView extends StatelessWidget {
         //           "Cleaning",
         //           "Laundry",
         //  ],)
+
+        EndScreenDialog()
       ]),
     );
   }

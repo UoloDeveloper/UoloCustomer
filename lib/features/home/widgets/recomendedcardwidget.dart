@@ -397,7 +397,7 @@ bool isbusy = store?.zone?.isbusy == 1 ?? false;
                   children: [
                     Text(
                       store?.name ?? '',
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeDefault, fontWeight: FontWeight.bold),
+                      style:  robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge,fontWeight: FontWeight.w600 ,color: Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -422,12 +422,12 @@ bool isbusy = store?.zone?.isbusy == 1 ?? false;
                             const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                             Text(
                               store?.avgRating?.toStringAsFixed(1) ?? '0.0',
-                              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall),
+                              style:  robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,fontWeight: FontWeight.w600,color:  Colors.black),
                             ),
                             const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                             Text(
                               '${store?.deliveryTime}s',
-                              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).disabledColor),
+                              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall,fontWeight: FontWeight.w600,color:  Colors.black),
                             ),
                           ],
                         ),
@@ -436,7 +436,7 @@ bool isbusy = store?.zone?.isbusy == 1 ?? false;
                     const SizedBox(height: Dimensions.paddingSizeExtraSmall),
                     Text(
                       store?.address ?? '',
-                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Colors.grey),
+                      style: robotoRegular.copyWith(color: Colors.grey[600], fontSize: Dimensions.fontSizeDefault,fontWeight: FontWeight.w500 ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
