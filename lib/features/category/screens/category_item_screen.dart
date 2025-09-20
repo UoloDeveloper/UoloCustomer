@@ -218,12 +218,7 @@ class CategoryItemScreenState extends State<CategoryItemScreen> with TickerProvi
             ],
           )),
           endDrawer: const MenuDrawer(),endDrawerEnableOpenDragGesture: false,
-          body:    catController.isLoading ? Center(
-            child: Padding(
-              padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-              child: CustomLoaderWidget(),
-            ),
-          ) : ResponsiveHelper.isDesktop(context) ?  SingleChildScrollView(
+          body:    ResponsiveHelper.isDesktop(context) ?  SingleChildScrollView(
             child:  FooterView(
               child: Center(child: SizedBox(
                 width: Dimensions.webMaxWidth,

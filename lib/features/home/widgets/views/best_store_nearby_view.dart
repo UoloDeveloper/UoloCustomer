@@ -325,7 +325,7 @@ class BestStoreNearbyView extends StatelessWidget {
             ),
           ]),
         ),
-      ) : const SizedBox() : BestStoreNearbyShimmer(isPharmacy: isPharmacy, isFood: isFood);
+      ) : const SizedBox() : SizedBox();
     });
   }
 }

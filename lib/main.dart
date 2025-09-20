@@ -14,7 +14,7 @@ import 'package:sixam_mart/helper/auth_helper.dart';
 import 'package:sixam_mart/helper/notification_helper.dart';
 import 'package:sixam_mart/helper/responsive_helper.dart';
 import 'package:sixam_mart/helper/route_helper.dart';
-import 'package:sixam_mart/theme/dark_theme.dart';
+import 'package:sixam_mart/theme/dark_theme.dart';  
 import 'package:sixam_mart/theme/light_theme.dart';
 import 'package:sixam_mart/util/app_constants.dart';
 import 'package:sixam_mart/util/messages.dart';
@@ -87,9 +87,7 @@ Future<void> main() async {
       ),
     );
   } else {
-    await Firebase.initializeApp(
-      
-    );
+    await Firebase.initializeApp();
        
   }
 

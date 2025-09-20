@@ -172,6 +172,7 @@ class LocationController extends GetxController implements GetxService {
 
     _inZone = responseModel.isSuccess;
     _zoneID = responseModel.zoneIds.isNotEmpty ? responseModel.zoneIds[0] : 0;
+    //  Get.find<StoreController>().setzoneid();
     if(updateInAddress && responseModel.isSuccess) {
       AddressModel address = AddressHelper.getUserAddressFromSharedPref()!;
       address.zoneData = responseModel.zoneData;

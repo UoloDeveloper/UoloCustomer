@@ -186,8 +186,8 @@ class AuthController extends GetxController implements GetxService {
   }
 
   Future<void> socialLogout() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    googleSignIn.disconnect();
+    // final GoogleSignIn googleSignIn = GoogleSignIn();
+    // googleSignIn.disconnect();
     await FacebookAuth.instance.logOut();
   }
 

@@ -67,6 +67,7 @@ class HomeScreen extends StatefulWidget {
 
   static Future<void> loadData(bool reload, {bool fromModule = false}) async {
     Get.find<LocationController>().syncZoneData();
+    // Get.find<StoreController>().setzoneid();
     Get.find<FlashSaleController>().setEmptyFlashSale(fromModule: fromModule);
     Get.find<BannerController>().getBannerList(reload);
      Get.find<StoreController>().getLatestStoreList(reload, 'all', false);
@@ -421,7 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             //   Get.toNamed(RouteHelper.getShopCategoryRoute());
                             // }
                           },
-                          child: VideoContainer( isimage: true,home: false,)),
+                          child: VideoContainer( home: false)),
 
                             //  if (!showMobileModule)
                                 Padding(

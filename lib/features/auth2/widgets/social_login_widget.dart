@@ -29,7 +29,7 @@ class SocialLoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    // final GoogleSignIn googleSignIn = GoogleSignIn();
 
     bool canAppleLogin = Get.find<SplashController>().configModel!.appleLogin!.isNotEmpty && Get.find<SplashController>().configModel!.appleLogin![0].status!
     && !GetPlatform.isAndroid;
@@ -64,7 +64,7 @@ class SocialLoginWidget extends StatelessWidget {
                 boxShadow: [BoxShadow(color: Colors.grey[Get.isDarkMode ? 700 : 300]!, spreadRadius: 1, blurRadius: 5, offset: const Offset(2, 2))],
               ),
               child: CustomInkWell(
-                onTap: ()=> _googleLogin(googleSignIn),
+                onTap: (){},
                 radius: Dimensions.radiusDefault,
                 child: Padding(
                   padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
@@ -176,7 +176,7 @@ class SocialLoginWidget extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
 
         googleLoginActive ? InkWell(
-          onTap: () => _googleLogin(googleSignIn),
+          onTap: () {},
           child: Container(
             height: 40,width: 40,
             padding: const EdgeInsets.all(1),
@@ -188,7 +188,7 @@ class SocialLoginWidget extends StatelessWidget {
             child: CustomInkWell(
               radius: Dimensions.radiusDefault,
               padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-              onTap: () => _googleLogin(googleSignIn),
+              onTap: (){},
               child: Image.asset(Images.google),
             ),
           ),
@@ -234,24 +234,24 @@ class SocialLoginWidget extends StatelessWidget {
     ]) : const SizedBox();
   }
 
-  void _googleLogin(GoogleSignIn googleSignIn) async {
-    googleSignIn.signOut();
-    GoogleSignInAccount googleAccount = (await googleSignIn.signIn())!;
-    GoogleSignInAuthentication auth = await googleAccount.authentication;
+  // void _googleLogin(GoogleSignIn googleSignIn) async {
+  //   // googleSignIn.signOut();
+  //   // GoogleSignInAccount googleAccount = (await googleSignIn.signIn())!;
+  //   // GoogleSignInAuthentication auth = await googleAccount.authentication;
 
-    SocialLogInBody googleBodyModel = SocialLogInBody(
-      email: googleAccount.email, token: auth.accessToken, uniqueId: googleAccount.id,
-      medium: 'google', accessToken: 1, loginType: CentralizeLoginType.social.name,
-    );
+  //   // SocialLogInBody googleBodyModel = SocialLogInBody(
+  //   //   email: googleAccount.email, token: auth.accessToken, uniqueId: googleAccount.id,
+  //   //   medium: 'google', accessToken: 1, loginType: CentralizeLoginType.social.name,
+  //   );
 
-    Get.find<AuthController>().loginWithSocialMedia(googleBodyModel).then((response) {
-      if (response.isSuccess) {
-        _processSocialSuccessSetup(response, googleBodyModel, null, null);
-      } else {
-        showCustomSnackBar(response.message);
-      }
-    });
-  }
+  //   Get.find<AuthController>().loginWithSocialMedia(googleBodyModel).then((response) {
+  //     if (response.isSuccess) {
+  //       _processSocialSuccessSetup(response, googleBodyModel, null, null);
+  //     } else {
+  //       showCustomSnackBar(response.message);
+  //     }
+  //   });
+  // }
 
   void _facebookLogin() async {
     LoginResult result = await FacebookAuth.instance.login(permissions: ["public_profile", "email"]);
@@ -259,7 +259,7 @@ class SocialLoginWidget extends StatelessWidget {
       Map userData = await FacebookAuth.instance.getUserData();
 
       SocialLogInBody facebookBodyModel = SocialLogInBody(
-        email: userData['email'], token: result.accessToken!.token, uniqueId: result.accessToken!.userId,
+        // email: userData['email'], token: result.accessToken!.token, uniqueId: result.accessToken!.userId,
         medium: 'facebook', loginType: CentralizeLoginType.social.name,
       );
 

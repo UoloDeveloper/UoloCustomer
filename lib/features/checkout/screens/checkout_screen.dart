@@ -21,6 +21,7 @@ import 'package:sixam_mart/features/cart/widgets/delivery_option_button_widget.d
 import 'package:sixam_mart/features/cart/widgets/extra_packaging_widget.dart';
 import 'package:sixam_mart/features/checkout/controllers/checkout_controller.dart';
 import 'package:sixam_mart/features/checkout/domain/models/place_order_body_model.dart';
+import 'package:sixam_mart/features/checkout/widgets/adressbottomsheet.dart';
 import 'package:sixam_mart/features/checkout/widgets/bottom_section.dart';
 import 'package:sixam_mart/features/checkout/widgets/deliveroption.dart';
 
@@ -129,8 +130,28 @@ class _CheckoutState extends State<CheckoutScreen> {
   @override
   void initState() {
     super.initState();
+    //  WidgetsBinding.instance.addPostFrameCallback((_) {
     initCall();
+  // });
+
+
+
+//    WidgetsBinding.instance.addPostFrameCallback((_) {
+//                   showModalBottomSheet(
+//   context: context,
+//   backgroundColor: Colors.transparent,
+//   isScrollControlled: true,
+//   builder: (_) => AddressDropdownSheet(
+//     // addressList: addressList,
+//     // address: address,
+//     // checkoutController: Get.find<CheckoutController>(),
+//   ),
+// );
+//     });
+    //  _loadAddressesAndShowDropdown();
+    
   }
+
 
   Future<void> initCall() async {
     
@@ -196,7 +217,77 @@ class _CheckoutState extends State<CheckoutScreen> {
       );
       Get.find<CheckoutController>().tipController.text = Get.find<CheckoutController>().selectedTips != -1 ? AppConstants.tips[Get.find<CheckoutController>().selectedTips] : '';
 
+
+
+  
+
   }
+
+
+// @override
+// void initState() {
+//   super.initState();
+//   _loadAddressesAndShowDropdown();
+// }
+
+// Future<void> _loadAddressesAndShowDropdown() {
+//   final addressController = Get.find<AddressController>();
+//   final checkoutController = Get.find<CheckoutController>();
+
+//   return addressController.getAddressList().then((_) {
+//     // ✅ Debug: Check data before building dropdown
+//     final loadedAddresses = addressController.addressList;
+//     print('Loaded address count: ${loadedAddresses!.length}');
+
+//     // ✅ Prevent empty/null issues in dropdown
+//     if (loadedAddresses.isEmpty) {
+//       print('Address list is empty — skipping dropdown');
+//       return;
+//     }
+
+//     final dropdownList = _getDropdownAddressList(
+//       context: context,
+//       addressList: loadedAddresses,
+//       store: checkoutController.store,
+//     );
+
+//     // ✅ Double-check dropdown list is not empty
+//     if (dropdownList.isEmpty) {
+//       print('Dropdown list data is empty — skipping dropdown');
+//       return;
+//     }
+
+//     // ✅ Schedule showing dropdown after UI frame is rendered
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       try {
+// //         showModalBottomSheet(
+// //   context: context,
+// //   backgroundColor: Colors.transparent,
+// //   isScrollControlled: true,
+// //   builder: (_) => AddressDropdownSheet(
+// //     addressList: addressList,
+// //     address: address,
+// //     checkoutController: checkoutController,
+// //   ),
+// // );
+
+//         // _showAddressDropdown(
+//         //   context,
+//         //   dropdownList,
+//         //   checkoutController,
+//         //   address,
+//         // );
+//       } catch (e, stack) {
+//         print('Error showing dropdown: $e');
+//         print(stack);
+//       }
+//     });
+//   }).catchError((error, stack) {
+//     print('Error loading addresses: $error');
+//     print(stack);
+//   });
+// }
+
 
   void _getExpandedBottomSheetHeight() {
     final RenderBox renderBox = _widgetKey.currentContext?.findRenderObject() as RenderBox;
@@ -383,512 +474,525 @@ class _CheckoutState extends State<CheckoutScreen> {
                   // checkoutController.houseController.text = address.house ?? '';
                   // checkoutController.floorController.text = address.floor ?? '';
                 }
-                        return    Stack(
-                          children: [
-                            CustomScrollView(
-                                slivers: [
-
-                                  SliverAppBar(
-                                    pinned: true,
-                                       leading: Padding(
-                                         padding: const EdgeInsets.only(left: 5),
-                                         child: IconButton(
-                                                                   onPressed: () => Get.back(),
-                                                                   icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-                                                                 ),
-                                       ),
-                                    title:Padding(
-                                      padding: const EdgeInsets.only(top : 15,left: 0,bottom: 10),
-                                      child: InkWell(
-                                          onTap: (){
-                                           
-                                            _showAddressDropdown(
-                                              context,
-                                             addressList,
-                                             checkoutController,
-                                              address
-                            
-                            
-                                            ); 
-                                            },
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                             Padding(
-                                               padding: const EdgeInsets.only(left: 0 ),
-                                               child: Text("${checkoutController.store!.name}",style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: const Color.fromARGB(109, 27, 26, 26)
+                        return    SafeArea(
+                          top: false  ,
+                          child: Stack(
+                            children: [
+                              CustomScrollView(
+                                  slivers: [
+                          
+                                    SliverAppBar(
+                                      pinned: true,
+                                         leading: Padding(
+                                           padding: const EdgeInsets.only(left: 5),
+                                           child: IconButton(
+                                                                     onPressed: () => Get.back(),
+                                                                     icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                                                                   ),
+                                         ),
+                                      title:Padding(
+                                        padding: const EdgeInsets.only(top : 15,left: 0,bottom: 10),
+                                        child: InkWell(
+                                            onTap: (){
+                                            showModalBottomSheet(
+  context: context,
+  backgroundColor: Colors.transparent,
+  isScrollControlled: true,
+  builder: (_) => AddressDropdownSheet(
+    // addressList: addressList,
+    // address: address,
+    // checkoutController: checkoutController,
+  ),
+);
+ 
+                                              // _showAddressDropdown(
+                                              //   context,
+                                              //  addressList,
+                                              //  checkoutController,
+                                              //   address
+                              
+                              
+                                              // ); 
+                                              },
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                               Padding(
+                                                 padding: const EdgeInsets.only(left: 0 ),
+                                                 child: Text("${checkoutController.store!.name}",style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: const Color.fromARGB(109, 27, 26, 26)
+                                                    ),),
+                                               ),
+                                              Row(children: [
+                                              SizedBox(width: 0,),
+                                                Icon(
+                                                  Icons.near_me,
+                                                  size: 18,
+                                                  color: const Color.fromARGB(239, 55, 55, 55),
+                                                ),
+                                                  Text("${selectedAddress!.addressType}",style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w600,
                                                   ),),
-                                             ),
-                                            Row(children: [
-                                            SizedBox(width: 0,),
-                                              Icon(
-                                                Icons.near_me,
-                                                size: 18,
-                                                color: const Color.fromARGB(239, 55, 55, 55),
-                                              ),
-                                                Text("${selectedAddress!.addressType}",style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w600,
-                                                ),),
-                                                                  Container(
-                                                    height: 13,
-                                                    width: 1, 
-                                                    color: const Color.fromARGB(239, 55, 55, 55), 
-                                                    margin: EdgeInsets.symmetric(horizontal: 8), 
-                                                  ),
-                                                                        Flexible(
-                                                                          child: Text("${selectedAddress!.address}",style: TextStyle(
-                                                                            fontSize: 14,
-                                                                            fontWeight:FontWeight.w500 ,
-                                                                            color: const Color.fromARGB(109, 27, 26, 26)
-                                                                          ),
-                                                                          overflow: TextOverflow.ellipsis,
-                                                                          ),
-                                                                        )
-                                                                       ],),
-                                          ],
+                                                                    Container(
+                                                      height: 13,
+                                                      width: 1, 
+                                                      color: const Color.fromARGB(239, 55, 55, 55), 
+                                                      margin: EdgeInsets.symmetric(horizontal: 8), 
+                                                    ),
+                                                                          Flexible(
+                                                                            child: Text("${selectedAddress!.address}",style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontWeight:FontWeight.w500 ,
+                                                                              color: const Color.fromARGB(109, 27, 26, 26)
+                                                                            ),
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            ),
+                                                                          )
+                                                                         ],),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                   leadingWidth: 35,
-                              //  leading: 
-                               ),
-                                           
-                             
-                                   SliverToBoxAdapter(
-                                    child: Column(
-                                        children: [
-                                              discount > 0 ?    Padding(
-                                                      padding: const EdgeInsets.all(8),
-                                                      child: Container(
-                                                        decoration:  BoxDecoration(
-                                                          color: Theme.of(context).primaryColor.withOpacity(0.1)
-                                                          
-                                                          //  Color(0xFFD7E5FF)
-                                            ,
-                                                          borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
-                                                        ),
-                                                        width: double.infinity,height: 43,
-                                            
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Row(
-                                                            children: [
-                                                          
-                                    Text("🥳",  style: TextStyle(
-                                      fontSize: Dimensions.fontSizeLarge
-                                    ),),
-                                    const SizedBox(width: 5,),
-                                    Text(
-                                      'You saved ${PriceConverter.convertPrice( discount,currency:currency)} on delivery',
-                                      style: robotoBold.copyWith(color: Theme.of(context).primaryColor.withOpacity(0.8)
-                                      
-                                      //  const Color(0xFF366BC9)
-                                        ,fontSize: Dimensions.fontSizeSmall), 
-                                    ),
-                                                            ],
+                                     leadingWidth: 35,
+                                //  leading: 
+                                 ),
+                                             
+                               
+                                     SliverToBoxAdapter(
+                                      child: Column(
+                                          children: [
+                                                discount > 0 ?    Padding(
+                                                        padding: const EdgeInsets.all(8),
+                                                        child: Container(
+                                                          decoration:  BoxDecoration(
+                                                            color: Theme.of(context).primaryColor.withOpacity(0.1)
+                                                            
+                                                            //  Color(0xFFD7E5FF)
+                                              ,
+                                                            borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
                                                           ),
-                                                        ),
-                                            
-                                                      ),
-                                                    ): const SizedBox(),
-                                           
-                                                DeliveryOptionsWidget(originalCharge:  originalCharge, deliveryCharge:deliveryCharge , extraChargeForToolTip:extraChargeForToolTip , badWeatherChargeForToolTip: badWeatherChargeForToolTip, total:  total, deliveryChargeForView: _deliveryChargeForView, checkoutController: checkoutController,)   , 
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(bottom: 8,left: 8,right: 8),
-                                                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                                                    WebConstrainedBox(
-                                                                      dataLength: cartController.cartList.length, minLength: 5, minHeight: 0.6,
-                                                                      child: Container(
-                                                                           decoration: BoxDecoration(
-                                                                              color: Theme.of(context).cardColor,
-                                                                                    borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
-                                                                              boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 10)],
-                                                                        
-                                                                            ),
-                                                                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                                                          Container(
-                                                                         
-                                                                            child: ListView.builder(
-                                                                              physics: const NeverScrollableScrollPhysics(),
-                                                                              shrinkWrap: true,
-                                                                              itemCount: cartController.cartList.length,
-                                                                              padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                                                                              itemBuilder: (context, index) {
-                                                                                return CartItemWidget(cart: cartController.cartList[index], cartIndex: index, addOns: cartController.addOnsList[index], isAvailable: cartController.availableList[index]);
-                                                                              },
-                                                                            ),
-                                                                          ),
-                                                                       
-
-                                                                          Padding(
-                                                                            padding: const EdgeInsets.only(left: 20),
-                                                                            child: Row(
-                                                                              children: [
-                                                                                CustomInkWell(
-                                                                                  onTap: () {
-                                                                                 setState(() {
-
-                                                                                  if(checkoutController.showadditionalnote == true){
-                                                                                    checkoutController.showadditionalnote = false;
-                                                                                  }else
-                                                                                     checkoutController.showadditionalnote = true;
-                                                                                 });  
-                                      
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    decoration: BoxDecoration(
-                                                                                      borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
-                                                                                      border: Border.all(
-                                                                                        color: Theme.of(context).primaryColor.withOpacity(0.1),
-                                                                                        width: 0.5,
-                                                                                      ),
-                                                                                      
-                                                                                   
-                                                                                    ),
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsets.all(8.0),
-                                                                                      child: Text("Cooking request",style: TextStyle(
-                                                                                        fontSize: 14,
-                                                                                        fontWeight: FontWeight.w400
-                                                                                      ),),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                            
-                                                                            
-                                                                            SizedBox(width: 10,),
-                                                                              CustomInkWell(
-
-                                                                                radius: Dimensions.radiusLarge,
-                                                                                onTap: () {
-                                                                                    cartController.forcefullySetModule(cartController.cartList[0].item!.moduleId!);
-                                                                                    Get.toNamed(
-                                                                                      RouteHelper.getStoreRoute(id: cartController.cartList[0].item!.storeId, page: 'item'),
-                                                                                      arguments: StoreScreen(store: Store(id: cartController.cartList[0].item!.storeId), fromModule: false),
-                                                                                    );
-                                                                                  },
-                                                                                child: Container(
-                                                                                    decoration: BoxDecoration(
-                                                                                      borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
-                                                                                      border: Border.all(
-                                                                                        color: Theme.of(context).primaryColor.withOpacity(0.1),
-                                                                                        width: 0.5,
-                                                                                      ),
-                                                                                      
-                                                                                   
-                                                                                    ),
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsets.all(8.0),
-                                                                                      child: Text("add More Items",style: TextStyle(
-                                                                                        fontSize: 14,
-                                                                                        fontWeight: FontWeight.w400
-                                                                                      ),),
-                                                                                    ),
-                                                                                  ),
-                                                                              ),
-                                                                            
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        
-                                                                        
-                                                                        
-                                                                   
-     
-
-      checkoutController.showadditionalnote ? Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
-        child: CustomTextField(
-      showBorder: false,
-              controller: checkoutController.noteController,
-              titleText: 'Type cooking requests'.tr,
-
-              showLabelText: false,
-              maxLines: 4,
-              inputType: TextInputType.multiline,
-              inputAction: TextInputAction.done,
-              capitalization: TextCapitalization.sentences,
-            ),
-      ) : SizedBox(),
-          const SizedBox(height: Dimensions.paddingSizeLarge),
-                                                                          // ExtraPackagingWidget(cartController: cartController),
-                                                                        ]),
-                                                                      ),
-                                                                    ),
-                                                                    // const SizedBox(height: Dimensions.paddingSizeSmall),
-                                                                    // !ResponsiveHelper.isDesktop(context) ? pricingView(cartController, cartController.cartList[0].item!) : const SizedBox(),
-                                                                  ]),
-                                                      ),
-     
-     
-     
-                                         
-                                         
-                                                           TopSection(
-                                                            Currency: currency,
-                                      checkoutController: checkoutController, charge: originalCharge, deliveryCharge: deliveryCharge,
-                                      addressList: addressList,
-                                      tomorrowClosed: tomorrowClosed, todayClosed: todayClosed, module : module, price: price,
-                                      discount: discount, addOns: addOns, address: address, cartList: _cartList, isCashOnDeliveryActive: _isCashOnDeliveryActive!,
-                                      isDigitalPaymentActive: _isDigitalPaymentActive!, isWalletActive: _isWalletActive, storeId: widget.storeId,
-                                      total: total, isOfflinePaymentActive: _isOfflinePaymentActive, guestNameTextEditingController: guestContactPersonNameController,
-                                      guestNumberTextEditingController: guestContactPersonNumberController, guestNumberNode: guestNumberNode,
-                                      guestEmailController: guestEmailController, guestEmailNode: guestEmailNode,
-                                      tooltipController1: tooltipController1, tooltipController2: tooltipController2, dmTipsTooltipController: tooltipController3,
-                                      guestPasswordController: guestPasswordController, guestConfirmPasswordController: guestConfirmPasswordController,
-                                      guestPasswordNode: guestPasswordNode, guestConfirmPasswordNode: guestConfirmPasswordNode, variationPrice: isPassedVariationPrice ? variations : 0,
-                                      deliveryChargeForView: _deliveryChargeForView, badWeatherCharge: badWeatherChargeForToolTip, extraChargeForToolTip: extraChargeForToolTip,
-                                    ),
-                                    
-                                        
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8,right: 8,bottom: 8),
-                                      child: BottomSection(
-                                        checkoutController: checkoutController, total: total ?? 0, 
-                                        
-                                        module: module! , subTotal: subTotal,
-                                        discount: discount, couponController: couponController, taxIncluded: taxIncluded, tax: tax,
-                                        deliveryCharge: deliveryCharge,
-                                        todayClosed: todayClosed,tomorrowClosed: tomorrowClosed, orderAmount: orderAmount,
-                                        maxCodOrderAmount: maxCodOrderAmount, storeId: widget.storeId, taxPercent: _taxPercent, price: price, addOns : addOns,
-                                        isPrescriptionRequired: isPrescriptionRequired, checkoutButton: _orderPlaceButton(
-                                          checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge,
-                                          tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,currency,
-                                          module
-                                        ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress, time: checkoutController.store!.deliveryTime!, address: address,addressList: addressList,guestEmailController: guestEmailController,guestEmailNode: guestEmailNode ,guestNameTextEditingController: guestContactPersonNameController,guestNumberTextEditingController: guestContactPersonNumberController,guestNumberNode: guestNumberNode
-
-                                      ),
-                                    ),
-                                                                    
-                                    
-                                                        !ResponsiveHelper.isDesktop(context) ? suggestedItemView(cartController.cartList) : const SizedBox(), 
-                                         // ResponsiveHelper.isDesktop(context) ? const 
-                                          // SizedBox.shrink() : CheckoutButton(cartController: cartController, availableList: cartController.availableList),
-                                    
-                                    //        ResponsiveHelper.isDesktop(context) ? const SizedBox() : Container(
-                                    //                 decoration: BoxDecoration(
-                                    //                   color: Colors.white,
-                                    //                   // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 10)],
-                                    //                 ),
-                                    //                 child: Column(
-                                    //                   children: [
-                                    // // Padding(
-                                    // //   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeExtraSmall),
-                                    // //   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                    // //     Text(
-                                    // //       checkoutController.isPartialPay ? 'due_payment'.tr : 'total_amount'.tr,
-                                    // //       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),
-                                    // //     ),
-                                    // //     PriceConverter.convertAnimationPrice(
-                                    // //       currency: currency,
-                                    // //       checkoutController.viewTotalPrice,
-                                    // //       textStyle: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),
-                                    // //     ),
-                                    // //   ]),
-                                    // // ),
-                                    
-                                    // // _orderPlaceButton(
-                                    // //     checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge, tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,  currency
-                                    // // ),
-
-                            
-                                    //                   ],
-                                    //                 ),
-                                    //               ),
-
-   
-                                    SizedBox(height: 30,),
-                                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
-                          Text("PAYMENT PREFERENCES",style: TextStyle(
-                             color:  const Color(0xFF868686),
-                             fontSize: Dimensions.fontSizeExtraLarge,
-                              fontWeight: FontWeight.w400
-                          ),),
-                        ],
-                      ),
-SizedBox(height: 20,),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width /2,
-                              child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Cash on Delivery Preferred",style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600
-                                  ),),
-                                      Text("We prefer cash on delivery, even though the delivery personnel have all online UPI payment options",style: TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xFF868686)
+                                                          width: double.infinity,height: 43,
+                                              
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Row(
+                                                              children: [
+                                                            
+                                      Text("🥳",  style: TextStyle(
+                                        fontSize: Dimensions.fontSizeLarge
                                       ),),
+                                      const SizedBox(width: 5,),
+                                      Text(
+                                        'You saved ${PriceConverter.convertPrice((discount ?? 0) + (couponController.discount ?? 0), currency: currency)} on delivery',
+                                        style: robotoBold.copyWith(color: Theme.of(context).primaryColor.withOpacity(0.8)
+                                        
+                                        //  const Color(0xFF366BC9)
+                                          ,fontSize: Dimensions.fontSizeSmall), 
+                                      ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                              
+                                                        ),
+                                                      ): const SizedBox(),
+                                             
+                                                  DeliveryOptionsWidget(originalCharge:  originalCharge, deliveryCharge:deliveryCharge , extraChargeForToolTip:extraChargeForToolTip , badWeatherChargeForToolTip: badWeatherChargeForToolTip, total:  total, deliveryChargeForView: _deliveryChargeForView, checkoutController: checkoutController,)   , 
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(bottom: 8,left: 8,right: 8),
+                                                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                                                      WebConstrainedBox(
+                                                                        dataLength: cartController.cartList.length, minLength: 5, minHeight: 0.6,
+                                                                        child: Container(
+                                                                             decoration: BoxDecoration(
+                                                                                color: Theme.of(context).cardColor,
+                                                                                      borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
+                                                                                boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 10)],
+                                                                          
+                                                                              ),
+                                                                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                                                            Container(
+                                                                           
+                                                                              child: ListView.builder(
+                                                                                physics: const NeverScrollableScrollPhysics(),
+                                                                                shrinkWrap: true,
+                                                                                itemCount: cartController.cartList.length,
+                                                                                padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                                                                                itemBuilder: (context, index) {
+                                                                                  return CartItemWidget(cart: cartController.cartList[index], cartIndex: index, addOns: cartController.addOnsList[index], isAvailable: cartController.availableList[index]);
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                         
+                          
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only(left: 20),
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  CustomInkWell(
+                                                                                    onTap: () {
+                                                                                   setState(() {
+                          
+                                                                                    if(checkoutController.showadditionalnote == true){
+                                                                                      checkoutController.showadditionalnote = false;
+                                                                                    }else
+                                                                                       checkoutController.showadditionalnote = true;
+                                                                                   });  
+                                        
+                                                                                    },
+                                                                                    child: Container(
+                                                                                      decoration: BoxDecoration(
+                                                                                        borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
+                                                                                        border: Border.all(
+                                                                                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                                                                                          width: 0.5,
+                                                                                        ),
+                                                                                        
+                                                                                     
+                                                                                      ),
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.all(8.0),
+                                                                                        child: Text("Cooking request",style: TextStyle(
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w400
+                                                                                        ),),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                              
+                                                                              
+                                                                              SizedBox(width: 10,),
+                                                                                CustomInkWell(
+                          
+                                                                                  radius: Dimensions.radiusLarge,
+                                                                                  onTap: () {
+                                                                                      cartController.forcefullySetModule(cartController.cartList[0].item!.moduleId!);
+                                                                                      Get.toNamed(
+                                                                                        RouteHelper.getStoreRoute(id: cartController.cartList[0].item!.storeId, page: 'item'),
+                                                                                        arguments: StoreScreen(store: Store(id: cartController.cartList[0].item!.storeId), fromModule: false),
+                                                                                      );
+                                                                                    },
+                                                                                  child: Container(
+                                                                                      decoration: BoxDecoration(
+                                                                                        borderRadius: BorderRadius.all(Radius.circular(Dimensions.radiusLarge)),
+                                                                                        border: Border.all(
+                                                                                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                                                                                          width: 0.5,
+                                                                                        ),
+                                                                                        
+                                                                                     
+                                                                                      ),
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.all(8.0),
+                                                                                        child: Text("add More Items",style: TextStyle(
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.w400
+                                                                                        ),),
+                                                                                      ),
+                                                                                    ),
+                                                                                ),
+                                                                              
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          
+                                                                          
+                                                                          
+                                                                     
+                               
+                          
+                                checkoutController.showadditionalnote ? Padding(
+                                  padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+                                  child: CustomTextField(
+                                showBorder: false,
+                                        controller: checkoutController.noteController,
+                                        titleText: 'Type cooking requests'.tr,
+                          
+                                        showLabelText: false,
+                                        maxLines: 4,
+                                        inputType: TextInputType.multiline,
+                                        inputAction: TextInputAction.done,
+                                        capitalization: TextCapitalization.sentences,
+                                      ),
+                                ) : SizedBox(),
+                                    const SizedBox(height: Dimensions.paddingSizeLarge),
+                                                                            // ExtraPackagingWidget(cartController: cartController),
+                                                                          ]),
+                                                                        ),
+                                                                      ),
+                                                                      // const SizedBox(height: Dimensions.paddingSizeSmall),
+                                                                      // !ResponsiveHelper.isDesktop(context) ? pricingView(cartController, cartController.cartList[0].item!) : const SizedBox(),
+                                                                    ]),
+                                                        ),
+                               
+                               
+                               
+                                           
+                                           
+                                                             TopSection(
+                                                              Currency: currency,
+                                        checkoutController: checkoutController, charge: originalCharge, deliveryCharge: deliveryCharge,
+                                        addressList: addressList,
+                                        tomorrowClosed: tomorrowClosed, todayClosed: todayClosed, module : module, price: price,
+                                        discount: discount, addOns: addOns, address: address, cartList: _cartList, isCashOnDeliveryActive: _isCashOnDeliveryActive!,
+                                        isDigitalPaymentActive: _isDigitalPaymentActive!, isWalletActive: _isWalletActive, storeId: widget.storeId,
+                                        total: total, isOfflinePaymentActive: _isOfflinePaymentActive, guestNameTextEditingController: guestContactPersonNameController,
+                                        guestNumberTextEditingController: guestContactPersonNumberController, guestNumberNode: guestNumberNode,
+                                        guestEmailController: guestEmailController, guestEmailNode: guestEmailNode,
+                                        tooltipController1: tooltipController1, tooltipController2: tooltipController2, dmTipsTooltipController: tooltipController3,
+                                        guestPasswordController: guestPasswordController, guestConfirmPasswordController: guestConfirmPasswordController,
+                                        guestPasswordNode: guestPasswordNode, guestConfirmPasswordNode: guestConfirmPasswordNode, variationPrice: isPassedVariationPrice ? variations : 0,
+                                        deliveryChargeForView: _deliveryChargeForView, badWeatherCharge: badWeatherChargeForToolTip, extraChargeForToolTip: extraChargeForToolTip,
+                                      ),
+                                      
+                                          
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8,right: 8,bottom: 8),
+                                        child: BottomSection(
+                                          checkoutController: checkoutController, total: total ?? 0, 
+                                          
+                                          module: module! , subTotal: subTotal,
+                                          discount: discount, couponController: couponController, taxIncluded: taxIncluded, tax: tax,
+                                          deliveryCharge: deliveryCharge,
+                                          todayClosed: todayClosed,tomorrowClosed: tomorrowClosed, orderAmount: orderAmount,
+                                          maxCodOrderAmount: maxCodOrderAmount, storeId: widget.storeId, taxPercent: _taxPercent, price: price, addOns : addOns,
+                                          isPrescriptionRequired: isPrescriptionRequired, checkoutButton: _orderPlaceButton(
+                                            checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge,
+                                            tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,currency,
+                                            module
+                                          ), referralDiscount: referralDiscount, variationPrice: isPassedVariationPrice ? variations : 0, distance: checkoutController.distance ?? 0, dicount: discount, SelectedAddress: selectedAddress, time: checkoutController.store!.deliveryTime!, address: address,addressList: addressList,guestEmailController: guestEmailController,guestEmailNode: guestEmailNode ,guestNameTextEditingController: guestContactPersonNameController,guestNumberTextEditingController: guestContactPersonNumberController,guestNumberNode: guestNumberNode
+                          
+                                        ),
+                                      ),
+                                                                      
+                                      
+                                                          !ResponsiveHelper.isDesktop(context) ? suggestedItemView(cartController.cartList) : const SizedBox(), 
+                                           // ResponsiveHelper.isDesktop(context) ? const 
+                                            // SizedBox.shrink() : CheckoutButton(cartController: cartController, availableList: cartController.availableList),
+                                      
+                                      //        ResponsiveHelper.isDesktop(context) ? const SizedBox() : Container(
+                                      //                 decoration: BoxDecoration(
+                                      //                   color: Colors.white,
+                                      //                   // boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withOpacity(0.1), blurRadius: 10)],
+                                      //                 ),
+                                      //                 child: Column(
+                                      //                   children: [
+                                      // // Padding(
+                                      // //   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: Dimensions.paddingSizeExtraSmall),
+                                      // //   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      // //     Text(
+                                      // //       checkoutController.isPartialPay ? 'due_payment'.tr : 'total_amount'.tr,
+                                      // //       style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),
+                                      // //     ),
+                                      // //     PriceConverter.convertAnimationPrice(
+                                      // //       currency: currency,
+                                      // //       checkoutController.viewTotalPrice,
+                                      // //       textStyle: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),
+                                      // //     ),
+                                      // //   ]),
+                                      // // ),
+                                      
+                                      // // _orderPlaceButton(
+                                      // //     checkoutController, todayClosed, tomorrowClosed, orderAmount, deliveryCharge, tax, discount, total, maxCodOrderAmount, isPrescriptionRequired,  currency
+                                      // // ),
+                          
+                              
+                                      //                   ],
+                                      //                 ),
+                                      //               ),
+                          
+                             
+                                      SizedBox(height: 30,),
+                                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:  [
+                            Text("PAYMENT PREFERENCES",style: TextStyle(
+                               color:  const Color(0xFF868686),
+                               fontSize: Dimensions.fontSizeExtraLarge,
+                                fontWeight: FontWeight.w400
+                            ),),
+                          ],
+                                                ),
+                          SizedBox(height: 20,),
+                          
+                                                Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width /2,
+                                child: const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Cash on Delivery Preferred",style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600
+                                    ),),
+                                        Text("We prefer cash on delivery, even though the delivery personnel have all online UPI payment options",style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xFF868686)
+                                        ),),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              child: Stack(
+                                children: [
+                                  SvgPicture.asset("assets/image/freepik--background-complete--inject-31.svg", width: 106, height: 121),
+                                  Positioned(
+                                    left: 40,
+                                    top: 50,
+                                    child: Image.asset("assets/image/Indian-shopkeeper-is-holding-money-in-hand-10-small 1.png", height: 84, width: 84)),
+                                ],
+                              ),
+                            ),
+                          ],
+                                                ),
+                          
+                                                SizedBox(height: 20,),
+                                                Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 80,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                            color: Colors.white,
+                             
+                          ),
+                                        
+                          child:const Center(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment:   MainAxisAlignment.center ,
+                              children: [
+                            
+                                Paymenticoncard(image: "assets/image/paytmlogo.png"),
+                                SizedBox(width: 10,),
+                                Paymenticoncard(image: "assets/image/gpayicon.png"),
+                                SizedBox(width: 10,),
+                                Paymenticoncard(image: "assets/image/png-transparent-phonepe-india-unified-payments-interface-india-purple-violet-text 1.png"),
+                                SizedBox(width: 10,),
+                                Paymenticoncard(image: "assets/image/bharat-interface-for-money-bhim-logo-vector 1.png"),
+                                SizedBox(width: 10,),
+                                Paymenticoncard(image: "assets/image/5968269 1.png")
+                              
+                              ],
+                            ),
+                          )
+                                                ),
+                                                SizedBox(height: 10,),
+                                                Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Cancelation Policy".toUpperCase(),style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w500, 
+                                  color: Color.fromARGB(255, 177, 175, 175),  
+                                  fontFamily: 'Poppins'
+                                  ),
+                                  textAlign: TextAlign.left,
+                                  ),
+                                   Text("Help us reduce food waste by avoiding cancellation. The amount paid in non-refundabale after placing  the order".toLowerCase(),style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500, 
+                                  color: Color.fromARGB(255, 177, 175, 175),
+                                  fontFamily: 'Poppins'
+                                  ),
+                                  textAlign: TextAlign.left,
+                                  ),
+                              ],
+                            ),
+                          ),
+                                                ),
+                                                 SizedBox(height: 200,),
+                                          ],
+                                        ),
+                                    ),
+                                
+                                
+                                  ],
+                                
+                              ),
+                          
+                          
+                          
+                          
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(context).primaryColor.withOpacity(0.1),
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                 
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(LoyaltyScreen(fromNotification: false));
+                                    },
+                                    child: PartialPayView2(totalPrice: total, isPrescription: false, currency: currency,),
+                                  ),
+                          
+                                  // Payment Section and Order Button
+                                  Row(
+                                    children: [
+                                      PaymentSection(
+                                        storeId: widget.storeId,
+                                        isCashOnDeliveryActive: _isCashOnDeliveryActive!,
+                                        isDigitalPaymentActive: _isDigitalPaymentActive!,
+                                        isWalletActive: _isWalletActive,
+                                        total: total,
+                                        checkoutController: checkoutController,
+                                        isOfflinePaymentActive: _isOfflinePaymentActive,
+                                      ),
+                                      Expanded(
+                                        child: _orderPlaceButton(
+                                          checkoutController,
+                                          todayClosed,
+                                          tomorrowClosed,
+                                          orderAmount,
+                                          deliveryCharge,
+                                          tax,
+                                          discount,
+                                          total,
+                                          maxCodOrderAmount,
+                                          isPrescriptionRequired,
+                                           currency,
+                                           module
+                                        ),
+                                      ),
+                          
+                                          
+                                    ],
+                                  ),
+                          
+                                      SizedBox(height: 0,)
                                 ],
                               ),
                             ),
                           ),
-                          Container(
-                            child: Stack(
-                              children: [
-                                SvgPicture.asset("assets/image/freepik--background-complete--inject-31.svg", width: 106, height: 121),
-                                Positioned(
-                                  left: 40,
-                                  top: 50,
-                                  child: Image.asset("assets/image/Indian-shopkeeper-is-holding-money-in-hand-10-small 1.png", height: 84, width: 84)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 20,),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 80,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          ),
-                          color: Colors.white,
-                           
-                        ),
-              
-                        child:const Center(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment:   MainAxisAlignment.center ,
-                            children: [
-                          
-                              Paymenticoncard(image: "assets/image/paytmlogo.png"),
-                              SizedBox(width: 10,),
-                              Paymenticoncard(image: "assets/image/gpayicon.png"),
-                              SizedBox(width: 10,),
-                              Paymenticoncard(image: "assets/image/png-transparent-phonepe-india-unified-payments-interface-india-purple-violet-text 1.png"),
-                              SizedBox(width: 10,),
-                              Paymenticoncard(image: "assets/image/bharat-interface-for-money-bhim-logo-vector 1.png"),
-                              SizedBox(width: 10,),
-                              Paymenticoncard(image: "assets/image/5968269 1.png")
-                            
+                                                 
                             ],
                           ),
-                        )
-                      ),
-                      SizedBox(height: 10,),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Cancelation Policy".toUpperCase(),style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500, 
-                                color: Color.fromARGB(255, 177, 175, 175),  
-                                fontFamily: 'Poppins'
-                                ),
-                                textAlign: TextAlign.left,
-                                ),
-                                 Text("Help us reduce food waste by avoiding cancellation. The amount paid in non-refundabale after placing  the order".toLowerCase(),style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500, 
-                                color: Color.fromARGB(255, 177, 175, 175),
-                                fontFamily: 'Poppins'
-                                ),
-                                textAlign: TextAlign.left,
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                       SizedBox(height: 200,),
-                                        ],
-                                      ),
-                                  ),
-                              
-                              
-                                ],
-                              
-                            ),
-
-
-                        
-                        
-                        Positioned(
-  bottom: 0,
-  left: 0,
-  right: 0,
-  child: Container(
-    decoration: BoxDecoration(
-      color: Theme.of(context).cardColor,
-      boxShadow: [
-        BoxShadow(
-          color: Theme.of(context).primaryColor.withOpacity(0.1),
-          blurRadius: 10,
-        ),
-      ],
-    ),
-    child: Column(
-      children: [
-       
-        InkWell(
-          onTap: () {
-            Get.to(LoyaltyScreen(fromNotification: false));
-          },
-          child: PartialPayView2(totalPrice: total, isPrescription: false, currency: currency,),
-        ),
-
-        // Payment Section and Order Button
-        Row(
-          children: [
-            PaymentSection(
-              storeId: widget.storeId,
-              isCashOnDeliveryActive: _isCashOnDeliveryActive!,
-              isDigitalPaymentActive: _isDigitalPaymentActive!,
-              isWalletActive: _isWalletActive,
-              total: total,
-              checkoutController: checkoutController,
-              isOfflinePaymentActive: _isOfflinePaymentActive,
-            ),
-            Expanded(
-              child: _orderPlaceButton(
-                checkoutController,
-                todayClosed,
-                tomorrowClosed,
-                orderAmount,
-                deliveryCharge,
-                tax,
-                discount,
-                total,
-                maxCodOrderAmount,
-                isPrescriptionRequired,
-                 currency,
-                 module
-              ),
-            ),
-
-                
-          ],
-        ),
-
-            SizedBox(height: 10,)
-      ],
-    ),
-  ),
-),
-                       
-                          ],
                         );
                       }
                     );
@@ -1045,7 +1149,7 @@ Widget _orderPlaceButton(
 
     onTap: checkoutController.acceptTerms ? () {
       // checkoutController. = true;
-
+      //  = checkoutController.store!.tax! ?? '0';
       if ( tax == "null") {
         print("=============Tax is null========");
       } if (deliveryCharge == "null") {
@@ -1145,6 +1249,18 @@ Widget _orderPlaceButton(
 
 
           } 
+          else if ( checkoutController.selectedAddress == null && checkoutController.orderType != 'take_away') {
+             showModalBottomSheet(
+  context: context,
+  backgroundColor: Colors.transparent,
+  isScrollControlled: true,
+  builder: (_) => AddressDropdownSheet(
+    // addressList: addressList,
+    // address: address,
+    // checkoutController: checkoutController,
+  ),
+);
+          }
           // else if( checkoutController.store!.scheduleOrder == true || checkoutController.preferableTime.isEmpty   ) {
           //    showCustomSnackBar("Preferable time is required");
             
@@ -1191,9 +1307,15 @@ Widget _orderPlaceButton(
           }else if (!checkoutController.acceptTerms) {
             showCustomSnackBar('please_accept_privacy_policy_trams_conditions_refund_policy_first'.tr);
           }
+
+          
           else {
         
-            AddressModel? finalAddress = isGuestLogIn ? checkoutController.guestAddress : address[checkoutController.addressIndex!];
+            AddressModel? finalAddress =  
+            
+             isGuestLogIn ? checkoutController.guestAddress : address[checkoutController.addressIndex!];
+             
+
         
             if(isGuestLogIn && checkoutController.orderType == 'take_away') {
               String number = checkoutController.countryDialCode! + guestContactPersonNumberController.text;
@@ -1989,220 +2111,219 @@ Widget _orderPlaceButton(
 
 
 
-void _showAddressDropdown(BuildContext context, List addressList, checkoutController, List address) {
-  // Define the height of each item (you can adjust this based on your AddressWidget)
-  const double itemHeight = 70.0; // Example height of each item
-  const double titleHeight = 60.0; // Height for title and padding
-  const double addAddressHeight = 50.0; // Height for the add address button
-  const double textFieldHeight = 60.0; // Height for text fields
-  const double padding = 16.0; // Padding around the container
+// void _showAddressDropdown(BuildContext context, List addressList, checkoutController, List address) {
+//   // Define the height of each item (you can adjust this based on your AddressWidget)
+//   const double itemHeight = 70.0; // Example height of each item
+//   const double titleHeight = 60.0; // Height for title and padding
+//   const double addAddressHeight = 50.0; // Height for the add address button
+//   const double textFieldHeight = 60.0; // Height for text fields
+//   const double padding = 16.0; // Padding around the container
 
-  // Calculate the total height based on the number of items and other components
-  final double bottomSheetHeight = (addressList.length * itemHeight) + titleHeight + addAddressHeight + (textFieldHeight * 3) + (padding * 2);
+//   // Calculate the total height based on the number of items and other components
+//   final double bottomSheetHeight = (addressList.length * itemHeight) + titleHeight + addAddressHeight + (textFieldHeight * 3) + (padding * 2);
 
-  showModalBottomSheet(
-    context: context,
-    backgroundColor: Colors.transparent,
-    isScrollControlled: true, // Allow the bottom sheet to take full height
-    builder: (BuildContext context) {
-      return Container(
-        // padding: const EdgeInsets.all(padding),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.5,
-          // minHeight:MediaQuery.of(context).size.height * 0.8  // Limit the height to 80% of the screen height
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max, // Use min to allow for scrolling
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+//   showModalBottomSheet(
+//     context: context,
+//     backgroundColor: Colors.transparent,
+//     isScrollControlled: true, // Allow the bottom sheet to take full height
+//     builder: (BuildContext context) {
+//       return Container(
+//         // padding: const EdgeInsets.all(padding),
+//         constraints: BoxConstraints(
+//           maxHeight: MediaQuery.of(context).size.height * 0.5,
+//           // minHeight:MediaQuery.of(context).size.height * 0.8  // Limit the height to 80% of the screen height
+//         ),
+//         child: Column(
+//           mainAxisSize: MainAxisSize.max, // Use min to allow for scrolling
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
 
-              Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    // topLeft: Radius.circular(Dimensions.radiusLarge),
-                    // topRight: Radius.circular(Dimensions.radiusLarge)
-                  )
-                ),
+//               Container(
+//                 height: 50,
+//                 width: MediaQuery.of(context).size.width,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.only(
+//                     // topLeft: Radius.circular(Dimensions.radiusLarge),
+//                     // topRight: Radius.circular(Dimensions.radiusLarge)
+//                   )
+//                 ),
 
-                child: Center(
-                  child: Container(
-               height: 40,
-               width: 40,
-                    decoration: BoxDecoration(
-                           color: const Color.fromARGB(146, 0, 0, 0),
-                      borderRadius: BorderRadius.circular(
-                        100
-                      )
-                    ),
-                    child: Center(
-                      child: IconButton(onPressed: (){
-                        Get.back();
-                      }, icon: Icon(
-                        Icons.close,
-                        color: const Color.fromARGB(209, 255, 255, 255),
-                        size: 25,
-                      )),
-                    ),
-                  ),
-                ),
-              ),
+//                 child: Center(
+//                   child: Container(
+//                height: 40,
+//                width: 40,
+//                     decoration: BoxDecoration(
+//                            color: const Color.fromARGB(146, 0, 0, 0),
+//                       borderRadius: BorderRadius.circular(
+//                         100
+//                       )
+//                     ),
+//                     child: Center(
+//                       child: IconButton(onPressed: (){
+//                         Get.back();
+//                       }, icon: Icon(
+//                         Icons.close,
+//                         color: const Color.fromARGB(209, 255, 255, 255),
+//                         size: 25,
+//                       )),
+//                     ),
+//                   ),
+//                 ),
+//               ),
 
-              SizedBox(height: 5,),
-           Expanded(
-             child: Container(
-               decoration: BoxDecoration(
-                 color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Dimensions.radiusExtraLarge + 5),
-                    topRight: Radius.circular(Dimensions.radiusExtraLarge + 5)
-                  )
-                ),
+//               SizedBox(height: 5,),
+//            Expanded(
+//              child: Container(
+//                decoration: BoxDecoration(
+//                  color: Colors.white,
+//                   borderRadius: BorderRadius.only(
+//                     topLeft: Radius.circular(Dimensions.radiusExtraLarge + 5),
+//                     topRight: Radius.circular(Dimensions.radiusExtraLarge + 5)
+//                   )
+//                 ),
              
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+//               child: Padding(
+//                 padding: const EdgeInsets.all(10.0),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
                   
-                             children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10,top: 10),
-                    child: Text(
-                    'Choose a delivery address',
-                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
-                                    ),
-                  ),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: addressList.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          checkoutController.getDistanceInKM(
-                            LatLng(
-                              double.parse(address[index].latitude!),
-                              double.parse(address[index].longitude!),
-                            ),
-                            LatLng(
-                              double.parse(checkoutController.store!.latitude!),
-                              double.parse(checkoutController.store!.longitude!),
-                            ),
-                          );
-                          checkoutController.setAddressIndex(index);
-                          Get.back();
-                        },
-                        child: AddressWidget(
-                          address: address[index],
-                          fromAddress: false,
-                          fromCheckout: true,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                         const SizedBox(height: Dimensions.paddingSizeSmall),
-                // Text fields for address details
-                Padding(
-                  padding:  const EdgeInsets.only(left: 8,right: 8),
-                  child: CustomTextField(
-                         radius: Dimensions.radiusLarge,
-                    labelText: 'street_number'.tr,
-                    titleText: 'write_street_number'.tr,
-                    inputType: TextInputType.streetAddress,
-                    focusNode: checkoutController.streetNode,
-                    nextFocus: checkoutController.houseNode,
-                    controller: checkoutController.streetNumberController,
-                  ),
-                ),
-                SizedBox(height: Dimensions.paddingSizeLarge),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8,right: 8),
-                  child: Row(
-                    children: [
+//                              children: [
+//                   Padding(
+//                     padding: const EdgeInsets.only(left: 10,top: 10),
+//                     child: Text(
+//                     'Choose a delivery address',
+//                     style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+//                                     ),
+//                   ),
+//                 const SizedBox(height: 10),
+//                 Expanded(
+//                   child: ListView.builder(
+//                     itemCount: addressList.length,
+//                     itemBuilder: (context, index) {
+//                       return InkWell(
+//                         onTap: () {
+//                           checkoutController.getDistanceInKM(
+//                             LatLng(
+//                               double.parse(address[index].latitude!),
+//                               double.parse(address[index].longitude!),
+//                             ),
+//                             LatLng(
+//                               double.parse(checkoutController.store!.latitude!),
+//                               double.parse(checkoutController.store!.longitude!),
+//                             ),
+//                           );
+//                           checkoutController.setAddressIndex(index);
+//                           Get.back();
+//                         },
+//                         child: AddressWidget(
+//                           address: address[index],
+//                           fromAddress: false,
+//                           fromCheckout: true,
+//                         ),
+//                       );
+//                     },
+//                   ),
+//                 ),
+//                          const SizedBox(height: Dimensions.paddingSizeSmall),
+//                 // Text fields for address details
+//                 Padding(
+//                   padding:  const EdgeInsets.only(left: 8,right: 8),
+//                   child: CustomTextField(
+//                          radius: Dimensions.radiusLarge,
+//                     labelText: 'street_number'.tr,
+//                     titleText: 'write_street_number'.tr,
+//                     inputType: TextInputType.streetAddress,
+//                     focusNode: checkoutController.streetNode,
+//                     nextFocus: checkoutController.houseNode,
+//                     controller: checkoutController.streetNumberController,
+//                   ),
+//                 ),
+//                 SizedBox(height: Dimensions.paddingSizeLarge),
+//                 Padding(
+//                   padding: const EdgeInsets.only(left: 8,right: 8),
+//                   child: Row(
+//                     children: [
                     
-                      Expanded(
-                        child: CustomTextField(
-                               radius: Dimensions.radiusLarge,
-                          titleText: 'write_house_number'.tr,
-                          labelText: 'house'.tr,
-                          inputType: TextInputType.text,
-                          focusNode: checkoutController.houseNode,
-                          nextFocus: checkoutController.floorNode,
-                          controller: checkoutController.houseController,
-                        ),
-                      ),
-                      const SizedBox(width: Dimensions.paddingSizeSmall),
-                      Expanded(
-                        child: CustomTextField(
-                          radius: Dimensions.radiusLarge,
-                          titleText: 'write_floor_number'.tr,
-                          labelText: 'floor'.tr,
-                          inputType: TextInputType.text,
-                          focusNode: checkoutController.floorNode,
-                          inputAction: TextInputAction.done,
-                          controller: checkoutController.floorController,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                         const SizedBox(height: Dimensions.paddingSizeSmall),
+//                       Expanded(
+//                         child: CustomTextField(
+//                                radius: Dimensions.radiusLarge,
+//                           titleText: 'write_house_number'.tr,
+//                           labelText: 'house'.tr,
+//                           inputType: TextInputType.text,
+//                           focusNode: checkoutController.houseNode,
+//                           nextFocus: checkoutController.floorNode,
+//                           controller: checkoutController.houseController,
+//                         ),
+//                       ),
+//                       const SizedBox(width: Dimensions.paddingSizeSmall),
+//                       Expanded(
+//                         child: CustomTextField(
+//                           radius: Dimensions.radiusLarge,
+//                           titleText: 'write_floor_number'.tr,
+//                           labelText: 'floor'.tr,
+//                           inputType: TextInputType.text,
+//                           focusNode: checkoutController.floorNode,
+//                           inputAction: TextInputAction.done,
+//                           controller: checkoutController.floorController,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                          const SizedBox(height: Dimensions.paddingSizeSmall),
                              
-                  Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: CustomInkWell(
-                    onTap: () async {
-                      Get.back();
-                      var newAddress = await Get.toNamed(RouteHelper.getAddAddressRoute(true, false, checkoutController.store!.zoneId));
-                      if (newAddress != null) {
-                        checkoutController.getDistanceInKM(
-                          LatLng(double.parse(newAddress.latitude), double.parse(newAddress.longitude)),
-                          LatLng(double.parse(checkoutController.store!.latitude!), double.parse(checkoutController.store!.longitude!)),
-                        );
-                        checkoutController.streetNumberController.text = newAddress.streetNumber ?? '';
-                        checkoutController.houseController.text = newAddress.house ?? '';
-                        checkoutController.floorController.text = newAddress.floor ?? '';
-                      }
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(color: Theme.of(context).primaryColor),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
-                            child: Icon(Icons.add, size: 18, color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Text('Add New Address'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
-                        Spacer(),
-                        Icon(Icons.arrow_right),
-                      ],
-                    ),
-                  ),
-                ),
+//                   Padding(
+//                   padding: const EdgeInsets.all(12),
+//                   child: CustomInkWell(
+//                     onTap: () async {
+//                       Get.back();
+//                       var newAddress = await Get.toNamed(RouteHelper.getAddAddressRoute(true, false, checkoutController.store!.zoneId));
+//                       if (newAddress != null) {
+//                         checkoutController.getDistanceInKM(
+//                           LatLng(double.parse(newAddress.latitude), double.parse(newAddress.longitude)),
+//                           LatLng(double.parse(checkoutController.store!.latitude!), double.parse(checkoutController.store!.longitude!)),
+//                         );
+//                         checkoutController.streetNumberController.text = newAddress.streetNumber ?? '';
+//                         checkoutController.houseController.text = newAddress.house ?? '';
+//                         checkoutController.floorController.text = newAddress.floor ?? '';
+//                       }
+//                     },
+//                     child: Row(
+//                       children: [
+//                         Container(
+//                           decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.all(Radius.circular(5)),
+//                             border: Border.all(color: Theme.of(context).primaryColor),
+//                           ),
+//                           child: Padding(
+//                             padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+//                             child: Icon(Icons.add, size: 18, color: Theme.of(context).primaryColor),
+//                           ),
+//                         ),
+//                         SizedBox(width: 20),
+//                         Text('Add New Address'.tr, style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor)),
+//                         Spacer(),
+//                         Icon(Icons.arrow_right),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
                              
-                             ],
+//                              ],
                              
-                ),
-              ),
-             ),
-           ),
+//                 ),
+//               ),
+//              ),
+//            ),
             
            
            
-          ],
-        ),
-      );
-    },
-  );
-}
-
+//           ],
+//         ),
+//       );
+//     },
+//   );
+// }
 
 
 

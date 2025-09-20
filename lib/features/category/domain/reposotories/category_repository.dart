@@ -122,7 +122,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
 
   Future<ItemModel?> _getCategoryItemList(String? categoryID, int offset, String type) async {
     ItemModel? categoryItem;
-    Response response = await apiClient.getData('${AppConstants.categoryItemUri}$categoryID?limit=10&offset=$offset&type=$type');
+    Response response = await apiClient.getData('${AppConstants.categoryItemUri}$categoryID?limit=20&offset=$offset&type=$type');
     if (response.statusCode == 200) {
       categoryItem = ItemModel.fromJson(response.body);
     }

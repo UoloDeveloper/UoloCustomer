@@ -140,6 +140,9 @@ class CheckoutController extends GetxController implements GetxService {
   bool _isExpand = false;
   bool get isExpand => _isExpand;
 
+  AddressModel? _selectedAddress;
+  AddressModel? get selectedAddress => _selectedAddress;
+
   Future<void> initCheckoutData(int? storeId) async {
     _isLoading = true;
     Get.find<CouponController>().removeCouponData(false);
@@ -246,6 +249,7 @@ class CheckoutController extends GetxController implements GetxService {
   }
 
   void setTotalAmount(double amount){
+    print("Amount: $amount");
     _viewTotalPrice = amount;
   }
 
@@ -378,6 +382,10 @@ class CheckoutController extends GetxController implements GetxService {
       update();
     }
   }
+void setSelectedAddress(AddressModel? address) {
+  _selectedAddress = address;
+  update();
+}
 
   // Future<String> placeOrder(PlaceOrderBodyModel placeOrderBody, int? zoneID, double amount, double? maximumCodOrderAmount, bool fromCart, bool isCashOnDeliveryActive, List<XFile>? orderAttachment, {bool isOfflinePay = false}) async {
   //   List<MultipartBody>? multiParts = [];

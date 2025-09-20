@@ -863,7 +863,7 @@ void showPricingBottomSheet(BuildContext context, bool takeAway , CheckoutContro
                   Stack(
                     children: [
                       WaveTopSection(
-                      discount: discount ,
+                      discount: discount + couponController.discount ?? 0  ,
                       ),
 
                       

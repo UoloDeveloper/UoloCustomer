@@ -196,14 +196,14 @@ class StoreController extends GetxController implements GetxService {
       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.local);
       // storeModel!.stores!.removeWhere((element) => element.distancelimit  == null || element.distancelimit == 0);
       if (storeModel != null)
-             storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+             storeModel.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID );
                  update();
       _prepareStoreModel(storeModel, offset);
       getStoreList(offset, false, source: DataSourceEnum.client);
     } else {
       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.client);
       // storeModel!.stores!.removeWhere((element) =>  element.distancelimit == 0  );
-storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID  );
           update();
       _prepareStoreModel(storeModel, offset);
     }
@@ -253,7 +253,7 @@ storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 
         popularStoreList = await storeServiceInterface.getPopularStoreList(type, source: DataSourceEnum.local);
         if (popularStoreList != null) {
           _popularStoreList = [];
-          popularStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+          popularStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0 && element.zoneId ==   Get.find<LocationController>().zoneID  );
           _popularStoreList!.addAll(popularStoreList);
         }
         update();
@@ -262,7 +262,7 @@ storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 
         popularStoreList = await storeServiceInterface.getPopularStoreList(type, source: DataSourceEnum.client);
         if (popularStoreList != null) {
           _popularStoreList = [];
-             popularStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+             popularStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID   );
           _popularStoreList!.addAll(popularStoreList);
         }
         update();
@@ -337,7 +337,7 @@ Future<void> getLatestStoreList(
 
     if (latestStoreList != null) {
       // Apply filtration to remove stores where both noservicerestriction and distancelimit are 0
-      latestStoreList.removeWhere((element) => element.noservicerestriction == 0 && element.distancelimit == 0);
+      latestStoreList.removeWhere((element) => element.noservicerestriction == 0 && element.distancelimit == 0 && element.zoneId ==   Get.find<LocationController>().zoneID );
           update();
 
       _latestStoreList = [];
@@ -364,7 +364,7 @@ Future<void> getLatestStoreList(
       if(dataSource == DataSourceEnum.local) {
         latestStoreList = await storeServiceInterface.getTopOfferStoreList(source: DataSourceEnum.local);
         if (latestStoreList != null) {
-        latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+        latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0 && element.zoneId ==   Get.find<LocationController>().zoneID   );
             update();
           _topOfferStoreList = [];
           _topOfferStoreList!.addAll(latestStoreList);
@@ -374,7 +374,7 @@ Future<void> getLatestStoreList(
       } else {
         latestStoreList = await storeServiceInterface.getTopOfferStoreList(source: DataSourceEnum.client);
         if (latestStoreList != null) {
-              latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  );
+              latestStoreList.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID  );
                   update();
           _topOfferStoreList = [];
           _topOfferStoreList!.addAll(latestStoreList);
@@ -614,7 +614,7 @@ Future<void> getRecommendedStoreList({
   if (recommendedStoreList != null) {
     // Filter the recommendedStoreList based on the conditions
     _recommendedStoreList = recommendedStoreList.where((store) {
-      return store.noservicerestriction != 0 || store.distancelimit != 0;
+      return store.noservicerestriction != 0 || store.distancelimit != 0  && store.zoneId ==   Get.find<LocationController>().zoneID ;
     }).toList();
   } else {
     _recommendedStoreList = [];

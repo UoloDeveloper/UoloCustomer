@@ -235,22 +235,22 @@ class SocialLoginWidget extends StatelessWidget {
   }
 
   void _googleLogin(GoogleSignIn googleSignIn) async {
-    googleSignIn.signOut();
-    GoogleSignInAccount googleAccount = (await googleSignIn.signIn())!;
-    GoogleSignInAuthentication auth = await googleAccount.authentication;
+    // googleSignIn.signOut();
+    // GoogleSignInAccount googleAccount = (await googleSignIn.initialize())!;
+    // GoogleSignInAuthentication auth = await googleAccount.authentication;
 
-    SocialLogInBody googleBodyModel = SocialLogInBody(
-      email: googleAccount.email, token: auth.accessToken, uniqueId: googleAccount.id,
-      medium: 'google', accessToken: 1, loginType: CentralizeLoginType.social.name,
-    );
+    // SocialLogInBody googleBodyModel = SocialLogInBody(
+    //   email: googleAccount.email, token: auth.accessToken, uniqueId: googleAccount.id,
+    //   medium: 'google', accessToken: 1, loginType: CentralizeLoginType.social.name,
+    // );
 
-    Get.find<AuthController>().loginWithSocialMedia(googleBodyModel).then((response) {
-      if (response.isSuccess) {
-        _processSocialSuccessSetup(response, googleBodyModel, null, null);
-      } else {
-        showCustomSnackBar(response.message);
-      }
-    });
+    // Get.find<AuthController>().loginWithSocialMedia(googleBodyModel).then((response) {
+    //   if (response.isSuccess) {
+    //     _processSocialSuccessSetup(response, googleBodyModel, null, null);
+    //   } else {
+    //     showCustomSnackBar(response.message);
+    //   }
+    // });
   }
 
   void _facebookLogin() async {

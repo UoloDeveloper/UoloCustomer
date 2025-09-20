@@ -16,8 +16,8 @@ class AppConstants {
   // static const String baseUrl = 'https://Uolo Delivery-admin.6amtech.com';
   static const String baseUrl = 
   // "https://testorders.uolodelivery.com";
-  "https://orders.uolodelivery.com";
-  // 'https://uolo.v-nexus.com';
+  // "https://orders.uolodelivery.com";
+  'http://livetest.uolodelivery.com';
   // "https://test.uolodelivery.com";
 
   static const String categoryUri = '/api/v1/categories';

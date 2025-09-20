@@ -214,24 +214,24 @@ class _ItemsViewState extends State<ItemsView> {
              //         bool  itemAvailable = DateConverter.isAvailable(widget.items![index]!.availableTimeStarts, widget.items![index]!.availableTimeEnds);
              // final List<Item?>? filterditems = widget.items!.where((element) => element!.storeId == widget.stores![index]!.id).toList();
              
-                List<Item?> availableItems = [];
-           List<Item?> notAvailableItems = [];
-           if (widget.items != null ) {
+          //       List<Item?> availableItems = [];
+          //  List<Item?> notAvailableItems = [];
+          //  if (widget.items != null ) {
             
-             for (var item in widget.items!) {
-               if (item != null) { 
-                 bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds) ;
-                 if (isAvailable) {
-            availableItems.add(item);
-                 } else {
-            notAvailableItems.add(item);
-                 }
-               }
-             }
-           }
+          //    for (var item in widget.items!) {
+          //      if (item != null) { 
+          //        bool isAvailable = DateConverter.isAvailable(item.availableTimeStarts, item.availableTimeEnds) ;
+          //        if (isAvailable) {
+          //   availableItems.add(item);
+          //        } else {
+          //   notAvailableItems.add(item);
+          //        }
+          //      }
+          //    }
+          //  }
            
            
-           final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
+          //  final List<Item?> sortedFilteredItems = [...availableItems, ...notAvailableItems];
            
            
              // if (index  == 0) {
@@ -260,7 +260,7 @@ class _ItemsViewState extends State<ItemsView> {
                    Column(
                      children: [
                        ItemWidget(
-                                       isStore: widget.isStore, item: widget.isStore ? null :sortedFilteredItems[index], isFeatured: widget.isFeatured,
+                                       isStore: widget.isStore, item: widget.isStore ? null : widget.items?[index], isFeatured: widget.isFeatured,
                                        store: widget.isStore ? widget.stores![index] : null, index: index, length: length, isCampaign: widget.isCampaign,
                                        inStore: widget.inStorePage,
                                      ),

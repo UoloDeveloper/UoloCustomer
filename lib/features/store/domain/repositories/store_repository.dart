@@ -50,11 +50,11 @@ class StoreRepository implements StoreRepositoryInterface {
 
   Future<StoreModel?> _getStoreList(int offset, String filterBy, String storeType, {required DataSourceEnum source}) async {
     StoreModel? storeModel;
-    String cacheId = '${AppConstants.storeUri}/$filterBy?store_type=$storeType&offset=$offset&limit=12-${Get.find<SplashController>().module!.id!}';
+    String cacheId = '${AppConstants.storeUri}/$filterBy?store_type=$storeType&offset=$offset&limit=50-${Get.find<SplashController>().module!.id!}';
 
     switch(source) {
       case DataSourceEnum.client:
-        Response response = await apiClient.getData('${AppConstants.storeUri}/$filterBy?store_type=$storeType&offset=$offset&limit=12');
+        Response response = await apiClient.getData('${AppConstants.storeUri}/$filterBy?store_type=$storeType&offset=$offset&limit=50');
         if(response.statusCode == 200){
           storeModel = StoreModel.fromJson(response.body);
           LocalClient.organize(DataSourceEnum.client, cacheId, jsonEncode(response.body), apiClient.getHeader());
@@ -220,7 +220,7 @@ class StoreRepository implements StoreRepositoryInterface {
   Future<ItemModel?> getStoreItemList(int? storeID, int offset, int? categoryID, String type) async {
     ItemModel? storeItemModel;
     Response response = await apiClient.getData(
-      '${AppConstants.storeItemUri}?store_id=$storeID&category_id=$categoryID&offset=$offset&limit=13&type=$type');
+      '${AppConstants.storeItemUri}?store_id=$storeID&category_id=$categoryID&offset=$offset&limit=100&type=$type');
     if(response.statusCode == 200){
       storeItemModel = ItemModel.fromJson(response.body);
     }
