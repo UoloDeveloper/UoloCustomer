@@ -621,8 +621,8 @@ class _VideoContainerState extends State<VideoContainer> {
             widget.isImage
                 ? Image.asset(
                     widget.home
-                        ? "assets/image/static_banner/20250919_181304.jpg"
-                        : "assets/image/static_banner/20250919_181304.jpg",
+                        ? "assets/image/static_banner/20250920_110807.jpg"
+                        : "assets/image/static_banner/20250920_110807.jpg",
                     fit: BoxFit.cover,
                   )
                 : _controller.value.isInitialized
