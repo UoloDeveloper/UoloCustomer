@@ -5,7 +5,7 @@ import 'package:sixam_mart/util/images.dart';
 
 class AppConstants {
   static const String appName = 'Uolo Delivery';
-  static const double appVersion = 10; ///Flutter Version: 3.24.5
+  static const double appVersion = 10; 
 
   static const String fontFamily = 'Poppins';
   static const bool payInWevView = false;
