@@ -96,13 +96,14 @@ class _WebCouponBannerViewWidgetState extends State<WebCouponBannerViewWidget> {
                   const Spacer(),
 
                   DottedBorder(
-                    color: Theme.of(context).primaryColor,
-                    strokeWidth: 1,
-                    strokeCap: StrokeCap.butt,
-                    dashPattern: const [5, 5],
-                    padding: const EdgeInsets.all(0),
-                    borderType: BorderType.RRect,
-                    radius: const Radius.circular(50),
+               options: RoundedRectDottedBorderOptions(
+    color: Theme.of(context).primaryColor,
+    strokeWidth: 1,
+    strokeCap: StrokeCap.butt,
+    dashPattern: [5, 5],
+    padding: EdgeInsets.all(0),
+    radius: Radius.circular(50),
+  ),
                     child: InkWell(
                       onTap: () {
                         if(couponController.couponList![itemIndex].code != null){

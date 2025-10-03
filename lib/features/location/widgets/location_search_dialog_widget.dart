@@ -27,53 +27,59 @@ class LocationSearchDialogWidget extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Material(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
-        child: SizedBox(width: ResponsiveHelper.isDesktop(context) ? 600 : Dimensions.webMaxWidth, child: TypeAheadField(
-          textFieldConfiguration: TextFieldConfiguration(
-            controller: controller,
-            textInputAction: TextInputAction.search,
-            autofocus: true,
-            textCapitalization: TextCapitalization.words,
-            keyboardType: TextInputType.streetAddress,
-            decoration: InputDecoration(
-              hintText: 'search_location'.tr,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(style: BorderStyle.none, width: 0),
-              ),
-              hintStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).disabledColor,
-              ),
-              filled: true, fillColor: Theme.of(context).cardColor,
-            ),
-            style: Theme.of(context).textTheme.displayMedium!.copyWith(
-              color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeLarge,
-            ),
-          ),
-          suggestionsCallback: (pattern) async {
-            return await Get.find<LocationController>().searchLocation(context, pattern);
-          },
-          itemBuilder: (context, PredictionModel suggestion) {
-            return Padding(
-              padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-              child: Row(children: [
-                const Icon(Icons.location_on),
-                Expanded(
-                  child: Text(suggestion.description!, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeLarge,
-                  )),
+        child: SizedBox(
+          width: ResponsiveHelper.isDesktop(context) ? 600 : Dimensions.webMaxWidth,
+          child: TypeAheadField<PredictionModel>(
+            builder: (context, controller, focusNode) {
+              return TextField(
+                controller: controller,
+                focusNode: focusNode,
+                textInputAction: TextInputAction.search,
+                autofocus: true,
+                textCapitalization: TextCapitalization.words,
+                keyboardType: TextInputType.streetAddress,
+                decoration: InputDecoration(
+                  hintText: 'search_location'.tr,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+                  ),
+                  hintStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).disabledColor,
+                  ),
+                  filled: true, fillColor: Theme.of(context).cardColor,
                 ),
-              ]),
-            );
-          },
-          onSuggestionSelected: (PredictionModel suggestion) {
-            if(isPickedUp == null) {
-              Get.find<LocationController>().setLocation(suggestion.placeId, suggestion.description, mapController);
-            }else {
-              Get.find<ParcelController>().setLocationFromPlace(suggestion.placeId, suggestion.description, isPickedUp);
-            }
-            Get.back();
-          },
-        )),
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                  color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeLarge,
+                ),
+              );
+            },
+            suggestionsCallback: (pattern) async {
+              return await Get.find<LocationController>().searchLocation(context, pattern);
+            },
+            itemBuilder: (context, PredictionModel suggestion) {
+              return Padding(
+                padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                child: Row(children: [
+                  const Icon(Icons.location_on),
+                  Expanded(
+                    child: Text(suggestion.description!, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeLarge,
+                    )),
+                  ),
+                ]),
+              );
+            },
+            onSelected: (PredictionModel suggestion) {
+              if(isPickedUp == null) {
+                Get.find<LocationController>().setLocation(suggestion.placeId, suggestion.description, mapController);
+              }else {
+                Get.find<ParcelController>().setLocationFromPlace(suggestion.placeId, suggestion.description, isPickedUp);
+              }
+              Get.back();
+            },
+          ),
+        ),
       ),
     );
   }

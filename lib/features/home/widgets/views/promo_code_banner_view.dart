@@ -72,36 +72,56 @@ class _PromoCodeBannerViewState extends State<PromoCodeBannerView> {
                       ),
                       const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                      DottedBorder(
-                        color: Theme.of(context).primaryColor,
-                        strokeWidth: 1,
-                        strokeCap: StrokeCap.butt,
-                        dashPattern: const [5, 5],
-                        padding: const EdgeInsets.all(0),
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(50),
-                        child: Container(
-                          height: 35, width: 130,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(50)),
-                          child: CustomInkWell(
-                            onTap: () {
-                              if(couponController.couponList![itemIndex].code != null){
-                                Clipboard.setData(ClipboardData(text: couponController.couponList![itemIndex].code ?? ''));
-                                showCustomSnackBar('coupon_code_copied'.tr, isError: false);
-                              }
-                            },
-                            radius: 50,
-                            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
-                            child: Row(mainAxisSize: MainAxisSize.min, children: [
-                              Icon(Icons.copy, color: Theme.of(context).primaryColor, size: 16),
-                              const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+                     DottedBorder(
+  options: RoundedRectDottedBorderOptions(
+    color: Theme.of(context).primaryColor,
+    strokeWidth: 1,
+    strokeCap: StrokeCap.butt,
+    dashPattern: [5, 5],
+    padding: EdgeInsets.all(0),
+    radius: Radius.circular(50),
+  ),
+  child: Container(
+    height: 35,
+    width: 130,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      color: Theme.of(context).cardColor,
+      borderRadius: BorderRadius.circular(50),
+    ),
+    child: CustomInkWell(
+      onTap: () {
+        if (couponController.couponList![itemIndex].code != null) {
+          Clipboard.setData(
+            ClipboardData(text: couponController.couponList![itemIndex].code ?? ''),
+          );
+          showCustomSnackBar('coupon_code_copied'.tr, isError: false);
+        }
+      },
+      radius: 50,
+      padding: EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.copy, color: Theme.of(context).primaryColor, size: 16),
+          const SizedBox(width: Dimensions.paddingSizeExtraSmall),
+          Flexible(
+            child: Text(
+              couponController.couponList![itemIndex].code ?? '',
+              style: robotoMedium.copyWith(
+                color: Theme.of(context).primaryColor,
+                fontSize: Dimensions.fontSizeSmall,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+)
 
-                              Flexible(child: Text(couponController.couponList![itemIndex].code ?? '', style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeSmall), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                            ]),
-                          ),
-                        ),
-                      ),
 
                     ]),
                   ),

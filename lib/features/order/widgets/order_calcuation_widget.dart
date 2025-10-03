@@ -224,13 +224,14 @@ class OrderCalculationWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                 ),
                 child: DottedBorder(
-                  color: Theme.of(context).primaryColor,
-                  strokeWidth: 1,
-                  strokeCap: StrokeCap.butt,
-                  dashPattern: const [8, 5],
-                  padding: const EdgeInsets.all(8),
-                  borderType: BorderType.RRect,
-                  radius: const Radius.circular(Dimensions.radiusDefault),
+                 options: RoundedRectDottedBorderOptions(
+    color: Theme.of(context).disabledColor,
+    strokeWidth: 2,
+    strokeCap: StrokeCap.butt,
+    dashPattern: [8, 5],
+    padding: EdgeInsets.all(0),
+    radius: Radius.circular(Dimensions.radiusSmall),
+  ),
                   child: Column(children: [
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

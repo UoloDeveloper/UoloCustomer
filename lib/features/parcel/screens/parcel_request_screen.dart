@@ -132,11 +132,12 @@ class _ParcelRequestScreenState extends State<ParcelRequestScreen> {
                 ResponsiveHelper.isDesktop(context) ? const SizedBox(height: Dimensions.paddingSizeSmall) : const SizedBox(),
 
                 DottedBorder(
-                  color: Theme.of(context).disabledColor,
-                  strokeWidth: 1.5,
-                  dashPattern: const [5, 5],
-                  borderType: BorderType.RRect,
-                  radius: const Radius.circular(Dimensions.radiusDefault),
+                  options: RoundedRectDottedBorderOptions(
+    color: Theme.of(context).disabledColor,
+    strokeWidth: 1.5,
+    dashPattern: [5, 5],
+    radius: Radius.circular(Dimensions.radiusDefault),
+  ),
                   child: Container(
                     padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
                     decoration: BoxDecoration(
