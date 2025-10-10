@@ -37,8 +37,12 @@ class SplashScreenState extends State<SplashScreen> {
     bool firstTime = true;
     _onConnectivityChanged = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) {
       bool isConnected = result.contains(ConnectivityResult.wifi) || result.contains(ConnectivityResult.mobile);
-// Get.find<SplashController>().getModules();
-//   // Get.find<SplashController>().getModules();
+     Get.find<SplashController>().getModules().then(
+      (value) {
+        Get.find<SplashController>().setModule(Get.find<SplashController>().moduleList![0],notify: true);
+      },
+     );
+  
 //      for(ModuleModel module in Get.find<SplashController>().moduleList ?? []) {
 //                             if(module.moduleType == AppConstants.food) {
 //                               Get.find<SplashController>().setModule(module);

@@ -148,14 +148,19 @@ class _MyAppState extends State<MyApp> {
       }
 
       if(!AuthHelper.isLoggedIn() && !AuthHelper.isGuestLoggedIn() ) {
+        
         await Get.find<AuthController>().guestLogin();
       }
 
       if((AuthHelper.isLoggedIn() || AuthHelper.isGuestLoggedIn()) && Get.find<SplashController>().cacheModule != null) {
-        Get.find<CartController>().getCartDataOnline();
+         Get.find<SplashController>().getModules();
+        Get.find<CartController>().getCartDataOnline(
+        );
+
       }
 
-      Get.find<SplashController>().getConfigData(loadLandingData: (GetPlatform.isWeb && AddressHelper.getUserAddressFromSharedPref() == null), fromMainFunction: true);
+      Get.find<SplashController>().getConfigData(
+        loadLandingData: (GetPlatform.isWeb && AddressHelper.getUserAddressFromSharedPref() == null), fromMainFunction: true);
 
     }
   }
@@ -166,6 +171,10 @@ class _MyAppState extends State<MyApp> {
     return GetBuilder<ThemeController>(builder: (themeController) {
       return GetBuilder<LocalizationController>(builder: (localizeController) {
         return GetBuilder<SplashController>(builder: (splashController) {
+          //  splashController.getModules();
+  //            splashController.setModule( 
+  //  splashController.moduleList![0]
+  // );
           return (GetPlatform.isWeb && splashController.configModel == null) ? const SizedBox() : GetMaterialApp(
             title: AppConstants.appName,
             debugShowCheckedModeBanner: false,
@@ -173,7 +182,6 @@ class _MyAppState extends State<MyApp> {
             scrollBehavior: const MaterialScrollBehavior().copyWith(
 
               dragDevices: {PointerDeviceKind.mouse, 
-              
               PointerDeviceKind.touch},
             ),
             theme: themeController.darkTheme ? dark() : light(),

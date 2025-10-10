@@ -199,7 +199,6 @@ class AppConstants {
   static const String referBottomSheet = 'Uolo Delivery_reffer_bottomsheet_show';
   static const String dmRegisterSuccess = 'Uolo Delivery_dm_registration_success';
   static const String isRestaurantRegister = 'Uolo Delivery_store_registration';
-
   static const String topic = 'all_zone_customer';
   static const String zoneId = 'zoneId';
   static const String operationAreaId = 'operationAreaId';
@@ -211,7 +210,9 @@ class AppConstants {
   static const String cookiesManagement = 'cookies_management';
 
 
-  ///Refer & Earn work flow list..
+  // Refer & Earn work flow list..
+
+
   static final dataList = [
     'invite_your_friends_and_business'.tr,
     '${'they_register'.tr} ${AppConstants.appName} ${'with_special_offer'.tr}',

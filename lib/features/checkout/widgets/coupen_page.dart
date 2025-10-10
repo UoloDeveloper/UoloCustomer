@@ -39,7 +39,7 @@ class CouponPage extends StatelessWidget {
             for (CouponModel coupon in couponController.couponList!) {
               if (coupon.storeId == null ||
                   (coupon.couponType != 'store_wise' && coupon.couponType != 'default' && coupon.couponType != 'free_delivery' && coupon.storeId == null) ||
-                  coupon.storeId == storeId)     {
+                  coupon.storeId == checkoutController.store!.id)     {
                     if (!RegExp(r'^[0]+$').hasMatch(coupon.title.toString().trim())) {
          couponList.add(coupon);
 }

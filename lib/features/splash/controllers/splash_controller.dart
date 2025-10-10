@@ -173,6 +173,8 @@ class SplashController extends GetxController implements GetxService {
       splashServiceInterface.initSharedData();
     }else {
       _module = await splashServiceInterface.initSharedData();
+        
+
     }
     _cacheModule = splashServiceInterface.getCacheModule();
     setModule(_module, notify: false);
@@ -233,10 +235,13 @@ class SplashController extends GetxController implements GetxService {
     if(dataSource == DataSourceEnum.local) {
       moduleList = await splashServiceInterface.getModules(headers: headers, source: DataSourceEnum.local);
       _prepareModuleList(moduleList);
+
+
       getModules(headers: headers, dataSource: DataSourceEnum.client);
     } else {
       moduleList = await splashServiceInterface.getModules(headers: headers, source: DataSourceEnum.client);
       _prepareModuleList(moduleList);
+      //  setModule(_moduleList![0],notify: true);
     }
 
   }
