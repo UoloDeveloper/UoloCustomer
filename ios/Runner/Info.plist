@@ -54,6 +54,11 @@
 	<array>
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
+		<string>upi</string> <!-- Generic UPI scheme -->
+        <string>gpay</string> <!-- Google Pay -->
+        <string>phonepe</string> <!-- PhonePe -->
+        <string>paytm</string> <!-- Paytm -->
+        <string>bhim</string> <!-- BHIM -->
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
