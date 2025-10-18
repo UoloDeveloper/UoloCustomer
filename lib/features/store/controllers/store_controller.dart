@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sixam_mart/common/enums/data_source_enum.dart';
 import 'package:sixam_mart/features/category/controllers/category_controller.dart';
@@ -186,29 +187,161 @@ class StoreController extends GetxController implements GetxService {
     update();
   }
 
-  Future<void> getStoreList(int offset, bool reload, {DataSourceEnum source = DataSourceEnum.local}) async {
-    if(reload) {
+//   Future<void> getStoreList(int offset, bool reload, {DataSourceEnum source = DataSourceEnum.local}) async {
+//     if(reload) {
+//       _storeModel = null;
+//       update();
+//     }
+//     StoreModel? storeModel;
+//     if(source == DataSourceEnum.local && offset == 1) {
+//       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.local);
+//       // storeModel!.stores!.removeWhere((element) => element.distancelimit  == null || element.distancelimit == 0);
+//       if (storeModel != null)
+//       print("==================================${element.noservicerestriction}=======================================================");
+//          print("==================================${element.element.distancelimit}=======================================================");
+//           print("==================================${ element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID }=======================================================");
+//              storeModel.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID );
+//                  update();
+//       _prepareStoreModel(storeModel, offset);
+//       getStoreList(offset, false, source: DataSourceEnum.client);
+//     } else {
+//       storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.client);
+//       // storeModel!.stores!.removeWhere((element) =>  element.distancelimit == 0  );
+// storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID  );
+//           update();
+//       _prepareStoreModel(storeModel, offset);
+//     }
+//   }
+Future<void> getStoreList(int offset, bool reload, {DataSourceEnum source = DataSourceEnum.local}) async {
+  try {
+    if (reload) {
       _storeModel = null;
       update();
     }
+
     StoreModel? storeModel;
-    if(source == DataSourceEnum.local && offset == 1) {
-      storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.local);
-      // storeModel!.stores!.removeWhere((element) => element.distancelimit  == null || element.distancelimit == 0);
-      if (storeModel != null)
-             storeModel.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID );
-                 update();
-      _prepareStoreModel(storeModel, offset);
-      getStoreList(offset, false, source: DataSourceEnum.client);
+    
+    // Safely get zoneID once and reuse
+    final LocationController locationController = Get.find<LocationController>();
+    final String? currentZoneID = locationController.zoneID?.toString();
+    
+    if (currentZoneID == null) {
+      print("⚠️ DEBUG: zoneID is null, cannot apply zone-based filtering");
     } else {
-      storeModel = await storeServiceInterface.getStoreList(offset, _filterType, _storeType, source: DataSourceEnum.client);
-      // storeModel!.stores!.removeWhere((element) =>  element.distancelimit == 0  );
-storeModel!.stores!.removeWhere((element) =>  element.noservicerestriction == 0 &&  element.distancelimit == 0  && element.zoneId ==   Get.find<LocationController>().zoneID  );
-          update();
-      _prepareStoreModel(storeModel, offset);
+      print("📍 DEBUG: Using zoneID: $currentZoneID for filtering");
     }
+
+    if (source == DataSourceEnum.local && offset == 1) {
+      // Local source with initial offset - Apply filtering
+      print("🔍 DEBUG: Fetching from LOCAL source with offset 1");
+      storeModel = await storeServiceInterface.getStoreList(
+        offset, 
+        _filterType, 
+        _storeType, 
+        source: DataSourceEnum.local
+      );
+      
+      await _filterAndProcessStoreModel(storeModel, currentZoneID, "LOCAL");
+      
+      // Chain to client source after local processing
+      await getStoreList(offset, false, source: DataSourceEnum.client);
+      
+    } else {
+      // Client source or subsequent calls
+      print("🔍 DEBUG: Fetching from CLIENT source with offset: $offset");
+      storeModel = await storeServiceInterface.getStoreList(
+        offset, 
+        _filterType, 
+        _storeType, 
+        source: DataSourceEnum.client
+      );
+      
+      await _filterAndProcessStoreModel(storeModel, currentZoneID, "CLIENT");
+    }
+    
+  } catch (e, stackTrace) {
+    print("❌ ERROR in getStoreList: $e");
+    print("Stack trace: $stackTrace");
+    // Optionally rethrow or handle gracefully
+    rethrow;
+  }
+}
+
+/// Helper method to filter and process store model
+Future<void> _filterAndProcessStoreModel(StoreModel? storeModel, String? zoneID, String sourceType) async {
+  if (storeModel?.stores == null || storeModel!.stores!.isEmpty) {
+    print("⚠️ DEBUG: $sourceType - No stores to process");
+    _prepareStoreModel(storeModel, 1); // Use default offset
+    update();
+    return;
   }
 
+  print("📊 DEBUG: $sourceType - Processing ${storeModel!.stores!.length} stores");
+
+  int removedCount = 0;
+  final originalCount = storeModel!.stores!.length;
+
+  // Debug logging for each store
+  for (int i = 0; i < storeModel!.stores!.length; i++) {
+    final store = storeModel!.stores![i];
+    final shouldRemove = _shouldRemoveStore(store, zoneID);
+    
+    print("=== $sourceType STORE $i ===");
+    print("ID: ${store.id}");
+    print("noservicerestriction: ${store.noservicerestriction}");
+    print("distancelimit: ${store.distancelimit}");
+    print("zoneId: ${store.zoneId}");
+    print("Should remove: $shouldRemove");
+    print("========================");
+  }
+
+  // Apply filtering
+  storeModel!.stores!.removeWhere((store) {
+    final shouldRemove = _shouldRemoveStore(store, zoneID);
+    if (shouldRemove) {
+      removedCount++;
+      print("🗑️ $sourceType REMOVED: ${store.id} (zone: ${store.zoneId})");
+    }
+    return shouldRemove;
+  });
+
+  final remainingCount = storeModel!.stores!.length;
+  print("📈 DEBUG: $sourceType - Original: $originalCount, Removed: $removedCount, Remaining: $remainingCount");
+
+  // Update and prepare model
+  update();
+  _prepareStoreModel(storeModel, 1); // Use appropriate offset
+}
+
+/// Filter logic extracted to separate method
+bool _shouldRemoveStore(dynamic store, String? zoneID) {
+  // Early return if no zoneID
+  if (zoneID == null) {
+    print("⚠️ No zoneID available for filtering");
+    return false;
+  }
+  
+  // Normalize values for comparison
+  final noService = store.noservicerestriction ?? 1;
+  final distanceLimit = store.distancelimit ?? 1;
+  final storeZone = (store.zoneId ?? '').toString().trim();
+  final currentZone = zoneID.toString().trim();
+  
+  final condition1 = noService == 0;
+  final condition2 = distanceLimit == 0;
+  final condition3 = storeZone == currentZone;
+  
+  final shouldRemove = condition1 && condition2 && condition3;
+  
+  // Detailed debug output
+  print("🔍 Filter conditions:");
+  print("  1. noservicerestriction==0: $condition1 (value: $noService)");
+  print("  2. distancelimit==0: $condition2 (value: $distanceLimit)");  
+  print("  3. zoneId==currentZone: $condition3 ('$storeZone' vs '$currentZone')");
+  print("  FINAL: $shouldRemove");
+  
+  return shouldRemove;
+}
   _prepareStoreModel(StoreModel? storeModel, int offset) {
     if (storeModel != null) {
       if (offset == 1) {
@@ -647,9 +780,62 @@ Future<void> getRecommendedStoreList({
   //   update();
   // }
 
+// Future<void> getStoreItemList(int? storeID, int offset, String type, bool notify) async {
+//   try {
+
+//     if (offset == 1 || _storeItemModel == null) {
+//       _type = type;
+//       _storeItemModel = null;
+//       if (notify) {
+//         update();
+//       }
+//     }
+
+    
+//     final categoryId = (_store?.categoryIds?.isNotEmpty ?? false) && _categoryIndex != 0
+//         ? _categoryList![_categoryIndex].id
+//         : 0;
+
+    
+//     final storeItemModel = await storeServiceInterface.getStoreItemList(
+//       storeID,
+//       offset,
+//       categoryId,
+//       type,
+//     );
+     
+  
+//     if (storeItemModel != null) {
+//       if (offset == 1) {
+//         _storeItemModel = storeItemModel;
+//       } else {
+//         _storeItemModel ??= ItemModel(items: [], totalSize: 0, offset: 0);
+//         _storeItemModel!
+//           ..items!.addAll(storeItemModel.items ?? [])
+//           ..totalSize = storeItemModel.totalSize
+//           ..offset = storeItemModel.offset;
+//       }
+//       update();
+//     }
+//   } catch (e) {
+   
+//     print('Error fetching store items: $e');
+ 
+//     if (notify) {
+//       update();
+//     }
+//   }
+// }
+
+// String startTime = DateFormat('hh:mm a').format(
+//   DateFormat('HH:mm').parse(widget.item!.availableTimeStarts.toString())
+// );
+// String endTime = DateFormat('hh:mm a').format(
+//   DateFormat('HH:mm').parse(widget.item!.availableTimeEnds.toString())
+// );
+
 Future<void> getStoreItemList(int? storeID, int offset, String type, bool notify) async {
   try {
-
     if (offset == 1 || _storeItemModel == null) {
       _type = type;
       _storeItemModel = null;
@@ -658,36 +844,108 @@ Future<void> getStoreItemList(int? storeID, int offset, String type, bool notify
       }
     }
 
-    
     final categoryId = (_store?.categoryIds?.isNotEmpty ?? false) && _categoryIndex != 0
         ? _categoryList![_categoryIndex].id
         : 0;
 
-    
     final storeItemModel = await storeServiceInterface.getStoreItemList(
       storeID,
       offset,
       categoryId,
       type,
     );
-     
-  
-    if (storeItemModel != null) {
+
+    if (storeItemModel != null && storeItemModel.items != null) {
+      // Get current time for availability check
+      final now = DateTime.now();
+      final currentTime = DateFormat('HH:mm').format(now);
+      final currentTime24 = DateFormat('HH:mm').parse(currentTime);
+
+      // Filter and sort items by availability
+      final availableItems = <Item>[];
+      final upcomingItems = <Item>[];
+      final unavailableItems = <Item>[];
+
+      for (final item in storeItemModel.items!) {
+        try {
+          final startTimeStr = item.availableTimeStarts.toString();
+          final endTimeStr = item.availableTimeEnds.toString();
+          
+          if (startTimeStr.isNotEmpty && endTimeStr.isNotEmpty) {
+            final startTime24 = DateFormat('HH:mm').parse(startTimeStr);
+            final endTime24 = DateFormat('HH:mm').parse(endTimeStr);
+
+            // Check if current time is within available range
+            if (currentTime24.isAfter(startTime24) && currentTime24.isBefore(endTime24)) {
+              availableItems.add(item);
+            } else if (startTime24.isAfter(currentTime24)) {
+              upcomingItems.add(item);
+            } else {
+              unavailableItems.add(item);
+            }
+          } else {
+            // If no time specified, treat as always available
+            availableItems.add(item);
+          }
+        } catch (e) {
+          print('Error parsing time for item ${item.id}: $e');
+          // If time parsing fails, put in available items
+          availableItems.add(item);
+        }
+      }
+
+      // Sort available items by start time (earliest first)
+      availableItems.sort((a, b) {
+        try {
+          final aStart = DateFormat('HH:mm').parse(a.availableTimeStarts.toString());
+          final bStart = DateFormat('HH:mm').parse(b.availableTimeStarts.toString());
+          return aStart.compareTo(bStart);
+        } catch (e) {
+          return 0;
+        }
+      });
+
+      // Sort upcoming items by start time (earliest first)
+      upcomingItems.sort((a, b) {
+        try {
+          final aStart = DateFormat('HH:mm').parse(a.availableTimeStarts.toString());
+          final bStart = DateFormat('HH:mm').parse(b.availableTimeStarts.toString());
+          return aStart.compareTo(bStart);
+        } catch (e) {
+          return 0;
+        }
+      });
+
+      // Combine: Available -> Upcoming -> Unavailable
+      final sortedItems = [
+        ...availableItems,
+        ...upcomingItems,
+        ...unavailableItems,
+      ];
+
+      // Create new model with sorted items
+      final sortedModel = ItemModel(
+        items: sortedItems,
+        totalSize: storeItemModel.totalSize ?? 0,
+        offset: storeItemModel.offset ?? 0,
+      );
+
       if (offset == 1) {
-        _storeItemModel = storeItemModel;
+        _storeItemModel = sortedModel;
       } else {
         _storeItemModel ??= ItemModel(items: [], totalSize: 0, offset: 0);
         _storeItemModel!
-          ..items!.addAll(storeItemModel.items ?? [])
-          ..totalSize = storeItemModel.totalSize
-          ..offset = storeItemModel.offset;
+          ..items!.addAll(sortedModel.items ?? [])
+          ..totalSize = sortedModel.totalSize
+          ..offset = sortedModel.offset;
       }
-      update();
+      
+      if (notify) {
+        update();
+      }
     }
   } catch (e) {
-   
     print('Error fetching store items: $e');
- 
     if (notify) {
       update();
     }

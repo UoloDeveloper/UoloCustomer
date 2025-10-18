@@ -86,7 +86,7 @@ Future<void> main() async {
         messagingSenderId: "349709842275",
         projectId: "uolo-6b0e9",
       ),
-    );
+    );  
   } else {
     await Firebase.initializeApp();
        
